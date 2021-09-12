@@ -6,7 +6,7 @@ This is the homepage of my GitHub repositories
 
 This is my repositories:
 
-[Windows 11 Compatibility Check [jbcarreon123/Win11CompChk]](https://github.com/jbcarreon123/Win11CompChk)
+[Windows 11 Compatibility Check [jbcarreon123/Win11CompChk]](/Win11CompChk)
 
 ### Reach me at:
 
