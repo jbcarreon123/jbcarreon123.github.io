@@ -89,6 +89,25 @@ h5 {
     }
 }
         </style>
+    
+    <script>
+      var percentageElement = document.getElementById("percentage");
+var percentage = 0;
+
+function process() {
+  percentage += parseInt(Math.random() * 10);
+  if (percentage > 100) {
+    percentage = 100;
+  }
+  percentageElement.innerText = percentage;
+  processInterval();
+}
+
+function processInterval() {
+  setTimeout(process, Math.random() * (1000 - 500) + 500)
+}
+processInterval();
+    </script>
   </head>
   
 <div id="page">
@@ -97,7 +116,7 @@ h5 {
     <h2>Your site requested ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for
       you.</h2>
     <h2>
-      <span id="percentage">69</span>% complete</h2>
+      <span id="percentage">0</span>% complete</h2>
     <div id="details">
       <div id="stopcode">
         <h4>To go back to the homepage, visit
