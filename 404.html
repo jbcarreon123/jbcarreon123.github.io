@@ -94,8 +94,13 @@ h5 {
   
 <div id="page">
   <div id="container">
-   <script>
-var percentageElement = document.getElementById("percentage");
+    <h1>:(</h1>
+    <h2>Your site requested ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for
+      you.</h2>
+    <h2>
+      <span id="percentage">0</span>% complete</h2>
+    <script>
+      var percentageElement = document.getElementById("percentage");
 var percentage = 0;
 
 function process() {
@@ -113,11 +118,6 @@ function processInterval() {
 processInterval();
     </script>
     <noscript>It looks like you have an browser that does not support JavaScript, or you disabled it.</noscript>
-    <h1>:(</h1>
-    <h2>Your site requested ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for
-      you.</h2>
-    <h2>
-      <span id="percentage">0</span>% complete</h2>
     <div id="details">
       <div id="stopcode">
         <h4>To go back to the homepage, visit
