@@ -112,7 +112,7 @@
   player.stopVideo();
   }
   function unMuteVid() {
-  setTimeout({ player.unMute(); }, 1500);
+  setTimeout(function(){ player.unMute(); }, 1500);
   }
   document.querySelector('#ytvid').classList.toggle('hidden');
 			function toggleImage(){
