@@ -105,7 +105,6 @@
 			<div class="text1">
 				<h1>Video Title</h1>
 				<h3>Video Author</h3>
-				<h7>press Enter to run the specified in the slider</h7>
 			</div>
 			<div class="img1">
 				<img id="image1" class="image image1" src="https://github.com/jbcarreon123/badUIbattles-mySubmissions/raw/main/imageS/VidImg1.png" alt="PlayerPlay1">
@@ -145,16 +144,20 @@
   console.log(event);
   }
   function PlayVid() {
+alert('page will now play video');
   player.playVideo();
   unMuteVid();
   }
   function PauseVid() {
+alert('page will now pause video');
   player.pauseVideo();
   }
   function StopVid() {
+alert('page will now stop video');
   player.stopVideo();
   }
   function unMuteVid() {
+alert('page will now unmute video');
   setTimeout(function(){ player.unMute(); }, 1500);
   }
   document.querySelector('#ytvid').classList.toggle('hidden');
@@ -194,6 +197,7 @@ var text8 = val
 window.sliderOutput = text8;
           document.getElementById('textInput').value=text7; 
 document.getElementById('textInput').readOnly = true;
+enterPress1();
         }
 
 document.addEventListener("keyup", function(event) {
