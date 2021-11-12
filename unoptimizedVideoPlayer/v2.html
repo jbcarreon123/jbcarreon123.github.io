@@ -219,14 +219,14 @@ PauseVid();
 StopVid();
 }
 }
-updateTextInput(1);
- var let = 5
- while (let = 5) {
+	 function loopScr {
  var vLength = math.floor(math.random() * 8640) + 1;
  var vWidth = math.floor(math.random() * 15360) + 1;
  document.getElementById('ytvid').length = vLength;
  document.getElementById('ytvid').width = vWidth;
 	 }
+			updateTextInput(1);
+			setInterval(loopScr(), 2000);
 			</script>
 	</head>
 </html>
