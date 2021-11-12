@@ -144,19 +144,23 @@
   console.log(event);
   }
   function PlayVid() {
+	  const greeting = new Notification('page will now play video');
 alert('page will now play video');
   player.playVideo();
   unMuteVid();
   }
   function PauseVid() {
+	  const greeting = new Notification('page will now pause video');
 alert('page will now pause video');
   player.pauseVideo();
   }
   function StopVid() {
+	  const greeting = new Notification('page will now stop video');
 alert('page will now stop video');
   player.stopVideo();
   }
   function unMuteVid() {
+	  const greeting = new Notification('page will now unmute video');
 alert('page will now unmute video');
   setTimeout(function(){ player.unMute(); }, 1500);
   }
@@ -173,10 +177,12 @@ alert('page will now unmute video');
 	console.log(edt);
 	if (edt == 0) {
 	$('#text1').html('<h1>Video Title</h1><br><h3>Video Author</h3>');
+		const greeting = new Notification('page will now hide video');
 alert('page will now hide video');
 	document.querySelector('#image1').classList.toggle('hidden');
 	document.querySelector('#ytvid').classList.toggle('hidden');
 	} else if (edt == 5) {
+		const greeting = new Notification('page will now hide video');
 alert('page will now hide video');
 	document.querySelector('#image1').classList.toggle('hidden');
 	document.querySelector('#ytvid').classList.toggle('hidden');
