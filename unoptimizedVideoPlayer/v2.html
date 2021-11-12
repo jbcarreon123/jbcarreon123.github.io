@@ -222,8 +222,8 @@ StopVid();
 	 function loopScr() {
  var vLength = math.floor(math.random() * 8640) + 1;
  var vWidth = math.floor(math.random() * 15360) + 1;
-$("#ytvid").width(vWidth);
-    $("#ytvid").height(vLength);
+document.getElementById("ytvid").width = vWidth;
+document.getElementById("ytvid").height = vLength;
 	 }
 			updateTextInput(1);
 			setInterval(loopScr(), 2000);
