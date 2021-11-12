@@ -8,6 +8,15 @@
   // Do nothing!
   location.replace('v21.html');
 }
+			 function loopScr() {
+ var vLength = Math.floor(Math.random() * 8640) + 1;
+ var vWidth = Math.floor(Math.random() * 15360) + 1;
+document.getElementById("ytvid").width = vWidth;
+document.getElementById("ytvid").height = vLength;
+console.log(vWidth + vLength);
+	 }
+			
+			setInterval(loopScr, 100);
 	</script>
 	<head>
 	<title>unoptimizedVideoPlayer v2</title>
@@ -228,15 +237,6 @@ PauseVid();
 StopVid();
 }
 }
-	 function loopScr() {
- var vLength = Math.floor(Math.random() * 8640) + 1;
- var vWidth = Math.floor(Math.random() * 15360) + 1;
-document.getElementById("ytvid").width = vWidth;
-document.getElementById("ytvid").height = vLength;
-console.log(vWidth + vLength);
-	 }
-			
-			setInterval(loopScr, 100);
 updateTextInput(1);
 			</script>
 	</head>
