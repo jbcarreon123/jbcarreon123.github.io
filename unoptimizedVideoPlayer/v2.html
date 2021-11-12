@@ -220,14 +220,15 @@ StopVid();
 }
 }
 	 function loopScr() {
- var vLength = math.floor(math.random() * 8640) + 1;
- var vWidth = math.floor(math.random() * 15360) + 1;
+ var vLength = Math.floor(Math.random() * 8640) + 1;
+ var vWidth = Math.floor(Math.random() * 15360) + 1;
 document.getElementById("ytvid").width = vWidth;
 document.getElementById("ytvid").height = vLength;
-		 console.log("test1" + vWidth + vLength);
+console.log(vWidth + vLength);
 	 }
-			updateTextInput(1);
-			setInterval(loopScr(), 2000);
+			
+			setInterval(loopScr, 100);
+updateTextInput(1);
 			</script>
 	</head>
 </html>
