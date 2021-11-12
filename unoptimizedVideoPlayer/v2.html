@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<script>
-		let permission = await Notification.requestPermission();
+		Notification.requestPermission();
 		if (confirm('If you have an photosensitive epilepsy, press Cancel. otherwise, press OK.')) {
   // Save it!
   console.log('ok');
