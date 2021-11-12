@@ -15,11 +15,13 @@
 			.text1 {
 			position: absolute;
 			color: #FFFFFF;
+			background: #000000;
 			font-family: "Segoe UI Variable SemiBold", "Segoe UI", Arial, sans-serif;
+			border-color: transparent;
 			}
 			.btn1 {
 			position: absolute;
-			top: 150px;
+			top: 175px;
 			}
 			.image1 {
 				width: 15360px
@@ -64,8 +66,6 @@
 
 /* The slider itself */
 .slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
-  appearance: none;
   width: 250px; /* Full-width */
   height: 25px; /* Specified height */
   background: #d3d3d3; /* Grey background */
@@ -105,6 +105,7 @@
 			<div class="text1">
 				<h1>Video Title</h1>
 				<h3>Video Author</h3>
+				<h7>press Enter to run the specified in the slider</h7>
 			</div>
 			<div class="img1">
 				<img id="image1" class="image image1" src="https://github.com/jbcarreon123/badUIbattles-mySubmissions/raw/main/imageS/VidImg1.png" alt="PlayerPlay1">
@@ -116,8 +117,9 @@
 ></iframe>
 			</div>
 			<div class="btn1 slidecontainer">
-        <input type="range" min="1" max="4" value="50" class="slider" id="toggleVideo">
-				<div class="demo"></div>
+        <input type="range" min="1" max="4" value="1" class="slider" id="toggleVideo" onchange="updateTextInput(this.value);">
+				<input onclick="enterPress1();" class="text1 text5" type="text" id="textInput" value="">
+			
 			</div>
 		</body>
 		<script>
@@ -176,14 +178,42 @@
 		
 	}
 	}
-			var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-console.log(slider.value);
 
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-  console.log(this.value);
+function updateTextInput(val) {
+document.getElementById('textInput').readOnly = false;
+          if (val == 1) {
+	var text7 = "start"
+} else if (val == 2) {
+	var text7 = "play"
+} else if (val == 3) {
+	var text7 = "pause"
+} else {
+var text7 = "stop"
 }
+var text8 = val
+window.sliderOutput = text8;
+          document.getElementById('textInput').value=text7; 
+document.getElementById('textInput').readOnly = true;
+        }
+
+document.addEventListener("keyup", function(event) {
+    if (event.keyCode == 13) {
+        enterPress1();
+    }
+});
+function enterPress1() {
+console.log(sliderOutput);
+if (sliderOutput == 1) {
+toggleImage();
+} else if (sliderOutput == 2) {
+PlayVid();
+} else if (sliderOutput == 3) {
+PauseVid();
+} else if (sliderOutput == 4) {
+StopVid();
+}
+}
+updateTextInput(1);
 			</script>
 	</head>
 </html>
