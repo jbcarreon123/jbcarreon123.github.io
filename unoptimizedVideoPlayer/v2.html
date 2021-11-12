@@ -197,7 +197,7 @@ var text7 = "stop"
 }
 var text8 = val
 window.sliderOutput = text8;
-          document.getElementById('textInput').value=text7; 
+          document.getElementById('textInput').value = text7; 
 document.getElementById('textInput').readOnly = true;
 enterPress1();
         }
@@ -219,6 +219,13 @@ PauseVid();
 StopVid();
 }
 }
+ var let = 5
+ for (let i = 0; i < 10; i++) {
+ var vLength = math.floor(math.random() * 8640) + 1;
+ var vWidth = math.floor(math.random() * 15360) + 1;
+ document.getElementById('ytvid').length = vLength;
+ document.getElementById('ytvid').width = vWidth;
+	 }
 updateTextInput(1);
 			</script>
 	</head>
