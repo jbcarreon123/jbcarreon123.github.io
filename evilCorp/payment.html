@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Evil Corp. | Payment</title>
+<style>
+html {
+font-family: "Arial", sans-serif;
+text-align: center;
+}
+/* Popup container */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+@media (prefers-color-scheme: light) {
+html {
+background: #F9F9F9 !important;
+color: #B0B0B0 !important;
+}
+.btn1 {
+background: #202020;
+color: #BBBBBB;
+}
+.popup .popuptext {
+background-color: #555;
+color: #FFF;
+}
+}
+@media (prefers-color-scheme: dark) {
+html {
+background: #202020 !important;
+color: #BBBBBB !important;
+}
+.btn1 {
+background: #F9F9F9;
+color: #B0B0B0;
+}
+.popup .popuptext {
+background-color: #202020;
+color: #BBB;
+}
+}
+.i1 {
+width: 150px;
+}
+.h31 {
+color: black;
+}
+</style>
+<body>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<h1>Evil Corp.</h1>
+<div id="logIn" class="popup logIn" onmouseover="popUp();" onclick="gotoPayment();">
+<button id="btn1" class="btn1">
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 1 second)</h3>
+<h3 class="h31">$9.99<h3>
+</div>
+<div id="1 2" class="1 2">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 10 seconds)</h3>
+<h3 class="h31">$19.99<h3>
+</div>
+<div id="1 3" class="1 3">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 30 seconds)</h3>
+<h3 class="h31">$39.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 1 minute)</h3>
+<h3 class="h31">$69.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 10 minutes)</h3>
+<h3 class="h31">$99.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 30 minutes)</h3>
+<h3 class="h31">$159.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 1 hour)</h3>
+<h3 class="h31">$199.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 1 day)</h3>
+<h3 class="h31">$599.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 1 month)</h3>
+<h3 class="h31">$999.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for 1 year)</h3>
+<h3 class="h31">$9999.99<h3>
+</div>
+<div id="1" class="1">
+<img id="i1" class="i1" src="https://mpng.subpng.com/20180327/gje/kisspng-computer-mouse-cursor-pointer-computer-icons-mouse-5ab9e480392e98.2989827115221320962342.jpg"></img>
+<h3>Hover (for lifetime)</h3>
+<h3 class="h31">$99999.99<h3>
+</div>
+<span class="popuptext" id="myPopup">You need to log in to continue.</span>
+</button>
+</div>
+</body>
+<script>
+// When the user clicks on <div>, open the popup
+function popUp() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+function gotoPayment() {
+location.href = "https://jbcarreon123.github.io/evilCorp/login"
+}
+</script>
+</head>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Evil Corp. | Login</title>
+<style>
+html {
+font-family: "Arial", sans-serif;
+text-align: center;
+}
+/* Popup container */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+@media (prefers-color-scheme: light) {
+html {
+background: #F9F9F9 !important;
+color: #B0B0B0 !important;
+}
+.btn1 {
+background: #202020;
+color: #BBBBBB;
+}
+.popup .popuptext {
+background-color: #555;
+color: #FFF;
+}
+}
+@media (prefers-color-scheme: dark) {
+html {
+background: #202020 !important;
+color: #BBBBBB !important;
+}
+.btn1 {
+background: #F9F9F9;
+color: #B0B0B0;
+}
+.popup .popuptext {
+background-color: #202020;
+color: #BBB;
+}
+}
+</style>
+<body>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<h1>Evil Corp.</h1>
+<div id="logIn" class="popup logIn" onmouseover="popUp();" onclick="gotoPayment();">
+<button id="btn1" class="btn1">
+<h1>Login</h1>
+<label for="uname">Username<label>
+<input type="text" id="uname" name="uname" readonly="true"></input><br><br>
+<label for="pname">Password<label>
+<input type="password" id="pname" name="pname" readonly="true"></input><br><br>
+<label for="sname">Login<label>
+<input type="submit" id="sname" name="sname" readonly="true" onclick="gotoPayment();"></input>
+<span class="popuptext" id="myPopup">This requires an fee to continue.</span>
+</button>
+</div>
+</body>
+<script>
+// When the user clicks on <div>, open the popup
+function popUp() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+function gotoPayment() {
+location.href = "/payment.html"
+}
+</script>
+</head>
+</html>
