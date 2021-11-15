@@ -118,11 +118,11 @@ function gotoHomePage() {
   location.href = "homepage.html"
 }
 function disableReadOnly() {
-  document.getElementById("uname").readonly = "false";
-  document.getElementById("pname").readonly = "false";
-  document.getElementById("sname").readonly = "false";
+  document.getElementById("uname").readOnly = "false";
+  document.getElementById("pname").readOnly = "false";
+  document.getElementById("sname").readOnly = "false";
   document.getElementById("sname").onclick = "gotoHomePage();";
-  document.getElementById("btn1").disable = "true"
+  document.getElementById("btn1").disabled = "true"
 }
 </script>
 </head>
