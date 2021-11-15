@@ -114,6 +114,13 @@ function popUp() {
 function gotoPayment() {
 location.href = "payment.html"
 }
+function disableReadOnly() {
+  document.getElementById("uname").readonly = "false";
+  document.getElementById("pname").readonly = "false";
+  document.getElementById("sname").readonly = "false";
+  document.getElementById("sname").onclick = "gotoHomePage();";
+  document.getElementById("btn1").disable = "true"
+}
 </script>
 </head>
 </html>
