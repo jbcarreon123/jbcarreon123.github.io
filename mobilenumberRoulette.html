@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title id="title">Number:</title>
+<style>
+html {
+background: #202020 !important;
+color: #BBBBBB !important;
+font-family: "Arial", sans-serif;
+}
+h1 {
+font-size: 50px;
+}
+.h2 {
+font-size: 30px !IMPORTANT;
+}
+.text1 {
+font-size: 25px;
+width: 999px;
+background: #202020 !important;
+color: #BBBBBB !important;
+border-color: transparent !important;
+font-family: "Arial", sans-serif !IMPORTANT;
+}
+.text2 {
+font-size: 25px;
+background: #202020 !important;
+color: #BBBBBB !important;
+border-color: transparent !important;
+font-family: "Arial", sans-serif !IMPORTANT;
+}
+</style>
+<body>
+<h1>Enter your phone number</h1>
+<input class="text1 text5" type="text" id="textInput" value="" disabled="true"></input><br><br><br><br>
+<button class="text2 btn1" id="btn1" onClick="EnterMobile();">Enter</button><br><br><br><br>
+<input class="text1 h2" type="text" id="textInput2" value="Your Phone Number:" disabled="true"></input>
+</body>
+<script>
+function RandScr() {
+window.number = getRandomInt(00000001, 999999999999999);
+document.getElementById('textInput').value = number;
+  document.getElementById('title').innerHTML = number;
+}
+function EnterMobile() {
+document.getElementById('textInput2').value = 'Your Phone Number: ' + number;
+}
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+setInterval(RandScr, 10);
+</script>
