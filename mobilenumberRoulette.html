@@ -40,9 +40,9 @@ font-family: "Arial", sans-serif !IMPORTANT;
 function RandScr() {
 window.number = getRandomInt(00000001, 999999999999999);
 document.getElementById('textInput').value = number;
-  document.getElementById('title').innerHTML = number;
 }
 function EnterMobile() {
+document.getElementById('title').innerHTML = number;
 document.getElementById('textInput2').value = 'Your Phone Number: ' + number;
 }
 function getRandomInt(min, max) {
