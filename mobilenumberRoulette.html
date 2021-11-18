@@ -35,16 +35,32 @@ font-family: "Arial", sans-serif !IMPORTANT;
 <h1>Enter your phone number</h1>
 <input class="text1 text5" type="text" id="textInput" value="" disabled="true"></input><br><br><br><br>
 <button class="text2 btn1" id="btn1" onClick="EnterMobile();">Enter</button><br><br><br><br>
-<input class="text1 h2" type="text" id="textInput2" value="Your Phone Number:" disabled="true"></input>
+<input class="text1 h2" type="text" id="textInput2" value="Your Phone Number:" disabled="true"></input><br><br>
+  <input class="text1 h2" type="text" id="textInput3" value="" disabled="true"></input>
 </body>
 <script>
+function SubmitNumber() {
+  document.getElementById('textInput3').value = 'Submitted Phone Number: ' + numberE;
+  document.numberS = 1;
+}
 function RandScr() {
 window.number = getRandomInt(00000001, 999999999999999);
 document.getElementById('textInput').value = number;
+  if (typeof numberS !== 'undefined') {
+ clearTimeout(deleteS);
+}
 }
 function EnterMobile() {
 document.getElementById('title').innerHTML = 'Number: ' + number;
 document.getElementById('textInput2').value = 'Your Phone Number: ' + number;
+window.numberE = number;
+if (typeof numberS == 'undefined') {
+ deleteS = setTimeout(deleteSu, 3000);
+}
+}
+function deleteSu() {
+  document.getElementById('title').innerHTML = 'Number: ';
+document.getElementById('textInput2').value = 'Your Phone Number: ';
 }
 function getRandomInt(min, max) {
     min = Math.ceil(min);
