@@ -93,7 +93,7 @@ width: 150px;
 color: black;
 }
 </style>
-<body>
+<body onmouseover="popUp();" onclick='gotoPayment();'>
 <br><br><br>
 <br><br><br>
 <br><br><br>
@@ -169,6 +169,19 @@ function popUp() {
 function gotoPayment() {
 location.href = "https://jbcarreon123.github.io/evilCorp/"
 }
+  function int() {
+window.addEventListener('contextmenu', (event) => {
+  gotoPayment();
+})
+  var minimalUserResponseInMiliseconds = 100;
+  var before = new Date().getTime();
+  debugger;
+  var after = new Date().getTime();
+  if (after - before > minimalUserResponseInMiliseconds) { // user had to resume the script manually via opened dev tools 
+    gotoPayment();
+  }
+} 
+setInterval(int, 100);
 </script>
 </head>
 </html>
