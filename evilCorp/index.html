@@ -88,6 +88,7 @@ color: #BBB;
 }
 </style>
 <body onmouseover="popUp();" onclick='gotoPayment();'>
+<div id="jsReq" hidden>
 <br><br><br>
 <br><br><br>
 <br><br><br>
@@ -103,6 +104,7 @@ color: #BBB;
 <input type="submit" id="sname" name="sname" readonly="true" onclick="gotoPayment();"></input>
 <span class="popuptext" id="myPopup">This requires an fee to continue.</span>
 </button>
+</div>
 </div>
 </body>
 <script>
@@ -141,6 +143,8 @@ window.addEventListener('contextmenu', (event) => {
   enableReadOnly();
 } 
 setInterval(int, 100);
+  
+document.getElementById("jsReq").hidden = false
 </script>
 </head>
 </html>
