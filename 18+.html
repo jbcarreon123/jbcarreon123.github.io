@@ -93,7 +93,7 @@
             <b1>You must wait at least</b1><br>
             <h3 id="sec">test</h3> <h3>seconds.</h3>
             <b1>Note that closing this page, letting Chrome or any browser to disable it to save battery and RAM, or pressing Back will make the timer reset.</b1>
-            <b1 id="sec2" hidden>0</b1>
+            <b1 id="sec2" hidden></b1>
         </div>
     </body>
     <script>
@@ -118,21 +118,20 @@
         function Loop1(r, m) {
             r = r-1
             document.getElementById("sec2").innerHTML = r
-            if (m = 1) {
-                let m = 'Finished!'
-                alert('Finished')
-                Int0()
-            }
             document.getElementById("sec").innerHTML = r
-            console.log(Int)
         }
         function Loop0(m) {
             let vr1 = document.getElementById("sec2").innerHTML
+            if (vr1 = 1) {
+                vr1 = 0
+                alert("Finished");
+                Int0()
+            }
             Loop1(vr1, m)
         }
         function Int1() {
             // Put here the number
-            let r = 568036800;
+            let r = 1;
             // Put here the number
             let m = 1;
             document.getElementById("sec2").innerHTML = r
