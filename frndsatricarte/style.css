@@ -1,0 +1,144 @@
+@font-face {
+    font-family: Oswald;
+    src: url(media/Oswald.ttf);
+}
+
+@font-face {
+    font-family: CascadiaCode;
+    src: url(media/CascadiaCode.ttf);
+}
+
+@keyframes marquee{
+    from {color: #ffffff}
+    to {color: #2F3136}
+}
+
+.marquee {
+    animation-name: marquee;
+    animation-duration: 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.sandbox {
+    display: flex;
+    justify-content: center;
+}
+
+.noscript {
+    background-color:#ce4444;
+    color: white;
+    border-radius: 10px;
+    font-family: CascadiaCode, sans-serif;
+    text-align: center;
+}
+
+.footer {
+    background-color: rgb(114, 92, 92);
+    color: white;
+    text-align: center;
+    width : 100%;
+    display: block;
+}
+
+footer {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+button {
+    border-color: #2F3136 !important;
+    background-color: #2F3136 !important;
+    border-radius: 10px;
+    height: auto !important;
+    width: auto;
+    color: white;
+    flex: 75% !important;
+    text-align: center;
+}
+
+button:hover {
+    background-color:#36393F !important;
+}
+
+.row {
+    display: flex;
+}
+  
+.column {
+    flex: 50% !important;
+    font-family: Geneva, Verdana, sans-serif;
+    margin: 25px 25px 25px 25px;
+    line-height: normal !important;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+}
+
+.gallery{
+    margin:5px;
+    float:left;
+    width:130px;
+    background-color:#2F3136;
+    border-radius: 10px;
+    font-family: Geneva, Tahoma, sans-serif;
+}
+
+.gallery:hover{
+    margin:5px;
+    float:left;
+    width:130px;
+    background-color:#36393F;
+    border-radius: 10px;
+}
+
+.gallery img{
+    width:75%;
+    margin-left: 12.5%;
+    margin-top: 12.5%;
+    border-radius: 100px;
+}
+
+.desc{
+    padding:15px;
+    text-align:center;
+    color:white;
+}
+
+body {
+    background-image: url(media/redux.jpg);
+}
+
+.topdiv {
+    background: #2F3136;
+    color: white;
+    border-radius: 10px;
+    margin: 25px !important;
+}
+
+.top {
+    font-family: Oswald, sans-serif;
+    text-align: center;
+    line-height: 100% !important;
+}
+
+h1 {
+    font-size: 64px;
+}
+
+.comicsans {
+    font-family: 'Comic Sans MS', sans-serif;
+    line-height: 50% !important;
+}
+
+dynamic2 {
+    font-family: 'Oswald ExtraLight', sans-serif;
+}

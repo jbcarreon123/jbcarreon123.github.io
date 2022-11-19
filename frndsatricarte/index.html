@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="title">the Group 1 | Homepage</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="media/favicon.ico">
+        <body id="home">
+            <noscript>
+                <div class="noscript"><br>[!WARNING!] Oh! We detected that you disabled JavaScript on your browser. It is really REALLY required to make sure this page works properly. Please enable JavaScript <i>please!</i> [!WARNING!]<br><br></div>
+                <br>
+            </noscript>
+            <div class="topdiv">
+                <br><br>
+                <h1 class="top">We are<dynamic id="dynamic" class="dynamic"> the Group 1</dynamic></h1>
+                <hr>
+                <h5 class="top" style="font-family: Arial !important;"><Marquee class="marquee" behavior="alternate" scrollamount="5">Why Pay For Mistakes When I Get Them For Free?</Marquee></h5>
+                <br><br><br>
+            </div>
+            <br>
+            <div style="max-width:1138px;" class="sandbox" id="users">
+                <div id="container" class="container" style="max-width:1138px;" onclick="location.href='users/jbcarreon123/index.html'">
+                    <div class ="gallery"> 
+                        <img src ="media/Carreon.jpg">
+                        <div class ="desc">John Benedict</div>
+                    </div>
+                </div>
+                <div class="container" onclick="location.href='users/Rhylle.html'">
+                    <div class ="gallery"> 
+                        <img src ="media/ramos.jpg">
+                        <div class ="desc">Rhylle</div>
+                    </div>
+                </div>
+                <div class="container" onclick="location.href='users/user.html'">
+                    <div class ="gallery"> 
+                        <img src ="media/redux.jpg">
+                        <div class ="desc">User</div>
+                    </div>
+                </div>
+                <div class="container" onclick="location.href='users/user.html'">
+                    <div class ="gallery"> 
+                        <img src ="media/redux.jpg">
+                        <div class ="desc">User</div>
+                    </div>
+                </div>
+                <div class="container" onclick="location.href='users/user.html'">
+                    <div class ="gallery"> 
+                        <img src ="media/redux.jpg">
+                        <div class ="desc">User</div>
+                    </div>
+                </div>
+                <div class="container" onclick="location.href='users/user.html'">
+                    <div class ="gallery"> 
+                        <img src ="media/redux.jpg">
+                        <div class ="desc">User</div>
+                    </div>
+                </div>
+                <div class="container" onclick="location.href='users/user.html'">
+                    <div class ="gallery"> 
+                        <img src ="media/redux.jpg">
+                        <div class ="desc">User</div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <br>
+                <div class="footer">
+                    <br>
+                    <div class="row">
+                        <div class="column">
+                            Useful Links<br>
+                            <div class="btns">
+                                <button onclick="location.href = 'https://commons.deped.gov.ph/'">DepEd Commons</button>
+                                <button onclick="location.href = 'http://depedqc.ph'">SDO-QC Website</button>
+                                <button onclick="location.href = 'https://sites.google.com/depedqc.ph/sbhs/home'">SBHS Website</button>
+                                <button onclick="location.href = 'https://jbcarreon123.github.io'">jbcarreon123's Website [under construction]</button>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="comicsans"><h1>Friends at Ricarte</h1></div>
+                            Copyright jbcarreon123 and TRG @ 2022. All rights reserved.
+                        </div>
+                      </div>
+                    <br>
+                </div>
+            </footer>
+        </body>
+        <script>
+            console.log('  ______    _                _             _     _____  _                _ ')
+            console.log(' |  ____|  (_)              | |           | |   |  __ \\(_)              | |      ')
+            console.log(' | |__ _ __ _  ___ _ __   __| |___    __ _| |_  | |__) |_  ___ __ _ _ __| |_ ___ ')
+            console.log(' |  __| \'__| |/ _ \\ \'_ \\ / _` / __|  / _` | __| |  _  /| |/ __/ _` | \'__| __/ _ \\')
+            console.log(' | |  | |  | |  __/ | | | (_| \\__ \\ | (_| | |_  | | \\ \\| | (_| (_| | |  | ||  __/')
+            console.log(' |_|  |_|  |_|\\___|_| |_|\\__,_|___/  \\__,_|\\__| |_|  \\_\\_|\\___\\__,_|_|   \\__\\___|')
+            console.log('Group 1 Project on TLE\n\nEven there is no login info on this page, DO NOT put anything you don\'t know to this console. You can be a victim to a attack called Self-XSS.')
+
+            let namea = " the Group 1"
+            let nameb = " Friends at Ricarte"
+            let namec = " the Group 1"
+            let doc = document.getElementById("dynamic")
+            let title = document.getElementById("title")
+
+            setInterval(function () {
+                document.title = doc.innerHTML + " | Homepage"
+                var viewport_width = window.innerWidth;
+                document.getElementById('users').style = `max-width:${viewport_width}px;`
+                document.getElementById('container').style = `max-width:${viewport_width}px;`
+            }, 50)
+
+            namechanger()
+            rnd()
+
+            function rnd() {
+                let rnd = Math.floor(Math.random() * 100) + 1
+                if (rnd > 49 && rnd < 59) {
+                    location.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+                }
+                if (rnd > 69 && rnd < 79) {
+                    location.replace('utils/htmlvis.html');
+                }
+            }
+
+            async function namechanger() {
+                await new Promise(r => setTimeout(r, 2500));
+                for (let i = 0; i <= 18; i++) {
+                    const names = doc.innerHTML.split("");
+                    names.pop();
+                    let name = ""
+                    names.forEach(element => {
+                        name += element
+                    });
+                    if (name === "") { break }
+                    doc.innerHTML = name
+                    await new Promise(r => setTimeout(r, 250));
+                }
+                await namechanger2()
+            }
+
+            async function namechanger2() {
+                if (name === "") {
+                    if (namec === " the Group 1") {
+                        for (let i = 0; i <= 18; i++) {
+                            doc.innerHTML += nameb[i]
+                            await new Promise(r => setTimeout(r, 250));
+                        }
+                        namec = nameb
+                    } else {
+                        for (let i = 0; i <= 11; i++) {
+                            doc.innerHTML += namea[i]
+                            await new Promise(r => setTimeout(r, 250));
+                        }
+                        namec = namea
+                    }
+                }
+                await namechanger()
+            }
+        </script>
+    </head>
+</html>
