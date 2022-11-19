@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .row {
+                display: flex;
+            }
+            
+            .column {
+                flex: 50% !important;
+                font-family: Geneva, Verdana, sans-serif;
+                margin: 25px 25px 25px 25px;
+                line-height: normal !important;
+            }
+
+            #inputbox, #iframe {
+                width: 100%;
+            }
+
+            * {
+                background-color: dimgray;
+                color:azure;
+            }
+
+            iframe {
+                background-color: white;
+            }
+        </style>
+        <body>
+            <div class="row">
+                <div class="column">
+                    <textarea id="inputbox" oninput="oninp(this.value)"></textarea>
+                </div>
+                <div class="column">
+                    <iframe src="about:blank" id="iframe"></iframe>
+                </div>
+            </div>
+        </body>
+        <script>
+            function oninp(value) {
+                let iframe = document.getElementById('iframe')
+                iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(value);
+            }
+
+            function encodeURI(html) {
+                html = html.replace("\r\n", "")
+                html = html.replace("\n", "")
+                return html
+            }
+
+            setInterval(function () {
+                var viewport_width = window.innerHeight;
+                document.getElementById('iframe').style = `height:${viewport_width}px;`
+                document.getElementById('inputbox').style = `height:${viewport_width}px;`
+            }, 50)
+        </script>
+    </head>
+</html>
