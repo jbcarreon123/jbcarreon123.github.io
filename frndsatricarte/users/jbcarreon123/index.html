@@ -14,6 +14,10 @@
             .topdiv {
                 background: #333333;
             }
+
+            #img {
+                content: url("../../media/Carreon.jpg");
+            }
         </style>
         <body>
             <div class="topdiv">
@@ -24,7 +28,7 @@
             <br>
             <div class="column left" style="width: 375px; float: left;">
                 <br>
-                <div class="image"><img src="..\..\media\Carreon.jpg" width="250px" height="250px"></div>
+                <div class="image"><img id="img" width="250px" height="250px"></div>
                 <br>
                 John Benedict B. Carreon<br><c style="font-size: 10px">My hobby is coding. Literally.</c><br>
                 <div class="information box">
@@ -35,6 +39,7 @@
                         <img src="..\..\media\mail.svg" class="svg mail" alt="*" width="12px" height="12px"> <c onclick='location.href = "mailto:jbcarreon212@gmail.com"'>jbcarreon212@gmail.com</c><br>
                         <img src="..\..\media\mail.svg" class="svg mail" alt="*" width="12px" height="12px"> <c onclick='location.href = "mailto:carreon.136528130549@depedqc.ph"'>carreon.136528130549@depedqc.ph</c><br>
                         <img src="..\..\media\mail.svg" class="svg mail" alt="*" width="12px" height="12px"> <c onclick='location.href = "mailto:jbcarreon123@outlook.com"'>jbcarreon123@outlook.com</c><br>
+                        <img src="..\..\media\discord.svg" class="svg discord" alt="*" width="12px" height="12px"> jbcarreon123#4500<br>
                         <br>
                     </div>
                 </div>
@@ -78,7 +83,7 @@
                         <a href="https://twitter.com/jbcarreon123"><img src="..\..\media\twitter.svg" class="svg twitter" alt="*" width="48px" height="48px"></a>
                         <a href="https://github.com/jbcarreon123"><img src="..\..\media\github.svg" class="svg github" alt="*" width="48px" height="48px"></a>
                         <a href="https://jbcarreon123.github.io"><img src="..\..\media\website.svg" class="svg website" alt="*" width="48px" height="48px"></a>
-                        <a href="https://discord.com/api/oauth2/authorize?client_id=1040911682282737704&permissions=277025508416&scope=bot%20applications.commands"><img src="..\..\media\discord.svg" class="svg discord" alt="*" width="48px" height="48px"></a>
+                        <a href="https://www.youtube.com/@jbcarreon123"><img src="..\..\media\youtube.svg" class="svg youtube" alt="*" width="48px" height="48px"></a>
                     </div>
                 </div>
                 <div class="redirect box">
@@ -99,10 +104,10 @@
                 </div><br>
                 <div class="post">
                     <div class="title">Join the Grade 9 Ricarte Discord Server!</div>
-                    <div class="content"><a href="https://discord.gg/DeCNZzUCpq">using this link!</a></div>
                     <br>
-                    <div class="img">
-                        <img src="..\..\media\ricarte.png" style="max-height:100%; max-width:100%;">
+                    <div class="container">
+                        <div class='cantconnect' id='nointernet' style="opacity: 0%;"><img src='..\..\media\nointernet.svg' class='svg nointernet' alt='*' width='64px' height='64px'><br>Cannot connect. Please try again with a internet connection.</div>
+                        <iframe class="ytvid" src="https://discord.com/widget?id=1037994294256078908&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                     </div>
                 </div>
                 <br>
@@ -111,7 +116,7 @@
                     <br>
                     <div class="container">
                         <div class='cantconnect' id='nointernet' style="opacity: 0%;"><img src='..\..\media\nointernet.svg' class='svg nointernet' alt='*' width='64px' height='64px'><br>Cannot connect. Please try again with a internet connection.</div>
-                        <iframe class="ytvid" onerror="error" id="youtube" style="opacity: 100%;" src="https://www.youtube.com/embed/videoseries?list=PLzQMiS2VoQIVnm_7bh56lb48OmdCMU6Fx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe class="ytvid" onerror="error" style="opacity: 100%;" src="https://www.youtube.com/embed/videoseries?list=PLzQMiS2VoQIVnm_7bh56lb48OmdCMU6Fx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -131,7 +136,7 @@
                         </div>
                         <div class="column">
                             <div class="comicsans"><h1><c onclick="location.href = '../../index.html'">Friends at Ricarte</c></h1></div>
-                            Copyright jbcarreon123 and TRG @ 2022. All rights reserved.
+                            Copyright jbcarreon123 @ 2022. All rights reserved.
                         </div>
                       </div>
                     <br>
@@ -151,8 +156,8 @@
             let nameb = " John Benedict Carreon"
             let namec = " jbcarreon123"
             let doc = document.getElementById("dynamic")
-            let noi = document.getElementById("nointernet")
-            let ytv = document.getElementById("youtube")
+            const noi = document.getElementsByClassName("cantconnect")
+            const ytv = document.getElementsByClassName("ytvid")
 
             try {
                 var xmlHttp = new XMLHttpRequest();
@@ -167,9 +172,15 @@
                 xmlHttp.send( null );
             } catch (e) {
                 if (e.name === "NetworkError") {
-                        noi.style = "opacity: 100%;"
-                        ytv.style = "opacity: 0%;"
-                    }
+                    Array.prototype.forEach.call(noi, (a) => {
+                        a.style = "opacity: 100%;"
+                        console.log(a)
+                    })
+                    Array.prototype.forEach.call(ytv, (a) => {
+                        a.style = "opacity: 0%;"
+                        console.log(a)
+                    })
+                }
             }
 
             namechanger()
