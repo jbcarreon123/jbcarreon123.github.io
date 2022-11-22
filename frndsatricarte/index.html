@@ -4,11 +4,80 @@
         <title id="title">the Group 1 | Homepage</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/x-icon" href="media/favicon.ico">
-        <body id="home">
+        <script>
+            function sleep(ms) {
+                return new Promise(resolveFunc => setTimeout(resolveFunc, ms));
+            }
+
+            async function fadein(id) {
+                let element = document.getElementById(id)
+                element.children[0].style = 'display: inline-block;'
+                for (let i = 0; i <= 50; i++) {
+                    element.style = `opacity: ${i * 2}%;`
+                    await sleep(5);
+                }
+            }
+
+            async function fadeout(id) {
+                let element = document.getElementById(id)
+                for (let i = 50; i >= 0; i--) {
+                    element.style = `opacity: ${i * 2}%;`
+                    await sleep(5);
+                }
+                element.children[0].style = 'display: none;'
+            }
+        </script>
+    </head>
+    <body id="home">
+        <div id="notlogin">
             <noscript>
                 <div class="noscript"><br>[!WARNING!] Oh! We detected that you disabled JavaScript on your browser. It is really REALLY required to make sure this page works properly. Please enable JavaScript <i>please!</i> [!WARNING!]<br><br></div>
                 <br>
             </noscript>
+            <div class="topnav">
+                <div class="left">
+                    <a class="active" href="index.html">Friends at Ricarte</a>
+                </div>
+                <div class="mid">
+                    <a href="users/jbcarreon123/index.html">John Benedict</a>
+                    <a href="users/">Rhylle</a>
+                    <a href="users/christopher/index.html">Christopher</a>
+                </div>
+                <div class="right">
+                    <a id="usernameholder" style="display: none;" class="form">Username</a>
+                    <a href="index.html" id="logout" style="display: none;" class="form">Logout</a>
+                    <a id="logina" onclick="fadein('loginbox');fadeout('signupbox')" class="form">Log in</a>
+                    <a id="signupa" onclick="fadein('signupbox');fadeout('loginbox')" class="form">Sign up</a>
+                </div>
+            </div>
+            <div id="loginbox" style="opacity: 0%;">
+                <div class="login" id="login" style="display: none;">
+                    <form>
+                        <div style="color:rgb(238, 106, 106);"><c id="incpass" style="display: none;">Incorrect Password. Try again.</c></div><br>
+                        Username<br>
+                        <input type="text" class="uname" id="username" name="username" required><br>
+                        Password<br>
+                        <input type="password" id="text" name="password" required><br><br>
+                        <input type="submit" value="Log in">
+                        <input type="reset">
+                        <input type="button" value="Cancel" onclick="fadeout('loginbox');">
+                    </form>
+                </div>
+            </div>
+            <div id="signupbox" style="opacity: 0%;">
+                <div class="login signup" id="signup" style="display: none;">
+                    <form>
+                        <c style="text-align: center;">Please note that this will<br>not be saved. If you log out,<br>the information will be lost<br>forever.<br><br></c>
+                        Username<br>
+                        <input type="text" id="text" name="username" required><br>
+                        Password<br>
+                        <input type="password" id="text" name="password" required><br><br>
+                        <input type="submit" value="Sign up" name="signup">
+                        <input type="reset">
+                        <input type="button" value="Cancel" onclick="fadeout('signupbox')">
+                    </form>
+                </div>
+            </div>
             <div class="topdiv">
                 <br><br>
                 <h1 class="top">We are<dynamic id="dynamic" class="dynamic"> the Group 1</dynamic></h1>
@@ -79,80 +148,110 @@
                             <div class="comicsans"><h1>Friends at Ricarte</h1></div>
                             Copyright jbcarreon123 and TRG @ 2022. All rights reserved.
                         </div>
-                      </div>
+                    </div>
                     <br>
                 </div>
             </footer>
-        </body>
-        <script>
-            console.log('  ______    _                _             _     _____  _                _ ')
-            console.log(' |  ____|  (_)              | |           | |   |  __ \\(_)              | |      ')
-            console.log(' | |__ _ __ _  ___ _ __   __| |___    __ _| |_  | |__) |_  ___ __ _ _ __| |_ ___ ')
-            console.log(' |  __| \'__| |/ _ \\ \'_ \\ / _` / __|  / _` | __| |  _  /| |/ __/ _` | \'__| __/ _ \\')
-            console.log(' | |  | |  | |  __/ | | | (_| \\__ \\ | (_| | |_  | | \\ \\| | (_| (_| | |  | ||  __/')
-            console.log(' |_|  |_|  |_|\\___|_| |_|\\__,_|___/  \\__,_|\\__| |_|  \\_\\_|\\___\\__,_|_|   \\__\\___|')
-            console.log('Group 1 Project on TLE\n\nEven there is no login info on this page, DO NOT put anything you don\'t know to this console. You can be a victim to a attack called Self-XSS.')
+        </div>
+    </body>
+    <script>
+        console.log('  ______    _                _             _     _____  _                _ ')
+        console.log(' |  ____|  (_)              | |           | |   |  __ \\(_)              | |      ')
+        console.log(' | |__ _ __ _  ___ _ __   __| |___    __ _| |_  | |__) |_  ___ __ _ _ __| |_ ___ ')
+        console.log(' |  __| \'__| |/ _ \\ \'_ \\ / _` / __|  / _` | __| |  _  /| |/ __/ _` | \'__| __/ _ \\')
+        console.log(' | |  | |  | |  __/ | | | (_| \\__ \\ | (_| | |_  | | \\ \\| | (_| (_| | |  | ||  __/')
+        console.log(' |_|  |_|  |_|\\___|_| |_|\\__,_|___/  \\__,_|\\__| |_|  \\_\\_|\\___\\__,_|_|   \\__\\___|')
+        console.log('Group 1 Project on TLE\n\nEven there is no login info on this page, DO NOT put anything you don\'t know to this console. You can be a victim to a attack called Self-XSS.')
 
-            let namea = " the Group 1"
-            let nameb = " Friends at Ricarte"
-            let namec = " the Group 1"
-            let doc = document.getElementById("dynamic")
-            let title = document.getElementById("title")
+        let namea = " the Group 1"
+        let nameb = " Friends at Ricarte"
+        let namec = " the Group 1"
+        let doc = document.getElementById("dynamic")
+        let title = document.getElementById("title")
 
-            setInterval(function () {
-                document.title = doc.innerHTML + " | Homepage"
-                var viewport_width = window.innerWidth;
-                document.getElementById('users').style = `max-width:${viewport_width}px;`
-                document.getElementById('container').style = `max-width:${viewport_width}px;`
-            }, 50)
+        setInterval(function () {
+            document.title = doc.innerHTML + " | Homepage"
+            var viewport_width = window.innerWidth;
+            document.getElementById('users').style = `max-width:${viewport_width}px;`
+            document.getElementById('container').style = `max-width:${viewport_width}px;`
+            var viewport_height = window.innerHeight;
+            document.getElementById('notlogin').style = `height:${viewport_height}px`
+        }, 50)
 
-            namechanger()
-            rnd()
+        namechanger()
+        rnd()
+        getParams()
 
-            function rnd() {
-                let rnd = Math.floor(Math.random() * 100) + 1
-                if (rnd > 49 && rnd < 59) {
-                    location.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
-                }
-                if (rnd > 69 && rnd < 79) {
-                    location.replace('utils/htmlvis.html');
+        function rnd() {
+            let rnd = Math.floor(Math.random() * 100) + 1
+            if (rnd > 49 && rnd < 54) {
+                location.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+            }
+            if (rnd > 69 && rnd < 74) {
+                location.replace('utils/htmlvis.html');
+            }
+        }
+
+        function getParams() {
+            var querystring = window.location.search;
+            var params = new URLSearchParams(querystring)
+            window.history.pushState('index', 'are Group 1 | Homepage', 'index.html')
+
+            if (params.get('username') === null) {return}
+            if (params.get('username') == "admin" && params.get('signup') === null) {
+                if (!(params.get('password') == "adm1n")) {
+                    document.getElementById('incpass').style = "display: block;"
+                    document.getElementById('username').value = params.get('username')
+                    fadein('loginbox');
+                    return
                 }
             }
 
-            async function namechanger() {
-                await new Promise(r => setTimeout(r, 2500));
-                for (let i = 0; i <= 18; i++) {
-                    const names = doc.innerHTML.split("");
-                    names.pop();
-                    let name = ""
-                    names.forEach(element => {
-                        name += element
-                    });
-                    if (name === "") { break }
-                    doc.innerHTML = name
-                    await new Promise(r => setTimeout(r, 250));
-                }
-                await namechanger2()
-            }
+            var doc = document.getElementsByClassName("container")
+            Array.prototype.forEach.call(doc, function (a) {
+                a.setAttribute("onClick", String(a.onclick).slice(0, -3).replace("function onclick(event) {", "").replace("}", "").replace("\r\n", "") + `?username=${params.get('username')}'`)
+            })
 
-            async function namechanger2() {
-                if (name === "") {
-                    if (namec === " the Group 1") {
-                        for (let i = 0; i <= 18; i++) {
-                            doc.innerHTML += nameb[i]
-                            await new Promise(r => setTimeout(r, 250));
-                        }
-                        namec = nameb
-                    } else {
-                        for (let i = 0; i <= 11; i++) {
-                            doc.innerHTML += namea[i]
-                            await new Promise(r => setTimeout(r, 250));
-                        }
-                        namec = namea
+            document.getElementById('usernameholder').style = "display: inline-block;"
+            document.getElementById('usernameholder').innerHTML = `<b>${params.get('username')}</b>`
+            document.getElementById('logout').style = "display: inline-block;"
+            document.getElementById('logina').style = "display: none;"
+            document.getElementById('signupa').style = "display: none;"
+        }
+
+        async function namechanger() {
+            await new Promise(r => setTimeout(r, 2500));
+            for (let i = 0; i <= 18; i++) {
+                const names = doc.innerHTML.split("");
+                names.pop();
+                let name = ""
+                names.forEach(element => {
+                    name += element
+                });
+                if (name === "") { break }
+                doc.innerHTML = name
+                await new Promise(r => setTimeout(r, 250));
+            }
+            await namechanger2()
+        }
+
+        async function namechanger2() {
+            if (name === "") {
+                if (namec === " the Group 1") {
+                    for (let i = 0; i <= 18; i++) {
+                        doc.innerHTML += nameb[i]
+                        await new Promise(r => setTimeout(r, 250));
                     }
+                    namec = nameb
+                } else {
+                    for (let i = 0; i <= 11; i++) {
+                        doc.innerHTML += namea[i]
+                        await new Promise(r => setTimeout(r, 250));
+                    }
+                    namec = namea
                 }
-                await namechanger()
             }
-        </script>
-    </head>
+            await namechanger()
+        }
+    </script>
 </html>

@@ -20,6 +20,50 @@
             }
         </style>
         <body>
+            <div class="topnav">
+                <div class="left">
+                    <a class="active" href="index.html">Friends at Ricarte</a>
+                </div>
+                <div class="mid">
+                    <a href="users/jbcarreon123/index.html">jbcarreon123</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#about">About</a>
+                </div>
+                <div class="right">
+                    <a id="usernameholder" style="display: none;">Username</a>
+                    <a href="index.html" id="logout" style="display: none;">Logout</a>
+                    <a id="logina" onclick="document.getElementById('login').style = 'display: inline-block;';document.getElementById('signup').style = 'display: none;'" class="form">Log in</a>
+                    <a id="signupa" onclick="document.getElementById('signup').style = 'display: inline-block;';document.getElementById('login').style = 'display: none;'" class="form">Sign up</a>
+                </div>
+            </div>
+            <noscript>
+                <div class="noscript"><br>[!WARNING!] Oh! We detected that you disabled JavaScript on your browser. It is really REALLY required to make sure this page works properly. Please enable JavaScript <i>please!</i> [!WARNING!]<br><br></div>
+                <br>
+            </noscript>
+            <div class="login" id="login" style="display: none;">
+                <form>
+                    Username<br>
+                    <input type="text" name="username"><br>
+                    Password<br>
+                    <input type="password"><br><br>
+                    <input type="submit" value="Log in">
+                    <input type="reset">
+                    <input type="button" value="Cancel" onclick="document.getElementById('login').style = 'display: none;'">
+                </form>
+            </div>
+
+            <div class="login signup" id="signup" style="display: none;">
+                <form>
+                    <c style="text-align: center;">Please note that this will<br>not be saved. If you log out,<br>the information will be lost<br>forever.<br><br></c>
+                    Username<br>
+                    <input type="text" name="username"><br>
+                    Password<br>
+                    <input type="password"><br><br>
+                    <input type="submit" value="Sign up" name="signup">
+                    <input type="reset">
+                    <input type="button" value="Cancel" onclick="document.getElementById('signup').style = 'display: none;'">
+                </form>
+            </div>
             <div class="topdiv">
                 <br><br>
                 <h1 class="top">Hello, I'm<dynamic id="dynamic" class="dynamic"> jbcarreon123</dynamic></h1>
@@ -107,7 +151,7 @@
                     <br>
                     <div class="container">
                         <div class='cantconnect' id='nointernet' style="opacity: 0%;"><img src='..\..\media\nointernet.svg' class='svg nointernet' alt='*' width='64px' height='64px'><br>Cannot connect. Please try again with a internet connection.</div>
-                        <iframe class="ytvid" src="https://discord.com/widget?id=1037994294256078908&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                        <iframe class="ytvid" id="discord" src="" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                     </div>
                 </div>
                 <br>
@@ -117,6 +161,15 @@
                     <div class="container">
                         <div class='cantconnect' id='nointernet' style="opacity: 0%;"><img src='..\..\media\nointernet.svg' class='svg nointernet' alt='*' width='64px' height='64px'><br>Cannot connect. Please try again with a internet connection.</div>
                         <iframe class="ytvid" onerror="error" style="opacity: 100%;" src="https://www.youtube.com/embed/videoseries?list=PLzQMiS2VoQIVnm_7bh56lb48OmdCMU6Fx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <br>
+                <div class="post">
+                    <div class="title">Synthwaves!</div>
+                    <br>
+                    <div class="container">
+                        <div class='cantconnect' id='nointernet' style="opacity: 0%;"><img src='..\..\media\nointernet.svg' class='svg nointernet' alt='*' width='64px' height='64px'><br>Cannot connect. Please try again with a internet connection.</div>
+                        <iframe class="ytvid" onerror="error" style="opacity: 100%;" src="https://www.youtube.com/embed/videoseries?list=PL6dcG1i7AQmb3l4-ldMvlSpKwEcvrSPW8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -184,6 +237,7 @@
             }
 
             namechanger()
+            getParams()
 
             async function namechanger() {
                 await new Promise(r => setTimeout(r, 2500));
@@ -218,6 +272,20 @@
                     }
                 }
                 await namechanger()
+            }
+
+            function getParams() {
+                var querystring = window.location.search;
+                var params = new URLSearchParams(querystring)
+
+                if (params.get('username') === null) {document.getElementById('discord').src = `https://discord.com/widget?id=1037994294256078908&theme=dark`;return}
+
+                document.getElementById('usernameholder').style = "display: inline-block;"
+                document.getElementById('usernameholder').innerHTML = `<b>${params.get('username')}</b>`
+                document.getElementById('logout').style = "display: inline-block;"
+                document.getElementById('logina').style = "display: none;"
+                document.getElementById('signupa').style = "display: none;"
+                document.getElementById('discord').src = `https://discord.com/widget?id=1037994294256078908&theme=dark&username=${params.get('username')}`;
             }
         </script>
     </head>
