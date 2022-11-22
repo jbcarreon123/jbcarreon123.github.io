@@ -45,7 +45,7 @@
                     <textarea id="inputbox" oninput="oninp(this.value)"></textarea>
                 </div>
                 <div class="column">
-                    <h2>Output</h2>
+                    <h2>Output</h2> Title: <c id="title">[None]</c>
                     <iframe src="about:blank" id="iframe"></iframe>
                 </div>
             </div>
@@ -66,6 +66,7 @@
                 var viewport_width = window.innerHeight;
                 document.getElementById('iframe').style = `height:${viewport_width}px;`
                 document.getElementById('inputbox').style = `height:${viewport_width}px;`
+				document.getElementById('title').innerHTML = document.getElementById('iframe').contentWindow.contentDocument.title
             }, 50)
             
             document.getElementById('inputbox').addEventListener('keydown', function(e) {
