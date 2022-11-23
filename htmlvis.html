@@ -41,11 +41,12 @@
 
             <div class="row">
                 <div class="column">
-                    <h2>Input</h2>
+                    <h2>Input</h2><br><br><br>
                     <textarea id="inputbox" oninput="oninp(this.value)"></textarea>
                 </div>
                 <div class="column">
-                    <h2>Output</h2> Title: <c id="title">[None]</c>
+                    <h2>Output</h2>
+					URL: <div id="param"></div><br>
                     <iframe src="about:blank" id="iframe"></iframe>
                 </div>
             </div>
@@ -66,24 +67,19 @@
                 var viewport_width = window.innerHeight;
                 document.getElementById('iframe').style = `height:${viewport_width}px;`
                 document.getElementById('inputbox').style = `height:${viewport_width}px;`
-				document.getElementById('title').innerHTML = document.getElementById('iframe').contentWindow.contentDocument.title
+				document.getElementById('param').innerHTML = `<code>${escapeHTML(document.getElementById('iframe').src)}</code>`
             }, 50)
-            
-            document.getElementById('inputbox').addEventListener('keydown', function(e) {
-              if (e.key == 'Tab') {
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
+			
+			var escape = document.createElement('textarea');
+			function escapeHTML(html) {
+				escape.textContent = html;
+				return escape.innerHTML;
+			}
 
-                // set textarea value to: text before caret + tab + text after caret
-                this.value = this.value.substring(0, start) +
-                  "\t" + this.value.substring(end);
-
-                // put caret at right position again
-                this.selectionStart =
-                  this.selectionEnd = start + 1;
-              }
-            });
+			function unescapeHTML(html) {
+				escape.innerHTML = html;
+				return escape.textContent;
+			}
         </script>
     </head>
 </html>
