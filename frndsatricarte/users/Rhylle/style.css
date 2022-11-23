@@ -1,0 +1,173 @@
+@font-face {
+    font-family: Oswald;
+    src: url(../../media/Oswald.ttf);
+}
+
+@font-face {
+    font-family: CascadiaCode;
+    src: url(../../media/CascadiaCode.ttf);
+}
+
+button {
+    border-color: #2F3136 !important;
+    background-color: #2F3136 !important;
+    border-radius: 10px;
+    height: auto !important;
+    width: auto;
+    color: white;
+    flex: 75% !important;
+    text-align: center;
+}
+
+button:hover {
+    background-color:#36393F !important;
+}
+
+* {
+    font-family: Geneva, Tahoma, sans-serif;
+}
+
+.top {
+    font-family: Oswald, sans-serif;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.topdiv {
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.column {
+    margin: 15px;
+    margin-top: 0;
+}
+
+.image img {
+    border-radius: 320px !important;
+    border-color: white;
+}
+
+.post {
+    background-color: #37373D;
+    border-radius: 10px;
+    text-align: left;
+    /*margin: 15px;*/
+    padding: 15px;
+}
+
+a {
+    color: white;
+}
+
+a:visited {
+    color: lightcyan;
+}
+
+a:hover {
+    color:blanchedalmond
+}
+
+.post .title {
+    font-size: 20px;
+}
+
+.post .content {
+    font-size: 14px;
+    margin: 0;
+    padding: 5px;
+}
+
+.post .img {
+    display: flex;
+    justify-content: center;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+}
+
+.svg {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(157deg) brightness(108%) contrast(105%);
+}
+
+.footer {
+    background-color: rgb(114, 92, 92);
+    color: white;
+    text-align: center;
+    width : 100%;
+    display: block;
+}
+
+footer {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.comicsans {
+    font-family: 'Comic Sans MS', sans-serif !important;
+    line-height: 50% !important;
+}
+
+.box {
+    background-color: #37373D;
+    border-radius: 10px;
+    text-align: left;
+    margin: 15px;
+}
+
+.container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+    height: auto;
+}
+
+.cantconnect {
+    text-align: center;
+    height: 56.25% !important;
+}
+  
+  /* Then style the iframe to fit in the container div with full height and width */
+.ytvid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* .row {
+    display: flex;
+}
+  
+.column {
+    flex: 50% !important;
+    font-family: Geneva, Verdana, sans-serif;
+    margin: 25px 25px 25px 25px;
+    line-height: normal !important;
+} */
+
+.content {
+    margin: 15px;
+}
+
+.left {
+    background: #252526;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.dynamic {
+    font-weight: bold;
+    font-family: inherit;
+}
+
+h1 {
+    font-size: 84px;
+}
