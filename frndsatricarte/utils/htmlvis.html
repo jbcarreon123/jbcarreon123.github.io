@@ -46,15 +46,15 @@
                 </div>
                 <div class="column">
                     <h2>Output</h2>
-					URL: <div id="param"></div><br>
-                    <iframe src="about:blank" id="iframe"></iframe>
+					<div id="param"></div><br>
+                    <iframe src="data:text/html;charset=utf-8," id="iframe"></iframe>
                 </div>
             </div>
         </body>
         <script>
             function oninp(value) {
                 let iframe = document.getElementById('iframe')
-                iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(value);
+                iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(value) + encodeURI('<scr'+'ipt>parent.postMessage(document.title, "*")</scr'+'ipt>')
             }
 
             function encodeURI(html) {
@@ -62,13 +62,11 @@
                 html = html.replace("\n", "")
                 return html
             }
-
-            setInterval(function () {
-                var viewport_width = window.innerHeight;
-                document.getElementById('iframe').style = `height:${viewport_width}px;`
-                document.getElementById('inputbox').style = `height:${viewport_width}px;`
-				document.getElementById('param').innerHTML = `<code>${escapeHTML(document.getElementById('iframe').src)}</code>`
-            }, 50)
+			
+			window.addEventListener('message', event => {
+				// IMPORTANT: check the origin of the data!
+				document.getElementById('param').innerHTML = "Title: <code>" + escapeHTML(event.data) + "</code>"
+			});
 			
 			var escape = document.createElement('textarea');
 			function escapeHTML(html) {
@@ -79,7 +77,13 @@
 			function unescapeHTML(html) {
 				escape.innerHTML = html;
 				return escape.textContent;
-			}
-        </script>
+			}	
+
+			setInterval(function () {
+                var viewport_width = window.innerHeight;
+                document.getElementById('iframe').style = `height:${viewport_width}px;`
+                document.getElementById('inputbox').style = `height:${viewport_width}px;`
+            }, 50)
+		</script>
     </head>
 </html>
