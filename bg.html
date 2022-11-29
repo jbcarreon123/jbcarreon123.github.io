@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<body>
+<div id="my-peak-meter" style="width: 5em; height: 20em; margin: 1em 0;">
+</div>
+<audio id="my-audio" crossorigin="anonymous" x-ref="audio" preload="metadata" controls="controls">
+    <source src="Dizzy.mp3" type="audio/mpeg">
+</audio>
+</body>
+<script src="https://esonderegger.github.io/web-audio-peak-meter/web-audio-peak-meter-2.0.0.min.js"></script>
+<script>
+  var myMeterElement = document.getElementById('my-peak-meter');
+  var myAudio = document.getElementById('my-audio');
+  var audioCtx = new window.AudioContext();
+  var sourceNode = audioCtx.createMediaElementSource(myAudio);
+  myAudio.crossOrigin = "anonymous";
+  sourceNode.connect(audioCtx.destination);
+  var meterNode = webAudioPeakMeter.createMeterNode(sourceNode, audioCtx);
+  webAudioPeakMeter.createMeter(myMeterElement, meterNode, {});
+  myAudio.addEventListener('play', function() {
+    audioCtx.resume();
+  });
+</script>
