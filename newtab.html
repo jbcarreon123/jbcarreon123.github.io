@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>New Tab</title>
+<style>
+body {
+background-image: url("https://i.imgur.com/gBxP6oJ.gif");
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center; 
+background-size: 100vw 100vh;
+}
+
+* {
+color: white !important;
+}
+
+.timedate {
+position: absolute;
+bottom:12px;
+right:3px;
+text-align: right;
+text-shadow: 3px 3px #000000;
+}
+
+.time {
+font-family: "Pixeled", sans-serif !important;
+font-size: 95px;
+line-height: 155px;
+}
+
+.date {
+font-family: "Pixel Coleco", sans-serif !important;
+font-size: 45px;
+padding-right: 15px;
+}
+
+.greet {
+font-family: "Pixel Coleco", sans-serif !important;
+
+position: absolute;
+bottom: 12px;
+left: 15px;
+text-shadow: 3px 3px #000000;
+}
+
+.greet1 {
+font-size: 45px;
+line-height: 0px;
+}
+
+.name {
+font-size: 80px;
+}
+</style>
+</head>
+<body>
+<div class="timedate">
+<div class="time"></div>
+<div class="date"></div>
+</div>
+<div class="greet">
+<div class="greet1"></div>
+<div class="name"></div>
+</div>
+</body>
+<script>
+setInterval(loop, 250);
+
+function loop() {
+const d = new Date();
+let hour = d.getHours();
+let minu = d.getMinutes();
+let day = d.getDay();
+let month = d.getMonth() + 1;
+let year = d.getFullYear();
+
+document.getElementsByClassName("time")[0].innerHTML = hour + ":" + minu;
+document.getElementsByClassName("date")[0].innerHTML = day + "/" + month + "/" + year;
+
+let greeting = "";
+
+if (hour >= 5 && hour < 12) {
+  greeting = "Good morning,";
+} else if (hour >= 12 && hour < 18) {
+  greeting = "Good afternoon,";
+} else {
+  greeting = "Good evening,";
+}
+
+document.getElementsByClassName("greet1")[0].innerHTML = greeting;
+document.getElementsByClassName("name")[0].innerHTML = "jbcarreon123!";
+
+}
+</script>
+</html>
