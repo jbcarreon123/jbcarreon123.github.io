@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<style>
+			* {
+				font-family: 'Poppins', sans-serif;
+			}
+		
+			.container {
+				display: flex;
+			}
+
+			.left-column,
+			.right-column {
+				box-sizing: border-box;
+				padding: 20px;
+				width: 50%;
+			}
+
+				/* Media query for smaller screens */
+			@media (max-width: 768px) {
+				.container {
+					flex-direction: column; /* Change to a single column layout */
+				}
+
+				.left-column,
+				.right-column {
+						width: 100%; /* Each column takes up the full width */
+				}
+			}
+			
+			:root {
+				--bg-color: #f0f0f0; /* Default light mode background color */
+				--text-color: #333;	 /* Default light mode text color */
+				--input-bg-color: #fff; /* Default light mode input background color */
+				--input-text-color: #333; /* Default light mode input text color */
+				--textarea-bg-color: #fff; /* Default light mode textarea background color */
+				--textarea-text-color: #333; /* Default light mode textarea text color */
+			}
+
+			body {
+				background-color: var(--bg-color);
+				color: var(--text-color);
+				transition: background-color 0.3s, color 0.3s;
+			}
+
+			.dark-mode {
+				--bg-color: #222; /* Dark mode background color */
+				--text-color: #fff; /* Dark mode text color */
+				--input-bg-color: #333; /* Dark mode input background color */
+				--input-text-color: #fff; /* Dark mode input text color */
+				--textarea-bg-color: #333; /* Dark mode textarea background color */
+				--textarea-text-color: #fff; /* Dark mode textarea text color */
+			}
+
+			input[type=text], input[type=number]{
+				background-color: var(--input-bg-color);
+				color: var(--input-text-color);
+				border: 1px solid #ccc;
+				margin: 10px 0;
+				width: 100%;
+				padding: 12px 20px;
+				margin: 8px 0;
+				box-sizing: border-box;
+				border-radius: 10px;
+			}
+			
+			.btnred {
+				font-family: Material Icons;
+				background-color: #e01919;
+				color: white;
+				border: 1px solid #ccc;
+				width: 17%;
+				padding: 12px 20px;
+				margin-left: 5px;
+				margin-top: 5px;
+				font-size: 15px;
+				box-sizing: border-box;
+				border-radius: 10px;
+				transition: 1s;
+			}
+			
+			.btngre {
+				font-family: Material Icons;
+				background-color: #108f25;
+				color: white;
+				border: 1px solid #ccc;
+				width: 17%;
+				margin-left: 5px;
+				margin-top: 5px;
+				font-size: 15px;
+				padding: 12px 20px;
+				box-sizing: border-box;
+				border-radius: 10px;
+				transition: 1s;
+			}
+			
+			.btnred:hover {
+				background-color: #f25449;
+				color: black;
+			}
+			
+			.btngre:hover {
+				background-color: #22e342;
+				color: black;
+			}
+			
+			.id {
+				width: 81% !important;
+			}
+			
+			#texta {
+				width: 100%;
+				height: 100%;
+				font-family: 'Inconsolata', monospace;
+				background-color: var(--textarea-bg-color) !important;
+				color: var(--textarea-text-color) !important;
+				border: 1px solid #ccc;
+				margin: 10px 0;
+				padding: 12px 20px;
+				box-sizing: border-box;
+				border-radius: 10px;
+			}
+
+			.dark-mode {
+				--bg-color: #222; /* Dark mode background color */
+				--text-color: #fff; /* Dark mode text color */
+			}
+
+			.dark-mode-switch {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+			}
+
+			.dark-mode-switch label {
+				display: block;
+				width: 40px;
+				height: 20px;
+				border-radius: 20px;
+				background-color: #ddd;
+				position: relative;
+				cursor: pointer;
+			}
+
+			.dark-mode-switch label:after {
+				content: "";
+				position: absolute;
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				top: 2px;
+				left: 2px;
+				background-color: #fff;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+				transition: transform 0.3s;
+			}
+
+			input[type="checkbox"] {
+				display: none;
+			}
+
+			input[type="checkbox"]:checked + label {
+				background-color: #4caf50; /* Toggle switch background color in "checked" state */
+			}
+
+			input[type="checkbox"]:checked + label:after {
+				transform: translateX(20px);
+			}
+		</style>
+		<center>
+			<h1>
+				YTSCTD JSON Generator
+			</h1>
+		</center>
+		<div class="dark-mode-switch">
+			Light/Dark
+			<center>
+				<input type="checkbox" id="toggle" />
+				<label for="toggle"></label>
+			</center>
+		</div>
+		<div class="container">
+			<div class="left-column">
+				<input type="text" id="apikey" placeholder="Youtube API Key" />
+				<input type="text" id="apiname" placeholder="Youtube API Name" />
+				<input type="text" id="dcwebhookurl" placeholder="Discord Webhook URL" />
+				<input type="text" id="csvdest" placeholder="CSV File Destination (optional)" />
+				<input type="text" id="fappendcsv" placeholder="Force Append CSV (leave blank for false, optional)" />
+				<input type="number" id="interval" placeholder="Update Interval" />
+				<input type="number" id="msgid" placeholder="Message ID Override" />
+				
+				<div id="inpchnls">
+					<input type="text" id="inp0000" class="id" placeholder="Youtube Channel ID"><button class="btngre" onclick="addytchnl()">add</button>
+				</div>
+			</div>
+			<div class="right-column">
+				<textarea id="texta">
+{
+	"YtApiKey": "[INSERT API KEY HERE]",
+	"YtApiName": "[INSERT APP NAME HERE]",
+	"DiscordWebhookToken": "[INSERT WEBHOOK URL HERE]",
+	"Channels": "[CHANNEL 1 ID HERE],[CHANNEL 2 ID HERE]",
+	"UpdateInterval": 300,
+	"WebhookMessageIdOverride": 0 
+}
+				</textarea>
+			</div>
+		</div>
+	</body>
+	<script>
+		function addytchnl() {
+			const rnum = getRandomFourDigitNumber();
+		
+			var inputElement = document.createElement("input");
+			inputElement.type = "text"; // Set the type attribute to "text"
+			inputElement.classList.add("id");
+			inputElement.id = `inp${rnum}`;
+			inputElement.required = true;
+			inputElement.placeholder = "Youtube Channel ID";
+			
+			var inputButton = document.createElement("button");
+			inputButton.classList.add("btnred");
+			inputButton.id = `but${rnum}`;
+			inputButton.textContent = "remove";
+			inputButton.onclick = function() {
+				document.getElementById(`inp${rnum}`).remove();
+				document.getElementById(`but${rnum}`).remove();
+			};
+
+			// Step 2: Find the target <div> element
+			var targetDiv = document.getElementById("inpchnls");
+
+			// Step 3: Append the input element to the target <div>
+			targetDiv.appendChild(inputElement);		
+			targetDiv.appendChild(inputButton);						
+			
+			document.querySelectorAll("input").forEach((input) => {
+				input.addEventListener("input", generateJSON);
+			});
+		}
+		
+		function generateJSON() {
+			const apiKey = document.getElementById("apikey").value;
+			const apiName = document.getElementById("apiname").value;
+			const webhookUrl = document.getElementById("dcwebhookurl").value;
+			const csvdest = document.getElementById("csvdest").value;
+			const fappendcsv = Boolean(document.getElementById("fappendcsv").value);
+			const interval = document.getElementById("interval").value;
+			const messageId = document.getElementById("msgid").value;
+
+			const channelInputs = document.querySelectorAll("#inpchnls input");
+			let channels = "";
+			channelInputs.forEach((input, index) => {
+			channels += input.value;
+			if (index < channelInputs.length - 1) {
+				channels += ",";
+			}
+			});
+
+			const jsonData = {
+			YtApiKey: apiKey,
+			YtApiName: apiName,
+			DiscordWebhookToken: webhookUrl,
+			Channels: channels,
+			UpdateInterval: interval,
+			WebhookMessageIdOverride: messageId,
+			CSVFileDestination: csvdest,
+			ForceAppendCSV: fappendcsv
+			};
+
+			const jsonString = JSON.stringify(jsonData, null, 2);
+			document.getElementById("texta").value = jsonString;
+		}
+		
+		function getRandomFourDigitNumber() {
+			// Generate a random number between 1000 and 9999 (inclusive)
+			const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+			return randomNumber;
+		}
+	
+		document.addEventListener("DOMContentLoaded", function () {
+			const toggleSwitch = document.querySelector("#toggle");
+
+			const darkModeEnabled = JSON.parse(localStorage.getItem("darkModeEnabled"));
+
+			if (darkModeEnabled) {
+				toggleSwitch.checked = true;
+				toggleDarkMode(true);
+			}
+
+			toggleSwitch.addEventListener("change", function () {
+				toggleDarkMode(this.checked);
+			});
+
+			function toggleDarkMode(isDarkMode) {
+				if (isDarkMode) {
+					document.body.classList.add("dark-mode");
+				} else {
+					document.body.classList.remove("dark-mode");
+				}
+
+				localStorage.setItem("darkModeEnabled", isDarkMode);
+			}
+		});
+		
+		document.querySelectorAll("input").forEach((input) => {
+			input.addEventListener("input", generateJSON);
+		});
+	</script>
+</html>
