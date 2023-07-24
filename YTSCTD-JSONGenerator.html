@@ -189,27 +189,36 @@
 		</div>
 		<div class="container">
 			<div class="left-column">
+				<input type="text" id="mode" placeholder="Mode (BASIC, SIMPLE, or VERBOSE)" value="SIMPLE" list="emode" />
+				<datalist id="emode">
+					<option value="BASIC">
+					<option value="SIMPLE">
+					<option value="VERBOSE">
+				</datalist>
 				<input type="text" id="apikey" placeholder="Youtube API Key" />
 				<input type="text" id="apiname" placeholder="Youtube API Name" />
 				<input type="text" id="dcwebhookurl" placeholder="Discord Webhook URL" />
 				<input type="text" id="csvdest" placeholder="CSV File Destination (optional)" />
 				<input type="text" id="fappendcsv" placeholder="Force Append CSV (leave blank for false, optional)" />
-				<input type="number" id="interval" placeholder="Update Interval" />
-				<input type="number" id="msgid" placeholder="Message ID Override" />
+				<input type="number" id="interval" placeholder="Update Interval" value="300" />
+				<input type="number" id="msgid" placeholder="Message ID Override" value="0" />
 				
 				<div id="inpchnls">
 					<input type="text" id="inp0000" class="id" placeholder="Youtube Channel ID"><button class="btngre" onclick="addytchnl()">add</button>
 				</div>
 			</div>
 			<div class="right-column">
-				<textarea id="texta">
+				<textarea id="texta" readonly>
 {
-	"YtApiKey": "[INSERT API KEY HERE]",
-	"YtApiName": "[INSERT APP NAME HERE]",
-	"DiscordWebhookToken": "[INSERT WEBHOOK URL HERE]",
-	"Channels": "[CHANNEL 1 ID HERE],[CHANNEL 2 ID HERE]",
-	"UpdateInterval": 300,
-	"WebhookMessageIdOverride": 0 
+	"Mode": "SIMPLE",
+	"YtApiKey": "",
+	"YtApiName": "",
+	"DiscordWebhookToken": "",
+	"Channels": "",
+	"UpdateInterval": "300",
+	"WebhookMessageIdOverride": "0",
+	"CSVFileDestination": "",
+	"ForceAppendCSV": false
 }
 				</textarea>
 			</div>
@@ -248,6 +257,7 @@
 		}
 		
 		function generateJSON() {
+			const mode = document.getElementById("mode").value;
 			const apiKey = document.getElementById("apikey").value;
 			const apiName = document.getElementById("apiname").value;
 			const webhookUrl = document.getElementById("dcwebhookurl").value;
@@ -266,6 +276,7 @@
 			});
 
 			const jsonData = {
+			Mode: mode,
 			YtApiKey: apiKey,
 			YtApiName: apiName,
 			DiscordWebhookToken: webhookUrl,
