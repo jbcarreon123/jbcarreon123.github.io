@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Redirect Page</title>
+</head>
+<body>
+  <script>
+    // Function to extract query parameter from URL
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Check if 'url' parameter is present in the URL
+    const targetUrl = getQueryParam('url');
+    if (targetUrl) {
+      // Redirect to the specified URL
+      window.location.href = 'https://' + targetUrl;
+    } else {
+      // If no 'url' parameter, display a message
+      document.body.innerHTML = 'No target URL specified.';
+    }
+  </script>
+</body>
+</html>
