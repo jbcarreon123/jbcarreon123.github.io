@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@100..900&family=Lora:ital,wght@1,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .time {
+            font-size: 165px;
+            font-weight: 600;
+        }
+
+        .date {
+            font-size: 45px;
+            font-weight: 450;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="center time" id="time">09:53:00 AM</div>
+        <div class="center date" id="date">Monday, Feburary 19, 2024</div>
+    </div>
+</body>
+<script>
+    function updateDateTime() {
+        var now = new Date();
+        var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
+        var date = now.toLocaleDateString(undefined, dateOptions);
+        var time = now.toLocaleTimeString(undefined, timeOptions);
+        document.getElementById("time").innerHTML = time;
+        document.getElementById("date").innerHTML = date;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+</script>
+</html>
