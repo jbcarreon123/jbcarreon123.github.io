@@ -24,12 +24,12 @@
         }
 
         .time {
-            font-size: 165px;
+            font-size: 200px;
             font-weight: 600;
         }
 
         .date {
-            font-size: 45px;
+            font-size: 65px;
             font-weight: 450;
         }
 
@@ -61,5 +61,18 @@
 
     setInterval(updateDateTime, 1000);
     updateDateTime();
+
+    // add service worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registered: ', registration);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed: ', error);
+                });
+        });
+    }
 </script>
 </html>
