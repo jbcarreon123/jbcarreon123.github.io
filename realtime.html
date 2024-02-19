@@ -43,7 +43,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="fullscreen-element">
         <div class="center time" id="time">09:53:00 AM</div>
         <div class="center date" id="date">Monday, Feburary 19, 2024</div>
     </div>
@@ -74,5 +74,20 @@
                 });
         });
     }
+
+    // full screen
+    const fullscreenElement = document.getElementById('fullscreen-element');
+
+    fullscreenElement.addEventListener('click', function() {
+        if (fullscreenElement.requestFullscreen) {
+            fullscreenElement.requestFullscreen();
+        } else if (fullscreenElement.mozRequestFullScreen) { /* Firefox */
+            fullscreenElement.mozRequestFullScreen();
+        } else if (fullscreenElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            fullscreenElement.webkitRequestFullscreen();
+        } else if (fullscreenElement.msRequestFullscreen) { /* IE/Edge */
+            fullscreenElement.msRequestFullscreen();
+        }
+    });
 </script>
 </html>
