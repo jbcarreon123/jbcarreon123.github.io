@@ -1,0 +1,54 @@
+---
+import {version} from '../../package.json';
+---
+
+<script>
+    
+</script>
+
+
+<style lang="postcss">
+    header h1 {
+        font-size: 5em;
+        font-weight: 600;
+    }
+
+    .container {
+        display: grid;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        gap: 6px;
+    }
+
+    div#leftbar > * {
+        border-right: 1px solid var(--text);
+    }
+
+    div#leftbar > *:last-child {
+        border-right: none;
+    }
+
+    nav:not(:has(a:hover)) a.current, nav a:hover {
+        background-color: var(--base);
+    }
+
+    nav a {
+        padding: 6px 12px ;
+        margin: 2px 0;
+    }
+
+    header {
+        width: max-content;
+        height:max-content;
+    }
+
+    .leftbar-sdw {
+        writing-mode: vertical-rl;
+        text-orientation: sideways;
+        rotate: 180deg;
+        display:flex;
+        justify-content: space-between;
+        margin: 12px;
+    }
+</style>

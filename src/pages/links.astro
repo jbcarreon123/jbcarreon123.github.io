@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Buttons from '../components/site-buttons.svelte'
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout title="Links" id="links">
+    <h1>Links</h1>
+    <p>Links to other sites, webrings, and more!</p>
+
+    <h2>Buttons</h2>
+    <Buttons />
+
+    <h2>Webrings</h2>
+    <div id="webrings" class="flex flex-auto flex-wrap gap-4 w-full">
+        <div id='FCWL' class="pb-4">
+            <script type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/onionring-variables.js"></script>
+            <script type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/widgets/philippines.js"></script>
+        </div>
+    
+        <div class="text-left max-w-md">
+            <div>
+                <a href="https://webring.bucketfish.me/" class="py-4" target="_blank">bucket webring!</a>
+                <div class="flex flex-row w-full text-center pb-4">
+                    <a class="grow" href="https://webring.bucketfish.me/redirect.html?to=prev&name=jbcarreon123" >&lt; prev</a>
+                    <a class="grow" href="https://webring.bucketfish.me/redirect.html?to=random&name=jbcarreon123" >rand</a>
+                    <a class="grow" href="https://webring.bucketfish.me/redirect.html?to=next&name=jbcarreon123" >next &gt;</a>
+                </div>
+            </div>
+    
+            <div>
+                <a href="https://baccyflap.com/noai/?prv&s=jcr" target="_top">« prev</a> |
+                <a href="https://baccyflap.com/noai" target="_blank">no ai webring</a>
+                <a style="font-size:60%" href="https://baccyflap.com/noai/?rnd" target="_top">(random)</a> |
+                <a href="https://baccyflap.com/noai/?nxt&s=jcr" target="_top">next »</a>
+            </div> 
+        
+            <div>
+                <script src="https://astracelestine.nekoweb.org/webring/tropical-rice-bowl/widgettext.js"></script>
+            </div>
+        </div>
+        
+    
+        <webring-container>
+            <config key="type" value="gruvbox-dark"></config>
+            <config key="font" value="Overused Grotesk, Arial, sans-serif"></config>
+            <config key="fill" value="false"></config>
+        
+            <script src="https://palette.nekoweb.org/webring.js"></script>
+        </webring-container>
+    
+        <div>
+            <script defer src="https://mechagic.party/1stylescripts/gitgudring.js"></script>
+        </div>
+    
+        <div id='apartment-webring'>
+            <script type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-variables.js"></script>
+            <script type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-widget.js"></script>
+        </div> 
+    
+        <div id="rice-ring">
+            <link rel="stylesheet" href="https://terakun.nekoweb.org/ricepaddy/webring.css"> 
+            <script type="text/javascript" src="https://terakun.nekoweb.org/ricepaddy/webring-variables.js"></script>
+            <script type="text/javascript" src="https://terakun.nekoweb.org/ricepaddy/webring-widget.js"></script>
+        </div>
+    
+        <div id='focusfirst-webring'>
+            <script type="text/javascript" src="https://www.beepbird.net/webring/onionring-variables.js"></script>
+            <script type="text/javascript" src="https://www.beepbird.net/webring/onionring-widget.js"></script>
+            <noscript><a href='https://www.beepbird.net/index.html'><img src="https://www.beepbird.net/webring/focusfirst.png" alt="Focus First Index"></a></noscript>
+        </div>
+    </div>
+</Layout>

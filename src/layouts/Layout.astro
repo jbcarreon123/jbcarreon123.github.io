@@ -1,0 +1,170 @@
+---
+import Leftbar from '../components/Leftbar.astro'
+import '../styles/global.css' 
+import { ClientRouter } from "astro:transitions";
+import { version } from '../../package.json';
+
+const { title, id } = Astro.props;
+---
+
+<script>
+	Array.prototype.sample = function(){
+        return this[Math.floor(Math.random()*this.length)];
+    }
+
+	document.addEventListener("astro:page-load", () => {
+		setTimeout(() => {
+			document.querySelector('.motd').textContent = [
+				'ctrl + c and ctrl + v are the most used shortcuts',
+				'hello, we\'re trying to reach you for your site\'s extended warranty',
+				'nekonekoweb',
+				'hmm',
+				'your resident helper',
+				'made in astro and bun'
+			].sample();
+		}, 250)
+
+		document.querySelectorAll('.title').forEach((el) => el.textContent = document.title);
+
+		let el = document.querySelector('nav')?.dataset.activePage;
+		document.querySelectorAll('nav a').forEach((e) => {
+			if (e.id === el) {
+				e.classList.add('active')
+			} else {
+				e.classList.remove('active')
+			}
+		})
+	});
+</script>
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title? title : "jb's site"}</title>
+		<script src="view-transitions-polyfill"></script>
+		<!-- ^^ polyfill -->
+		<ClientRouter />
+	</head>
+	<body class="jcolor">
+		<header>
+			<label for="nav-visible" class="a">Menu</label>
+			<input type="checkbox" id="nav-visible" />
+			<p class="title">{title? title : "jb's site"}</p>
+		</header>
+		<div class="container">
+			<aside>
+				<nav data-active-page={id}>
+					<a id="index" href="/">Home</a>
+					<a id="links" href="/links">Links</a>
+				</nav>
+				<div>
+					<h1 class="title">{title? title : "jb's site"}</h1>
+					<p class="sec motd">your resident helper</p>
+				</div>
+			</aside>
+			<main>
+				<div id="content">
+					<slot />
+				</div>
+				<footer>
+					<div class="sec small">
+						<p>jbsite4 {version} © 2025 jbcarreon123. All rights reserved.</p>
+						<p>Content are licensed under CC BY-SA 4.0 unless specified.</p>
+						<p>Made in Astro and Bun, hosted in Nekoweb</p>
+						<p><a href="https://maxpixels.moe/manifesto/">Copying is an act of theft, while taking inspiration is the true act of love.</a></p>
+					</div>
+					<div class="right">
+						<a target="_blank" rel="noopener" class="w-fit shrink-0" href="https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL">
+							<img src="/imgs/buttons/smil.svg" alt="Enhanced with SMIL :D" title="Enhanced with SMIL :D" />
+						</a>
+						<a target="_blank" rel="noopener" class="w-fit shrink-0" href="https://team.indieseas.net">
+							<img
+								src="/imgs/buttons/indiefellas.svg"
+								alt="Indiefellas"
+								title="indieweb devs with no idea what they're doing"
+							/>
+						</a>
+						<a target="_blank" rel="noopener" class="w-fit shrink-0" href="https://nekoweb.org/"
+							><img
+								src="https://nekoweb.org/assets/buttons/button5.gif"
+								loading="lazy"
+								alt="Nekoweb"
+								title="Nekoweb (button by maxpixels)"
+							/></a
+						>
+						<a href="https://districts.nekoweb.org/" target="_blank"><img alt="Nekoweb Districts" title="Nekoweb Districts" src="https://districts.nekoweb.org/img/districts002.png"></a>
+						<a target="_blank" class="w-fit shrink-0" href="https://kalechips.net/responsive/index">
+							<img
+								src="/imgs/buttons/responsive-web-directory.png"
+								alt="Responsive Web Directory"
+								title="Responsive Web Directory"
+							/>
+						</a>
+						<img src="/imgs/buttons/mobilefriendly.png" alt="Mobile friendly" title="This site is mobile friendly!" />
+					</div>
+				</footer>
+			</main>	
+		</div>
+	</body>
+</html>
+
+<style>
+	body {
+		display: flex;
+		flex-direction: column;
+	}
+
+	header {
+		display: flex;
+		justify-content: space-between;
+		position: sticky;
+		padding: 6px;
+		background: var(--acc);
+		justify-self: start;
+	}
+
+	main {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 24px;
+	}
+
+	footer {
+		border-top: 1px solid var(--acc);
+		padding-top: 4px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	footer .right {
+		text-align: right;
+		width: 300px;
+	}
+
+	.motd {
+		height: 300px;
+		writing-mode: vertical-rl;
+		font-size: 0.85em;
+	}
+
+	.small {
+		font-size: 0.85em;
+	}
+
+	@media (width > 640px) {
+		header {
+			display: none;
+		}		
+	}
+
+	@media (width <= 800px) {
+		footer .right {
+			display: none;
+		}
+	}
+</style>

@@ -1,0 +1,21 @@
+{
+  "name": "jbsite4",
+  "type": "module",
+  "version": "4.0.0-alpha.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^7.0.9",
+    "@indiefellas/astro-adapter-nekoweb": "../astro-adapter-nekoweb/",
+    "@tailwindcss/vite": "^4.0.17",
+    "astro": "^5.5.5",
+    "svelte": "^5.25.10",
+    "tailwindcss": "^4.0.17",
+    "typescript": "^5.8.3",
+    "view-transitions-polyfill": "^1.0.4"
+  }
+}
