@@ -29,5 +29,7 @@ export default defineConfig({
     service: passthroughImageService()
   },
 
-  integrations: [svelte()]
+  integrations: [svelte()],
+
+  trailingSlash: 'always'
 });

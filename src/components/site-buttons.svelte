@@ -171,7 +171,7 @@
 	<!-- <a href="https://xan.lol"><img src="https://xan.lol/button.avif" ></a> -->
 	<a href="https://toasty.place/" target="_blank" rel="noopener"
 		><img
-			src="https://toastofthesewn.nekoweb.org/images/buttons/pagebutton1.gif"
+			src="https://toastofthesewn.nekoweb.org/images/buttons/sitebutton2.png"
 			loading="lazy"
 			title="ToastofTheSewn"
 			alt="ToastofTheSewn"

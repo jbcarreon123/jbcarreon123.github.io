@@ -52,14 +52,15 @@ const { title, id } = Astro.props;
 	<body class="jcolor">
 		<header>
 			<label for="nav-visible" class="a">Menu</label>
-			<input type="checkbox" id="nav-visible" />
 			<p class="title">{title? title : "jb's site"}</p>
+			<input type="checkbox" id="nav-visible" />
 		</header>
 		<div class="container">
 			<aside>
 				<nav data-active-page={id}>
 					<a id="index" href="/">Home</a>
-					<a id="links" href="/links">Links</a>
+					<a id="links" href="/links/">Links</a>
+					<a id="posts" href="/posts/">Posts</a>
 				</nav>
 				<div>
 					<h1 class="title">{title? title : "jb's site"}</h1>
@@ -71,11 +72,11 @@ const { title, id } = Astro.props;
 					<slot />
 				</div>
 				<footer>
-					<div class="sec small">
-						<p>jbsite4 {version} © 2025 jbcarreon123. All rights reserved.</p>
-						<p>Content are licensed under CC BY-SA 4.0 unless specified.</p>
-						<p>Made in Astro and Bun, hosted in Nekoweb</p>
-						<p><a href="https://maxpixels.moe/manifesto/">Copying is an act of theft, while taking inspiration is the true act of love.</a></p>
+					<div class="sec">
+						<p class="small">jbsite4 {version} © 2025 jbcarreon123. All rights reserved.</p>
+						<p class="small">Content are licensed under CC BY-SA 4.0 unless specified.</p>
+						<p class="small">Made in Astro and Bun, hosted in Nekoweb</p>
+						<p class="small"><a href="https://maxpixels.moe/manifesto/">Copying is an act of theft, while taking inspiration is the true act of love.</a></p>
 					</div>
 					<div class="right">
 						<a target="_blank" rel="noopener" class="w-fit shrink-0" href="https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL">
@@ -120,11 +121,24 @@ const { title, id } = Astro.props;
 
 	header {
 		display: flex;
-		justify-content: space-between;
 		position: sticky;
 		padding: 6px;
+		gap: 6px;
 		background: var(--acc);
 		justify-self: start;
+	}
+
+	header > * {
+		flex-grow: 1;
+  		flex-basis: 0;
+	}
+
+	header > p {
+		text-align: center;
+		text-wrap-mode: nowrap;
+		overflow: none;
+		text-overflow: ellipsis;
+		padding: 0px;
 	}
 
 	main {
@@ -132,6 +146,7 @@ const { title, id } = Astro.props;
 		flex-direction: column;
 		justify-content: space-between;
 		gap: 24px;
+		padding: 0 12px;
 	}
 
 	footer {
@@ -147,13 +162,10 @@ const { title, id } = Astro.props;
 	}
 
 	.motd {
-		height: 300px;
 		writing-mode: vertical-rl;
 		font-size: 0.85em;
-	}
-
-	.small {
-		font-size: 0.85em;
+		padding-right: 6px;
+  		padding-top: 14px;
 	}
 
 	@media (width > 640px) {

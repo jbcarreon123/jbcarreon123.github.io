@@ -1,0 +1,17 @@
+blockquote {
+    border-left: 3px solid var(--acc);
+    padding: 3px;
+    padding-left: 12px;
+}
+
+p:not(.small) {
+    padding: 6px 0;
+}
+
+ul, li {
+    margin-left: 8px;
+}
+
+.post-title {
+    font-size: 3em;
+}

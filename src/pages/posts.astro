@@ -1,0 +1,63 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const posts = Object.values(import.meta.glob('./posts/**/*.md', { eager: true }));
+
+const postSorted = posts.sort((a, b) => {
+    const dateA = new Date(a.frontmatter.published);
+    const dateB = new Date(b.frontmatter.published);
+    return dateA.getTime() - dateB.getTime();
+}).reverse()
+---
+
+<Layout title="jb's posts" id="posts">
+<h1>Posts</h1>
+<p>Some posts that JB did</p>
+
+<div class="post-container">
+    {
+        postSorted.map((val) => <a href={val.url}>
+            <div class="post">
+                <h2>{val.frontmatter.title}</h2>
+                <p>{val.frontmatter.description}</p>
+            </div>
+        </a>)
+    }
+</div>
+</Layout>
+
+<style>
+    .post-container {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+        gap: 6px;
+    }
+
+    .post {
+        padding: 0 6px;
+        height: 150px;
+        background: var(--acc);
+    }
+
+    .post h2 {
+        text-wrap-mode: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .post:hover, .post *:hover {
+        background: var(--altbg);
+    }
+
+    @media (width <= 940px) {
+        .post-container {
+            grid-template-columns: repeat(2, minmax(200px, 1fr));
+        }
+    }
+
+    @media (width <= 640px) {
+        .post-container {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+</style>

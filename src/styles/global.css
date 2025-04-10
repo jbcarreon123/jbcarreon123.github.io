@@ -3,22 +3,25 @@
     padding: initial;
     box-sizing: content-box;
     transition: all 100ms;
+    text-wrap: wrap;
+    text-justify: unset;
 }
 
 body {
     font-family: Inter, sans-serif;
-    background-color: var(--bg);
+    background-color: var(--altbg);
     color: var(--text);
     width: 100%;
     height: 100%;
+    font-size: 1.125rem;
 }
 
 .container {
-    padding: 0 12px;
+    background-color: var(--bg);
     display: flex;
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
-    gap: 12px;
+    gap: 6px;
 }
 
 @layer transitions, theme;
@@ -31,6 +34,7 @@ body {
 @layer theme {
     .jcolor {
         --bg: #212529;
+        --altbg: #1d1f20;
         --acc: #343a40;
         --text: #f1f3f5;
         --sec: #ced4da;
@@ -75,28 +79,8 @@ body {
         300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
-@keyframes slide-from-top {
-    from {
-        transform: translateY(-60px);
-    }
-}
-
-@keyframes slide-to-down {
-    to {
-        transform: translateY(60px);
-    }
-}
-
-::view-transition-old(div) {
-    animation:
-        90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-down;
-}
-
-::view-transition-new(div) {
-    animation:
-        210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-top;
+img {
+    max-width: 500px;
 }
 
 aside nav {
@@ -105,9 +89,18 @@ aside nav {
     width: 125px;
 }
 
+.small {
+    font-size: 0.85em;
+    padding: 0 !important;
+}
+
 aside h1 {
     font-size: 3.5em;
     font-weight: 600;
+    text-wrap-mode: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 700px;
 }
 
 aside div p {
@@ -120,15 +113,16 @@ aside div {
     transform: rotate(180deg);
     text-align: start;
     align-content: end;
-    width: 100%;
+    padding-left: 12px;
 }
 
 aside nav a {
     padding: 6px;
+    margin-left: 6px;
 }
 
 aside nav:not(:has(a:hover)) a.active, aside nav a:hover {
-    background-color: var(--acc);
+    background-color: var(--bg);
 }
 
 aside {
@@ -139,6 +133,7 @@ aside {
     padding: 12px 0;
     min-height: calc(100vh - 24px);
     align-items: end;
+    background-color: var(--acc);
 }
 
 main {
@@ -153,16 +148,12 @@ div#leftbar > *:last-child {
     border-right: none;
 }
 
-aside nav, header {
+aside {
     view-transition-name: aside;
 }
 
-aside div {
-    view-transition-name: div;
-}
-
 .sec {
-    color: var(--sec)
+    color: var(--sec);
 }
 
 a, .a {

@@ -1,0 +1,50 @@
+---
+import Buttons from '../assets/buttons.json';
+---
+
+<div class="btn-container">
+    {
+        Buttons.sort((a, b) => 
+            a.alt.localeCompare(b.alt)
+        ).map((btn) => <a href={btn.url}>
+            <img src={btn.imgUrl} alt={btn.alt} title={btn.title} />
+        </a>)
+    }
+</div>
+
+<style>
+	img {
+		position: relative;
+		image-rendering: pixelated;
+		z-index: 2;
+
+		width: 88px;
+		height: 31px;
+		overflow: hidden;
+	}
+
+	a :global {
+		.ff-loading-icon::before {
+			background-image: none;
+			content: "Loading";
+			overflow: hidden;
+
+			width: 88px;
+			height: 31px;
+
+			margin: 0 auto;
+		}
+	}
+
+	img:hover {
+		z-index: 5;
+		transform: scale(1.25);
+		filter: blur(0);
+	}
+
+	.btn-container:has(img:hover) img:not(:hover) {
+		z-index: 1;
+		opacity: 0.5;
+		filter: blur(2px);
+	}
+</style>
