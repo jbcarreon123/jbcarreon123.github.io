@@ -1,20 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CommentWidget from '../components/CommentWidget.svelte';
 import '../styles/post.css';
 import '../styles/comment-widget-dark.css';
 const { frontmatter } = Astro.props;
 ---
 
-<Layout title={frontmatter.title} id="posts">
+<Layout title={frontmatter.title} description={frontmatter.description} id="posts">
     <h1 class="post-title">{frontmatter.title}</h1>
     <article>
         <slot />
     </article>
-    <div is:raw>
-        <script type="text/javascript" src="/lib/purify.min.js"></script>
-        <script src="/lib/showdown.min.js"></script>
-        <script src="/lib/comment-widget.js?post={data.slug}" defer></script>
-        <div id="c_widget"></div>
-    </div>
+    <CommentWidget client:only="svelte" />
 </Layout>
-

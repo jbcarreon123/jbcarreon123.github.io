@@ -39,7 +39,7 @@ var s_commentsPerPage = 10; // The max amount of comments that can be displayed 
 var s_maxLength = 1024; // The max character length of a comment
 var s_maxLengthName = 24; // The max character length of a name
 var s_commentsOpen = true; // Change to false if you'd like to close your comment section site-wide (Turn it off on Google Forms too!)
-var s_collapsedReplies = true; // True for collapsed replies with a button, false for replies to display automatically
+var s_collapsedReplies = false; // True for collapsed replies with a button, false for replies to display automatically
 var s_longTimestamp = false; // True for a date + time, false for just the date
 var s_includeUrlParameters = false; // Makes new comment sections on pages with URL parameters when set to true (If you don't know what this does, leave it disabled)
 var s_fixRarebitIndexPage = false; // If using Rarebit, change to true to make the index page and page 1 of your webcomic have the same comment section
@@ -78,13 +78,6 @@ if (s_fixRarebitIndexPage) { s_includeUrlParameters = true }
 
 var a_commentDivs = []; // For use in other functions
 
-// Apply CSS
-var c_cssLink = document.createElement('link');
-c_cssLink.type = 'text/css';
-c_cssLink.rel = 'stylesheet';
-c_cssLink.href = s_stylePath;
-document.getElementsByTagName('head')[0].appendChild(c_cssLink);
-
 // HTML Form
 var v_mainHtml = `
     <div id="c_inputDiv">
@@ -93,23 +86,7 @@ var v_mainHtml = `
     <div id="c_container">${s_loadingText}</div>
 `;
 var v_formHtml = `
-    <h1 id="c_widgetTitle">${s_widgetTitle}</h1>
-
-    <div id="c_nameWrapper" class="c-inputWrapper">
-        <input class="c-input c-nameInput bhv max-w-full" placeholder="name *" name="entry.${s_nameId}" id="entry.${s_nameId}" type="text" maxlength="${s_maxLengthName}" required>
-    </div>
-
-    <div id="c_websiteWrapper" class="c-inputWrapper">
-        <input class="c-input c-websiteInput bhv max-w-full"  placeholder="website" name="entry.${s_websiteId}" id="entry.${s_websiteId}" type="url" pattern="https://.*">
-    </div>
-
-    <div id="c_textWrapper" class="c-inputWrapper">
-        <textarea class="c-input c-textInput bhv max-w-full"  placeholder="your comment (pls be nice, markdown is supported!) *" name="entry.${s_textId}" id="entry.${s_textId}" rows="4" cols="50"  maxlength="${s_maxLength}" required></textarea>
-    </div>
     
-    <input name="entry.${s_adminId}" class="entry-admin" id="entry.${s_adminId}" type="text" style="display:none;pointer-events: none;" value="false">
-
-    <input id="c_submitButton" name="c_submitButton" type="submit" value="${s_submitButtonLabel}" disabled>
 `;
 
 // Insert main HTML to page
@@ -601,8 +578,6 @@ function changePage(dir) {
         if (i >= v_commentMin && i < v_commentMax) { a_commentDivs[i].style.display = 'block' }
     }
 }
-
-getComments(); // Run once on page load
 
 document.addEventListener("astro:page-load", () => {
     setTimeout(() => getComments(), 1500)

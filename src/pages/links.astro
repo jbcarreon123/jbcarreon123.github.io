@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Buttons from '../components/SiteButtons.astro'
+import { Image } from 'astro:assets';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout title="Links" id="links">
+<Layout title="Links" id="links" description="other links and webrings">
     <h1>Links</h1>
     <p>Links to other sites, webrings, and more!</p>
 
@@ -62,7 +63,7 @@ import Buttons from '../components/SiteButtons.astro'
         <div id='focusfirst-webring'>
             <script type="text/javascript" src="https://www.beepbird.net/webring/onionring-variables.js"></script>
             <script type="text/javascript" src="https://www.beepbird.net/webring/onionring-widget.js"></script>
-            <noscript><a href='https://www.beepbird.net/index.html'><img src="https://www.beepbird.net/webring/focusfirst.png" alt="Focus First Index"></a></noscript>
+            <noscript><a href='https://www.beepbird.net/index.html'><Image src="https://www.beepbird.net/webring/focusfirst.png" alt="Focus First Index" width="88px" height="31px"></a></noscript>
         </div>
     </div>
 </Layout>

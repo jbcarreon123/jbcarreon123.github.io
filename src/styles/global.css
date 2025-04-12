@@ -31,6 +31,21 @@ body {
     src: url(/fonts/Inter-Variable.ttf);
 }
 
+@font-face {
+    font-family: Commit Mono;
+    src: url(/fonts/CommitMono-Variable.ttf);
+}
+
+@font-face {
+    font-family: Material Symbols;
+    src: url(/fonts/MaterialSymbols.woff2);
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
 @layer theme {
     .jcolor {
         --bg: #212529;
@@ -38,8 +53,8 @@ body {
         --acc: #343a40;
         --text: #f1f3f5;
         --sec: #ced4da;
-        --link: #91a7ff;
-        --link-hover: #bac8ff;
+        --link: #a4b6fd;
+        --link-hover: #c7d2fd;
     }
 }
 
@@ -79,6 +94,19 @@ body {
         300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
+.astro-code, code {
+    font-family: 'Commit Mono', monospace;
+    font-size: 1.125rem;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.ms {
+    font-family: 'Material Symbols', serif;
+    vertical-align: bottom;
+
+}
+
 img {
     max-width: 500px;
 }
@@ -86,7 +114,17 @@ img {
 aside nav {
     display: flex;
     flex-direction: column;
-    width: 125px;
+    width: 150px;
+}
+
+aside nav .sep {
+    font-size: 0.65em;
+    color: var(--sec);
+    padding: 0;
+    padding-top: 12px;
+    padding-bottom: 2px;
+    margin-left: 12px;
+    text-transform: uppercase;
 }
 
 .small {
@@ -101,14 +139,11 @@ aside h1 {
     text-overflow: ellipsis;
     overflow: hidden;
     max-height: 700px;
-}
-
-aside div p {
-    padding-top: 6px;
+    line-height: 1.15em;
 }
 
 aside div {
-    writing-mode: vertical-lr;
+    writing-mode: vertical-rl;
     text-orientation:sideways;
     transform: rotate(180deg);
     text-align: start;
@@ -148,6 +183,10 @@ div#leftbar > *:last-child {
     border-right: none;
 }
 
+header {
+    view-transition-name: header;
+}
+
 aside {
     view-transition-name: aside;
 }
@@ -166,10 +205,8 @@ a, .a {
 }
 
 a:hover,
-a:visited,
 a:active,
 .a:hover,
-.a:visited,
 .a:active,
 body:has(#nav-visible:checked) .a {
     color: var(--link-hover);

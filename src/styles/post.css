@@ -15,3 +15,53 @@ ul, li {
 .post-title {
     font-size: 3em;
 }
+
+article:not(.link-preview) {
+    position: relative;
+}
+
+.link-preview {
+    background-color: var(--acc);
+    padding: 0 6px;
+    margin: 6px;
+    flex-direction: row !important;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+.link-preview:hover {
+    background-color: var(--altbg);
+}
+
+.link-preview img {
+    max-width: 100px;
+    padding: 6px;
+    padding-right: 0;
+}
+
+.link-preview a {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+article h1 {
+    position: sticky;
+    top: 0px;
+    background: var(--bg);
+    z-index: 9999;
+}
+
+article h1::after {
+    content: "";
+    position: absolute;
+    display: block;
+    background: linear-gradient(to bottom, var(--bg), transparent);
+    height: 12px;
+    width: 100%;
+}
+
+@media (width <= 640px) {
+    article h1 {
+        position: static;
+    }
+}

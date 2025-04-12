@@ -141,7 +141,7 @@
         "url": "https://ethxn.xyz/",
         "title": "ethxn",
         "alt": "ethxn",
-        "imgUrl": "http://localhost:4321/imgs/buttons/ethxn-button.gif"
+        "imgUrl": "/imgs/buttons/ethxn-button.gif"
     },
     {
         "url": "https://chataigne.nekoweb.org/",
@@ -171,25 +171,25 @@
         "url": "https://libraryofgurkistan.nekoweb.org/",
         "title": "LibraryofGurkistan: HELLO MORTAL",
         "alt": "LibraryofGurkistan: HELLO MORTAL",
-        "imgUrl": "http://localhost:4321/imgs/buttons/hellomortal.png"
+        "imgUrl": "/imgs/buttons/hellomortal.png"
     },
     {
         "url": "https://ducdat0507.github.io/",
         "title": "duducat's corner on the interwebz!",
         "alt": "duducat's corner on the interwebz!",
-        "imgUrl": "http://localhost:4321/imgs/buttons/duducat.svg"
+        "imgUrl": "/imgs/buttons/duducat.svg"
     },
     {
         "url": "https://theoliveoli.nekoweb.org/",
         "title": "TheOliveOli",
         "alt": "TheOliveOli",
-        "imgUrl": "http://localhost:4321/imgs/buttons/theoliveoli.png"
+        "imgUrl": "/imgs/buttons/theoliveoli.png"
     },
     {
         "url": "https://yumeoi.skin/",
         "title": "yumeoi.skin",
         "alt": "yumeoi.skin",
-        "imgUrl": "http://localhost:4321/imgs/buttons/yumeo.gif"
+        "imgUrl": "/imgs/buttons/yumeo.gif"
     },
     {
         "url": "https://eyeorb.net/",
@@ -213,7 +213,7 @@
         "url": "https://satorikeiko.nekoweb.org/",
         "title": "Satorikeiko",
         "alt": "Satorikeiko",
-        "imgUrl": "http://localhost:4321/imgs/buttons/satorikeiko.png"
+        "imgUrl": "/imgs/buttons/satorikeiko.png"
     },
     {
         "url": "https://ceat.nekoweb.org/",
@@ -243,13 +243,13 @@
         "url": "https://nandraid.moe/",
         "title": "Randopaizer/Nandraid",
         "alt": "Randopaizer/Nandraid",
-        "imgUrl": "http://localhost:4321/imgs/buttons/nandraid.gif"
+        "imgUrl": "/imgs/buttons/nandraid.gif"
     },
     {
         "url": "https://lel.nekoweb.org/",
         "title": "lel@button",
         "alt": "lel@nekoweb button",
-        "imgUrl": "http://localhost:4321/imgs/buttons/lel@Button.png"
+        "imgUrl": "/imgs/buttons/lel@Button.png"
     },
     {
         "url": "https://strudelfatpaws.neocities.org/",
@@ -279,7 +279,7 @@
         "url": "https://tsukinio.nekoweb.org/",
         "title": "Tsukinio:: Chiikawa Edition",
         "alt": "tsukinio",
-        "imgUrl": "http://localhost:4321/imgs/buttons/tsukinio.gif"
+        "imgUrl": "/imgs/buttons/tsukinio.gif"
     },
     {
         "url": "https://medjed.nekoweb.org/",

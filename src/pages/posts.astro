@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const posts = Object.values(import.meta.glob('./posts/**/*.md', { eager: true }));
+const posts = Object.values(import.meta.glob('./posts/**/*.mdx', { eager: true }));
 
 const postSorted = posts.sort((a, b) => {
     const dateA = new Date(a.frontmatter.published);
@@ -10,9 +10,12 @@ const postSorted = posts.sort((a, b) => {
 }).reverse()
 ---
 
-<Layout title="jb's posts" id="posts">
+<Layout title="jb's posts" description="aka stuff that jb yaps about" id="posts">
 <h1>Posts</h1>
-<p>Some posts that JB did</p>
+<p class="post-desc">
+    <span>Some posts that JB did</span>
+    <span><a href="/feed.xml"><span class="ms">rss_feed</span> RSS Feed</a> - <a href="/feed.json"><span class="ms">data_object</span> JSON Feed</a></span>
+</p>
 
 <div class="post-container">
     {
@@ -24,7 +27,6 @@ const postSorted = posts.sort((a, b) => {
         </a>)
     }
 </div>
-</Layout>
 
 <style>
     .post-container {
@@ -49,15 +51,21 @@ const postSorted = posts.sort((a, b) => {
         background: var(--altbg);
     }
 
-    @media (width <= 940px) {
-        .post-container {
-            grid-template-columns: repeat(2, minmax(200px, 1fr));
-        }
+    .post-desc {
+        display: flex;
+        justify-content: space-between;
+        gap: 6px;
     }
 
     @media (width <= 640px) {
         .post-container {
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(1, minmax(100px, 1fr));
+        }
+
+        .post-desc {
+            justify-content: left;
+            flex-direction: column;
         }
     }
 </style>
+</Layout>

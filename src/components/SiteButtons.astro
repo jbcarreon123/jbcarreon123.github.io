@@ -1,5 +1,6 @@
 ---
 import Buttons from '../assets/buttons.json';
+import { Image } from 'astro:assets';
 ---
 
 <div class="btn-container">
@@ -7,7 +8,7 @@ import Buttons from '../assets/buttons.json';
         Buttons.sort((a, b) => 
             a.alt.localeCompare(b.alt)
         ).map((btn) => <a href={btn.url}>
-            <img src={btn.imgUrl} alt={btn.alt} title={btn.title} />
+            <Image src={btn.imgUrl} alt={btn.alt} title={btn.title} width="88px" height="31px" />
         </a>)
     }
 </div>

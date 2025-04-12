@@ -56,7 +56,6 @@
 /* Main */
 #c_widget {
     box-sizing: border-box;
-    height: 100%;
     overflow: auto;
     padding-top: 20px;
     background: transparent;
@@ -68,18 +67,29 @@
     
 }
 
-#c_widget button, #c_widget input[type=submit] {
+#c_widget input[type=submit] {
     padding: 4px;
     text-decoration: none;
 	text-align: center;
     background-color: var(--acc);
-    color: var(--text);
+    color: var(--link);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.125rem;
+}
+
+#c_widget button {
+    padding: 4px;
+    text-decoration: none;
+	text-align: center;
+    background-color: var(--altbg);
+    color: var(--link);
     border: none;
     font-family: 'Inter', sans-serif;
     font-size: 1.125rem;
 }
 #c_widget button:hover, #c_widget input[type=submit]:hover {
-    background-color: var(--altbg);
+    color: var(--link-hover);
 }
 #c_widget button:disabled, #c_widget input[type=submit]:disabled {opacity: 60%;}
 #c_widget button:disabled:hover, #c_widget input[type=submit]:disabled:hover {
@@ -90,7 +100,7 @@
 #c_inputDiv {
     margin-bottom: 15px;
     padding: 10px;
-    background-color: transparent;
+    background-color: var(--altbg);
     border: none;
 }
 
@@ -104,7 +114,7 @@
 }
 
 .c-inputWrapper {
-    display: block;
+    display: inline-block;
     text-align: left;
 }
 .c-input {
@@ -113,7 +123,7 @@
 	outline: none;
     margin-top: 5px;
     margin-bottom: 5px;
-    background-color: var(--altbg);
+    background-color: var(--acc);
     border: none;
     color: var(--text);
     font-family: 'Inter';
@@ -139,16 +149,16 @@
 .c-comment {
     margin-bottom: 15px;
     padding: 10px;
-    background-color: transparent; 
+    background-color: var(--acc);
 }
 .c-reply {
     display: block;
-    width: 90%;
+    width: 95%;
     margin-bottom: 10px;
     margin-left: auto;
     margin-right: 0;
     padding: 10px;
-    background-color: transparent; 
+    background-color: var(--altbg); 
 }
 .c-reply:last-child {margin-bottom: 0;}
 .c-replyContainer {
@@ -183,8 +193,12 @@
     margin: 0;
     margin-left: -10px;
     margin-right: -10px;
-    padding: 10px;
-    font-size: 16px;
+    padding: 10px !important;
+    font-size: 1.125rem;
+}
+
+.c-text p {
+    padding: 0 !important;
 }
 
 /* Pagination */
