@@ -1,3 +1,4 @@
+import rss from '@astrojs/rss';
 export async function GET(context) {
     const posts = Object.values(import.meta.glob('./posts/**/*.mdx', { eager: true }));
 
