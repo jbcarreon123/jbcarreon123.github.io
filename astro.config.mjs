@@ -7,15 +7,13 @@ import remarkToc from 'remark-toc';
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
+import { env } from 'node:process';
 // @ts-ignore
 import rehypeFigure from 'rehype-figure';
 
 import mdx from '@astrojs/mdx';
 
 import expressiveCode from 'astro-expressive-code';
-
-// @ts-ignore
-const { NEKOWEB_APIKEY, NEKOWEB_COOKIE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
@@ -37,8 +35,8 @@ export default defineConfig({
   }), svelte(), mdx()],
 
   adapter: nekoweb({
-    apiKey: NEKOWEB_APIKEY,
-    cookie: NEKOWEB_COOKIE,
+    apiKey: env.NEKOWEB_APIKEY,
+    cookie: env.NEKOWEB_COOKIE,
     folder: 'jbsite4_test'
   }),
 
