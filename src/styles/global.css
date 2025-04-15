@@ -3,7 +3,6 @@
     padding: initial;
     box-sizing: content-box;
     transition: all 100ms;
-    text-wrap: wrap;
     text-justify: unset;
     overflow-wrap: anywhere;
     scroll-behavior: smooth;
@@ -26,21 +25,28 @@ body {
     margin: 0 auto;
 }
 
+.container > main {
+    min-width: 0;
+}
+
 @layer transitions, theme;
 
 @font-face {
     font-family: Inter;
     src: url(/fonts/Inter-Variable.ttf);
+    font-display: optional;
 }
 
 @font-face {
     font-family: Commit Mono;
     src: url(/fonts/CommitMono-Variable.ttf);
+    font-display: optional;
 }
 
 @font-face {
     font-family: Material Symbols;
     src: url(/fonts/MaterialSymbols.woff2);
+    font-display: optional;
     font-variation-settings:
         'FILL' 1,
         'wght' 400,
@@ -97,7 +103,8 @@ body {
 }
 
 .astro-code,
-code {
+code,
+.expressive-code {
     font-family: 'Commit Mono', monospace;
     font-size: 1.125rem;
     word-break: break-all;
@@ -281,6 +288,10 @@ footer {
 footer .right {
     text-align: right;
     width: 300px;
+}
+
+.astro-code, .expressive-code {
+    overflow-x: auto;
 }
 
 .motd {

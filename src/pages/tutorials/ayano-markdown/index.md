@@ -18,7 +18,7 @@ To implement this to your site, here's the steps:
     as those are the most recommended way to use these libraries. Also if you want, also grab the source maps for the minified scripts.
 2.  Include both of them above where the comment script is embedded, like this:
 
-    ```html
+    ```html title="comments.html"
     <script src="/lib/purify.min.js"></script>
     <script src="/lib/showdown.min.js"></script>
     <script src="/lib/comment-widget.js" defer></script>
@@ -29,7 +29,7 @@ To implement this to your site, here's the steps:
     config options below, but you can refer to [this FAQ on DOMPurify's GitHub](https://github.com/cure53/DOMPurify#can-i-configure-dompurify)
     of how to configure DOMPurify for your needs.
 
-    ```javascript
+    ```javascript title="comment-widget.js"
     var converter = new showdown.Converter()
     DOMPurify.setConfig(
         {
@@ -42,7 +42,7 @@ To implement this to your site, here's the steps:
 4.  Now, find the `createComment` function, then find the comment that says `// Text content`.
     We need the code below that, until above `return comment;` That should look like this:
 
-    ```javascript
+    ```javascript title="comment-widget.js"
     // Text content
     let text = document.createElement('p');
     let filteredText = data.Text;
@@ -54,18 +54,18 @@ To implement this to your site, here's the steps:
 5.  Now, let's add the Markdown rendering. **Process it after the word filter as that might break stuff!**
     You can add it by appending this above `text.innerText = filteredText;`:
 
-    ```javascript
+    ```javascript title="comment-widget.js"
     filteredText = converter.makeHtml(filteredText);
     ```
 6.  Then, let's sanitize the rendered message. **Process it after the renderer as that might expose some XSS vulnerabilities!**
     Append this below the above:
 
-    ```javascript
+    ```javascript title="comment-widget.js"
     filteredText = DOMPurify.sanitize(filteredText)
     ```
 7.  Lastly, let's modify the innerText to use innerHTML, like this:
 
-    ```javascript
+    ```javascript title="comment-widget.js"
     text.innerHTML = filteredText;
     ```
 

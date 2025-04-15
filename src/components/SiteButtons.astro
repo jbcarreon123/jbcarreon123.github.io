@@ -1,14 +1,37 @@
 ---
 import Buttons from '../../public/buttons.json';
 import { Image } from 'astro:assets';
+
+let buttons = Buttons
+    .filter((btn) => !btn.imgUrl.startsWith('/imgs'))
+    .map((btn) => {
+        let url = new URL(btn.imgUrl)
+        let spl = url.pathname.split('/')
+        let ext = spl[spl.length - 1]
+        let nme = url.hostname.replace('www', '').split('.')[0]
+
+        return { 
+            ...btn,
+            slug: `/imgs/site-buttons/${nme}-${ext}/`
+        }
+    });
+
+let nonbtns = Buttons
+    .filter((btn) => btn.imgUrl.startsWith('/imgs'))
+	.map((btn) => ({
+		...btn,
+		slug: btn.imgUrl
+	}))
+
+buttons = buttons.concat(nonbtns)
 ---
 
 <div class="btn-container">
     {
-        Buttons.sort((a, b) => 
+        buttons.sort((a, b) => 
             a.alt.localeCompare(b.alt)
         ).map((btn) => <a href={btn.url}>
-            <Image src={btn.imgUrl} alt={btn.alt} title={btn.title} width="88px" height="31px" />
+            <Image src={btn.slug} alt={btn.alt} title={btn.title} width="88" height="31" />
         </a>)
     }
 </div>

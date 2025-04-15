@@ -99,7 +99,7 @@ const ogImage = url
 				}, 250);
 
 				document
-					.querySelectorAll(".title")
+					.querySelectorAll(".page-title")
 					.forEach((el) => (el.textContent = document.title));
 
 				let v = window.scrollY;
@@ -117,11 +117,8 @@ const ogImage = url
 							console.log(e.parentElement)
 							console.log("open details")
 						}
-						e.dataset.href = e.href;
-						e.href = "";
 					} else {
 						e.classList.remove("active");
-						e.href = e.dataset.href ?? e.href;
 					}
 				});
 
@@ -147,7 +144,7 @@ const ogImage = url
 		<div class="container" transition:animate="none">
 			<main id="main">
 				<header>
-					<a href="#sidebar">Menu</a> <p class="title">{title ? title : "jb's site"}</p>
+					<a href="#sidebar">Menu</a> <p class="page-title">{title ? title : "jb's site"}</p>
 				</header>
 				<div>
 					<div id="content" transition:animate="slide">
@@ -313,7 +310,7 @@ const ogImage = url
 					</details>
 				</nav>
 				<div class="sidetitle">
-					<h1 class="title">{title ? title : "jb's site"}</h1>
+					<h1 class="page-title">{title ? title : "jb's site"}</h1>
 					<p class="sec motd">your resident helper</p>
 				</div>
 			</aside>

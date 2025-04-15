@@ -14,20 +14,20 @@ To implement this to your site, here's the steps:
 
 Find the input that's have the id `c_form`. That should look like this:
 
-```html
+```html title="comment-widget.js"
 <form id="c_form" onsubmit="c_submitButton.disabled = true; v_submitted = true;" method="post" target="c_hiddenIframe" action="https://docs.google.com/forms/d/e/${s_formId}/formResponse"></form>
 ```
 
 Now, add `refreshForm();` on the `onsubmit` attribute. That should look like this:
 
-```html
+```html title="comment-widget.js"
 <form id="c_form" onsubmit="c_submitButton.disabled = true; v_submitted = true; refreshForm();" method="post" target="c_hiddenIframe" action="https://docs.google.com/forms/d/e/${s_formId}/formResponse"></form>
 ```
 
 Then, we're now making the JS function that will reload it. It's just a simple 3 lines. Put this on the script.
 Modify the `1500` to how many milliseconds do you want before it reloads the widget.
 
-```js
+```js title="comment-widget.js"
 function refreshForm() {
     setTimeout(getComments, 1500);
 }

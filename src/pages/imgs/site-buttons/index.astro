@@ -1,0 +1,66 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Buttons from '../../../../public/buttons.json';
+import { Image } from 'astro:assets';
+
+let buttons = Buttons
+    .filter((btn) => !btn.imgUrl.startsWith('/imgs'))
+    .map((btn) => {
+        let url = new URL(btn.imgUrl)
+        let spl = url.pathname.split('/')
+        let ext = spl[spl.length - 1]
+        let nme = url.hostname.replace('www', '').split('.')[0]
+
+        return { 
+            ...btn,
+            slug: `/imgs/site-buttons/${nme}-${ext}/`
+        }
+    });
+---
+
+<Layout title="The jbSite Site Buttons Database" id="riiatw">
+    <h1>The jbSite Site Buttons Database</h1>
+    <h2>WTH is this?</h2>
+    <p>
+        This is a component in jbsite4 that leverages the fact that it stores all buttons
+        in a JSON file, to dynamically fetch buttons on build time, instead of hotlinking
+        them.
+    </p>
+    <h2>Why is my button on this page?</h2>
+    <p>
+        It means that on the buttons.json file, your site's entry is a hotlink rather than
+        hosted on this site. This allows jbSite to leverage storing buttons on his nekoweb
+        site than to hotlink, which saves bandwidth costs on your side.
+    </p>
+    <h2>What if I update the button?</h2>
+    <p>
+        If you are updating the button on the same filename, in the next build and deploy time,
+        it will fetch the updated button and use it.
+    </p>
+
+    <h1>The list</h1>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Button</td>
+                    <td>URL</td>
+                    <td>Original Path</td>
+                    <td>SBD Path</td>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    buttons.sort((a, b) => 
+                        a.alt.localeCompare(b.alt)
+                    ).map((btn) => <tr>
+                        <td><Image src={btn.slug} alt={btn.alt} title={btn.title} width="88" height="31" /></td>
+                        <td>{btn.url}</td>
+                        <td>{btn.imgUrl}</td>
+                        <td>{btn.slug}</td>
+                    </tr>)
+                }
+            </tbody>
+        </table>
+    </div>
+</Layout>

@@ -12,6 +12,8 @@ import rehypeFigure from 'rehype-figure';
 
 import mdx from '@astrojs/mdx';
 
+import expressiveCode from 'astro-expressive-code';
+
 // @ts-ignore
 const { NEKOWEB_APIKEY, NEKOWEB_COOKIE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
@@ -27,7 +29,12 @@ export default defineConfig({
     service: passthroughImageService()
   },
 
-  integrations: [svelte(), mdx()],
+  integrations: [expressiveCode({
+    styleOverrides: {
+      codeFontFamily: "'Commit Mono', monospace",
+      codeFontSize: '1.125rem'
+    }
+  }), svelte(), mdx()],
 
   adapter: nekoweb({
     apiKey: NEKOWEB_APIKEY,
@@ -63,6 +70,6 @@ export default defineConfig({
       }
       ],
       rehypeFigure
-    ]
+    ],
   }
 });
