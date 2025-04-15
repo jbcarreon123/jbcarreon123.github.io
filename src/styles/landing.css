@@ -23,25 +23,11 @@ html {
 .big span {
     position: relative;
     display: inline-block;
-    color: rgb(0, 255, 234);
+    color: #00ffea;
 }
 
 .un {
     padding-top: 24px;
-}
-
-.big span:nth-of-type(odd) {
-    animation:
-        title 2000ms var(--d) infinite alternate,
-        transform 2000ms var(--d) infinite alternate ease-in-out;
-    top: -6px;
-}
-
-.big span:nth-of-type(even) {
-    animation:
-        title 2000ms var(--d) infinite alternate,
-        transform 2000ms var(--d) infinite alternate-reverse ease-in-out;
-    top: 6px;
 }
 
 marquee {
@@ -71,12 +57,26 @@ h1, h2 {
     padding: 0;
 }
 
+.big span:nth-of-type(odd) {
+    animation:
+        title 2000ms var(--d) infinite alternate,
+        transform 2000ms var(--d) infinite alternate ease-in-out;
+    top: -6px;
+}
+
+.big span:nth-of-type(even) {
+    animation:
+        title 2000ms var(--d) infinite alternate,
+        transform 2000ms var(--d) infinite alternate-reverse ease-in-out;
+    top: 6px;
+}
+
 @keyframes title {
     from {
-        color: rgb(0, 255, 234);
+        color: #00ffea;
     }
     to {
-        color: rgb(0, 132, 255);
+        color: #0084ff;
     }
 }
 

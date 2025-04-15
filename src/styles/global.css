@@ -109,6 +109,7 @@ code,
     font-size: 1.125rem;
     word-break: break-all;
     word-wrap: break-word;
+    overflow-x: hidden;
 }
 
 .ms {
@@ -179,9 +180,12 @@ aside nav a {
     background-color: var(--acc);
 }
 
-aside nav:not(:has(a:hover)) a.active,
-aside nav a:hover {
+aside nav a.active {
     background-color: var(--bg);
+}
+
+aside nav a:hover {
+    background-color: var(--altbg);
 }
 
 aside {
@@ -241,16 +245,19 @@ body:has(#nav-visible:checked) .a {
 }
 
 h1 {
+    font-size: 2.5rem;
     padding-top: 12px;
     padding-bottom: 6px;
 }
 
 h2 {
+    font-size: 1.75rem;
     padding-top: 8px;
     padding-bottom: 4px;
 }
 
 h3 {
+    font-size: 1.5rem;
     padding-top: 6px;
     padding-bottom: 3px;
 }
@@ -294,6 +301,8 @@ footer .right {
     overflow-x: auto;
 }
 
+
+
 .motd {
     writing-mode: vertical-rl;
     font-size: 0.85em;
@@ -331,7 +340,7 @@ footer .right {
 
     .container main {
         scroll-snap-align: end;
-        min-width: fit-content;
+        min-width: 100vw;
     }
 
     .container aside {
@@ -348,7 +357,7 @@ footer .right {
     }
 
     aside nav {
-        padding-top: 35px;
+        padding-top: 28px;
     }
 
     .sidetitle {

@@ -4,7 +4,7 @@ blockquote {
     padding-left: 12px;
 }
 
-p:not(.small):not(.title) {
+p:not(.small):not(.page-title) {
     padding: 6px 0;
 }
 
