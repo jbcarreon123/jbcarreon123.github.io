@@ -4,7 +4,7 @@ import { satoriAstroOG } from "satori-astro";
 import { html } from "satori-html";
 import { readFileSync } from "node:fs";
 
-const posts = Object.values(import.meta.glob('../posts/**/*.mdx', { eager: true }));
+const posts = Object.values(import.meta.glob('../posts/**/*.md', { eager: true }));
 
 export const trailingSlash = 'never';
 

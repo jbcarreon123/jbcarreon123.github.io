@@ -1,0 +1,89 @@
+---
+import "../styles/global.css";
+import "../styles/landing.css";
+import { ClientRouter } from "astro:transitions";
+import { version } from "../../package.json";
+import { Image } from "astro:assets";
+
+const { title, id, description } = Astro.props;
+const { url, site } = Astro;
+import { OgImage } from "astro-opengraph-image/components";
+
+const ogImage = url
+	.toString()
+	.replace("/posts/", "/post-og/")
+	.replace(/\/$/, "");
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title ? title : "jb's site"}</title>
+		<meta name="description" content={description} />
+
+		<link
+			rel="preload"
+			href="/fonts/CommitMono-Variable.ttf"
+			as="font"
+			type="font/ttf"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			href="/fonts/Inter-Variable.ttf"
+			as="font"
+			type="font/ttf"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			href="/fonts/MaterialSymbols.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+
+		<!-- Meta tags -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={url} />
+		<meta
+			property="og:type"
+			content={url.pathname.includes("posts") ? "article" : "website"}
+		/>
+		<meta property="twitter:image" content={ogImage + ".png"} />
+
+		<!-- Alternate links -->
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="jb's posts"
+			href={new URL("feed.xml", Astro.site)}
+		/>
+		<link
+			rel="alternate"
+			type="application/atom+xml"
+			title="jb's posts"
+			href={new URL("feed.atom", Astro.site)}
+		/>
+		<link
+			rel="alternate"
+			type="application/json"
+			title="jb's posts"
+			href={new URL("feed.json", Astro.site)}
+		/>
+
+		<!-- Scripts and stuff -->
+		<ClientRouter />
+	</head>
+    <body class="jcolor" transition:animate="fade">
+        <main>
+            <slot />
+        </main>
+    </body>
+</html>

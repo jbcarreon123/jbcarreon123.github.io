@@ -1,0 +1,51 @@
+[
+    {
+        "host": "jbcarreon123.nekoweb.org",
+        "username": "jbcarreon123",
+        "framework": "<a href='https://www.astro.build/' target='_blank'>Astro</a>",
+        "pitch": "A personal website that contains my ramblings and stuff. Also contains my personal projects.",
+        "type": "14+",
+        "button": "https://jbcarreon123.nekoweb.org/sitebuttonv2.png"
+    },
+    {
+        "host": "moosyu.nekoweb.org",
+        "username": "moosyu",
+        "framework": "<a href='https://www.11ty.dev/' target='_blank'>Eleventy</a>",
+        "pitch": "moosyus super awesome rambling / reviews hellhole 🤑",
+        "button": "https://moosyu.nekoweb.org/assets/button.png"
+    },
+    {
+        "host": "reduxflakes.nekoweb.org",
+        "username": "reduxflakes",
+        "framework": "<a href='https://www.11ty.dev/' target='_blank'>Eleventy</a>",
+        "pitch": "A place where I share most of the things I do on the interwebs. Mostly stuff on life, privacy, programming, and design.",
+        "type": "13+",
+        "button": "https://reduxflakes.nekoweb.org/public/img/buttons/reduc_anim.gif"
+    },
+    {
+        "host": "ivrry.nekoweb.org",
+        "username": "ivrry",
+        "framework": "Custom",
+        "pitch": "It serves as a place for me to dump my projects and thoughts on the wide web",
+        "button": "https://ivrry.nekoweb.org/assets/images/button.png"
+    },
+    {
+        "host": "mechagic.party",
+        "username": "mechagic",
+        "framework": "<a href='https://www.11ty.dev/' target='_blank'>Eleventy</a>",
+        "pitch": "A very cool personal website that is owned by a cockroach that learned how to type.",
+        "button": "https://file.garden/ZvadqiE050beWbgP/buttons/mechagic_button.webp"
+    },
+    {
+        "host": "inaccessible.nekoweb.org",
+        "username": "inaccessible",
+        "framework": "<a href='https://www.svelte.dev/' target='_blank'>Svelte/SvelteKit</a>",
+        "pitch": "The Most Inaccessible Website (in Nekoweb at Least)"
+    },
+    {
+        "host": "32enoki.net",
+        "username": "32enoki",
+        "framework": "<a href='https://www.svelte.dev/' target='_blank'>Svelte/SvelteKit</a>",
+        "pitch": "amateur music artist"
+    }
+]

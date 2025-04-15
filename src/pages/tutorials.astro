@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+const tutorials = Object.values(import.meta.glob('./tutorials/**/*.md', { eager: true }));
+---
+
+<Layout title="jb's tutorials" description="some tutorials that jb made" id="tutorials">
+    <h1>Tutorials</h1>
+    <p class="tutorial-desc">
+        <span>Some tutorials that JB made</span>
+    </p>
+    
+    <div class="tutorial-container">
+        {
+            tutorials.map((val) => <a href={val.url}>
+                <div class="tutorial">
+                    <h2>{val.frontmatter.title}</h2>
+                    <p><i>{val.frontmatter.category}</i></p>
+                    <p>{val.frontmatter.description}</p>
+                </div>
+            </a>)
+        }
+    </div>
+    
+    <style>
+        .tutorial-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(200px, 1fr));
+            gap: 6px;
+        }
+    
+        .tutorial {
+            padding: 0 6px;
+            height: 100%;
+            background: var(--acc);
+        }
+    
+        .tutorial h2 {
+            text-wrap-mode: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    
+        .tutorial:hover, .tutorial *:hover {
+            background: var(--altbg);
+        }
+    
+        .tutorial-desc {
+            display: flex;
+            justify-content: space-between;
+            gap: 6px;
+        }
+    
+        @media (width <= 640px) {
+            .tutorial-container {
+                grid-template-columns: repeat(1, minmax(100px, 1fr));
+            }
+    
+            .tutorial-desc {
+                justify-content: left;
+                flex-direction: column;
+            }
+        }
+    </style>
+</Layout>

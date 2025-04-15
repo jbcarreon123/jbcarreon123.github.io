@@ -1,0 +1,225 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title='"AI" Chat' id="chat">
+    <h1>Chat with an "AI"!</h1>
+    <div class="chat-container">
+        <div class="history-container">
+            <p class="bot">Hello user! What I can help you?</p>
+        </div>
+        <div class="chatbox">
+            <p class="small">using "AI" v2, much faster than v1!</p>
+            <form>
+                <input
+                    type="text"
+                    placeholder="Chat..."
+                    aria-label="Your message"
+                />
+                <button type="submit"><span class="ms">send</span> Send!</button
+                >
+            </form>
+        </div>
+    </div>
+
+    <script is:inline>
+        Array.prototype.sample = function () {
+            return this[Math.floor(Math.random() * this.length)];
+        };
+
+        document.addEventListener("astro:page-load", () => {
+            document
+                .querySelector(".chatbox form")
+                ?.addEventListener("submit", (ev) => showResult(ev));
+        });
+
+        function showResult(ev) {
+            ev.preventDefault();
+
+            let btn = document.querySelector(".chatbox form button");
+            btn.disabled = true;
+            let el = document.querySelector(".chatbox form input");
+            let val = String(el.value);
+            el.value = "";
+
+            // You actually thought this is AI???
+            var answers = [
+                // 8 ball
+                "It is certain",
+                "It is decidedly so",
+                "Without a doubt",
+                "Yes definitely",
+                "You may rely on it",
+                "As I see it, yes",
+                "Most likely",
+                "Outlook good",
+                "Yes",
+                "Signs point to yes",
+                "Reply hazy, try again",
+                "Ask again later",
+                "Better not tell you now",
+                "Cannot predict now",
+                "Concentrate and ask again",
+                "Don't count on it",
+                "My reply is no",
+                "My sources say no",
+                "Outlook not so good",
+                "Very doubtful",
+
+                "ai",
+                val.replace(/[^A-Z]+/g, ""),
+                val.replace(/[^a-z]+/g, ""),
+                val.replace(/[^0-9]+/g, ""),
+
+                "As an AI chatbot, I cannot answer that question.",
+                "Please burn down your own house.",
+                "As an AI chatbot, I am legally obligated to remind you to consume your 55 grams of nitro glycerin per day!",
+            ];
+
+            if (/nekoweb/gi.test(val) && /opinions?/gi.test(val))
+                answers = [
+                    `As an AI language model, I don't have personal opinions or preferences, but I can provide some general insights about the name "Nekoweb".\n\n"Neko" is the Japanese word for "cat", and it is a common reference in Japanese pop culture. "Web" is a common word associated with the internet and technology. Therefore, "Nekoweb" could potentially be seen as a combination of these two elements, suggesting a tech-related brand or website with a playful or lighthearted twist.`,
+                ];
+            else if (/nekoweb/gi.test(val) && /what is/gi.test(val))
+                answers = [
+                    `Nekoweb is a free, non-commercial web hosting platform aimed at recreating the spirit of the early internet—think Geocities, Neocities, or personal homepages from the '90s and early 2000s. It allows users to create and host static websites with a nostalgic aesthetic, minimal restrictions, and a strong emphasis on creativity and community.\n\nHere are some key features of Nekoweb:\n\n    🌐 Free Static Web Hosting: You can upload HTML, CSS, JavaScript, and other static files to build your own little corner of the web.\n\n    🎨 DIY Aesthetic: It’s known for its retro web vibes—blink tags, pixel art, webrings, visitor counters, and all that fun old-school web stuff.\n\n    👤 Personal Pages: Most users build personal websites, portfolios, blogs, shrines to their favorite characters, or just express themselves however they want.\n\n    🧃 Community-Driven: It’s more of a community project than a corporate platform, with lots of interaction among users via webrings and shoutouts.\n\n    🕸️ Low Barrier to Entry: Great for beginners—if you can write basic HTML, you're good to go. No server setup, no backend required.\n\nThink of it as a digital garden for people who miss (or missed out on) the web before social media took over.\n\nWanna check it out or thinking of making a site yourself?`,
+                ];
+
+            let his = document.querySelector(".history-container");
+
+            let uval = document.createElement("p");
+            uval.classList.add("user");
+            uval.innerText = val;
+            his.appendChild(uval);
+
+            let bval = document.createElement("p");
+            bval.classList.add("bot");
+            bval.innerHTML = "<i>Thinking...</i>";
+            his.appendChild(bval);
+
+            setTimeout(
+                () => {
+                    let ans = answers.sample();
+
+                    let pops = ans.split("\n");
+
+                    let del = 0;
+                    bval.innerText = "";
+                    pops.forEach((p) => {
+                        let po = chunkPopper(p)
+                        let pop = [];
+                        let isPop = false;
+                        while (!isPop) {
+                            pop.push(po.popChunk(Math.floor(Math.random() * 5)));
+                            isPop = !po.hasRemaining();
+                            console.log(pop);
+                        }
+                        pop.forEach((p) => {
+                            if (p) {
+                                setTimeout(() => {
+                                    bval.innerHTML += p;
+                                    console.log(p);
+                                    console.log(bval.innerText);
+                                }, del);
+                                del += Math.floor(Math.random() * (150 - 25 + 1)) + 25;
+                            }
+                        })
+                        setTimeout(() => {
+                            bval.innerHTML += '<br />';
+                        }, del)
+                    });
+
+                    setTimeout(() => (btn.disabled = false), del);
+                },
+                Math.floor(Math.random() * (5000 - 1500 + 1)) + 1500,
+            );
+        }
+
+        function chunkPopper(str) {
+            let remainingStr = str;
+
+            return {
+                popChunk: function (size) {
+                    if (remainingStr.length === 0) {
+                        return undefined;
+                    }
+
+                    const chunkSize = Math.min(size, remainingStr.length);
+                    const poppedChunk = remainingStr.slice(0, chunkSize);
+                    remainingStr = remainingStr.slice(chunkSize);
+                    return poppedChunk;
+                },
+                getRemainingString: function () {
+                    return remainingStr;
+                },
+                hasRemaining: function () {
+                    return remainingStr.length > 0;
+                },
+            };
+        }
+    </script>
+
+    <style is:inline>
+        .history-container {
+            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .history-container p {
+            padding: 12px;
+            word-wrap: anywhere;
+        }
+
+        .history-container .bot {
+            background-color: var(--acc);
+            width: fit-content;
+        }
+
+        .history-container .user {
+            background-color: var(--altbg);
+            align-self: flex-end;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .chatbox {
+            background-color: var(--altbg);
+            padding: 12px;
+        }
+
+        .chatbox form {
+            padding-top: 6px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .chatbox input,
+        .chatbox button {
+            border: 0;
+            padding: 6px 12px;
+            color: var(--text);
+            background-color: var(--acc);
+            font-family: Inter, sans-serif;
+            font-size: 1.125rem;
+        }
+
+        .chatbox button:disabled {
+            opacity: 0.5;
+        }
+
+        .chatbox button {
+            width: 125px;
+        }
+
+        .chatbox input {
+            width: 100%;
+        }
+    </style>
+</Layout>

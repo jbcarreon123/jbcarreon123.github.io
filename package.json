@@ -1,7 +1,7 @@
 {
   "name": "jbsite4",
   "type": "module",
-  "version": "4.0.0-alpha.1",
+  "version": "4.21.16-alpha.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -13,12 +13,13 @@
     "@astrojs/rss": "^4.0.11",
     "@astrojs/svelte": "^7.0.9",
     "@indiefellas/astro-adapter-nekoweb": "^1.1.0",
+    "@kindspells/astro-shield": "^1.7.1",
     "@tailwindcss/vite": "^4.0.17",
     "@types/markdown-it": "^14.1.2",
     "@types/sanitize-html": "^2.15.0",
     "astro": "^5.5.5",
-    "astro-embed": "^0.9.0",
     "astro-opengraph-image": "^0.2.2",
+    "feed": "^4.2.2",
     "markdown-it": "^14.1.0",
     "rehype-accessible-emojis": "^0.3.2",
     "rehype-autolink-headings": "^7.1.0",
@@ -31,10 +32,10 @@
     "sharp": "^0.34.1",
     "svelte": "^5.25.10",
     "tailwindcss": "^4.0.17",
-    "typescript": "^5.8.3",
-    "view-transitions-polyfill": "^1.0.4"
+    "typescript": "^5.8.3"
   },
   "patchedDependencies": {
-    "astro-opengraph-images@1.12.1": "patches/astro-opengraph-images@1.12.1.patch"
+    "astro-opengraph-images@1.12.1": "patches/astro-opengraph-images@1.12.1.patch",
+    "view-transitions-polyfill@1.0.4": "patches/view-transitions-polyfill@1.0.4.patch"
   }
 }

@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CommentWidget from '../components/CommentWidget.svelte';
+import '../styles/comment-widget-dark.css';
+---
+
+<Layout title="Guestbook" description="a yapping place for everyone on jb's site" id="guestbook">
+<h1>Guestbook</h1>
+<p>Leave a message here! Say anything on it!</p>
+<p>Usual code of conduct rules apply.</p>
+<p>As this supports Markdown, <b>your comment might get modified to prevent XSS.</b></p>
+<div style="width: 100%;">
+    <CommentWidget client:only="svelte" />
+</div>
+</Layout>

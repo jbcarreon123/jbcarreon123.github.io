@@ -1,0 +1,109 @@
+main {
+    max-width: 800px;
+    background-color: var(--bg);
+    padding: 12px 24px;
+    padding-bottom: 24px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+html {
+    height: 100%;
+}
+
+.big {
+    font-size: 4em;
+    text-align: center;
+}
+
+.big span {
+    position: relative;
+    display: inline-block;
+    color: rgb(0, 255, 234);
+}
+
+.un {
+    padding-top: 24px;
+}
+
+.big span:nth-of-type(odd) {
+    animation:
+        title 2000ms var(--d) infinite alternate,
+        transform 2000ms var(--d) infinite alternate ease-in-out;
+    top: -6px;
+}
+
+.big span:nth-of-type(even) {
+    animation:
+        title 2000ms var(--d) infinite alternate,
+        transform 2000ms var(--d) infinite alternate-reverse ease-in-out;
+    top: 6px;
+}
+
+marquee {
+    text-wrap-mode:nowrap;
+}
+
+h1, h2 {
+    width: fit-content;
+}
+
+.cnt, .cntn {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 12px;
+}
+
+.cnt {
+    justify-content: space-between;
+}
+
+.cnt .right {
+    text-align: right;
+}
+
+.enter {
+    padding: 0;
+}
+
+@keyframes title {
+    from {
+        color: rgb(0, 255, 234);
+    }
+    to {
+        color: rgb(0, 132, 255);
+    }
+}
+
+@keyframes transform {
+    from {
+        top: -6px;
+    }
+    to {
+        top: 6px;
+    }
+}
+
+@media (width <= 640px) {
+    .big {
+        font-size: 3em;
+    }
+
+    .cnt {
+        flex-direction: column;
+        align-items: normal;
+    }
+
+    .cnt .right {
+        text-align: left;
+    }
+
+    .cntn h2 {
+        font-size: 1.25em;
+    }
+}

@@ -4,7 +4,9 @@
 
 	import MarkdownIt from 'markdown-it';
 	import sanitizeHtml from 'sanitize-html';
-	const parser = new MarkdownIt();
+	const parser = new MarkdownIt({
+		html: true
+	});
 
 	var defaultRender = parser.renderer.rules.link_open || function (tokens, idx, options, env, self) {
 		return self.renderToken(tokens, idx, options);
@@ -101,7 +103,7 @@
 	];
 
 	// Text - Change what messages/text appear on the form and in the comments section (Mostly self explanatory)
-	let s_widgetTitle = 'Leave a comment!';
+	let s_widgetTitle = $state('What do you think?');
 	let s_nameFieldLabel = 'Name';
 	let s_websiteFieldLabel = 'Website (Optional)';
 	let s_textFieldLabel = '';
@@ -109,9 +111,9 @@
 	let s_loadingText = 'Loading comments...';
 	let s_noCommentsText = 'No comments yet!';
 	let s_closedCommentsText = 'Comments are closed temporarily!';
-	let s_websiteText = 'Website'; // The links to websites left by users on their comments
-	let s_replyButtonText = 'Reply'; // The button for replying to someone
-	let s_replyingText = 'Replying to'; // The text that displays while the user is typing a reply
+	let s_websiteText = ' <span class="ms">open_in_new</span> '; // The links to websites left by users on their comments
+	let s_replyButtonText = '<span class="ms">reply</span> Reply'; // The button for replying to someone
+	let s_replyingText = '<span class="ms">reply</span> Replying to'; // The text that displays while the user is typing a reply
 	let s_expandRepliesText = 'Show Replies';
 	let s_leftButtonText = '<<';
 	let s_rightButtonText = '>>';
@@ -130,13 +132,13 @@
 
 	// Initialize misc things.
 	// The elements is binded to the variables instead of using getElementById.
-	let c_container: HTMLDivElement;
-	let c_submitButton: HTMLButtonElement;
-	let c_replyingText: HTMLSpanElement;
-	let c_replyInput: HTMLInputElement;
-	let c_nameInput: HTMLInputElement;
-	let c_siteInput: HTMLInputElement;
-	let c_textInput: HTMLTextAreaElement;
+	let c_container: HTMLDivElement = $state();
+	let c_submitButton: HTMLButtonElement = $state();
+	let c_replyingText: HTMLSpanElement = $state();
+	let c_replyInput: HTMLInputElement = $state();
+	let c_nameInput: HTMLInputElement = $state();
+	let c_siteInput: HTMLInputElement = $state();
+	let c_textInput: HTMLTextAreaElement = $state();
     let link: HTMLAnchorElement;
 	let v_pagePath = $state('');
 	let v_submitted = false;
@@ -160,11 +162,13 @@
 	}
 
 	function getComments() {
+		console.log('loading comments...')
 		// Disable the submit button while comments are reloaded
-		c_submitButton.disabled;
+		c_submitButton.disabled = true;
 
 		// Reset reply stuff to default
-		c_replyingText.style.display = 'none';
+		c_replyingText.style.display = 'block';
+		c_replyingText.innerText = '';
 		c_replyInput.value = '';
 
 		// Clear input fields too
@@ -317,6 +321,7 @@
 			} else {
 				container = document.getElementById(parentId + '-replies');
 			}
+			if (container?.querySelector(`[data-id='${reply.dataset.id}']`)) break;
 			reply.className = 'c-reply';
 			container.appendChild(reply);
 		}
@@ -383,6 +388,7 @@
 
 		// Set the ID (uses Name + Full Timestamp format)
 		var id = data.Name + '|--|' + data.Timestamp2;
+		comment.dataset.id = `comment-${data.Name}-${timestamp.replaceAll('/', '-').replaceAll('.', '-')}`;
 		comment.id = id;
 
 		// Name of user
@@ -407,8 +413,9 @@
 		// Website URL, if one was provided
 		if (data.Website) {
 			var site = document.createElement('a');
-			site.innerText = s_websiteText;
+			site.innerHTML = (new URL(data.Website)).host + s_websiteText;
 			site.href = data.Website;
+			site.target = '_blank';
 			site.className = 'c-site';
 			comment.appendChild(site);
 		}
@@ -420,9 +427,16 @@
 			filteredText = filteredText.replace(v_filteredWords, s_filterReplacement);
 		}
 		text.innerHTML = sanitizeHtml(parser.render(filteredText), {
-			allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+			allowedTags: [
+				...sanitizeHtml.defaults.allowedTags,
+				'img', 'iframe'
+			],
 			allowedClasses: {
-				'span': ['ms']
+				'span': ['ms'],
+			},
+			allowedAttributes: {
+				'iframe': ['src', 'width', 'height'],
+				'img': ['src', 'alt'],
 			}
 		});
 		text.className = 'c-text';
@@ -553,14 +567,12 @@
 	}
 
 	function openReply(id) {
-		if (c_replyingText.style.display == 'none') {
+		if (c_replyingText.innerText == '') {
 			c_replyingText.innerHTML = s_replyingText + ` ${id.split('|--|')[0]}...`;
 			c_replyInput.value = id;
-			c_replyingText.style.display = 'block';
 		} else {
 			c_replyingText.innerHTML = '';
 			c_replyInput.value = '';
-			c_replyingText.style.display = 'none';
 		}
 		link.click(); // Jump to the space to type
 	}
@@ -626,7 +638,7 @@
         console.log(document);
         link = document.createElement('a');
 	    link.href = '#c_inputDiv';
-        getComments();
+		getComments();
 	});
 </script>
 
@@ -639,7 +651,7 @@
 	<div id="c_inputDiv">
 		<form
 			id="c_form"
-			on:submit={() => {
+			onsubmit={() => {
 				c_submitButton.disabled = true;
 				v_submitted = true;
 			}}
@@ -648,7 +660,7 @@
 			action="https://docs.google.com/forms/d/e/{s_formId}/formResponse"
 		>
 			{#if s_commentsOpen}
-				<h1 id="c_widgetTitle">{s_widgetTitle}</h1>
+				<h1 id="c_widgetTitle" hidden={v_pagePath.includes('guestbook')}>{s_widgetTitle}</h1>
 
 				<div id="c_nameWrapper" class="c-inputWrapper">
 					<input
@@ -673,7 +685,7 @@
 						name="entry.{s_websiteId}"
 						id="entry.{s_websiteId}"
 						type="url"
-						pattern="https://.*"
+						pattern="https?://.*"
 					/>
 				</div>
 
@@ -692,9 +704,11 @@
 					></textarea>
 				</div>
 
-				<input type="text" id="entry.{s_pageId}" name="entry.{s_pageId}" bind:value={v_pagePath} style="display: none !important;" />
+				<input aria-hidden="true" aria-label="comment path" type="text" id="entry.{s_pageId}" name="entry.{s_pageId}" bind:value={v_pagePath} style="display: none !important;" />
 
 				<input
+					aria-hidden="true"
+					aria-label="reply"
 					type="text"
 					bind:this={c_replyInput}
 					id="entry.{s_replyId}"
@@ -702,13 +716,11 @@
 					style="display: none !important;"
 				/>
 
-				<span id="c_replyingText" bind:this={c_replyingText}></span>
-
 				<iframe
 					id="c_hiddenIframe"
 					name="c_hiddenIframe"
 					style="display: none !important"
-					on:load={() => {
+					onload={() => {
 						if (v_submitted) {
 							fixFrame();
 						}
@@ -716,14 +728,18 @@
 					title="comment widget form"
 				></iframe>
 
-				<input
-					id="c_submitButton"
-					bind:this={c_submitButton}
-					name="c_submitButton"
-					type="submit"
-					value={s_submitButtonLabel}
-					disabled={s_commentsOpen}
-				/>
+				<div id="c_submit">
+					<span id="c_replyingText" bind:this={c_replyingText}></span>
+
+					<button
+						id="c_submitButton"
+						bind:this={c_submitButton}
+						name="c_submitButton"
+						type="submit"
+						value={s_submitButtonLabel}
+						disabled={s_commentsOpen}
+					><span class="ms">send</span> Send!</button>
+				</div>
 			{:else}
 				<p>{s_closedCommentsText}</p>
 			{/if}

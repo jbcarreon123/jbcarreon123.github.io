@@ -11,5 +11,7 @@ const { frontmatter } = Astro.props;
     <article>
         <slot />
     </article>
-    <CommentWidget client:only="svelte" />
+    <div style="width: 100%;">
+        <CommentWidget client:only="svelte" />
+    </div>
 </Layout>

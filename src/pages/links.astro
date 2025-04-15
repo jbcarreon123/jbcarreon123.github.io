@@ -2,68 +2,190 @@
 import Layout from '../layouts/Layout.astro';
 import Buttons from '../components/SiteButtons.astro'
 import { Image } from 'astro:assets';
+import { Code } from 'astro:components';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+const sitebtns = [
+	'<a href="https://jbcarreon123.nekoweb.org"><img src="https://jbcarreon123.nekoweb.org/sitebutton.png" alt="jb\'s site" style="image-rendering: pixelated;"/></a>',
+    '<a href="https://jbcarreon123.nekoweb.org"><img src="https://jbcarreon123.nekoweb.org/sitebuttonv2.png" alt="jb\'s site" style="image-rendering: pixelated;"/></a>',
+    '<a href="https://jbcarreon123.nekoweb.org"><img src="https://jbcarreon123.nekoweb.org/sitebutton2.png" alt="jb\'s site" style="image-rendering: pixelated;"/></a>'
+];
 ---
 
 <Layout title="Links" id="links" description="other links and webrings">
     <h1>Links</h1>
     <p>Links to other sites, webrings, and more!</p>
+    <p>Note that this might get laggy as this contains a lot of JS.</p>
 
-    <h2>Buttons</h2>
+    <h2>My buttons</h2>
+    <p>Currently working on a jbsite4-themed button, but here's my other buttons!</p>
+    <div id="webrings">
+        {sitebtns.map((btn) => <div>
+            <div set:html={btn}></div>
+            <Code code={btn} lang="html" />
+        </div>)}
+    </div>
+
+    <h2>Other sites</h2>
+    <p>This is loaded from a JSON file, so you can just fetch /buttons.json if you want lol</p>
     <Buttons />
 
+    <h2>Cliques</h2>
+    <p>soon...</p>
+
     <h2>Webrings</h2>
-    <div id="webrings" class="flex flex-auto flex-wrap gap-4 w-full">
-        <div id='FCWL' class="pb-4">
-            <script type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/onionring-variables.js"></script>
-            <script type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/widgets/philippines.js"></script>
-        </div>
-    
-        <div class="text-left max-w-md">
-            <div>
-                <a href="https://webring.bucketfish.me/" class="py-4" target="_blank">bucket webring!</a>
-                <div class="flex flex-row w-full text-center pb-4">
-                    <a class="grow" href="https://webring.bucketfish.me/redirect.html?to=prev&name=jbcarreon123" >&lt; prev</a>
-                    <a class="grow" href="https://webring.bucketfish.me/redirect.html?to=random&name=jbcarreon123" >rand</a>
-                    <a class="grow" href="https://webring.bucketfish.me/redirect.html?to=next&name=jbcarreon123" >next &gt;</a>
-                </div>
-            </div>
-    
-            <div>
-                <a href="https://baccyflap.com/noai/?prv&s=jcr" target="_top">« prev</a> |
-                <a href="https://baccyflap.com/noai" target="_blank">no ai webring</a>
-                <a style="font-size:60%" href="https://baccyflap.com/noai/?rnd" target="_top">(random)</a> |
-                <a href="https://baccyflap.com/noai/?nxt&s=jcr" target="_top">next »</a>
-            </div> 
-        
-            <div>
-                <script src="https://astracelestine.nekoweb.org/webring/tropical-rice-bowl/widgettext.js"></script>
+    <div id="webrings">
+        <div>
+            <div id='FCWL'>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/onionring-variables.js"></script>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/widgets/philippines.js"></script>
             </div>
         </div>
-        
-    
-        <webring-container>
-            <config key="type" value="gruvbox-dark"></config>
-            <config key="font" value="Overused Grotesk, Arial, sans-serif"></config>
-            <config key="fill" value="false"></config>
-        
-            <script src="https://palette.nekoweb.org/webring.js"></script>
-        </webring-container>
+
+        <div style="height: 200px;">
+            <div id="rice-ring">
+                <link rel="stylesheet" href="https://terakun.nekoweb.org/ricepaddy/webring.css"> 
+            <script is:inline data-astro-rerun type="text/javascript" src="https://terakun.nekoweb.org/ricepaddy/webring-variables.js"></script>
+            <script is:inline data-astro-rerun type="text/javascript" src="https://terakun.nekoweb.org/ricepaddy/webring-widget.js"></script>
+            </div>
+        </div>
+
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" src="https://jbcarreon123.nekoweb.org/webrings/ssgring/pmoring.js"></script>
+        </div>
     
         <div>
-            <script defer src="https://mechagic.party/1stylescripts/gitgudring.js"></script>
+            <iframe id="bucket-webring" style="width: 100%; height: 3rem; border: none;" src="https://webring.bucketfish.me/embed.html?name=jbcarreon123"></iframe> 
+        </div>
+
+        <div>
+            <a href="https://baccyflap.com/noai/?prv&s=jcr" target="_top">« prev</a> |
+            <a href="https://baccyflap.com/noai" target="_blank">no ai webring</a>
+            <a style="font-size:60%" href="https://baccyflap.com/noai/?rnd" target="_top">(random)</a> |
+            <a href="https://baccyflap.com/noai/?nxt&s=jcr" target="_top">next »</a>
+        </div> 
+
+        <div>
+            <div id='focusfirst-webring'>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://www.beepbird.net/webring/onionring-variables.js"></script>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://www.beepbird.net/webring/onionring-widget.js"></script>
+                <noscript><a href='https://www.beepbird.net/index.html'><Image src="https://www.beepbird.net/webring/focusfirst.png" alt="Focus First Index" width="88px" height="31px"></a></noscript>
+            </div>
         </div>
     
-        <div id='apartment-webring'>
-            <script type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-variables.js"></script>
-            <script type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-widget.js"></script>
-        </div> 
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" src="https://astracelestine.nekoweb.org/webring/tropical-rice-bowl/widgettext.js"></script>
+        </div>
     
-        <div id='focusfirst-webring'>
-            <script type="text/javascript" src="https://www.beepbird.net/webring/onionring-variables.js"></script>
-            <script type="text/javascript" src="https://www.beepbird.net/webring/onionring-widget.js"></script>
-            <noscript><a href='https://www.beepbird.net/index.html'><Image src="https://www.beepbird.net/webring/focusfirst.png" alt="Focus First Index" width="88px" height="31px"></a></noscript>
+        <div>
+            <webring-container>
+                <config key="type" value="gruvbox-dark"></config>
+                <config key="font" value="Inter, Overused Grotesk, Arial, sans-serif"></config>
+                <config key="fill" value="true"></config>
+            
+                <script is:inline data-astro-rerun nonce="webring" src="https://palette.nekoweb.org/webring.js" onload="document.querySelector('webring-container').style.width = null"></script>
+            </webring-container>
+        </div>
+    
+        <div>
+            <div id='nekowebring'>
+                <link rel="stylesheet" href="https://webring.nekoweb.org/onionring.css">
+                <script is:inline data-astro-rerun type="text/javascript" src="https://webring.nekoweb.org/onionring-variables.js"></script>
+                <script is:inline data-astro-rerun type="text/javascript" src="https://webring.nekoweb.org/onionring-widget.js"></script>
+            </div>
+        </div>
+    
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" defer src="https://mechagic.party/1stylescripts/gitgudring.js"></script>
+        </div>
+    
+        <div>
+            <div id="apartment-webring">
+                <link rel="stylesheet" href="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-style.css">
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-variables.js"></script>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-widget.js"></script>
+            </div>
+        </div> 
+
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" src="https://jbcarreon123.nekoweb.org/webrings/responeko/pmoring.js"></script>
         </div>
     </div>
+
+    <h2>...links</h2>
+    <div id="linksiframe">
+        <div>
+            <div>
+                <iframe
+                    title="nekolink"
+                    loading="lazy"
+                    style="border:none;"
+                    src="https://rubybulbs.net/neko.html"
+                ></iframe>
+            </div>
+        </div>
+        <div>
+            <div>
+                <iframe style="border:none" class="aspect-square max-h-2xs w-full max-w-2xs" src="https://dimden.neocities.org/navlink/" title="neolink"></iframe>
+            </div>
+        </div>
+        <div>
+            <div>
+                <iframe style="border:none" src="https://evehibi.nekoweb.org/ringlink/" name="ringlink"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <style is:inline>
+        #webrings {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(100px, 1fr));
+            gap: 6px;
+        }
+
+        #linksiframe {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(100px, 1fr));
+            gap: 6px;
+        }
+
+        iframe {
+            width: 100% !important;
+        }
+
+        #linksiframe > div {
+            background-color: var(--acc);
+            padding: 12px;
+        }
+
+        #linksiframe iframe {
+            aspect-ratio: 1/1;
+            width: 100%;
+        }
+
+        #webrings > * {
+            background-color: var(--acc);
+            padding: 6px;
+        }
+
+        #webring > div {
+            max-width: inherit;
+        }
+
+        #webring div > *, #linksiframe div div {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        @media (width <= 640px) {
+            #webrings, #linksiframe {
+                grid-template-columns: repeat(1, minmax(100px, 1fr));
+            }
+            
+            #linksiframe iframe {
+                width: clamp(60px, 100%, 256px);
+            }
+        }
+    </style>
 </Layout>

@@ -4,16 +4,15 @@ blockquote {
     padding-left: 12px;
 }
 
-p:not(.small) {
+p:not(.small):not(.title) {
     padding: 6px 0;
-}
-
-ul, li {
-    margin-left: 8px;
 }
 
 .post-title {
     font-size: 3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 85vw;
 }
 
 article:not(.link-preview) {

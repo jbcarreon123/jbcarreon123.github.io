@@ -1,16 +1,9 @@
 // @ts-check
 import { defineConfig, envField, passthroughImageService } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
 import { loadEnv } from "vite";
 import nekoweb from '@indiefellas/astro-adapter-nekoweb';
 import svelte from '@astrojs/svelte';
-import fs from 'node:fs';
-import { getEnv } from 'astro/env/runtime';
-import opengraphImages, { presets } from "astro-opengraph-images";
-import embeds from 'astro-embed/integration';
-import opengraphImage from 'astro-opengraph-image';
 import remarkToc from 'remark-toc';
-import remarkSectionize from 'remark-sectionize';
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
@@ -24,7 +17,7 @@ const { NEKOWEB_APIKEY, NEKOWEB_COOKIE } = loadEnv(process.env.NODE_ENV, process
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://inaccessible.nekoweb.org",
+  site: "https://jbcarreon123.nekoweb.org",
 
   prefetch: {
     prefetchAll: true
@@ -34,7 +27,7 @@ export default defineConfig({
     service: passthroughImageService()
   },
 
-  integrations: [embeds(), svelte(), mdx()],
+  integrations: [svelte(), mdx()],
 
   adapter: nekoweb({
     apiKey: NEKOWEB_APIKEY,

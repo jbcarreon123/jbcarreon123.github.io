@@ -63,11 +63,7 @@
     color: rgba(var(--ctp-text));
 }
 
-#c_widget h2 {
-    
-}
-
-#c_widget input[type=submit] {
+#c_widget button#c_submitButton {
     padding: 4px;
     text-decoration: none;
 	text-align: center;
@@ -114,10 +110,13 @@
 }
 
 .c-inputWrapper {
+    max-width: 90vw;
     display: inline-block;
     text-align: left;
 }
+
 .c-input {
+    max-width: 90vw;
     padding: 4px;
     border-bottom: 1px solid;
 	outline: none;
@@ -135,15 +134,18 @@
     max-width: 900px;
     resize: none;
 }
+#c_submit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#c_submit #c_replyingText {
+    padding-right: 6px;
+}
 #c_submitButton {
     display: block; 
-    margin-left: auto; 
-    margin-right: 0;
 }
-#c_replyingText {
-    color: ;
-    text-align: right;
-}
+
 
 /* Comment section */
 .c-comment {

@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CommentWidget from '../components/CommentWidget.svelte';
+import '../styles/post.css';
+import '../styles/comment-widget-dark.css';
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description} id="tutorials">
+    <h1 class="post-title">{frontmatter.title}</h1>
+    <article>
+        <slot />
+    </article>
+    <div style="width: 100%;">
+        <CommentWidget client:only="svelte" />
+    </div>
+</Layout>

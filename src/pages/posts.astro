@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const posts = Object.values(import.meta.glob('./posts/**/*.mdx', { eager: true }));
+const posts = Object.values(import.meta.glob('./posts/**/*.md', { eager: true }));
 
 const postSorted = posts.sort((a, b) => {
     const dateA = new Date(a.frontmatter.published);
@@ -14,7 +14,7 @@ const postSorted = posts.sort((a, b) => {
 <h1>Posts</h1>
 <p class="post-desc">
     <span>Some posts that JB did</span>
-    <span><a href="/feed.xml"><span class="ms">rss_feed</span> RSS Feed</a> - <a href="/feed.json"><span class="ms">data_object</span> JSON Feed</a></span>
+    <span><a href="/feed.xml"><span class="ms">rss_feed</span> RSS Feed</a> - <a href="/feed.atom"><span class="ms">rss_feed</span> Atom Feed</a> - <a href="/feed.json"><span class="ms">data_object</span> JSON Feed</a></span>
 </p>
 
 <div class="post-container">
