@@ -30,8 +30,8 @@ jobs:
       - name: Build jbsite
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
-          NEKOWEB_APIKEY: ${{ secrets.NEKOWEB_APIKEY }}
-          NEKOWEB_COOKIE: ${{ secrets.NEKOWEB_COOKIE }}
+          NEKOWEB_APIKEY: '${{ secrets.NEKOWEB_APIKEY }}'
+          NEKOWEB_COOKIE: '${{ secrets.NEKOWEB_COOKIE }}'
         run: bun run build
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3

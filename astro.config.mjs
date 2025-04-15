@@ -15,6 +15,8 @@ import mdx from '@astrojs/mdx';
 
 import expressiveCode from 'astro-expressive-code';
 
+console.log(env.NEKOWEB_APIKEY);
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://jbcarreon123.nekoweb.org",
