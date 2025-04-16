@@ -28,7 +28,8 @@
 	/*
         (PLEASE DO NOT DELETE THIS HEADER OR CREDIT!)
 
-        Ayano's Comment Widget port to Svelte component by jbcarreon123
+        Svelte Comment Widget:
+		Ayano's Comment Widget port to Svelte component by jbcarreon123
         Original script is from Ayano (https://virtualobserver.moe/).
 
         User customizable settings below!

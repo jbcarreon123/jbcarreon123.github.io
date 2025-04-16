@@ -131,9 +131,15 @@ aside nav {
     z-index: 999;
 }
 
+figcaption {
+    font-size: 0.75em;
+    color: var(--sec);
+    text-transform: uppercase;
+}
+
 aside nav .sep, aside nav summary {
     cursor: pointer;
-    font-size: 0.65em;
+    font-size: 0.75em;
     color: var(--sec);
     padding: 0;
     padding-top: 12px;

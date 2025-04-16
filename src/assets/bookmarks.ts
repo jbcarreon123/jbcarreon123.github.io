@@ -247,11 +247,11 @@ export const bookmarks: Bookmark[] = [
                 name: 'Frill\'s Moderation Addon'
             },
             {
-                url: '/utils/ayano-autoreload',
+                url: '/tutorials/ayano-autoreload',
                 name: 'JB\'s Auto Reload Addon'
             },
             {
-                url: '/utils/ayano-markdown',
+                url: '/tutorials/ayano-markdown',
                 name: 'JB\'s Markdown Addon'
             },
             
