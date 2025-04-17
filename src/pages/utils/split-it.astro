@@ -188,5 +188,11 @@ import Layout from "../../layouts/Layout.astro";
         textarea, input:not(#void), select {
             height: 100%;
         }
+
+        @media (width <= 640px) {
+            .cont {
+                grid-template-columns: repeat(1, minmax(100px, 1fr));
+            }
+        }
     </style>
 </Layout>
