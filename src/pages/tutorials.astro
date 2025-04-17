@@ -49,6 +49,12 @@ const tutorials = Object.values(import.meta.glob('./tutorials/**/*.md', { eager:
             justify-content: space-between;
             gap: 6px;
         }
+
+        @media (width <= 940px) {
+            .tutorial-container {
+                grid-template-columns: repeat(2, minmax(100px, 1fr));
+            }
+        }
     
         @media (width <= 640px) {
             .tutorial-container {

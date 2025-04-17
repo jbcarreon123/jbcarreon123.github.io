@@ -27,6 +27,7 @@ body {
 
 .container > main {
     min-width: 0;
+    width: calc(100vw - 150px);
 }
 
 @layer transitions, theme;
@@ -105,6 +106,15 @@ body {
 /* so safari can actually take it easily */
 * {
     font-synthesis: none !important;
+}
+
+input, button, select, textarea {
+    background: var(--acc);
+    color: var(--text);
+    font-size: 1.125rem;
+    font-family: 'Inter', sans-serif;
+    border: none;
+    padding: 6px;
 }
 
 .astro-code,

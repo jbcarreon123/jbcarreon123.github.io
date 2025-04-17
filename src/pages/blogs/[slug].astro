@@ -1,5 +1,5 @@
 ---
-import '../../styles/global.css' 
+import Layout from '../../layouts/LandingLayout.astro';
 
 export function getStaticPaths() {
     const posts = Object.values(import.meta.glob('../posts/**/*.md', { eager: true }));
@@ -13,14 +13,9 @@ export function getStaticPaths() {
 const { slug } = Astro.params;
 ---
 
-<html>
+<Layout title="Redirecting..." id="redirecting">
     <head>
         <meta http-equiv="refresh" content={"0; url=/posts/" + slug + '/'} />
-        <title>Redirecting...</title>
     </head>
-    <body class="jcolor">
-        <main>
-            <h1>Redirecting to /posts/{slug}/, please wait...</h1>
-        </main>
-    </body>
-</html>
+    <h1>Redirecting to /posts/{slug}/, please wait...</h1>
+</Layout>
