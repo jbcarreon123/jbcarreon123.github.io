@@ -130,7 +130,7 @@ import { Image } from "astro:assets";
 
     <h2 id="members">Members</h2>
     <div class="members">
-        {Members.map((member) => <a href="//{member.host}">
+        {Members.map((member) => <a href={member.host}>
             <div class="member">
                 <p class="text-nowrap overflow-hidden text-ellipsis">{member.title}</p>
                 <div class="mem-plch">
