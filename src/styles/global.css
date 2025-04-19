@@ -32,38 +32,70 @@ body {
 
 @layer transitions, theme;
 
-@font-face {
-    font-family: Inter;
-    src: url(/fonts/Inter-Variable.ttf);
-    font-display: optional;
-}
-
-@font-face {
-    font-family: Commit Mono;
-    src: url(/fonts/CommitMono-Variable.ttf);
-    font-display: optional;
-}
-
-@font-face {
-    font-family: Material Symbols;
-    src: url(/fonts/MaterialSymbols.woff2);
-    font-display: optional;
-    font-variation-settings:
-        'FILL' 1,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24;
-}
-
 @layer theme {
-    .jcolor {
-        --bg: #212529;
-        --altbg: #1d1f20;
-        --acc: #343a40;
-        --text: #f1f3f5;
-        --sec: #ced4da;
-        --link: #a4b6fd;
-        --link-hover: #c7d2fd;
+
+    html {
+        .jcolor {
+            --bg: #212529;
+            --altbg: #1d1f20;
+            --acc: #343a40;
+            --text: #f1f3f5;
+            --sec: #ced4da;
+            --link: #a4b6fd;
+            --link-hover: #c7d2fd;
+        }
+    
+        .gruvbox {
+            --bg: #32302f;
+            --altbg: #1d2021;
+            --acc: #504945;
+            --text: #e8dbb2;
+            --sec: #bdae93;
+            --link: #8ab4f8;
+            --link-hover: #b3d4fc;
+        }
+    
+        .ctp {
+            --bg: #1e1e2e;
+            --altbg: #181825;
+            --acc: #313244;
+            --text: #cdd6f4;
+            --sec: #bac2de;
+            --link: #89b4fa;
+            --link-hover: #89dceb;
+        }
+    }
+
+    html[data-color='light'] {
+        .jcolor {
+            --bg: #ffffff;
+            --altbg: #f8f9fa;
+            --acc: #e9ecef;
+            --text: #212529;
+            --sec: #495057;
+            --link: #003d82;
+            --link-hover: #143ddd;
+        }
+
+        .gruvbox {
+            --bg: #f2e5bc;
+            --altbg: #f9f5d7;
+            --acc: #d5c4a1;
+            --text: #3c3836;
+            --sec: #665c54;
+            --link: #003d82;
+            --link-hover: #143ddd;
+        }
+    
+        .ctp {
+            --bg: #e6e9ef;
+            --altbg: #dce0e8;
+            --acc: #ccd0da;
+            --text: #4c4f69;
+            --sec: #6c6f85;
+            --link: #1e66f5;
+            --link-hover: #7287fd;
+        }
     }
 }
 
@@ -152,7 +184,7 @@ figcaption {
     text-transform: uppercase;
 }
 
-aside nav .sep, aside nav summary {
+aside nav .sep, aside nav summary, optgroup {
     cursor: pointer;
     font-size: 0.75em;
     color: var(--sec);
@@ -194,19 +226,24 @@ aside div {
     z-index: 1;
 }
 
-aside nav a {
+aside nav a, aside nav button {
     display:block;
     padding: 6px;
     margin-left: 6px;
     background-color: var(--acc);
+    width: 132px;
+    text-align: left;
+    color: var(--link);
 }
 
-aside nav a.active {
+aside nav a.active, aside nav button.active {
     background-color: var(--bg);
+    color: var(--link-hover);
 }
 
-aside nav a:hover {
+aside nav a:hover, aside nav button:hover {
     background-color: var(--altbg);
+    color: var(--link-hover);
 }
 
 aside {

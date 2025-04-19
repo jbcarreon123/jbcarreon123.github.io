@@ -1,0 +1,160 @@
+---
+const { title, id, description } = Astro.props;
+const { url, site } = Astro;
+import { OgImage } from "astro-opengraph-image/components";
+const ogImage = url
+	.toString()
+	.replace("/posts/", "/post-og/")
+	.replace(/\/$/, "");
+import { ClientRouter } from "astro:transitions";
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="/favicon.ico" />
+<meta name="generator" content={Astro.generator} />
+<title>{title ? title : "jb's site"}</title>
+<meta name="description" content={description} />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#00ffea" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#a4b6fd" />
+
+<link
+    rel="preload"
+    href="/fonts/CommitMono-Variable.ttf"
+    as="font"
+    type="font/ttf"
+    crossorigin
+/>
+<link
+    rel="preload"
+    href="/fonts/Inter-Variable.ttf"
+    as="font"
+    type="font/ttf"
+    crossorigin
+/>
+<link
+    rel="preload"
+    href="/fonts/MaterialSymbols.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+/>
+
+<style>
+    @font-face {
+        font-family: Inter;
+        src: url(/fonts/Inter-Variable.ttf);
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: Commit Mono;
+        src: url(/fonts/CommitMono-Variable.ttf);
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: Material Symbols;
+        src: url(/fonts/MaterialSymbols.woff2);
+        font-display: block;
+        font-variation-settings:
+            "FILL" 1,
+            "wght" 400,
+            "GRAD" 0,
+            "opsz" 24;
+    }
+</style>
+
+<!-- Meta tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta
+    property="og:type"
+    content={url.pathname.includes("posts") ? "article" : "website"}
+/>
+<meta property="twitter:image" content={ogImage + ".png"} />
+
+<!-- Alternate links -->
+<link
+    rel="alternate"
+    type="application/rss+xml"
+    title="jb's posts"
+    href={new URL("feed.xml", Astro.site)}
+/>
+<link
+    rel="alternate"
+    type="application/atom+xml"
+    title="jb's posts"
+    href={new URL("feed.atom", Astro.site)}
+/>
+<link
+    rel="alternate"
+    type="application/json"
+    title="jb's posts"
+    href={new URL("feed.json", Astro.site)}
+/>
+
+<!-- Scripts and stuff -->
+<ClientRouter />
+
+<script is:inline>
+    Array.prototype.sample = function () {
+        return this[Math.floor(Math.random() * this.length)];
+    };
+
+    function load() {
+        setTimeout(() => {
+            document.querySelector(".motd").textContent = [
+                "ctrl + c and ctrl + v are the most used shortcuts",
+                "hello, we're trying to reach you for your site's extended warranty",
+                "nekonekoweb",
+                "hmm",
+                "your resident helper",
+                "made in astro and bun",
+                "a person that stares on his text editor",
+            ].sample();
+        }, 250);
+
+        document
+            .querySelectorAll(".page-title")
+            .forEach((el) => (el.textContent = document.title));
+
+        let v = window.scrollY;
+        document.querySelector("#main").scrollIntoView();
+        window.scroll(window.scrollX, v);
+    }
+
+    document.addEventListener("astro:page-load", () => {
+        let el = document.querySelector("aside")?.dataset.activePage;
+        document.querySelectorAll("nav a").forEach((e) => {
+            if (e.id === el) {
+                e.classList.add("active");
+                if (e.parentNode.tagName.toLowerCase() === "details") {
+                    e.parentElement.setAttribute("open", true);
+                    console.log(e.parentElement);
+                    console.log("open details");
+                }
+            } else {
+                e.classList.remove("active");
+            }
+        });
+
+        document.querySelector("header a").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let sidebar = document.getElementById("sidebar");
+            let main = document.getElementById("main");
+
+            if (sidebar.classList.contains("visible")) {
+                sidebar.classList.remove("visible");
+                main.scrollIntoView();
+            } else {
+                sidebar.classList.add("visible");
+                sidebar.scrollIntoView();
+            }
+        });
+    });
+    document.addEventListener("astro:after-swap", () => load());
+</script>

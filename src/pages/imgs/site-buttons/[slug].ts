@@ -23,14 +23,21 @@ export function getStaticPaths() {
 }
 
 export const GET: APIRoute = async ({ params }) => {
-    let btn = buttons.find((bt) => bt.slug === params.slug)
-    if (btn) {
-        let res = await fetch(btn.url)
-        return new Response(await res.arrayBuffer())
-    } else {
-        return new Response('button not found', {
-            status: 404,
-            statusText: 'button not found'
+    try {
+        let btn = buttons.find((bt) => bt.slug === params.slug)
+        if (btn) {
+            let res = await fetch(btn.url)
+            return new Response(await res.arrayBuffer())
+        } else {
+            return new Response('button not found', {
+                status: 404,
+                statusText: 'button not found'
+            })
+        }
+    } catch (e) {
+        return new Response(`button fetch failed: ${e}`, {
+            status: 500,
+            statusText: 'button fetch failed'
         })
     }
 }

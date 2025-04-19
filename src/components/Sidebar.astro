@@ -1,0 +1,81 @@
+---
+const { title, id, description } = Astro.props;
+---
+
+<aside data-active-page={id} id="sidebar">
+    <nav transition:persist>
+        <a id="index" href="/home/"><span class="ms">home</span> Home</a>
+        <details>
+            <summary>whereabouts</summary>
+            <a id="about" href="/about/"
+                ><span class="ms">person</span> About JB</a
+            >
+            <a id="riiatw" href="/riiatw/"
+                ><span class="ms">language</span> RIIAtW</a
+            >
+        </details>
+        <details>
+            <summary>stuff</summary>
+            <a id="chat" href="/chat/"
+                ><span class="ms">smart_toy</span> "AI" Chat</a
+            >
+            <a id="split-it" href="/utils/split-it/"
+                ><span class="ms">space_dashboard</span> Split It!</a
+            >
+        </details>
+        <details>
+            <summary>writing</summary>
+            <a id="posts" href="/posts/"
+                ><span class="ms">article</span> Posts</a
+            >
+            <a id="tutorials" href="/tutorials/"
+                ><span class="ms">help</span> Tutorials</a
+            >
+        </details>
+        <details>
+            <summary>my webrings</summary>
+            <a id="ssgring" href="/webrings/ssgring/"><span class="ms">build</span> SSGRing</a>
+            <a id="responeko" href="/webrings/responeko/"><span class="ms">phone_android</span> Responeko</a>
+        </details>
+        <details>
+            <summary>outlinks</summary>
+            <a id="links" href="/links/"
+                ><span class="ms">link</span> Links</a
+            >
+            <a id="bookmarks" href="/bookmarks/"
+                ><span class="ms">bookmark</span> Bookmarks</a
+            >
+        </details>
+        <details>
+            <summary>liked my site?</summary>
+            <a id="guestbook" href="/guestbook/"
+                ><span class="ms">contract_edit</span> Sign my Guestbook</a
+            >
+            <a href="https://nekoweb.org/follow/jbcarreon123"
+                ><span class="ms">add</span> Follow me on Nekoweb!</a
+            >
+        </details>
+        <details>
+            <summary>member of</summary>
+            <a href="https://team.indieseas.net" target="_blank"
+                >indiefellas <span class="ms">open_in_new</span></a
+            >
+            <a href="https://macro-deck.app" target="_blank"
+                >Macro Deck <span class="ms">open_in_new</span></a
+            >
+        </details>
+        <details>
+            <summary>windows</summary>
+            <button data-id="customize" onclick="showWindow(this)">
+                Customize
+            </button>
+            <button data-id="tty" onclick="showWindow(this)">
+                jTTY
+            </button>
+        </details>
+    </nav>
+    <div class="sidetitle">
+        <h1 class="page-title">{title ? title : "jb's site"}</h1>
+        <p class="sec motd">your resident helper</p>
+    </div>
+</aside>
