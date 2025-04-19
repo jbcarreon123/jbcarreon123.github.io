@@ -9,6 +9,7 @@ const { title, id, description } = Astro.props;
 const { url, site } = Astro;
 import { OgImage } from "astro-opengraph-image/components";
 import CommonHead from "../components/CommonHead.astro";
+import Windows from "../components/Windows.astro";
 
 const ogImage = url
 	.toString()
@@ -25,5 +26,9 @@ const ogImage = url
         <main>
             <slot />
         </main>
+
+		<div transition:persist>
+			<Windows />
+		</div>
     </body>
 </html>
