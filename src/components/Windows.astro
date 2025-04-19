@@ -4,9 +4,8 @@
 
     function loadCustomize() {
         document.querySelectorAll(".floating-window").forEach((window) => {
-            let titlebar = window.querySelector(".floating-window-titlebar");
-            let content = window.querySelector(".floating-window-content");
-            console.log("a");
+            let titlebar = window.querySelector(".floating-window-titlebar p:first-child");
+            if (matchMedia('(width <= 640px)').matches) return;
 
             titlebar.addEventListener("click", (mev) => {
                 if (window.classList.contains("move")) {
@@ -68,8 +67,6 @@
 
     function titlebarMove(mev, ev, window) {
         if (!window.classList.contains("move")) return;
-        console.log(mev);
-        console.log(ev);
         window.style.setProperty("--left", ev.clientX - mev.layerX + "px");
         window.style.setProperty("--top", ev.clientY - mev.layerY + "px");
     }
@@ -95,12 +92,16 @@
             .classList.add("visible");
         el.classList.add("active");
     }
+
+    function closeWindow(el) {
+        el.parentElement.parentElement.classList.remove('visible');
+    }
 </script>
 
 <div class="floating-window" id="customize">
     <div class="floating-window-titlebar">
         <p>Customize</p>
-        <p><span class="ms">close</span></p>
+        <p onclick="this.parentElement.parentElement.classList.remove('visible')"><span class="ms">close</span></p>
     </div>
     <div class="floating-window-content">
         <div class="window-container">
@@ -172,7 +173,7 @@
 <!-- <div class="floating-window">
     <div class="floating-window-titlebar">
         <p>jPlayer</p>
-        <p><span class="ms">close</span></p>
+        <p onclick="this.parentElement.parentElement.classList.remove('visible')"><span class="ms">close</span></p>
     </div>
     <div class="floating-window-content"></div>
 </div> -->
@@ -180,7 +181,7 @@
 <div class="floating-window" id="tty">
     <div class="floating-window-titlebar">
         <p>jTTY</p>
-        <p><span class="ms">close</span></p>
+        <p onclick="closeWindow(this)"><span class="ms">close</span></p>
     </div>
     <div class="jonsole--content floating-window-content">
         <p>[jbcarreon123@nekoweb ~]$ cd ..</p>
@@ -199,7 +200,7 @@
 <!-- <div class="floating-window">
     <div class="floating-window-titlebar">
         <p>jBrowser - https://thinliquid.dev</p>
-        <p><span class="ms">close</span></p>
+        <p onclick="this.parentElement.parentElement.classList.remove('visible')"><span class="ms">close</span></p>
     </div>
     <div class="browser--content floating-window-content">
         <iframe src="https://thinliquid.dev">
@@ -226,10 +227,13 @@
         .floating-window-titlebar {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
             background-color: var(--acc);
             padding: 0 6px;
-        }
+
+            p:first-child {
+                flex-grow: 1
+            }   
+        }        
 
         .floating-window-content {
             display: flex;
@@ -276,6 +280,7 @@
 
     #customize {
         width: 600px;
+        max-width: calc(100vw);
 
         .floating-window-content {
             height: 400px;
@@ -352,6 +357,32 @@
                     margin-top: 6px;
                     height: 20px;
                     background-color: var(--cl);
+                }
+            }
+        }
+    }
+
+    .floating-window-titlebar p {
+        cursor: pointer;
+    }
+
+    @media (width <= 640px) {
+        .floating-window {
+            top: 0;
+            left: 0;
+            width: 100vw;
+            max-height: 100vh;
+        }
+
+        #customize {
+            .window-container {
+                flex-direction: column;
+
+                .tab-buttons {
+                    flex-direction: row;
+                    .tab {
+                        width: calc(100vw - 12px);
+                    }
                 }
             }
         }
