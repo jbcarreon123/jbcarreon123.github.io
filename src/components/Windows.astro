@@ -1,84 +1,99 @@
 <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-        document.querySelectorAll('.floating-window').forEach((window) => {
-            let titlebar = window.querySelector('.floating-window-titlebar');
-            let content = window.querySelector('.floating-window-content');
-            console.log('a')
+    document.addEventListener("DOMContentLoaded", loadCustomize);
+    document.addEventListener("astro:after-swap", loadCustomize);
 
-            titlebar.addEventListener('click', (mev) => {
-                if (window.classList.contains('move')) {
-                    window.classList.remove('move')
-                    document.removeEventListener('pointermove', (ev) => titlebarMove(mev, ev, window));
+    function loadCustomize() {
+        document.querySelectorAll(".floating-window").forEach((window) => {
+            let titlebar = window.querySelector(".floating-window-titlebar");
+            let content = window.querySelector(".floating-window-content");
+            console.log("a");
+
+            titlebar.addEventListener("click", (mev) => {
+                if (window.classList.contains("move")) {
+                    window.classList.remove("move");
+                    document.removeEventListener("pointermove", (ev) =>
+                        titlebarMove(mev, ev, window),
+                    );
                 } else {
-                    window.classList.add('move')
-                    document.addEventListener('pointermove', (ev) => titlebarMove(mev, ev, window));
+                    window.classList.add("move");
+                    document.addEventListener("pointermove", (ev) =>
+                        titlebarMove(mev, ev, window),
+                    );
                 }
-            })
+            });
         });
 
-        document.querySelectorAll('.palette .select').forEach((el) => {
-            el.addEventListener('click', (e) => {
+        document.querySelectorAll(".palette .select").forEach((el) => {
+            el.addEventListener("click", (e) => {
                 document.body.className = el.dataset.value;
-                document.querySelectorAll('.palette .select').forEach((el) => {
-                    el.classList.remove('selected');
-                })
-                el.classList.add('selected');
+                document.querySelectorAll(".palette .select").forEach((el) => {
+                    el.classList.remove("selected");
+                });
+                el.classList.add("selected");
                 localStorage.setItem("jbsite-theme", el.dataset.value);
-            })
-        })
+            });
+        });
 
-        document.querySelectorAll('.scheme .select').forEach((el) => {
-            el.addEventListener('click', (e) => {
+        document.querySelectorAll(".scheme .select").forEach((el) => {
+            el.addEventListener("click", (e) => {
                 document.documentElement.dataset.color = el.dataset.value;
-                document.querySelectorAll('.scheme .select').forEach((el) => {
-                    el.classList.remove('selected');
-                })
-                el.classList.add('selected');
+                document.querySelectorAll(".scheme .select").forEach((el) => {
+                    el.classList.remove("selected");
+                });
+                el.classList.add("selected");
                 localStorage.setItem("jbsite-theme-scheme", el.dataset.value);
-            })
-        })
+            });
+        });
 
         let scheme = localStorage.getItem("jbsite-theme-scheme");
-        scheme = scheme ? scheme : (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+        scheme = scheme
+            ? scheme
+            : matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
         let theme = localStorage.getItem("jbsite-theme");
-        theme = theme ? theme : 'jcolor';
+        theme = theme ? theme : "jcolor";
 
         document.body.className = theme;
-        document.querySelectorAll('.palette .select').forEach((el) => {
-            if (el.dataset.value !== theme)
-                el.classList.remove('selected');
-            else
-                el.classList.add('selected');
-        })
+        document.querySelectorAll(".palette .select").forEach((el) => {
+            if (el.dataset.value !== theme) el.classList.remove("selected");
+            else el.classList.add("selected");
+        });
         document.documentElement.dataset.color = scheme;
-        document.querySelectorAll('.scheme .select').forEach((el) => {
-            if (el.dataset.value !== scheme)
-                el.classList.remove('selected');
-            else
-                el.classList.add('selected');
-        })
-    })
+        document.querySelectorAll(".scheme .select").forEach((el) => {
+            if (el.dataset.value !== scheme) el.classList.remove("selected");
+            else el.classList.add("selected");
+        });
+    }
 
     function titlebarMove(mev, ev, window) {
-        if (!window.classList.contains('move')) return;
-        console.log(mev)
-        console.log(ev)
-        window.style.setProperty('--left', (ev.clientX - mev.layerX) + 'px')
-        window.style.setProperty('--top', (ev.clientY - mev.layerY) + 'px')
+        if (!window.classList.contains("move")) return;
+        console.log(mev);
+        console.log(ev);
+        window.style.setProperty("--left", ev.clientX - mev.layerX + "px");
+        window.style.setProperty("--top", ev.clientY - mev.layerY + "px");
     }
 
     function showWindow(el) {
-        document.querySelector(`.floating-window#${el.dataset.id}`).classList.toggle('visible')
-        el.classList.toggle('active')
+        document
+            .querySelector(`.floating-window#${el.dataset.id}`)
+            .classList.toggle("visible");
+        el.classList.toggle("active");
     }
 
     function showTab(el) {
-        document.querySelectorAll('#customize .tab-buttons button').forEach((el) => {
-            el.classList.remove('active');
-            document.querySelector(`.tab#${el.dataset.tabId}`).classList.remove('visible');
-        })
-        document.querySelector(`.tab#${el.dataset.tabId}`).classList.add('visible');
-        el.classList.add('active');
+        document
+            .querySelectorAll("#customize .tab-buttons button")
+            .forEach((el) => {
+                el.classList.remove("active");
+                document
+                    .querySelector(`.tab#${el.dataset.tabId}`)
+                    .classList.remove("visible");
+            });
+        document
+            .querySelector(`.tab#${el.dataset.tabId}`)
+            .classList.add("visible");
+        el.classList.add("active");
     }
 </script>
 
@@ -90,19 +105,22 @@
     <div class="floating-window-content">
         <div class="window-container">
             <div class="tab-buttons">
-                <button onclick="showTab(this)" class="active" data-tab-id="colors"><span class="ms">palette</span> Colors</button>
-                <button onclick="showTab(this)" data-tab-id="fonts"><span class="ms">format_size</span> Fonts</button>
+                <button
+                    onclick="showTab(this)"
+                    class="active"
+                    data-tab-id="colors"
+                    ><span class="ms">palette</span> Colors</button
+                >
+                <button onclick="showTab(this)" data-tab-id="fonts"
+                    ><span class="ms">format_size</span> Fonts</button
+                >
             </div>
             <div class="tab visible" id="colors">
                 <h1>Colors</h1>
                 <p>Color scheme</p>
                 <div class="select-container scheme">
-                    <div class="select selected" data-value="dark">
-                        Dark
-                    </div>
-                    <div class="select" data-value="light">
-                        Light
-                    </div>
+                    <div class="select selected" data-value="dark">Dark</div>
+                    <div class="select" data-value="light">Light</div>
                 </div>
                 <p>Color palette</p>
                 <div class="select-container palette" id="palette">
@@ -168,10 +186,10 @@
         <p>[jbcarreon123@nekoweb ~]$ cd ..</p>
         <p>cd: /home/: Permission denied</p>
         <p>[jbcarreon123@nekoweb ~]$ ls</p>
-        <p style="color: #1c99f3; font-weight: 700;">fonts  imgs  webrings  ocs</p>
+        <p style="color: #1c99f3; font-weight: 700;">fonts imgs webrings ocs</p>
         <p>[jbcarreon123@nekoweb ~]$ cd ocs</p>
         <p>[jbcarreon123@nekoweb ~/ocs]$ ls</p>
-        <p style="font-weight: 700;">test1  test2</p>
+        <p style="font-weight: 700;">test1 test2</p>
         <p>[jbcarreon123@nekoweb ~/ocs]$ cat test1</p>
         <p>Testing!!!!</p>
         <p>[jbcarreon123@nekoweb ~/ocs]$</p>
@@ -228,12 +246,12 @@
     }
 
     .floating-window.move {
-        cursor:grabbing;
+        cursor: grabbing;
     }
 
     .jonsole--content {
         background-color: black !important;
-        font-family: 'Commit Mono', monospace;
+        font-family: "Commit Mono", monospace;
         width: 500px;
         height: 250px;
 
@@ -307,7 +325,7 @@
     }
 
     .select-container {
-        display:grid;
+        display: grid;
         grid-template-columns: repeat(3, minmax(6px, 1fr));
         gap: 12px;
 
@@ -326,7 +344,7 @@
             }
 
             .color-preview {
-                display:grid;
+                display: grid;
                 grid-template-columns: repeat(7, minmax(6px, 1fr));
                 gap: 3px;
 
