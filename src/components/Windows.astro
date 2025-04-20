@@ -1,69 +1,47 @@
-<script is:inline>
-    document.addEventListener("DOMContentLoaded", loadCustomize);
-    document.addEventListener("astro:after-swap", loadCustomize);
+---
+import Customize from "../jwindows/Customize.astro";
+---
 
-    function loadCustomize() {
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", loadEvents);
+    document.addEventListener("astro:after-swap", loadEvents);
+
+    function clickWindowEvent(mev) {
+        let window = mev.target.parentElement.parentElement;
+        document.querySelectorAll(".floating-window").forEach((w) => {
+            w.classList.remove('focused');
+        });
+        window.classList.add('focused');
+    }
+
+    function clickTitlebarEvent(mev) {
+        let window = mev.target.parentElement.parentElement;
+        if (window.classList.contains("move")) {
+            window.classList.remove("move");
+            document.removeEventListener("pointermove", (ev) =>
+                titlebarMove(mev, ev, window),
+            );
+        } else {
+            window.classList.add("move");
+            document.addEventListener("pointermove", (ev) =>
+                titlebarMove(mev, ev, window),
+            );
+        }
+    }
+
+    function loadEvents() {
+        console.log('loading window events')
+
         document.querySelectorAll(".floating-window").forEach((window) => {
+            window.addEventListener('click', clickWindowEvent)
+
             let titlebar = window.querySelector(".floating-window-titlebar p:first-child");
             if (matchMedia('(width <= 640px)').matches) return;
 
-            titlebar.addEventListener("click", (mev) => {
-                if (window.classList.contains("move")) {
-                    window.classList.remove("move");
-                    document.removeEventListener("pointermove", (ev) =>
-                        titlebarMove(mev, ev, window),
-                    );
-                } else {
-                    window.classList.add("move");
-                    document.addEventListener("pointermove", (ev) =>
-                        titlebarMove(mev, ev, window),
-                    );
-                }
-            });
-        });
-
-        document.querySelectorAll(".palette .select").forEach((el) => {
-            el.addEventListener("click", (e) => {
-                document.body.className = el.dataset.value;
-                document.querySelectorAll(".palette .select").forEach((el) => {
-                    el.classList.remove("selected");
-                });
-                el.classList.add("selected");
-                localStorage.setItem("jbsite-theme", el.dataset.value);
-            });
-        });
-
-        document.querySelectorAll(".scheme .select").forEach((el) => {
-            el.addEventListener("click", (e) => {
-                document.documentElement.dataset.color = el.dataset.value;
-                document.querySelectorAll(".scheme .select").forEach((el) => {
-                    el.classList.remove("selected");
-                });
-                el.classList.add("selected");
-                localStorage.setItem("jbsite-theme-scheme", el.dataset.value);
-            });
-        });
-
-        let scheme = localStorage.getItem("jbsite-theme-scheme");
-        scheme = scheme
-            ? scheme
-            : matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-        let theme = localStorage.getItem("jbsite-theme");
-        theme = theme ? theme : "jcolor";
-
-        document.body.className = theme;
-        document.querySelectorAll(".palette .select").forEach((el) => {
-            if (el.dataset.value !== theme) el.classList.remove("selected");
-            else el.classList.add("selected");
-        });
-        document.documentElement.dataset.color = scheme;
-        document.querySelectorAll(".scheme .select").forEach((el) => {
-            if (el.dataset.value !== scheme) el.classList.remove("selected");
-            else el.classList.add("selected");
+            titlebar.addEventListener("click", clickTitlebarEvent);
         });
     }
+
 
     function titlebarMove(mev, ev, window) {
         if (!window.classList.contains("move")) return;
@@ -75,6 +53,9 @@
         document
             .querySelector(`.floating-window#${el.dataset.id}`)
             .classList.toggle("visible");
+        document
+            .querySelector(`.floating-window#${el.dataset.id}`)
+            .classList.add("focused");
         el.classList.toggle("active");
     }
 
@@ -94,86 +75,28 @@
     }
 
     function closeWindow(el) {
-        el.parentElement.parentElement.classList.remove('visible');
+        console.log(el);
+        let pa = el.parentElement.parentElement;
+        pa.classList.remove('visible');
+        pa.classList.remove('focused');
+        console.log(pa);
+        document
+            .querySelectorAll(".window-toggle")
+            .forEach((ele) => {
+                if (ele.dataset.id === pa.id) {
+                    console.log(ele);
+                    ele.classList.remove('active');
+                }
+            });
     }
 </script>
 
-<div class="floating-window" id="customize">
-    <div class="floating-window-titlebar">
-        <p>Customize</p>
-        <p onclick="this.parentElement.parentElement.classList.remove('visible')"><span class="ms">close</span></p>
-    </div>
-    <div class="floating-window-content">
-        <div class="window-container">
-            <div class="tab-buttons">
-                <button
-                    onclick="showTab(this)"
-                    class="active"
-                    data-tab-id="colors"
-                    ><span class="ms">palette</span> Colors</button
-                >
-                <button onclick="showTab(this)" data-tab-id="fonts"
-                    ><span class="ms">format_size</span> Fonts</button
-                >
-            </div>
-            <div class="tab visible" id="colors">
-                <h1>Colors</h1>
-                <p>Color scheme</p>
-                <div class="select-container scheme">
-                    <div class="select selected" data-value="dark">Dark</div>
-                    <div class="select" data-value="light">Light</div>
-                </div>
-                <p>Color palette</p>
-                <div class="select-container palette" id="palette">
-                    <div class="select selected" data-value="jcolor">
-                        jColor 2
-                        <div class="jcolor color-preview">
-                            <div style="--cl:var(--bg)"></div>
-                            <div style="--cl:var(--altbg)"></div>
-                            <div style="--cl:var(--acc)"></div>
-                            <div style="--cl:var(--text)"></div>
-                            <div style="--cl:var(--sec)"></div>
-                            <div style="--cl:var(--link)"></div>
-                            <div style="--cl:var(--link-hover)"></div>
-                        </div>
-                    </div>
-                    <div class="select" data-value="gruvbox">
-                        Gruvbox
-                        <div class="gruvbox color-preview">
-                            <div style="--cl:var(--bg)"></div>
-                            <div style="--cl:var(--altbg)"></div>
-                            <div style="--cl:var(--acc)"></div>
-                            <div style="--cl:var(--text)"></div>
-                            <div style="--cl:var(--sec)"></div>
-                            <div style="--cl:var(--link)"></div>
-                            <div style="--cl:var(--link-hover)"></div>
-                        </div>
-                    </div>
-                    <div class="select" data-value="ctp">
-                        Catppuccin
-                        <div class="ctp color-preview">
-                            <div style="--cl:var(--bg)"></div>
-                            <div style="--cl:var(--altbg)"></div>
-                            <div style="--cl:var(--acc)"></div>
-                            <div style="--cl:var(--text)"></div>
-                            <div style="--cl:var(--sec)"></div>
-                            <div style="--cl:var(--link)"></div>
-                            <div style="--cl:var(--link-hover)"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab" id="fonts">
-                <h1>Fonts</h1>
-            </div>
-        </div>
-    </div>
-</div>
+<Customize />
 
 <!-- <div class="floating-window">
     <div class="floating-window-titlebar">
         <p>jPlayer</p>
-        <p onclick="this.parentElement.parentElement.classList.remove('visible')"><span class="ms">close</span></p>
+        <p onclick="closeWindow(this)"><span class="ms">close</span></p>
     </div>
     <div class="floating-window-content"></div>
 </div> -->
@@ -187,7 +110,7 @@
         <p>[jbcarreon123@nekoweb ~]$ cd ..</p>
         <p>cd: /home/: Permission denied</p>
         <p>[jbcarreon123@nekoweb ~]$ ls</p>
-        <p style="color: #1c99f3; font-weight: 700;">fonts imgs webrings ocs</p>
+        <p style="color: var(--link-hover); font-weight: 700;">fonts imgs webrings ocs</p>
         <p>[jbcarreon123@nekoweb ~]$ cd ocs</p>
         <p>[jbcarreon123@nekoweb ~/ocs]$ ls</p>
         <p style="font-weight: 700;">test1 test2</p>
@@ -200,7 +123,7 @@
 <!-- <div class="floating-window">
     <div class="floating-window-titlebar">
         <p>jBrowser - https://thinliquid.dev</p>
-        <p onclick="this.parentElement.parentElement.classList.remove('visible')"><span class="ms">close</span></p>
+        <p onclick="closeWindow(this)"><span class="ms">close</span></p>
     </div>
     <div class="browser--content floating-window-content">
         <iframe src="https://thinliquid.dev">
@@ -209,7 +132,7 @@
     </div>
 </div> -->
 
-<style>
+<style is:inline>
     .floating-window {
         display: flex;
         flex-direction: column;
@@ -217,12 +140,18 @@
         top: var(--top, 0);
         left: var(--left, 0);
         min-width: 350px;
-        z-index: 99999;
+        z-index: 99998;
         transition: none !important;
         border: 1px solid var(--link-hover);
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        max-width: calc(100vw - 2px);
+
+        &.focused {
+            border: 1px solid var(--link);
+            z-index: 99999;
+        }
 
         .floating-window-titlebar {
             display: flex;
@@ -233,6 +162,10 @@
             p:first-child {
                 flex-grow: 1
             }   
+
+            p {
+                cursor: pointer;
+            }
         }        
 
         .floating-window-content {
@@ -243,18 +176,20 @@
             padding: 6px;
             overflow: auto;
         }
-    }
 
-    .floating-window:not(.visible) {
-        display: none;
-    }
+        &.move {
+            * {
+                cursor: grabbing !important;
+            }
+        }
 
-    .floating-window.move {
-        cursor: grabbing;
+        &:not(.visible) {
+            display: none;
+        }
     }
 
     .jonsole--content {
-        background-color: black !important;
+        background-color: var(--altbg) !important;
         font-family: "Commit Mono", monospace;
         width: 500px;
         height: 250px;
@@ -278,57 +213,6 @@
         }
     }
 
-    #customize {
-        width: 600px;
-        max-width: calc(100vw);
-
-        .floating-window-content {
-            height: 400px;
-            padding: 0;
-        }
-
-        .window-container {
-            display: flex;
-            flex-direction: row;
-            gap: 6px;
-            align-items: stretch;
-            height: 100%;
-
-            .tab-buttons {
-                display: flex;
-                flex-direction: column;
-                background: var(--acc);
-                padding-top: 6px;
-
-                button {
-                    text-align: left;
-                    width: 100px;
-                    margin-left: 6px;
-                    color: var(--link);
-                }
-
-                button.active {
-                    background: var(--bg);
-                    color: var(--link-hover);
-                }
-
-                button:hover {
-                    background-color: var(--altbg);
-                    color: var(--link-hover);
-                }
-            }
-
-            .tab:not(.visible) {
-                display: none;
-            }
-
-            .tab {
-                width: 100%;
-                padding-right: 6px;
-            }
-        }
-    }
-
     .select-container {
         display: grid;
         grid-template-columns: repeat(3, minmax(6px, 1fr));
@@ -339,6 +223,7 @@
             padding: 6px;
             background-color: var(--bg);
             cursor: pointer;
+            font-family: var(--font);
 
             &:hover {
                 background-color: var(--altbg);
@@ -362,29 +247,11 @@
         }
     }
 
-    .floating-window-titlebar p {
-        cursor: pointer;
-    }
-
     @media (width <= 640px) {
         .floating-window {
             top: 0;
             left: 0;
-            width: 100vw;
             max-height: 100vh;
-        }
-
-        #customize {
-            .window-container {
-                flex-direction: column;
-
-                .tab-buttons {
-                    flex-direction: row;
-                    .tab {
-                        width: calc(100vw - 12px);
-                    }
-                }
-            }
         }
     }
 </style>

@@ -1,0 +1,246 @@
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", loadCustomize);
+    document.addEventListener("astro:after-swap", loadCustomize);
+
+    function loadCustomize() {
+        document.querySelectorAll(".palette .select").forEach((el) => {
+            el.addEventListener("click", (e) => {
+                document.body.className = el.dataset.value;
+                document.querySelectorAll(".palette .select").forEach((el) => {
+                    el.classList.remove("selected");
+                });
+                el.classList.add("selected");
+                localStorage.setItem("jbsite-theme", el.dataset.value);
+            });
+        });
+
+        document.querySelectorAll(".scheme .select").forEach((el) => {
+            el.addEventListener("click", (e) => {
+                let val = el.dataset.value;
+                if (el.dataset.value === "system") {
+                    val = matchMedia("(prefers-color-scheme:dark)").matches
+                        ? "dark"
+                        : "light";
+                }
+                document.documentElement.dataset.color = val;
+                document.querySelectorAll(".scheme .select").forEach((el) => {
+                    el.classList.remove("selected");
+                });
+                el.classList.add("selected");
+                localStorage.setItem("jbsite-theme-scheme", val);
+            });
+        });
+
+        document.querySelectorAll(".main-font .select").forEach((el) => {
+            el.addEventListener("click", (e) => {
+                document.documentElement.className = el.dataset.value;
+                document.querySelectorAll(".main-font .select").forEach((el) => {
+                    el.classList.remove("selected");
+                });
+                el.classList.add("selected");
+                localStorage.setItem("jbsite-font", el.dataset.value);
+            });
+        });
+
+        loadTheme();
+    }
+
+    function loadTheme() {
+        let scheme = localStorage.getItem("jbsite-theme-scheme");
+        scheme = scheme ? scheme : "system";
+        if (scheme === "system") {
+            scheme = matchMedia("(prefers-color-scheme:dark)").matches
+                ? "dark"
+                : "light";
+        }
+
+        let theme = localStorage.getItem("jbsite-theme");
+        theme = theme ? theme : "jcolor";
+
+        let font = localStorage.getItem("jbsite-font");
+        font = font ? font : "inter"
+
+        document.body.className = theme;
+        document.querySelectorAll(".palette .select").forEach((el) => {
+            if (el.dataset.value !== theme) el.classList.remove("selected");
+            else el.classList.add("selected");
+        });
+        document.documentElement.dataset.color = scheme;
+        document.querySelectorAll(".scheme .select").forEach((el) => {
+            if (el.dataset.value !== scheme) el.classList.remove("selected");
+            else el.classList.add("selected");
+        });
+        document.documentElement.classList = font;
+        document.querySelectorAll(".main-font .select").forEach((el) => {
+            if (el.dataset.value !== font) el.classList.remove("selected");
+            else el.classList.add("selected");
+        });
+    }
+</script>
+
+<div class="floating-window" id="customize">
+    <div class="floating-window-titlebar">
+        <p>Customize</p>
+        <p onclick="closeWindow(this)"><span class="ms">close</span></p>
+    </div>
+    <div class="floating-window-content">
+        <div class="window-container">
+            <div class="tab-buttons">
+                <button
+                    onclick="showTab(this)"
+                    class="active"
+                    data-tab-id="colors"
+                    ><span class="ms">palette</span> Colors</button
+                >
+                <button onclick="showTab(this)" data-tab-id="fonts"
+                    ><span class="ms">format_size</span> Fonts</button
+                >
+            </div>
+            <div class="tab visible" id="colors">
+                <h1>Colors</h1>
+                <p>Color scheme</p>
+                <div class="select-container scheme">
+                    <div class="select selected" data-value="system">
+                        System
+                    </div>
+                    <div class="select" data-value="dark">Dark</div>
+                    <div class="select" data-value="light">Light</div>
+                </div>
+                <p>Color palette</p>
+                <div class="select-container palette" id="palette">
+                    <div class="select selected" data-value="jcolor">
+                        jColor 2
+                        <div class="jcolor color-preview">
+                            <div style="--cl:var(--bg)"></div>
+                            <div style="--cl:var(--altbg)"></div>
+                            <div style="--cl:var(--acc)"></div>
+                            <div style="--cl:var(--text)"></div>
+                            <div style="--cl:var(--sec)"></div>
+                            <div style="--cl:var(--link)"></div>
+                            <div style="--cl:var(--link-hover)"></div>
+                        </div>
+                    </div>
+                    <div class="select" data-value="gruvbox">
+                        Gruvbox
+                        <div class="gruvbox color-preview">
+                            <div style="--cl:var(--bg)"></div>
+                            <div style="--cl:var(--altbg)"></div>
+                            <div style="--cl:var(--acc)"></div>
+                            <div style="--cl:var(--text)"></div>
+                            <div style="--cl:var(--sec)"></div>
+                            <div style="--cl:var(--link)"></div>
+                            <div style="--cl:var(--link-hover)"></div>
+                        </div>
+                    </div>
+                    <div class="select" data-value="ctp">
+                        Catppuccin
+                        <div class="ctp color-preview">
+                            <div style="--cl:var(--bg)"></div>
+                            <div style="--cl:var(--altbg)"></div>
+                            <div style="--cl:var(--acc)"></div>
+                            <div style="--cl:var(--text)"></div>
+                            <div style="--cl:var(--sec)"></div>
+                            <div style="--cl:var(--link)"></div>
+                            <div style="--cl:var(--link-hover)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab" id="fonts">
+                <h1>Fonts</h1>
+                <p>Main font</p>
+                <div class="select-container main-font">
+                    <div class="inter select selected" data-value="inter">
+                        Inter
+                    </div>
+                    <div class="commit-mono select" data-value="commit-mono">
+                        Commit Mono
+                    </div>
+                    <div class="times select" data-value="times">
+                        Times
+                    </div>
+                    <div class="opendyslexic select" data-value="opendyslexic">
+                        OpenDyslexic
+                    </div>
+                    <div class="default select" data-value="default">
+                        Default
+                    </div>
+                    <div class="default-serif select" data-value="default-serif">
+                        Default (Serif)
+                    </div>
+                    <div class="default-mono select" data-value="default-mono">
+                        Default (Mono)
+                    </div>
+                </div>
+                <p>Sadly, you cannot change the monospace font. Sorry!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #customize {
+        width: 600px;
+
+        .floating-window-content {
+            height: 400px;
+            padding: 0;
+        }
+
+        .window-container {
+            display: flex;
+            flex-direction: row;
+            gap: 6px;
+            align-items: stretch;
+            height: 100%;
+
+            .tab-buttons {
+                display: flex;
+                flex-direction: column;
+                background: var(--acc);
+                padding-top: 6px;
+
+                button {
+                    text-align: left;
+                    width: 100px;
+                    margin-left: 6px;
+                    color: var(--link);
+                }
+
+                button.active {
+                    background: var(--bg);
+                    color: var(--link-hover);
+                }
+
+                button:hover {
+                    background-color: var(--altbg);
+                    color: var(--link-hover);
+                }
+            }
+
+            .tab:not(.visible) {
+                display: none;
+            }
+
+            .tab {
+                width: 100%;
+                padding-right: 6px;
+            }
+        }
+    }
+
+    @media (width <= 640px) {
+        #customize {
+            .window-container {
+                flex-direction: column;
+
+                .tab-buttons {
+                    flex-direction: row;
+                    .tab {
+                        width: calc(100vw - 12px);
+                    }
+                }
+            }
+        }
+    }
+</style>

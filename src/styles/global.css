@@ -9,7 +9,7 @@
 }
 
 body {
-    font-family: Inter, sans-serif;
+    font-family: var(--font);
     background-color: var(--altbg);
     color: var(--text);
     width: 100%;
@@ -30,10 +30,40 @@ body {
     width: calc(100vw - 150px);
 }
 
-@layer transitions, theme;
+@layer transitions, theme, fonts;
+
+@layer fonts {
+    .inter {
+        --font: 'Inter', sans-serif;
+    }
+
+    .opendyslexic {
+        --font: 'OpenDyslexic', 'sans-serif';
+        font-size: 0.85em;
+    }
+
+    .times {
+        --font: 'Times New Roman', Times, serif;
+    }
+
+    .commit-mono {
+        --font: 'Commit Mono', monospace;
+    }
+
+    .default {
+        --font: sans-serif;
+    }
+
+    .default-serif {
+        --font: serif;
+    }
+
+    .default-mono {
+        --font: monospace;
+    }
+}
 
 @layer theme {
-
     html {
         .jcolor {
             --bg: #212529;
@@ -135,16 +165,11 @@ body {
         300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
-/* so safari can actually take it easily */
-* {
-    font-synthesis: none !important;
-}
-
 input, button, select, textarea {
     background: var(--acc);
     color: var(--text);
+    font-family: var(--font);
     font-size: 1.125rem;
-    font-family: 'Inter', sans-serif;
     border: none;
     padding: 6px;
 }

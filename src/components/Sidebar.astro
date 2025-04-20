@@ -66,10 +66,10 @@ const { title, id, description } = Astro.props;
         </details>
         <details>
             <summary>windows</summary>
-            <button data-id="customize" onclick="showWindow(this)">
+            <button class="window-toggle" data-id="customize" onclick="showWindow(this)">
                 Customize
             </button>
-            <button data-id="tty" onclick="showWindow(this)">
+            <button class="window-toggle" data-id="tty" onclick="showWindow(this)">
                 jTTY
             </button>
         </details>

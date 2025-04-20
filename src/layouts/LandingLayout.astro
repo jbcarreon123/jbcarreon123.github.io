@@ -18,31 +18,15 @@ const ogImage = url
 ---
 
 <!doctype html>
-<html lang="en" data-color="dark">
+<html lang="en" class="inter" data-color="dark">
 	<head>
 		<CommonHead title="welcome to jb's site" />
-
-		<script is:inline>
-			document.addEventListener("DOMContentLoaded", () => {
-				let theme = localStorage.getItem("jbsite-theme");
-				theme = theme ? theme : "jcolor";
-
-				document.body.className = theme;
-				document.querySelectorAll(".palette .select").forEach((el) => {
-					if (el.dataset.value !== theme) el.classList.remove("selected");
-					else el.classList.add("selected");
-				});
-				document.documentElement.dataset.color = scheme;
-				document.querySelectorAll(".scheme .select").forEach((el) => {
-					if (el.dataset.value !== scheme) el.classList.remove("selected");
-					else el.classList.add("selected");
-				});
-			})
-		</script>
 	</head>
     <body class="jcolor" transition:animate="fade">
         <main>
             <slot />
         </main>
+
+		<Windows />
     </body>
 </html>

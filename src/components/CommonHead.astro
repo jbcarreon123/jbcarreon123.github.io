@@ -18,28 +18,6 @@ import { ClientRouter } from "astro:transitions";
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#00ffea" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#a4b6fd" />
 
-<link
-    rel="preload"
-    href="/fonts/CommitMono-Variable.ttf"
-    as="font"
-    type="font/ttf"
-    crossorigin
-/>
-<link
-    rel="preload"
-    href="/fonts/Inter-Variable.ttf"
-    as="font"
-    type="font/ttf"
-    crossorigin
-/>
-<link
-    rel="preload"
-    href="/fonts/MaterialSymbols.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-/>
-
 <style>
     @font-face {
         font-family: Inter;
@@ -50,6 +28,12 @@ import { ClientRouter } from "astro:transitions";
     @font-face {
         font-family: Commit Mono;
         src: url(/fonts/CommitMono-Variable.ttf);
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: OpenDyslexic;
+        src: url(/fonts/OpenDyslexic-Regular.woff2);
         font-display: swap;
     }
 
