@@ -47,5 +47,11 @@
         "username": "32enoki",
         "framework": "<a href='https://www.svelte.dev/' target='_blank'>Svelte/SvelteKit</a>",
         "pitch": "amateur music artist"
+    },
+    {
+        "host": "nirefi.nekoweb.org",
+        "username": "nirefi",
+        "framework": "<a href='https://www.astro.build/' target='_blank'>Astro</a>",
+        "pitch": "Site where I mainly talk about whatever comic I'm reading right now."
     }
 ]
