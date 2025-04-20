@@ -52,6 +52,7 @@
         "host": "nirefi.nekoweb.org",
         "username": "nirefi",
         "framework": "<a href='https://www.astro.build/' target='_blank'>Astro</a>",
-        "pitch": "Site where I mainly talk about whatever comic I'm reading right now."
+        "pitch": "Site where I mainly talk about whatever comic I'm reading right now.",
+        "button": "https://nirefi.nekoweb.org/images/buttons/nirefi-btn.png"
     }
 ]
