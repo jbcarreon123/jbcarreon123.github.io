@@ -9,6 +9,8 @@ const { title, id, description } = Astro.props;
 import Windows from "../components/Windows.astro";
 import CommonHead from "../components/CommonHead.astro";
 import Sidebar from "../components/Sidebar.astro";
+
+const hash = import.meta.env.COMMIT_HASH ?? 'null';
 ---
 
 <!doctype html>
@@ -32,7 +34,7 @@ import Sidebar from "../components/Sidebar.astro";
 					});
 					img.addEventListener('mouseleave', () => {
 						tooltip?.style.setProperty('display', 'none');
-					})
+					});
 				});
 				document.querySelectorAll("a").forEach((el) => {
 					if (window.location.hostname === new URL(el.href).hostname) return;
@@ -82,7 +84,7 @@ import Sidebar from "../components/Sidebar.astro";
 					<footer transition:persist transition:animate="none">
 						<div class="sec">
 							<p class="small">
-								jbsite4@{version} © 2025 jbcarreon123. All rights
+								jbsite4@{version}/{hash} © 2025 jbcarreon123. All rights
 								reserved.
 							</p>
 							<p class="small">

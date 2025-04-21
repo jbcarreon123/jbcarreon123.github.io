@@ -27,11 +27,15 @@ jobs:
         uses: oven-sh/setup-bun@v2
       - name: Install dependencies
         run: bun install
+      - name: Get commit hash
+        id: commit
+        uses: prompt/actions-commit-hash@v3
       - name: Build jbsite
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
           NEKOWEB_APIKEY: '${{ secrets.NEKOWEB_APIKEY }}'
           NEKOWEB_COOKIE: '${{ secrets.NEKOWEB_COOKIE }}'
+          COMMIT_HASH: '${{ steps.commit.outputs.short }}'
         run: bun run build
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
