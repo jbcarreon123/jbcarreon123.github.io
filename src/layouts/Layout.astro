@@ -21,6 +21,19 @@ import Sidebar from "../components/Sidebar.astro";
 			function loadTooltip() {
 				console.log('loading tooltip event listener');
 				let tooltip = document.querySelector('.hover--tooltip');
+				document.querySelectorAll("*:not(a) img").forEach((img) => {
+					if (!img.alt && !img.title) return;
+					img.addEventListener('mousemove', (mev) => {
+						tooltip?.style.setProperty('--x', mev.clientX + 'px');
+						tooltip?.style.setProperty('--y', mev.clientY + 'px');
+						tooltip?.style.setProperty('display', 'block');
+						tooltip.innerHTML = `<p>${img.title ? img.title : img.alt}</p>`;
+						img?.removeAttribute('title');
+					});
+					img.addEventListener('mouseleave', () => {
+						tooltip?.style.setProperty('display', 'none');
+					})
+				});
 				document.querySelectorAll("a").forEach((el) => {
 					if (window.location.hostname === new URL(el.href).hostname) return;
 					el.addEventListener('mousemove', (mev) => {
