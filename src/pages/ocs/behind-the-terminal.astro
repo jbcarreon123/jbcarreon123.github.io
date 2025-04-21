@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/LandingLayout.astro';
+---
+
+<Layout title="Behind The Terminal" id="behind-the-terminal">
+    <script>
+        let cursor = document.querySelector('.cursor');
+        setInterval(() => {
+            cursor.style.display = cursor.style.display === 'none' ?
+                'inline-block' : 'none'
+        }, 1000)
+    </script>
+
+    <div class="landing-cont">
+        <h1>BEHIND THE TERMINAL<span class="cursor">_</span></h1>
+        <div>
+            <p>jb's first OC</p>
+            <p>coming soon!</p>
+        </div>
+    </div>
+    
+    <style>
+        .landing-cont {
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+        }
+
+        * {
+            font-family: 'Commit Mono', monospace;
+            transition: none;
+        }
+
+        .cursor {
+            box-sizing: border-box;
+        }
+
+        p {
+            text-align: end;
+        }
+
+        h1 {
+            padding: 0;
+            margin: 0;
+            max-width: 60%;
+            font-size: 3.5em;
+        }
+    </style>
+</Layout>
