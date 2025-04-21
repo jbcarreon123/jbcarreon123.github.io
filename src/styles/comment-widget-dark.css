@@ -113,6 +113,8 @@
     max-width: 90vw;
     display: inline-block;
     text-align: left;
+    z-index: 1;
+    position: relative;
 }
 
 .c-input {
@@ -138,6 +140,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 2;
+    position: relative;
 }
 #c_submit #c_replyingText {
     padding-right: 6px;

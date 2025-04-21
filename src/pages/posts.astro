@@ -47,7 +47,7 @@ const postSorted = posts.sort((a, b) => {
         text-overflow: ellipsis;
     }
 
-    .post:hover, .post *:hover {
+    .post:hover, .post:has(*:hover) {
         background: var(--altbg);
     }
 
