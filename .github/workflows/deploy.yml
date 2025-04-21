@@ -35,7 +35,7 @@ jobs:
           BASE_PATH: '/${{ github.event.repository.name }}'
           NEKOWEB_APIKEY: '${{ secrets.NEKOWEB_APIKEY }}'
           NEKOWEB_COOKIE: '${{ secrets.NEKOWEB_COOKIE }}'
-          COMMIT_HASH: '${{ steps.commit.outputs.short }}'
+          COMMIT_HASH: '<a href="https://github.com/jbcarreon123/jbcarreon123.github.io/commit/${{ steps.commit.outputs.hash }}">${{ steps.commit.outputs.short }}</a>'
         run: bun run build
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3

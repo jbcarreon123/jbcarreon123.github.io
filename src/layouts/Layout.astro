@@ -84,7 +84,7 @@ const hash = import.meta.env.COMMIT_HASH ?? 'null';
 					<footer transition:persist transition:animate="none">
 						<div class="sec">
 							<p class="small">
-								jbsite4@{version}/{hash} © 2025 jbcarreon123. All rights
+								jbsite4@{version}/<p set:html={hash}></p> © 2025 jbcarreon123. All rights
 								reserved.
 							</p>
 							<p class="small">
