@@ -316,5 +316,11 @@
         "title": "Pudding's Cove",
         "alt": "puddingpudd",
         "imgUrl": "https://puddingpudd.com/buttons/Pudd_Button.gif"
+    },
+    {
+        "url": "https://cathaks.nekoweb.org",
+        "title": "cathaks' voidway",
+        "alt": "cathaks",
+        "imgUrl": "https://cathaks.nekoweb.org/sitebutton.png"
     }
 ]
