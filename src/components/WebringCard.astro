@@ -1,0 +1,45 @@
+---
+const { name, link, prev, next, random } = Astro.props;
+---
+
+<div class="webring-card">
+    <a href={link}>
+        <p>{name}</p>
+    </a>
+    <div class="webring-links">
+        <a href={prev} aria-label="previous site">
+            <span class="ms">keyboard_double_arrow_left</span>
+        </a>
+        {random && <a href={random} aria-label="random site">
+            <span class="ms">shuffle</span>
+        </a>}
+        <a href={next} aria-label="next site">
+            <span class="ms">keyboard_double_arrow_right</span>
+        </a>
+    </div>
+</div>
+
+<style>
+    .webring-card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 6px;
+        font-size: 1.75rem;
+        font-weight: 700;
+        
+        a:has(p) {
+            max-width: 70%;
+            
+            p {
+                font-size: 0.85em;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+                overflow:hidden;
+                text-wrap-mode: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+</style>

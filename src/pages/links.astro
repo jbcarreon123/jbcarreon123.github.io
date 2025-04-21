@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Buttons from '../components/SiteButtons.astro'
 import { Image } from 'astro:assets';
 import { Code } from 'astro-expressive-code/components';
+import WebringCard from '../components/WebringCard.astro';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 
@@ -48,6 +49,26 @@ const oldsitebtns = [
     <h2>Webrings</h2>
     <div id="webrings">
         <div>
+            <WebringCard
+                name="Bucket Webring"
+                link="https://webring.bucketfish.me/"
+                prev="https://webring.bucketfish.me/redirect.html?to=prev&name=jbcarreon123"
+                next="https://webring.bucketfish.me/redirect.html?to=next&name=jbcarreon123"
+                random="https://webring.bucketfish.me/redirect.html?to=random&name=jbcarreon123"
+            ></WebringCard>
+        </div>
+
+        <div>
+            <WebringCard
+                name="No AI Webring"
+                link="https://baccyflap.com/noai"
+                prev="https://baccyflap.com/noai/?prv&s=jcr"
+                next="https://baccyflap.com/noai/?nxt&s=jcr"
+                random="https://baccyflap.com/noai/?rnd"
+            ></WebringCard>
+        </div>
+
+        <div>
             <div id='FCWL'>
                 <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/onionring-variables.js"></script>
                 <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/widgets/philippines.js"></script>
@@ -72,19 +93,6 @@ const oldsitebtns = [
         <div>
             <script is:inline data-astro-rerun nonce="webring" src="https://jbcarreon123.nekoweb.org/webrings/ssgring/pmoring.js"></script>
         </div>
-    
-        <div>
-            <iframe id="bucket-webring" style="width: 100%; height: 3rem; border: none;" src="https://webring.bucketfish.me/embed.html?name=jbcarreon123"></iframe> 
-        </div>
-
-        <div>
-            <div>
-                <a href="https://baccyflap.com/noai/?prv&s=jcr" target="_top">« prev</a> |
-                <a href="https://baccyflap.com/noai" target="_blank">no ai webring</a>
-                <a style="font-size:60%" href="https://baccyflap.com/noai/?rnd" target="_top">(random)</a> |
-                <a href="https://baccyflap.com/noai/?nxt&s=jcr" target="_top">next »</a>
-            </div>
-        </div> 
 
         <div>
             <div id='focusfirst-webring'>
@@ -101,7 +109,7 @@ const oldsitebtns = [
         <div>
             <webring-container>
                 <config key="type" value="gruvbox-dark"></config>
-                <config key="font" value="Inter, Overused Grotesk, Arial, sans-serif"></config>
+                <config key="font" value="var(--font)"></config>
                 <config key="fill" value="true"></config>
             
                 <script is:inline data-astro-rerun nonce="webring" src="https://palette.nekoweb.org/webring.js" onload="document.querySelector('webring-container').style.width = null"></script>

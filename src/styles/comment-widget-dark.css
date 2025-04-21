@@ -70,7 +70,7 @@
     background-color: var(--acc);
     color: var(--link);
     border: none;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font);
     font-size: 1.125rem;
 }
 
@@ -81,7 +81,7 @@
     background-color: var(--altbg);
     color: var(--link);
     border: none;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font);
     font-size: 1.125rem;
 }
 #c_widget button:hover, #c_widget input[type=submit]:hover {
