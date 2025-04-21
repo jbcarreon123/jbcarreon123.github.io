@@ -27,7 +27,7 @@ export default {
                     <a href="//{prev.host}">
                     <div class="item">
                         <div class="title">
-                            <p>{prev.title}</p>
+                            <p id="prev-title">{prev.title}</p>
                         </div>
                         <div class="fallback-img">
                             <div class="img" style="--img:url({prev.expression})"></div>
@@ -36,7 +36,7 @@ export default {
                     </a>
                     <div class="item">
                         <div class="title">
-                            <p>{item.title}</p>
+                            <p id="title">{item.title}</p>
                         </div>
                         <div class="fallback-img">
                             <div class="img" style="--img:url({item.expression})"></div>
@@ -92,7 +92,7 @@ export default {
         margin: 0;
         text-shadow: #fff 1px 1px 2px;
         font-weight: 600;
-        color: #634c53;
+        color:rgb(156, 121, 132);
     }
 
     .not p {
