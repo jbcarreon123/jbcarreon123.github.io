@@ -92,7 +92,7 @@ export default {
         margin: 0;
         text-shadow: #fff 1px 1px 2px;
         font-weight: 600;
-        color:rgb(156, 121, 132);
+        color:rgb(75, 56, 62);
     }
 
     .not p {
