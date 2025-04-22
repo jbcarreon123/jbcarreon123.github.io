@@ -7,6 +7,7 @@
         "@astrojs/mdx": "^4.2.3",
         "@astrojs/rss": "^4.0.11",
         "@astrojs/svelte": "^7.0.9",
+        "@catamphetamine/id3js": "^1.0.2",
         "@indiefellas/astro-adapter-nekoweb": "^1.1.0",
         "@kindspells/astro-shield": "^1.7.1",
         "@tailwindcss/vite": "^4.0.17",
@@ -58,6 +59,8 @@
     "@babel/parser": ["@babel/parser@7.27.0", "", { "dependencies": { "@babel/types": "^7.27.0" }, "bin": "./bin/babel-parser.js" }, "sha512-iaepho73/2Pz7w2eMS0Q5f83+0RKI7i4xmiYeBmDzfRVbQtTOG7Ts0S4HzJVsTMGI9keU8rNfuZr8DKfSt7Yyg=="],
 
     "@babel/types": ["@babel/types@7.27.0", "", { "dependencies": { "@babel/helper-string-parser": "^7.25.9", "@babel/helper-validator-identifier": "^7.25.9" } }, "sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg=="],
+
+    "@catamphetamine/id3js": ["@catamphetamine/id3js@1.0.2", "", { "dependencies": { "node-fetch": "^3.3.1" } }, "sha512-ya/zpsIJhksU3RY262GVJEqxDomof3tUCTC2E93Pz92iQOV1H5pz/6+OOsLf5ofBDBCwwGi8PGFHEofVwhNWSw=="],
 
     "@ctrl/tinycolor": ["@ctrl/tinycolor@4.1.0", "", {}, "sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ=="],
 

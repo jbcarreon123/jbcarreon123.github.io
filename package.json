@@ -12,6 +12,7 @@
     "@astrojs/mdx": "^4.2.3",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/svelte": "^7.0.9",
+    "@catamphetamine/id3js": "^1.0.2",
     "@indiefellas/astro-adapter-nekoweb": "^1.1.0",
     "@kindspells/astro-shield": "^1.7.1",
     "@tailwindcss/vite": "^4.0.17",
