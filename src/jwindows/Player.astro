@@ -19,8 +19,19 @@ const music = await loadMusic();
                 audio.load();
                 audio.play();
                 document.querySelector('[data-way="playpause"]').innerHTML = 'pause';
-                document.querySelector('.np-container #title').textContent = el.dataset.title;
-                document.querySelector('.np-container #artist').textContent = el.dataset.artist;
+                document.querySelector('.np-container #trackTitle').textContent = el.dataset.title;
+                document.querySelector('.np-container #trackArtist').textContent = el.dataset.artist;
+                document.querySelector('.np-container #trackArt').src = `/music/art-${el.dataset.value.replace('.mp3', '.jpg')}`;
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        album: el.dataset.album,
+                        artist: el.dataset.artist,
+                        title: el.dataset.title,
+                        artwork: [
+                            { src: `/music/art-${el.dataset.value.replace('.mp3', '.jpg')}`, sizes: '720x720', type: 'image/jpg' },
+                        ]
+                    })
+                }
                 document.querySelectorAll(".playlist .select").forEach((el) => {
                     el.classList.remove("selected");
                 });
@@ -56,8 +67,19 @@ const music = await loadMusic();
                 audio.load();
                 audio.play();
                 document.querySelector('[data-way="playpause"]').innerHTML = 'pause';
-                document.querySelector('.np-container #title').textContent = prevTag.dataset.title;
-                document.querySelector('.np-container #artist').textContent = prevTag.dataset.artist;
+                document.querySelector('.np-container #trackTitle').textContent = prevTag.dataset.title;
+                document.querySelector('.np-container #trackArtist').textContent = prevTag.dataset.artist;
+                document.querySelector('.np-container #trackArt').src = `/music/art-${prevTag.dataset.value.replace('.mp3', '.jpg')}`;
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        album: prevTag.dataset.album,
+                        artist: prevTag.dataset.artist,
+                        title: prevTag.dataset.title,
+                        artwork: [
+                            { src: `/music/art-${prevTag.dataset.value.replace('.mp3', '.jpg')}`, sizes: '720x720', type: 'image/jpg' },
+                        ]
+                    })
+                }
                 document.querySelectorAll(".playlist .select").forEach((el) => {
                     el.classList.remove("selected");
                 });
@@ -68,8 +90,19 @@ const music = await loadMusic();
                 audio.load();
                 audio.play();
                 document.querySelector('[data-way="playpause"]').innerHTML = 'pause';
-                document.querySelector('.np-container #title').textContent = nextTag.dataset.title;
-                document.querySelector('.np-container #artist').textContent = nextTag.dataset.artist;
+                document.querySelector('.np-container #trackTitle').textContent = nextTag.dataset.title;
+                document.querySelector('.np-container #trackArtist').textContent = nextTag.dataset.artist;
+                document.querySelector('.np-container #trackArt').src = `/music/art-${nextTag.dataset.value.replace('.mp3', '.jpg')}`;
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        album: nextTag.dataset.album,
+                        artist: nextTag.dataset.artist,
+                        title: nextTag.dataset.title,
+                        artwork: [
+                            { src: `/music/art-${nextTag.dataset.value.replace('.mp3', '.jpg')}`, sizes: '720x720', type: 'image/jpg' },
+                        ]
+                    })
+                }
                 document.querySelectorAll(".playlist .select").forEach((el) => {
                     el.classList.remove("selected");
                 });
@@ -86,22 +119,27 @@ const music = await loadMusic();
     </div>
     <div class="floating-window-content">
         <div class="np-container">
-            <h2 id="title">{music[0].info?.title}</h2>
-            <p id="artist">{music[0].info?.artist}</p>
-            <h3 class="controls">
-                <span class="ms" data-way="prev" onclick="changeAudio(this)">skip_previous</span>
-                <span class="ms" data-way="playpause" onclick="changeAudio(this)">play_arrow</span>
-                <span class="ms" data-way="next" onclick="changeAudio(this)">skip_next</span>
-            </h3>
+            <div>
+                <img id="trackArt" src=`/music/art-${music[0].name.replace('.mp3', '.jpg')}` />
+            </div>
+            <div>
+                <h2 id="trackTitle">{music[0].info?.title}</h2>
+                <p id="trackArtist">{music[0].info?.artist}</p>
+                <h3 class="controls">
+                    <span class="ms" data-way="prev" onclick="changeAudio(this)">skip_previous</span>
+                    <span class="ms" data-way="playpause" onclick="changeAudio(this)">play_arrow</span>
+                    <span class="ms" data-way="next" onclick="changeAudio(this)">skip_next</span>
+                </h3>
+                <audio id="player" title={music[0].info?.title} onended="changeAudio(this)">
+                    <source src={"/music/" + music[0].name} />
+                </audio>
+            </div>
         </div>
         <div class="select-container playlist">
             {
-                music.map((val) => <div class="select" data-prevtrack={music[music.indexOf(val) - 1]?.name} data-nexttrack={music[music.indexOf(val) + 1]?.name} data-title={val.info?.title} data-artist={val.info?.artist} data-value={val.name}>{val.info?.title} by {val.info?.artist}</div>)
+                music.map((val) => <div class="select" data-prevtrack={music[music.indexOf(val) - 1]?.name} data-nexttrack={music[music.indexOf(val) + 1]?.name} data-title={val.info?.title} data-artist={val.info?.artist} data-album={val.info?.album} data-value={val.name}>{val.info?.title} by {val.info?.artist}</div>)
             }
         </div>
-        <audio id="player" title={music[0].info?.title} onended="changeAudio(this)">
-            <source src={"/music/" + music[0].name} />
-        </audio>
     </div>
 </div>
 
@@ -112,11 +150,18 @@ const music = await loadMusic();
     }
 
     .np-container {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
         padding: 6px;
 
         * {
             padding:0;
             margin: 0;
+        }
+
+        img {
+            width: 96px;
         }
     }
 
