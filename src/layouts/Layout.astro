@@ -24,7 +24,7 @@ const hash = import.meta.env.COMMIT_HASH ?? 'null';
 				console.log('loading tooltip event listener');
 				let tooltip = document.querySelector('.hover--tooltip');
 				document.querySelectorAll("[title]").forEach((el) => {
-					if (!el.title) return;
+					if (!el.title && el.dataset.title) return;
 					el.addEventListener('mousemove', (mev) => {
 						tooltip?.style.setProperty('--x', mev.clientX + 'px');
 						tooltip?.style.setProperty('--y', mev.clientY + 'px');

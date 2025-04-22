@@ -1,0 +1,11 @@
+{
+    "name": "jRing",
+    "description": "jb's meta webring. used to showcase simple-webring-redirect.",
+    "url": "//jbcarreon123.nekoweb.org/webrings/jring",
+    "members": [
+        {
+            "username": "jbcarreon123",
+            "url": "//jbcarreon123.nekoweb.org"
+        }
+    ]
+}

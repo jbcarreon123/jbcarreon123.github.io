@@ -1,0 +1,92 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Code } from 'astro-expressive-code/components';
+import WebringData from "../../../public/webrings/yamring/swr.json";
+---
+
+<Layout
+    title="YAMring"
+    description="Yet another meta webring"
+    id="yamring"
+>
+    <h1>YAMring</h1>
+    <p>Yet another meta webring to showcase simple-webring-redirect.</p>
+    <h2>Guidelines</h2>
+    <p>This webring's guidelines is very lax but just don't be a dick.</p>
+
+    <h2>Wanna join?</h2>
+    <p>
+        Contact JB at <code>@jbcarreon123</code> on Discord (if you are on the Nekoweb
+        discord, and recommended!), or <code>jbcarreon212@gmail.com</code> on email
+        (make sure your email's title is jring and mark it as important!)
+    </p>
+    <p>Tell me your:</p>
+    <ul class="list-disc pl-12">
+        <li>
+            <p>name (Username, no spaces or special chars please!)</p>
+        </li>
+        <li>
+            <p>Your site URL</p>
+        </li>
+    </ul>
+    <p>
+        and wait. I'm gonna add you and notify you via the method you've used.
+    </p>
+
+    <h2>Webring widget</h2>
+    <p>
+        This webring uses the server-side simple-webring-redirect server, so here's the webring permalinks:
+    </p>
+    <ul class="list-disc pl-12">
+        <li>
+            <p>
+                Previous: <code
+                    >https://jb.is-a.dev/wr/jring?name=[YOUR_USERNAME]&way=prev</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Next: <code
+                    >https://jb.is-a.dev/wr/jring?name=[YOUR_USERNAME]&way=next</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Random: <code
+                    >https://jb.is-a.dev/wr/jring?way=rand</code>
+            </p>
+        </li>
+    </ul>
+    <p>Just replace <code>[YOUR_USERNAME]</code> to your username given.</p>
+
+    <h2>Members</h2>
+    <div class="members">
+        {
+            WebringData.members.map((mem) => <a href={mem.url}>
+                {mem.username}
+            </a>)
+        }
+    </div>
+
+    <h2>Other webrings!</h2>
+    <div>
+        <iframe
+            width="180"
+            height="180"
+            style="border:none"
+            src="https://evehibi.nekoweb.org/ringlink/"
+            name="ringlink"></iframe>
+    </div>
+
+    <style>
+        div {
+            background-color: var(--acc);
+            padding: 12px;
+        }
+
+        .members {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</Layout>
