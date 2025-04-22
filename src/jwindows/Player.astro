@@ -107,6 +107,10 @@ function r(str: any) {
                 }
                 break;
             case "prev":
+                if (audio.currentTime > 2) {
+                    audio.currentTime = 0;
+                    break;
+                }
                 audio.querySelector('source').src = '/music/' + prev;
                 audio.load();
                 document.querySelector('input#prog').value = 0;
@@ -160,9 +164,15 @@ function r(str: any) {
     }
 
     function timeUpdate(el) {
-        document.querySelector('#pos').textContent = toHHMMSS(el.currentTime);
-        document.querySelector('#rem').textContent = "-" + toHHMMSS(el.duration - el.currentTime);
-        document.querySelector('input#prog').value = (el.currentTime / el.duration) * 100;
+        document.querySelector('#pos').textContent = toHHMMSS(el.currentTime || 0);
+        document.querySelector('#rem').textContent = "-" + toHHMMSS((el.duration || 0) - (el.currentTime || 0));
+        document.querySelector('input#prog').value = ((el.currentTime || 0) / (el.duration || 0)) * 100;
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setPositionState({
+                duration: Math.round(el.duration || 0),
+                position: Math.round(el.currentTime || 0)
+            })
+        }
     }
 
     function progUpdate(el) {
