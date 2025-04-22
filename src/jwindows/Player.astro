@@ -3,6 +3,10 @@ import { loadMusic } from "../assets/loadMusic";
 import { fromPath } from '@catamphetamine/id3js/node';
 
 const music = await loadMusic();
+
+function r(str: any) {
+    return str.replace(/[^a-zA-Z0-9\s\-_.,!?;:'"\/\\()\[\]{}<>]/g, '').trim();
+}
 ---
 
 <script is:inline>
@@ -35,6 +39,7 @@ const music = await loadMusic();
                 document.querySelector('.np-container #trackTitle').textContent = el.dataset.title;
                 document.querySelector('.np-container #trackArtist').textContent = el.dataset.artist;
                 document.querySelector('.np-container #trackArt').src = `/music/art-${el.dataset.value.replace('.mp3', '.jpg')}`;
+                document.querySelector('.np-container #trackArt').dataset.title = el.dataset.album;
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
                         album: el.dataset.album,
@@ -110,6 +115,7 @@ const music = await loadMusic();
                 document.querySelector('.np-container #trackTitle').textContent = prevTag.dataset.title;
                 document.querySelector('.np-container #trackArtist').textContent = prevTag.dataset.artist;
                 document.querySelector('.np-container #trackArt').src = `/music/art-${prevTag.dataset.value.replace('.mp3', '.jpg')}`;
+                document.querySelector('.np-container #trackArt').dataset.title = prevTag.dataset.album;
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
                         album: prevTag.dataset.album,
@@ -133,6 +139,7 @@ const music = await loadMusic();
                 document.querySelector('[data-way="playpause"]').innerHTML = 'pause';
                 document.querySelector('.np-container #trackTitle').textContent = nextTag.dataset.title;
                 document.querySelector('.np-container #trackArtist').textContent = nextTag.dataset.artist;
+                document.querySelector('.np-container #trackArt').dataset.title = nextTag.dataset.album;
                 document.querySelector('.np-container #trackArt').src = `/music/art-${nextTag.dataset.value.replace('.mp3', '.jpg')}`;
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
@@ -172,7 +179,7 @@ const music = await loadMusic();
     <div class="floating-window-content">
         <div class="np-container">
             <div>
-                <img id="trackArt" src=`/music/art-${music[0].name.replace('.mp3', '.jpg')}` />
+                <img id="trackArt" title={r(music[0].info?.album)} src=`/music/art-${music[0].name.replace('.mp3', '.jpg')}` />
             </div>
             <div class="trackContainer">
                 <div>
@@ -207,7 +214,13 @@ const music = await loadMusic();
         </div>
         <div class="select-container playlist">
             {
-                music.map((val) => <div class="select" data-prevtrack={music[music.indexOf(val) - 1]?.name} data-nexttrack={music[music.indexOf(val) + 1]?.name} data-title={val.info?.title} data-artist={val.info?.artist} data-album={val.info?.album} data-value={val.name}>{val.info?.title} by {val.info?.artist}</div>)
+                music.map((val) => <div class="select"
+                data-prevtrack={music[music.indexOf(val) - 1]?.name}
+                data-nexttrack={music[music.indexOf(val) + 1]?.name}
+                data-title={r(val.info?.title)}
+                data-artist={r(val.info?.artist)}
+                data-album={r(val.info?.album)}
+                data-value={val.name}>{val.info?.title} by {val.info?.artist}</div>)
             }
         </div>
     </div>
@@ -217,6 +230,8 @@ const music = await loadMusic();
     .playlist {
         grid-template-columns: repeat(1, minmax(6px, 1fr));
         gap:3px;
+        max-height: 250px;
+        overflow: auto;
     }
 
     .np-container {
@@ -292,5 +307,11 @@ const music = await loadMusic();
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+    }
+
+    .floating-window-content {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
     }
 </style>
