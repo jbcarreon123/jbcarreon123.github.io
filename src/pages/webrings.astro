@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import WebringCard from '../components/WebringCard.astro';
+---
+
+<Layout title="Webrings" id="webring">
+    <h1>Webrings</h1>
+    <p>Moved the webrings page into another page because its getting larger</p>
+    <div id="webrings">
+        <div>
+            <WebringCard
+                name="Bucket Webring"
+                link="https://webring.bucketfish.me/"
+                prev="https://webring.bucketfish.me/redirect.html?to=prev&name=jbcarreon123"
+                next="https://webring.bucketfish.me/redirect.html?to=next&name=jbcarreon123"
+                random="https://webring.bucketfish.me/redirect.html?to=random&name=jbcarreon123"
+            ></WebringCard>
+        </div>
+
+        <div>
+            <WebringCard
+                name="No AI Webring"
+                link="https://baccyflap.com/noai"
+                prev="https://baccyflap.com/noai/?prv&s=jcr"
+                next="https://baccyflap.com/noai/?nxt&s=jcr"
+                random="https://baccyflap.com/noai/?rnd"
+            ></WebringCard>
+        </div>
+
+        <div>
+            <WebringCard
+                name="YAMring"
+                link="/webrings/yamring"
+                prev="https://jb.is-a.dev/wr/yamring?way=prev&name=jbcarreon123"
+                next="https://jb.is-a.dev/wr/yamring?way=next&name=jbcarreon123"
+                random="https://jb.is-a.dev/wr/yamring?way=rand"
+            ></WebringCard>
+        </div>
+
+        <div>
+            <div id='FCWL'>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/onionring-variables.js"></script>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://beaus-silly-folder.nekoweb.org/my-webrings/FCWL/widgets/philippines.js"></script>
+            </div>
+        </div>
+
+        <div>
+            <div id="the-webring-webring">
+                <script type="text/javascript" src="https://skylerzap.com/webring-webring/onionring-variables.js"></script>
+                <script type="text/javascript" src="https://skylerzap.com/webring-webring/onionring-widget.js"></script>
+            </div>
+        </div>
+
+        <div style="height: 200px;">
+            <div id="rice-ring">
+                <link rel="stylesheet" href="https://terakun.nekoweb.org/ricepaddy/webring.css"> 
+                <script is:inline data-astro-rerun type="text/javascript" src="https://terakun.nekoweb.org/ricepaddy/webring-variables.js"></script>
+                <script is:inline data-astro-rerun type="text/javascript" src="https://terakun.nekoweb.org/ricepaddy/webring-widget.js"></script>
+            </div>
+        </div>
+
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" src="https://jbcarreon123.nekoweb.org/webrings/ssgring/pmoring.js"></script>
+        </div>
+
+        <div>
+            <div id='focusfirst-webring'>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://www.beepbird.net/webring/onionring-variables.js"></script>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://www.beepbird.net/webring/onionring-widget.js"></script>
+                <noscript><a href='https://www.beepbird.net/index.html'><Image src="https://www.beepbird.net/webring/focusfirst.png" alt="Focus First Index" width="88px" height="31px"></a></noscript>
+            </div>
+        </div>
+    
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" src="https://astracelestine.nekoweb.org/webring/tropical-rice-bowl/widgettext.js"></script>
+        </div>
+    
+        <div>
+            <webring-container>
+                <config key="type" value="gruvbox-dark"></config>
+                <config key="font" value="var(--font)"></config>
+                <config key="fill" value="true"></config>
+            
+                <script is:inline data-astro-rerun nonce="webring" src="https://palette.nekoweb.org/webring.js" onload="document.querySelector('webring-container').style.width = null"></script>
+            </webring-container>
+        </div>
+    
+        <div>
+            <div id='nekowebring'>
+                <link rel="stylesheet" href="https://webring.nekoweb.org/onionring.css">
+                <script is:inline data-astro-rerun type="text/javascript" src="https://webring.nekoweb.org/onionring-variables.js"></script>
+                <script is:inline data-astro-rerun type="text/javascript" src="https://webring.nekoweb.org/onionring-widget.js"></script>
+            </div>
+        </div>
+    
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" defer src="https://mechagic.party/1stylescripts/gitgudring.js"></script>
+        </div>
+    
+        <div>
+            <div id="apartment-webring">
+                <link rel="stylesheet" href="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-style.css">
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-variables.js"></script>
+                <script is:inline data-astro-rerun nonce="webring" type="text/javascript" src="https://darkosparko.nekoweb.org/webrings/apartments-webring/apartment-webring-widget.js"></script>
+            </div>
+        </div> 
+
+        <div>
+            <script is:inline data-astro-rerun nonce="webring" src="https://jbcarreon123.nekoweb.org/webrings/responeko/pmoring.js"></script>
+        </div>
+    </div>
+
+    <style is:inline>
+        #webrings {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(100px, 1fr));
+            gap: 6px;
+        }
+
+        #webrings > * {
+            background-color: var(--acc);
+            padding: 6px;
+        }
+
+        #webring > div {
+            max-width: inherit;
+        }
+
+        #webring div > * {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        @media (width <= 640px) {
+            #webrings {
+                grid-template-columns: repeat(1, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</Layout>
