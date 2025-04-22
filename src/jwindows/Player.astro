@@ -9,6 +9,19 @@ const music = await loadMusic();
     document.addEventListener("DOMContentLoaded", loadPlayer);
     document.addEventListener("astro:after-swap", loadPlayer);
 
+    function toHHMMSS(str) {
+        var sec_num = parseInt(str, 10); // don't forget the second param
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+        if (hours   < 10) {hours   = hours;}
+        if (minutes < 10) {minutes = minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        return (hours > 0 ? hours+':' : '')+minutes+':'+seconds;
+    }
+
+
     function loadPlayer() {
         let audio = document.querySelector('audio#player');
 
@@ -39,7 +52,21 @@ const music = await loadMusic();
             });
         });
 
+        document.querySelector('input#prog').value = 0;
         document.querySelector('.playlist .select').classList.add('selected');
+
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setActionHandler('nexttrack', () => changeAudio({ dataset: { way: 'next' } }))
+            navigator.mediaSession.setActionHandler('previoustrack', () => changeAudio({ dataset: { way: 'prev' } }))
+        }
+    }
+
+    function playPause(play) {
+        if (play) {
+            document.querySelector('[data-way="playpause"]').innerHTML = 'play_arrow';
+        } else {
+            document.querySelector('[data-way="playpause"]').innerHTML = 'pause';
+        }
     }
 
     function changeAudio(el) {
@@ -51,12 +78,24 @@ const music = await loadMusic();
         let prevTag = document.querySelector(`[data-value="${prev}"]`);
         let nextTag = document.querySelector(`[data-value="${next}"]`);
 
-        console.log(el);
+        if (!el) {
+            el = document.querySelector('[data-way="playpause"]');
+        }
         switch (el.dataset.way) {
             case "playpause":
                 if (el.innerHTML === 'play_arrow') {
                     audio.play();
                     el.innerHTML = 'pause';
+                    if ('mediaSession' in navigator) {
+                        navigator.mediaSession.metadata = new MediaMetadata({
+                            album: tag.dataset.album,
+                            artist: tag.dataset.artist,
+                            title: tag.dataset.title,
+                            artwork: [
+                                { src: `/music/art-${tag.dataset.value.replace('.mp3', '.jpg')}`, sizes: '720x720', type: 'image/jpg' },
+                            ]
+                        })
+                    }
                 } else {
                     audio.pause();
                     el.innerHTML = 'play_arrow';
@@ -65,6 +104,7 @@ const music = await loadMusic();
             case "prev":
                 audio.querySelector('source').src = '/music/' + prev;
                 audio.load();
+                document.querySelector('input#prog').value = 0;
                 audio.play();
                 document.querySelector('[data-way="playpause"]').innerHTML = 'pause';
                 document.querySelector('.np-container #trackTitle').textContent = prevTag.dataset.title;
@@ -88,6 +128,7 @@ const music = await loadMusic();
             default:
                 audio.querySelector('source').src = '/music/' + next;
                 audio.load();
+                document.querySelector('input#prog').value = 0;
                 audio.play();
                 document.querySelector('[data-way="playpause"]').innerHTML = 'pause';
                 document.querySelector('.np-container #trackTitle').textContent = nextTag.dataset.title;
@@ -110,6 +151,17 @@ const music = await loadMusic();
                 break;
         }
     }
+
+    function timeUpdate(el) {
+        document.querySelector('#pos').textContent = toHHMMSS(el.currentTime);
+        document.querySelector('#rem').textContent = "-" + toHHMMSS(el.duration - el.currentTime);
+        document.querySelector('input#prog').value = (el.currentTime / el.duration) * 100;
+    }
+
+    function progUpdate(el) {
+        let audio = document.querySelector('audio#player');
+        audio.currentTime = (el.value / 100) * audio.duration;
+    }
 </script>
 
 <div class="floating-window" id="player">
@@ -122,15 +174,33 @@ const music = await loadMusic();
             <div>
                 <img id="trackArt" src=`/music/art-${music[0].name.replace('.mp3', '.jpg')}` />
             </div>
-            <div>
-                <h2 id="trackTitle">{music[0].info?.title}</h2>
-                <p id="trackArtist">{music[0].info?.artist}</p>
-                <h3 class="controls">
-                    <span class="ms" data-way="prev" onclick="changeAudio(this)">skip_previous</span>
-                    <span class="ms" data-way="playpause" onclick="changeAudio(this)">play_arrow</span>
-                    <span class="ms" data-way="next" onclick="changeAudio(this)">skip_next</span>
-                </h3>
-                <audio id="player" title={music[0].info?.title} onended="changeAudio(this)">
+            <div class="trackContainer">
+                <div>
+                    <h2 id="trackTitle">{music[0].info?.title}</h2>
+                    <p id="trackArtist">{music[0].info?.artist}</p>
+                </div>
+                <div class="rangeContainer">
+                    <input type="range" id="prog" value="0" min="0" max="100" aria-label="Current progress of the music" oninput="progUpdate(this)" />
+                </div>
+                <div class="controlContainer">
+                    <p class="controls">
+                        <span class="ms" data-way="prev" onclick="changeAudio(this)">skip_previous</span>
+                        <span class="ms" data-way="playpause" onclick="changeAudio(this)">play_arrow</span>
+                        <span class="ms" data-way="next" onclick="changeAudio(this)">skip_next</span>        
+                    </p>
+                    <p class="controls">
+                        <span id="pos">0:00</span>/<span id="dur">--:--</span> (<span id="rem">-0:00</span>)
+                    </p>
+                </div>
+                <audio
+                    id="player"
+                    title={music[0].info?.title}
+                    onended="changeAudio(this)"
+                    onpause="playPause(true)"
+                    onplay="playPause(false)"
+                    ontimeupdate="timeUpdate(this)"
+                    ondurationchange="document.querySelector('#dur').textContent = toHHMMSS(this.duration)"
+                >
                     <source src={"/music/" + music[0].name} />
                 </audio>
             </div>
@@ -152,8 +222,10 @@ const music = await loadMusic();
     .np-container {
         display: flex;
         flex-direction: row;
+        align-items: center;
         gap: 6px;
         padding: 6px;
+        background: var(--altbg);
 
         * {
             padding:0;
@@ -165,7 +237,60 @@ const music = await loadMusic();
         }
     }
 
-    h3 span.ms {
+    .np-container p span.ms {
         cursor: pointer;
+        font-size: 1.5em;
+        opacity: 0.75;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .rangeContainer {
+        height: 24px;
+    }
+
+    .trackContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+
+        input[type='range'] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: var(--text);
+            outline: none;
+            opacity: 0.75;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                height: 12px;
+                width: 12px;
+                background: var(--link);
+                cursor: pointer;
+            }
+
+            &::-moz-range-thumb {
+                height: 12px;
+                width: 12px;
+                background: var(--link);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .controlContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 </style>
