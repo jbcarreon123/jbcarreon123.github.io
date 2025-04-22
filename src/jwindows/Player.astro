@@ -25,6 +25,18 @@ function r(str: any) {
         return (hours > 0 ? hours+':' : '')+minutes+':'+seconds;
     }
 
+    function overflow() {
+        document.querySelectorAll('.trackTitleContainer *').forEach((el) => {
+            el.classList.remove("overflow");
+            setTimeout(() => {
+                if (el.scrollWidth > 300) {
+                    el.classList.add("overflow");
+                } else {
+                    el.classList.remove("overflow");
+                }
+            }, 500)
+        })
+    }
 
     function loadPlayer() {
         let audio = document.querySelector('audio#player');
@@ -40,6 +52,7 @@ function r(str: any) {
                 document.querySelector('.np-container #trackArtist').textContent = el.dataset.artist;
                 document.querySelector('.np-container #trackArt').src = `/music/art-${el.dataset.value.replace('.mp3', '.jpg')}`;
                 document.querySelector('.np-container #trackArt').dataset.title = el.dataset.album;
+                overflow();
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
                         album: el.dataset.album,
@@ -120,6 +133,7 @@ function r(str: any) {
                 document.querySelector('.np-container #trackArtist').textContent = prevTag.dataset.artist;
                 document.querySelector('.np-container #trackArt').src = `/music/art-${prevTag.dataset.value.replace('.mp3', '.jpg')}`;
                 document.querySelector('.np-container #trackArt').dataset.title = prevTag.dataset.album;
+                overflow();
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
                         album: prevTag.dataset.album,
@@ -145,6 +159,7 @@ function r(str: any) {
                 document.querySelector('.np-container #trackArtist').textContent = nextTag.dataset.artist;
                 document.querySelector('.np-container #trackArt').dataset.title = nextTag.dataset.album;
                 document.querySelector('.np-container #trackArt').src = `/music/art-${nextTag.dataset.value.replace('.mp3', '.jpg')}`;
+                overflow();
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
                         album: nextTag.dataset.album,
@@ -193,8 +208,12 @@ function r(str: any) {
             </div>
             <div class="trackContainer">
                 <div>
-                    <h2 id="trackTitle">{music[0].info?.title}</h2>
-                    <p id="trackArtist">{music[0].info?.artist}</p>
+                    <div class="trackTitleContainer">
+                        <h2 id="trackTitle">{music[0].info?.title}</h2>
+                    </div>
+                    <div class="trackTitleContainer">
+                        <p id="trackArtist">{music[0].info?.artist}</p>
+                    </div>
                 </div>
                 <div class="rangeContainer">
                     <input type="range" id="prog" value="0" min="0" max="100" aria-label="Current progress of the music" oninput="progUpdate(this)" />
@@ -310,6 +329,42 @@ function r(str: any) {
                 background: var(--link);
                 cursor: pointer;
             }
+        }
+
+        .trackTitleContainer {
+            width: 300px;
+            overflow: hidden;
+
+            &:has(.overflow) {
+                height: 34px;
+                position: relative;
+            }
+
+            #trackTitle.overflow, #trackArtist.overflow {
+                position:absolute;
+                animation: mq 12s infinite linear;
+                animation-delay: 1s;
+            }
+
+            * {
+                white-space: nowrap;
+                text-wrap-mode: nowrap;
+            }
+        }
+    }
+
+    @keyframes mq {
+        0% {
+            left: 0%;
+        }
+        33% {
+            left: -200%;
+        }
+        33.01% {
+            left: 200%;
+        }
+        66% {
+            left: 0%;
         }
     }
 
