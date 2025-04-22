@@ -29,7 +29,7 @@ function r(str: any) {
         document.querySelectorAll('.trackTitleContainer *').forEach((el) => {
             el.classList.remove("overflow");
             setTimeout(() => {
-                if (el.scrollWidth > 300) {
+                if (el.scrollWidth > el.parentElement.offsetWidth) {
                     el.classList.add("overflow");
                 } else {
                     el.classList.remove("overflow");
@@ -180,7 +180,9 @@ function r(str: any) {
 
     function timeUpdate(el) {
         document.querySelector('#pos').textContent = toHHMMSS(el.currentTime || 0);
-        document.querySelector('#rem').textContent = "-" + toHHMMSS((el.duration || 0) - (el.currentTime || 0));
+        try {
+            document.querySelector('#rem').textContent = "-" + toHHMMSS((el.duration || 0) - (el.currentTime || 0));
+        } catch {}
         document.querySelector('input#prog').value = ((el.currentTime || 0) / (el.duration || 0)) * 100;
         if ('mediaSession' in navigator) {
             navigator.mediaSession.setPositionState({
@@ -193,6 +195,16 @@ function r(str: any) {
     function progUpdate(el) {
         let audio = document.querySelector('audio#player');
         audio.currentTime = (el.value / 100) * audio.duration;
+    }
+
+    function clickDur(el) {
+        if (el.id === 'dur') {
+            el.id = 'rem'
+        } else {
+            let audio = document.querySelector('audio#player');
+            el.id = 'dur'
+            el.textContent = toHHMMSS(audio.duration || 0);
+        }
     }
 </script>
 
@@ -225,7 +237,7 @@ function r(str: any) {
                         <span class="ms" data-way="next" onclick="changeAudio(this)">skip_next</span>        
                     </p>
                     <p class="controls">
-                        <span id="pos">0:00</span>/<span id="dur">--:--</span> (<span id="rem">-0:00</span>)
+                        <span id="pos">0:00</span>/<span id="dur" onclick="clickDur(this)">--:--</span>
                     </p>
                 </div>
                 <audio
@@ -300,6 +312,7 @@ function r(str: any) {
         flex-direction: column;
         justify-content: space-between;
         width: 100%;
+        overflow: hidden;
 
         input[type='range'] {
             width: 100%;
@@ -332,7 +345,7 @@ function r(str: any) {
         }
 
         .trackTitleContainer {
-            width: 300px;
+            max-width: 300px;
             overflow: hidden;
 
             &:has(.overflow) {
@@ -366,6 +379,10 @@ function r(str: any) {
         66% {
             left: 0%;
         }
+    }
+
+    #rem, #dur {
+        cursor: pointer;
     }
 
     .controlContainer {
