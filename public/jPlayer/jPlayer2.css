@@ -1,0 +1,442 @@
+#jplayer--container {
+    --jplayer-bg: #212529;
+    --jplayer-acc: #1a1b1b;
+    --jplayer-acc2: #303235;
+    --jplayer-text: #f1f3f5;
+    --jplayer-sec: #c5ccd5;
+
+    container-name: jplayer-container;
+    padding: 6px;
+    transition: all 250ms;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    container-type: inline-size;
+    gap: 6px;
+    background: var(--jplayer-bg);
+    color: var(--jplayer-text);
+    font-family: inter, -apple-system, BlinkMacSystemFont, arial, avenir next, avenir, segoe ui, helvetica neue, Cantarell roboto, noto, helvetica, sans-serif; 
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: all 250ms;
+        text-wrap-mode: nowrap;
+    }
+
+    .ms {
+        font-family: 'Material Symbols';
+        font-size: 1.5em;
+        cursor: pointer;
+        vertical-align: bottom;
+        color: var(--jplayer-sec);
+
+        &:hover {
+            color: var(--jplayer-text);
+        }
+    }
+
+    h1 {
+        font-size: 1.75em;
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: var(--jplayer-text);
+        font-family: inter, -apple-system, BlinkMacSystemFont, arial, avenir next, avenir, segoe ui, helvetica neue, Cantarell roboto, noto, helvetica, sans-serif; 
+        text-align: left;
+        font-size: 1em;
+
+        h2 {
+            font-size: 1.2rem;
+        }
+    }
+
+    h2 .ms {
+        font-size: 1em;
+        display: none;
+    }
+
+    .card-background {
+        overflow: hidden;
+        position: absolute;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        z-index: 0;
+
+        img {
+            position: absolute;
+            filter: blur(40px);
+            inset: -25px;
+            margin: auto;
+            width: calc(100% + 80px);
+            opacity: .3;
+            animation: bgmove 30s infinite ease-in-out alternate;
+            object-fit: cover;
+        }
+    }
+
+    .playlist-item:not(.playing) > .card-background {
+        display: none;
+    }
+
+    .album-art-container {
+        height: 48px;
+        aspect-ratio: 1 / 1;
+        background-image: url('/jPlayer2/demo/fallback.png');
+        background-size: cover;
+
+        img {
+            max-height: 48px;
+        }
+    }
+
+    i {
+        color: var(--jplayer-sec)
+    }
+
+    p {
+        max-width: 100%;
+        text-wrap-mode: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    span[data-tracker] {
+        padding: 2px;
+        border-radius: 3px;
+        background-color: var(--jplayer-acc);
+        font-size: 0.85em;
+    }
+
+    #jplayer--playing-card {
+        .now-playing-container {
+            position: relative;
+            background-color: var(--jplayer-acc2);
+        }
+
+        .now-playing-info {
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+            gap: 6px;
+            padding: 6px;
+            position: relative;
+            z-index: 1;
+            max-width: 65%;
+
+            .track-info {
+                max-width: 100%;
+                overflow: hidden;
+
+                & > * {
+                    max-width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        .player-controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: end;
+            position: relative;
+            
+            .controls {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
+                padding: 6px;
+
+                & > * {
+                    flex-basis: 0;
+                }
+
+                div {
+                    flex-grow: 1;
+                    text-align: center;
+                }
+
+                span {
+                    text-align: center;
+                }
+            }
+        }
+
+        .album-art-container {
+            height: 96px;
+            
+            img {
+                max-height: 96px;
+            }
+        }
+
+        .progress {
+            height: 16px;
+
+            input[type='range'] {
+                width: 100%;
+                height: 12px;
+                appearance: none;
+                opacity: 0.7;
+                position: relative;
+                background: var(--jplayer-acc);
+                overflow: hidden;
+
+                color: var(--jplayer-text);
+                --thumb-height: 12px;
+                --track-height: 12px;
+                --track-color: var(--jplayer-acc);
+                --brightness-hover: 180%;
+                --brightness-down: 80%;
+                --clip-edges: 0.125em;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                &:active {
+                    cursor: grabbing;
+                }
+
+                &,
+                &::-webkit-slider-runnable-track,
+                &::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    transition: all ease 100ms;
+                    height: var(--thumb-height);
+                }
+
+                &::-webkit-slider-runnable-track,
+                &::-webkit-slider-thumb {
+                    position: relative;
+                }
+
+                &::-webkit-slider-thumb {
+                    --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+                    --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+                    --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+                    --clip-further: calc(100% + 1px);
+                    --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
+                        100vmax currentColor;
+                
+                    width: var(--thumb-width, var(--thumb-height));
+                    background: linear-gradient(currentColor 0 0) scroll no-repeat left center /
+                        50% calc(var(--track-height) + 1px);
+                    background-color: currentColor;
+                    box-shadow: var(--box-fill);
+                    border-radius: 0;
+                
+                    filter: brightness(100%);
+                    clip-path: polygon(
+                        100% -1px,
+                        var(--clip-edges) -1px,
+                        0 var(--clip-top),
+                        -100vmax var(--clip-top),
+                        -100vmax var(--clip-bottom),
+                        0 var(--clip-bottom),
+                        var(--clip-edges) 100%,
+                        var(--clip-further) var(--clip-further)
+                    );
+                }
+                
+                &:hover::-webkit-slider-thumb {
+                    filter: brightness(var(--brightness-hover));
+                    cursor: grab;
+                }
+                
+                &:active::-webkit-slider-thumb {
+                    filter: brightness(var(--brightness-down));
+                    cursor: grabbing;
+                }
+                
+                &::-webkit-slider-runnable-track {
+                    background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center /
+                        100% calc(var(--track-height) + 1px);
+                }
+                
+                &:disabled::-webkit-slider-thumb {
+                    cursor: not-allowed;
+                }
+                
+                /* === Firefox specific styles === */
+                &,
+                &::-moz-range-track,
+                &::-moz-range-thumb {
+                    appearance: none;
+                    transition: all ease 100ms;
+                    height: var(--thumb-height);
+                }
+                
+                &::-moz-range-track,
+                &::-moz-range-thumb,
+                &::-moz-range-progress {
+                    background: var(--jplayer-acc);
+                }
+                
+                &::-moz-range-thumb {
+                    background: currentColor;
+                    border: 0;
+                    width: var(--thumb-width, var(--thumb-height));
+                    border-radius: 0;
+                    cursor: grab;
+                }
+                
+                &:active::-moz-range-thumb {
+                    cursor: grabbing;
+                }
+                
+                &::-moz-range-track {
+                    width: 100%;
+                    background: var(--track-color);
+                }
+                
+                &::-moz-range-progress {
+                    appearance: none;
+                    background: currentColor;
+                    transition-delay: 30ms;
+                }
+                
+                &::-moz-range-track,
+                &::-moz-range-progress {
+                    height: calc(var(--track-height) + 1px);
+                    border-radius: 0;
+                }
+                
+                &::-moz-range-thumb,
+                &::-moz-range-progress {
+                    filter: brightness(100%);
+                }
+                
+                &:hover::-moz-range-thumb,
+                &:hover::-moz-range-progress {
+                    filter: brightness(var(--brightness-hover));
+                }
+                
+                &:active::-moz-range-thumb,
+                &:active::-moz-range-progress {
+                    filter: brightness(var(--brightness-down));
+                }
+            }
+
+
+        }
+    }
+
+    #jplayer--playlist-card {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        max-height: 350px;
+        overflow: auto;
+
+        .playlist-item {
+            flex-grow: 1;
+            flex: 1;
+            min-width: 33%;
+            flex-shrink: 0;
+            max-width: 100%;
+            overflow: hidden;
+            position: relative;
+            background-color: var(--jplayer-acc2);
+            cursor: pointer;
+
+            .track-info-container {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                min-width: 50%;
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
+                padding: 6px;
+                overflow: hidden;
+                max-width: 100%;
+
+                .track-info {
+                    max-width: inherit;
+                    overflow: hidden;
+
+                    & > * {
+                        max-width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+
+            &:hover {
+                background-color: var(--jplayer-acc);
+
+                .card-background {
+                    opacity: 0.7;
+                }
+            }
+
+            &.playing {
+                background-color: var(--jplayer-acc);
+
+                h2 .ms {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
+
+@container jplayer-container (width < 640px) {
+    .player-controls {
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: baseline !important;
+
+        .controls {
+            justify-content: space-between;
+            width: 100%;
+
+            #sep {
+                display: none;
+            }
+
+            #dur {
+                order: 3;
+            }
+        }
+    }
+
+    #jplayer--playing-card {
+        .album-art-container {
+            height: 64px !important;
+            
+            img {
+                max-height: 64px !important;
+            }
+        }
+
+        .now-playing-info {
+            max-width: 100% !important;
+        }
+    }
+
+    #jplayer--playlist-card {
+        .playlist-item {
+            min-width: 100% !important;
+        }
+    }
+}
+
+@keyframes bgmove {
+    0% {
+        transform: rotate(0deg) scale(100%);
+    }
+    75% {
+        transform: rotate(360deg) scale(150%);
+    }
+}
