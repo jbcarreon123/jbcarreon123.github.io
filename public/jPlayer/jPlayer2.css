@@ -15,7 +15,7 @@
     gap: 6px;
     background: var(--jplayer-bg);
     color: var(--jplayer-text);
-    font-family: inter, -apple-system, BlinkMacSystemFont, arial, avenir next, avenir, segoe ui, helvetica neue, Cantarell roboto, noto, helvetica, sans-serif; 
+    font-family: var(--font), inter, -apple-system, BlinkMacSystemFont, arial, avenir next, avenir, segoe ui, helvetica neue, Cantarell roboto, noto, helvetica, sans-serif; 
 
     * {
         margin: 0;
@@ -45,7 +45,7 @@
         background: none;
         border: none;
         color: var(--jplayer-text);
-        font-family: inter, -apple-system, BlinkMacSystemFont, arial, avenir next, avenir, segoe ui, helvetica neue, Cantarell roboto, noto, helvetica, sans-serif; 
+        font-family: var(--font), inter, -apple-system, BlinkMacSystemFont, arial, avenir next, avenir, segoe ui, helvetica neue, Cantarell roboto, noto, helvetica, sans-serif; 
         text-align: left;
         font-size: 1em;
 
