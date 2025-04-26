@@ -1,12 +1,11 @@
 #jplayer--container {
-    --jplayer-bg: #212529;
-    --jplayer-acc: #1a1b1b;
-    --jplayer-acc2: #303235;
-    --jplayer-text: #f1f3f5;
-    --jplayer-sec: #c5ccd5;
+    --jplayer-bg: var(--bg, #212529);
+    --jplayer-acc: var(--altbg, #1a1b1b);
+    --jplayer-acc2: var(--acc, #303235);
+    --jplayer-text: var(--text, #f1f3f5);
+    --jplayer-sec: var(--sec, #c5ccd5);
 
     container-name: jplayer-container;
-    padding: 6px;
     transition: all 250ms;
     opacity: 1;
     display: flex;
@@ -391,7 +390,7 @@
     }
 }
 
-@container jplayer-container (width < 640px) {
+@container jplayer-container (width < 600px) {
     .player-controls {
         flex-direction: column !important;
         justify-content: center !important;

@@ -12,9 +12,29 @@ const music = await loadMusic();
         <p>jPlayer2</p>
         <p onclick="closeWindow(this)"><span class="ms">close</span></p>
     </div>
-    <div class="floating-window-content">
+    <div class="floating-window-content" transition:persist>
         <player-container id="player" css="/jPlayer/jPlayer2.css" fallback="/imgs/albums/fallback.png">
             {music.map((tr) => <source src={"/music/" + tr} data-art={"/music/" + tr.replace('.it', '.jpg')} />)}
         </player-container>
     </div>
+    <script is:inline>
+        let player = document.querySelector('#player')
+        console.log(player.shadowRoot)
+        if (!player?.shadowRoot) {
+            player.updatePlaylist();
+        }
+    </script>
+
+    <style>
+        .floating-window {
+            width: 65vw;
+            max-width: 750px;
+        }
+
+        @media (width <= 640px) {
+            .floating-window {
+                width: 100%;
+            }
+        }
+    </style>
 </div>

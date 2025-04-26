@@ -7,6 +7,7 @@ import Player from "../jwindows/Player.astro";
     document.addEventListener("DOMContentLoaded", loadEvents);
     document.addEventListener("astro:after-swap", loadEvents);
 
+    /** @param {MouseEvent} mev */
     function clickWindowEvent(mev) {
         let window = mev.target.parentElement.parentElement;
         document.querySelectorAll(".floating-window").forEach((w) => {
