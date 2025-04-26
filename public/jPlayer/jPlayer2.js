@@ -4,7 +4,13 @@
 class jPlayer extends HTMLElement {
     _audioPlayer;
     _trackerPlayer;
-    _playlist;
+    _playlist = [];
+    _playlistSources = [];
+    _observer;
+    _style;
+    _solo = false;
+    _fallback;
+    rendered = false;
 
     /** @type {HTMLElement} */
     #container;
@@ -13,8 +19,7 @@ class jPlayer extends HTMLElement {
     /** @type {HTMLElement} */
     #playlistContainer;
 
-
-    static observedAttributes = ["solo", "id"];
+    static observedAttributes = ["solo", "id", "css", "fallback", "do-tracker-metadata"];
 
     /* 
         Modify this if you want to have a custom widget.
@@ -22,153 +27,177 @@ class jPlayer extends HTMLElement {
      */
     renderLoading() {
         return /* html */`
-            <article>
-                <h1>Please wait... jPlayer2 is loading...</h1>
-                <p id="jplayer--loading-status"></p>
-                <p>Want to remove the thing above? Just remove it on the renderLoading() function.</p>
-            </article>
-        `
+                <article>
+                    <h1>Please wait... jPlayer2 is loading...</h1>
+                    <p id="jplayer--loading-status"></p>
+                    <p>Want to remove the thing above? Just remove it on the renderLoading() function.</p>
+                </article>
+            `;
     }
 
     renderPlaylistItem(track, isFirst, mode) {
         return /* html */ `
-            <button class="playlist-item${isFirst ? ' playing' : ''}"${mode ? ` data-mode=${mode}` : ''} data-src=${track.src} data-art=${track.art}>
-                <div class="track-info-container">
-                    <div class="album-art-container">
-                        <img src="${track.art}" alt="">
-                    </div>
-                    <div class="track-info">
-                        <h2><span class="ms">equalizer</span> ${track.title}</h2>
-                        <p><span>${track.artist}</span> <span ${track.tracker ? 'data-tracker="true"' : ''}>${track.album != '' ? (!track.tracker ? '- ' : ' ') + track.album : ''}</span></p>
-                    </div>
-                </div>
-                <div class="card-background">
-                    <img src="${track.art}" alt="">
-                </div>
-            </button>
-        `;
-    }
-
-    renderPlayingCard() {
-        const currentTrack = this._playlist[0];
-        return /* html */ `
-            <section id="jplayer--playing-card">
-                <div class="now-playing-container">
-                    <div class="player-controls">
-                        <div class="now-playing-info">
-                            <div class="album-art-container">
-                                <img src="${currentTrack?.art}" alt="">
-                            </div>
-                            <div class="track-info">
-                                <h1>${currentTrack?.title}</h1>
-                                <p><span>${currentTrack?.artist}</span> <span ${currentTrack?.tracker ? 'data-tracker="true"' : ''}>${currentTrack?.album != '' ? (!currentTrack?.tracker ? '- ' : ' ') + currentTrack?.album : ''}</span></p>
-                            </div>
+                <button class="playlist-item${isFirst ? ' playing' : ''}"${mode ? ` data-mode=${mode}` : ''} data-src=${track.src} data-art=${track.art}>
+                    <div class="track-info-container">
+                        <div class="album-art-container">
+                            <img loading="lazy" src="${track.art}" alt="">
                         </div>
-                        <div class="controls">
-                            <span id="pos">0:00</span>
-                            <span id="sep">/</span>
-                            <span id="dur">0:00</span>
-                            <div class="center">
-                                ${this._playlist.length > 1 ? `
-                                <button class="ms" id="shuffle">shuffle</button>
-                                <button class="ms" id="prev">skip_previous</button>
-                                ` : ''}
-                                <button class="ms" id="playpause">play_arrow</button>
-                                ${this._playlist.length > 1 ? `
-                                <button class="ms" id="next">skip_next</button>
-                                <button class="ms" id="repeat">repeat</button>
-                                ` : ''}
-                            </div>
+                        <div class="track-info">
+                            <h2><span class="ms">equalizer</span> ${track.title}</h2>
+                            <p><span>${track.artist}</span> ${track.album ? `- <span>${track.album}</span>` : ''} ${mode ? `<span class="mode">${mode}</span>` : ''}</p>
                         </div>
-                    </div>
-                    <div class="progress">
-                        <input type="range" min="0" max="1000000" value="0">
                     </div>
                     <div class="card-background">
-                        <img src="${currentTrack?.art}" alt="">
+                        <img loading="lazy" src="${track.art}" alt="">
+                    </div>
+                </button>
+            `;
+    }
+
+    renderError(title, err) {
+        return /*html*/`
+        <section id="jplayer--playing-card">
+            <div class="now-playing-container">
+                <div class="player-controls">
+                    <div class="now-playing-info">
+                        <div class="track-info error">
+                            <h1>${title}</h1>
+                            <p>${err.message}</p>
+                        </div>
                     </div>
                 </div>
-            </section>
-        `;
+            </div>
+        </section>
+        `
+    }
+
+    renderPlayingCard(paused = false) {
+        const currentTrack = this._playlist[0];
+        return /* html */ `
+                <section id="jplayer--playing-card">
+                    <div class="now-playing-container">
+                        <div class="player-controls">
+                            <div class="now-playing-info">
+                                <div class="album-art-container">
+                                    <img loading="lazy" src="${currentTrack?.art}" alt="">
+                                </div>
+                                <div class="track-info">
+                                    <h1>${currentTrack?.title}</h1>
+                                    <p><span>${currentTrack?.artist}</span> <span ${currentTrack?.tracker ? 'data-tracker="true"' : ''}>${currentTrack?.album != '' ? (!currentTrack?.tracker ? '- ' : ' ') + currentTrack?.album : ''}</span></p>
+                                </div>
+                            </div>
+                            <div class="controls">
+                                <span id="pos">0:00</span>
+                                <span id="sep">/</span>
+                                <span id="dur">0:00</span>
+                                <div class="center">
+                                    ${this._playlist.length > 1 ? `
+                                    <button class="ms" id="shuffle">shuffle</button>
+                                    <button class="ms" id="prev">skip_previous</button>
+                                    ` : ''}
+                                    <button class="ms" id="playpause">${this._paused || paused ? 'play_arrow' : 'pause'}</button>
+                                    ${this._playlist.length > 1 ? `
+                                    <button class="ms" id="next">skip_next</button>
+                                    <button class="ms" id="repeat">repeat</button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <input type="range" min="0" max="1000000" value="0">
+                        </div>
+                        <div class="card-background">
+                            <img loading="lazy" src="${currentTrack?.art}" alt="">
+                        </div>
+                    </div>
+                </section>
+            `;
     }
 
     renderPlaylistCard() {
         return /* html */ `
-            <section id="jplayer--playlist-card" ${this._solo ? 'style="display: none;"' : ''}>
-                ${this._playlist.map(({ html }) => html).join('')}
-            </section>
-        `;
+                <section id="jplayer--playlist-card" style="display: ${this._solo ? 'none' : ''};">
+                    ${this._playlist.length > 0 ?
+                        `${this._playlist.map(({ html }) => html).join('')}` :
+                        `Loading tracks...`
+                    }
+                </section>
+            `;
     }
 
     render() {
         this._shadow.innerHTML = /* html */ `
-            <style>
-                ${!this.rendered ? /* css */ `
-                    #jplayer--container {
-                        display: none;
-                        opacity: 0;
-                        animation: fadein 250ms;
-                    }
-
-                    @keyframes fadein {
-                        from { opacity: 0; }
-                        to   { opacity: 1; }
-                    }
-                ` : ''}
-                ${this._style}
-            </style>
-            <article id="jplayer--container">
-                ${this.renderPlayingCard()}
-                ${this.renderPlaylistCard()}
-            </article>
-        `;
+                <style>
+                    ${!this.rendered ? /* css */ `
+                        #jplayer--container {
+                            display: none;
+                            opacity: 0;
+                            animation: fadein 250ms forwards;
+                        }
+    
+                        @keyframes fadein {
+                            from { opacity: 0; }
+                            to   { opacity: 1; }
+                        }
+                    ` : ''}
+                    ${this._style || ''}
+                </style>
+                <article id="jplayer--container">
+                    ${this.renderPlayingCard()}
+                    ${this.renderPlaylistCard()}
+                </article>
+            `;
 
         this.#container = this._shadow.querySelector('#jplayer--container');
         this.#playingContainer = this.#container.querySelector('#jplayer--playing-card');
         this.#playlistContainer = this.#container.querySelector('#jplayer--playlist-card');
 
-        this.#playlistContainer.querySelectorAll('.playlist-item').forEach((el) => {
+        this.#playlistContainer?.querySelectorAll('.playlist-item').forEach((el) => {
             el.addEventListener('click', () => this.playTrack(el));
-        })
+        });
 
-        this.playTrack(this.#playlistContainer.querySelector('.playlist-item'));
+        // Ensure there's at least one playlist item to play initially
+        if (this.#playlistContainer?.querySelector('.playlist-item')) {
+            this.playTrack(this.#playlistContainer.querySelector('.playlist-item'));
+        }
 
-        let playPause = this.#playingContainer.querySelector('#playpause');
-        playPause.addEventListener('click', () => this.playPause(playPause));
-
-        let next = this.#playingContainer.querySelector('#next');
-        next?.addEventListener('click', () => this.nextTrack());
-
-        let prev = this.#playingContainer.querySelector('#prev');
-        prev?.addEventListener('click', () => this.prevTrack());
-
-        let repe = this.#playingContainer.querySelector('#repeat');
-        repe?.addEventListener('click', () => this.repeat(repe));
-
-        let shuf = this.#playingContainer.querySelector('#shuffle');
-        shuf?.addEventListener('click', () => this.shuffle(shuf));
-
-        let progressBar = this.#playingContainer.querySelector('.progress input[type="range"]');
-        progressBar.addEventListener('input', () => this.progressChanged(progressBar));
+        this.initListeners();
 
         this.rendered = true;
         this.emit('load');
+    }
+
+    initListeners() {
+        const playPause = this.#playingContainer?.querySelector('#playpause');
+        playPause?.addEventListener('click', () => this.playPause(playPause));
+
+        const next = this.#playingContainer?.querySelector('#next');
+        next?.addEventListener('click', () => this.nextTrack());
+
+        const prev = this.#playingContainer?.querySelector('#prev');
+        prev?.addEventListener('click', () => this.prevTrack());
+
+        const repe = this.#playingContainer?.querySelector('#repeat');
+        repe?.addEventListener('click', () => this.repeat(repe));
+
+        const shuf = this.#playingContainer?.querySelector('#shuffle');
+        shuf?.addEventListener('click', () => this.shuffle(shuf));
+
+        const progressBar = this.#playingContainer?.querySelector('.progress input[type="range"]');
+        progressBar?.addEventListener('input', () => this.progressChanged(progressBar));
     }
 
     constructor() {
         super();
         this._internals = this.attachInternals();
         this._shadow = this.attachShadow({ mode: 'open' });
-        this._playlist = [];
-        this._playlistArt = [];
-        /** @type {HTMLSourceElement[]} */
-        this._playlistSources = [];
-        this._observer = new MutationObserver(async () => await this.updatePlaylist())
+        this._observer = new MutationObserver(() => this.updatePlaylist());
         this._audioPlayer = new Audio();
+        this._paused = true;
+
         this._audioPlayer.addEventListener('durationchange', () => this.progress());
         this._audioPlayer.addEventListener('timeupdate', () => this.progress());
         this._audioPlayer.addEventListener('ended', () => this.nextTrack());
-        this._style = this.querySelector('style');
 
         if (typeof ChiptuneJsPlayer !== 'undefined') {
             window['libopenmpt'] = Module;
@@ -183,26 +212,22 @@ class jPlayer extends HTMLElement {
         this._shadow.innerHTML = this.renderLoading();
     }
 
-    emit(type, detail = {}) {
-        let ev = new CustomEvent(`jPlayer2:${type}`, {
-            bubbles: true,
-            detail: detail
-        })
-
-        return this.dispatchEvent(ev);
-    }
-
     connectedCallback() {
-        this._observer.observe(this, { childList: true })
+        this._observer.observe(this, { childList: true });
+        this.updatePlaylist();
     }
 
     disconnectedCallback() {
         this._observer.disconnect();
     }
 
+    emit(type, detail = {}) {
+        this.dispatchEvent(new CustomEvent(`jPlayer2:${type}`, { bubbles: true, detail }));
+    }
+
     seek(secs) {
-        if (this._trackerPlayer.currentPlayingNode !== null) {
-            let module = this._trackerPlayer.currentPlayingNode.modulePtr;
+        if (this._trackerPlayer && this._trackerPlayer?.currentPlayingNode !== null) {
+            let module = this._trackerPlayer?.currentPlayingNode.modulePtr;
             libopenmpt._openmpt_module_set_position_seconds(module, secs);
         } else {
             this._audioPlayer.currentTime = secs;
@@ -211,9 +236,9 @@ class jPlayer extends HTMLElement {
     }
 
     progressChanged(el) {
-        if (this._trackerPlayer.currentPlayingNode !== null) {
-            let duration = this._trackerPlayer.duration();
-            let module = this._trackerPlayer.currentPlayingNode.modulePtr;
+        if (this._trackerPlayer && this._trackerPlayer?.currentPlayingNode !== null) {
+            let duration = this._trackerPlayer?.duration();
+            let module = this._trackerPlayer?.currentPlayingNode.modulePtr;
             libopenmpt._openmpt_module_set_position_seconds(module, (el.value / 1000000) * duration);
             this.emit('seek', (el.value / 1000000) * duration);
         } else {
@@ -224,8 +249,8 @@ class jPlayer extends HTMLElement {
     }
 
     getProgress() {
-        if (this._trackerPlayer.currentPlayingNode !== null) {
-            return this._trackerPlayer.getCurrentTime();
+        if (this._trackerPlayer && this._trackerPlayer?.currentPlayingNode !== null) {
+            return this._trackerPlayer?.getCurrentTime();
         } else {
             return this._audioPlayer.currentTime;
         }
@@ -236,11 +261,11 @@ class jPlayer extends HTMLElement {
             let pos = this.#playingContainer.querySelector('#pos');
             let dur = this.#playingContainer.querySelector('#dur');
             let prg = this.#playingContainer.querySelector('.progress input[type="range"]');
-            if (this._trackerPlayer.currentPlayingNode !== null) {
-                let duration = this._trackerPlayer.duration();
-                let position = this._trackerPlayer.getCurrentTime();
-                let order = this._trackerPlayer.getCurrentOrder();
-                let totalOrder = this._trackerPlayer.getTotalOrder();
+            if (this._trackerPlayer && this._trackerPlayer?.currentPlayingNode !== null) {
+                let duration = this._trackerPlayer?.duration();
+                let position = this._trackerPlayer?.getCurrentTime();
+                let order = this._trackerPlayer?.getCurrentOrder();
+                let totalOrder = this._trackerPlayer?.getTotalOrder();
                 pos.textContent = `${formatTime(position)}.${order}`;
                 dur.textContent = `${formatTime(duration)}.${totalOrder}`;
                 let val = ((position ?? 0) / (duration ?? 0)) * 1000000;
@@ -295,7 +320,7 @@ class jPlayer extends HTMLElement {
             el.innerHTML = 'repeat_on';
         }
 
-        if (this._trackerPlayer.currentPlayingNode === null) {
+        if (this._trackerPlayer && this._trackerPlayer?.currentPlayingNode === null) {
             this._audioPlayer.loop = this._repeatOne;
         } else {
             libopenmpt._openmpt_module_set_repeat_count(this._trackerNode.modulePtr, this._repeatOne ? -1 : 0);
@@ -305,33 +330,38 @@ class jPlayer extends HTMLElement {
     }
 
     playPause(el, play = undefined) {
-        let paused = false;
-        if (this._trackerPlayer.currentPlayingNode !== null) {
-            if ((play == undefined || (play == true && this._trackerPlayer.currentPlayingNode.paused))) {
-                this._trackerPlayer.togglePause();
-            }
-            paused = !this._trackerPlayer.currentPlayingNode.paused;
-            if (!paused) {
-                el.innerHTML = 'play_arrow';
+        try {
+            let paused = false;
+            if (this._trackerPlayer && this._trackerPlayer?.currentPlayingNode !== null) {
+                if ((play == undefined || (play == true && this._trackerPlayer?.currentPlayingNode.paused))) {
+                    this._trackerPlayer?.togglePause();
+                }
+                paused = !this._trackerPlayer?.currentPlayingNode.paused;
+                if (!paused) {
+                    el.innerHTML = 'play_arrow';
+                } else {
+                    el.innerHTML = 'pause';
+                }
             } else {
-                el.innerHTML = 'pause';
+                paused = this._audioPlayer.paused
+                if (paused || play) {
+                    this._audioPlayer.play();
+                    el.innerHTML = 'pause';
+                } else {
+                    this._audioPlayer.pause();
+                    el.innerHTML = 'play_arrow';
+                }
             }
-        } else {
-            paused = this._audioPlayer.paused
-            if (paused || play) {
-                this._audioPlayer.play();
-                el.innerHTML = 'pause';
-            } else {
-                this._audioPlayer.pause();
-                el.innerHTML = 'play_arrow';
+
+            if ("mediaSession" in navigator) {
+                navigator.mediaSession.playbackState = paused ? "playing" : "paused";
             }
-        }
 
-        if ("mediaSession" in navigator) {
-            navigator.mediaSession.playbackState = paused ? "playing" : "paused";
+            this._paused = paused;
+            this.emit('playChanged', !paused);
+        } catch (err) {
+            this.#playingContainer.innerHTML = this.renderError('An error occured.', err);
         }
-
-        this.emit('playChanged', !paused);
     }
 
     shuffle(el) {
@@ -373,7 +403,7 @@ class jPlayer extends HTMLElement {
             return;
         }
         this._audioPlayer.pause();
-        this._trackerPlayer.stop();
+        this._trackerPlayer?.stop();
         let trackVal = Object.values(tracks);
         let track = trackVal.find((val) => val.dataset.src === el.dataset.src);
         let trackIndex = trackVal.indexOf(track);
@@ -385,93 +415,116 @@ class jPlayer extends HTMLElement {
     }
 
     playTracker(buf) {
-        this._trackerPlayer.stop();
-        this._trackerNode = this._trackerPlayer.createLibopenmptNode(buf, this._trackerPlayer.config);
+        if (!this._trackerPlayer) {
+            console.error('Tracker deps not initialised');
+            throw new Error('You must import the necessary dependencies for playing Tracker files. See https://github.com/jbcarreon123/jPlayer2?tab=readme-ov-file#tracker-files for more info.')
+        }
+
+        this._trackerPlayer?.stop();
+        this._trackerNode = this._trackerPlayer?.createLibopenmptNode(buf, this._trackerPlayer?.config);
         if (!this._trackerNode) {
             return;
         }
 
         libopenmpt._openmpt_module_set_repeat_count(this._trackerNode.modulePtr, this._repeatOne ? -1 : 0);
-        libopenmpt._openmpt_module_set_render_param(this._trackerNode.modulePtr, OPENMPT_MODULE_RENDER_STEREOSEPARATION_PERCENT, this._trackerPlayer.config.stereoSeparation);
-        libopenmpt._openmpt_module_set_render_param(this._trackerNode.modulePtr, OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, this._trackerPlayer.config.interpolationFilter);
+        libopenmpt._openmpt_module_set_render_param(this._trackerNode.modulePtr, OPENMPT_MODULE_RENDER_STEREOSEPARATION_PERCENT, this._trackerPlayer?.config.stereoSeparation);
+        libopenmpt._openmpt_module_set_render_param(this._trackerNode.modulePtr, OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, this._trackerPlayer?.config.interpolationFilter);
 
         this._trackerPlayer.currentPlayingNode = this._trackerNode;
         this._trackerNode.connect(this._trackerAudioContext.destination);
     }
 
     async playTrack(el) {
-        let track = this._fetchedPlaylist.find(({ src }) => src === el.dataset.src);
-        let source = this._playlistSources.find((data) => data.src === el.dataset.src);
-        let data = await this.processMetadata(source, track, this._fetchedPlaylist.indexOf(track), el.dataset.art);
+        try {
+            let isPlaying = Object.values(this.#playingContainer.querySelectorAll('button.ms')).find((el) => el.innerHTML === 'pause');
+            this.#playingContainer.innerHTML = this.renderPlayingCard(!isPlaying);
+            this.initListeners();
 
-        let playPause = this.#playingContainer.querySelector('#playpause');
+            let track = this._fetchedPlaylist.find(({ src }) => src === el.dataset.src);
+            let source = this._playlistSources.find((data) => data.src === el.dataset.src);
+            let data = await this.processMetadata(source, track, this._fetchedPlaylist.indexOf(track), el.dataset.art);
 
-        this.#playingContainer.querySelector('.album-art-container img').src = el.dataset.art;
-        this.#playingContainer.querySelector('.card-background img').src = el.dataset.art;
+            let playPause = this.#playingContainer.querySelector('#playpause');
 
-        this.#playingContainer.querySelector('.track-info h1').textContent = data.title;
-        this.#playingContainer.querySelector('.track-info p').innerHTML = `<p><span>${data.artist}</span> <span ${data.tracker ? 'data-tracker="true"' : ''}>${data.album != '' ? (!data.tracker ? '- ' : ' ') + data.album : ''}</span></p>`;
+            if (el.dataset.mode === 'tracker') {
+                if (!this._trackerPlayer) {
+                    console.error('Tracker deps not initialised');
+                    throw new Error('You must import the necessary dependencies for playing Tracker files. See https://github.com/jbcarreon123/jPlayer2?tab=readme-ov-file#tracker-files for more info.')
+                }
 
-        this.#playlistContainer.querySelectorAll('.playlist-item').forEach((el) => {
-            el.classList.remove('playing');
-        })
-        el.classList.add('playing');
-
-        let isPlaying = Object.values(this.#playingContainer.querySelectorAll('button.ms')).find((el) => el.innerHTML === 'pause');
-
-        if (el.dataset.mode === 'tracker') {
-            this._audioPlayer.pause();
-            this._trackerPlayer.stop();
-            this._trackerPlayer.load(el.dataset.src, (out) => {
+                this._audioPlayer.pause();
+                this._trackerPlayer?.stop();
+                this._trackerPlayer?.load(el.dataset.src, (out) => {
+                    clearInterval(this._trackerInterval);
+                    this.playTracker(out);
+                    this._trackerInterval = setInterval(() => this.progress(), 50);
+                    this._trackerPlayer?.currentPlayingNode.addEventListener('timeupdate', () => this.progress());
+                    if (!isPlaying)
+                        this.playPause(playPause);
+                    else {
+                        navigator.mediaSession.playbackState = 'playing';
+                        let playPause = this.#playingContainer.querySelector('#playpause');
+                        playPause.innerHTML = 'pause'
+                    }
+                });
+            } else {
+                console.log('loading file');
                 clearInterval(this._trackerInterval);
-                this.playTracker(out);
-                this._trackerInterval = setInterval(() => this.progress(), 50);
-                this._trackerPlayer.currentPlayingNode.addEventListener('timeupdate', () => this.progress());
-                if (!isPlaying)
+                this._trackerPlayer?.stop();
+                this._audioPlayer.src = el.dataset.src;
+                this._audioPlayer.load();
+                this._audioPlayer.loop = this._repeatOne;
+                if (isPlaying)
                     this.playPause(playPause);
-                navigator.mediaSession.playbackState = 'playing';
+            }
+
+            this.#playingContainer.querySelector('.album-art-container img').src = el.dataset.art;
+            this.#playingContainer.querySelector('.card-background img').src = el.dataset.art;
+
+            this.#playingContainer.querySelector('.track-info h1').textContent = data.title;
+            this.#playingContainer.querySelector('.track-info p').innerHTML = `<p><span>${data.artist}</span> <span ${data.tracker ? 'data-tracker="true"' : ''}>${data.album != '' ? (!data.tracker ? '- ' : ' ') + data.album : ''}</span></p>`;
+
+            this.#playlistContainer.querySelectorAll('.playlist-item').forEach((el) => {
+                el.classList.remove('playing');
+            })
+            el.classList.add('playing');
+
+            if ("mediaSession" in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: data.title,
+                    artist: data.artist,
+                    album: data.album,
+                    artwork: [{
+                        src: el.dataset.art,
+                        sizes: '512x512',
+                        type: getType(el.dataset.art)
+                    }]
+                });
+
+                navigator.mediaSession.setActionHandler('nexttrack', () => this.nextTrack());
+                navigator.mediaSession.setActionHandler('previoustrack', () => this.prevTrack());
+                navigator.mediaSession.setActionHandler('play', () => this.playPause(playPause));
+                navigator.mediaSession.setActionHandler('pause', () => this.playPause(playPause));
+                navigator.mediaSession.setActionHandler('seekto', (secs) => this.seek(secs.seekTime));
+            }
+
+            this.emit('playing', {
+                ...data,
+                art: el.dataset.art
             });
-        } else {
-            clearInterval(this._trackerInterval);
-            this._trackerPlayer.stop();
-            this._audioPlayer.src = el.dataset.src;
-            this._audioPlayer.load();
-            this._audioPlayer.loop = this._repeatOne;
-            if (isPlaying)
-                this.playPause(playPause);
+        } catch (err) {
+            console.error(err);
+            this.#playingContainer.innerHTML = this.renderError('An error occured.', err);
         }
-
-        if ("mediaSession" in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: data.title,
-                artist: data.artist,
-                album: data.album,
-                artwork: [{
-                    src: el.dataset.art,
-                    sizes: '512x512',
-                    type: getType(el.dataset.art)
-                }]
-            });
-
-            navigator.mediaSession.setActionHandler('nexttrack', () => this.nextTrack());
-            navigator.mediaSession.setActionHandler('previoustrack', () => this.prevTrack());
-            navigator.mediaSession.setActionHandler('play', () => this.playPause(playPause));
-            navigator.mediaSession.setActionHandler('pause', () => this.playPause(playPause));
-            navigator.mediaSession.setActionHandler('seekto', (secs) => this.seek(secs.seekTime));
-        }
-
-        this.emit('playing', {
-            ...data,
-            art: el.dataset.art
-        });
     }
 
     async fetchTrackData(el) {
         try {
             let loading = this._shadow.querySelector('#jplayer--loading-status');
-            if (loading) loading.innerHTML += `<br />Fetching: ${el.src}`
+            if (loading) loading.innerHTML += `<br />Fetching: ${el.src}`;
             const response = await fetch(el.src);
             if (!response.ok) {
+                console.error(`Failed to fetch: ${el.src} - ${response.status}`);
                 return { ok: false };
             }
             const buffer = await response.arrayBuffer();
@@ -483,6 +536,7 @@ class jPlayer extends HTMLElement {
     }
 
     async processMetadata(el, fetchedData, index, art = undefined) {
+        if (!fetchedData) return;
         if (fetchedData.ok) {
             let loading = this._shadow.querySelector('#jplayer--loading-status');
             if (loading) loading.innerHTML += `<br />Processing metadata: ${el.src}`;
@@ -492,27 +546,32 @@ class jPlayer extends HTMLElement {
                     src: el.src,
                     title: metadata.info.trackTitle ?? el.dataset.title ?? "Unknown title",
                     artist: metadata.info.trackAuthor ?? el.dataset.artist ?? "Unknown artist",
-                    album: metadata.info.albumTitle ?? metadata.info.trackTitle,
-                    art: art ?? metadata.info.mainPicture.image,
+                    album: metadata.info.albumTitle ?? metadata.info.trackTitle ?? '',
+                    art: art ?? metadata.info.mainPicture?.image ?? this._fallback,
                     raw: metadata
                 };
 
                 metadata.info.mainPicture.register(() => {
-                    setTimeout(() => {
-                        const playlistItem = this._playlist.find(({ src }) => src === el.src);
-                        const itemIndex = this._playlist.indexOf(playlistItem);
-                        if (playlistItem) {
-                            playlistItem.art = art ?? metadata.info.mainPicture.image;
-                            this._playlist[itemIndex] = playlistItem;
-                            this._playlist[itemIndex]['html'] = this.renderPlaylistItem(this._playlist[itemIndex], index === 0);
-                            if (!art) {
-                                this.render();
-                            }
-                        }
-                    }, 100)
-                });
+                    if (metadata.info.mainPicture?.image) {
+                        trackInfo.art = art ?? metadata.info.mainPicture.image;
+                    } else if (el.dataset.art) {
+                        trackInfo.art = el.dataset.art;
+                    } else {
+                        trackInfo.art = this._fallback;
+                    }
 
-                metadata.info.mainPicture.load();
+                    trackInfo['html'] = this.renderPlaylistItem(trackInfo, index === 0);
+
+                    this._playlist[index] = trackInfo;
+                })
+
+                if (metadata.info.mainPicture?.image) {
+                    trackInfo.art = art ?? metadata.info.mainPicture.image;
+                } else if (el.dataset.art) {
+                    trackInfo.art = el.dataset.art;
+                } else {
+                    trackInfo.art = this._fallback;
+                }
 
                 trackInfo['html'] = this.renderPlaylistItem(trackInfo, index === 0);
                 return trackInfo;
@@ -524,72 +583,91 @@ class jPlayer extends HTMLElement {
     }
 
     async processTrackerMetadata(el, buffer, index, error) {
-        if (this._trackerPlayer) {
-            return new Promise((resolve) => {
-                try {
-                    this._trackerPlayer.play(buffer);
-                    const metadata = this._trackerPlayer.metadata();
-                    if (!metadata['type']) {
-                        resolve(this.createDefaultTrackInfo(el, index))
-                    }
-                    this._trackerPlayer.stop();
-                    const trackInfo = {
-                        src: el.src,
-                        title: el.dataset.title ?? metadata['title'] ?? "Unknown title",
-                        artist: el.dataset.artist ?? metadata['artist'] ?? "Unknown artist",
-                        album: el.dataset.album ?? metadata['type'].toUpperCase() ?? '',
-                        art: el.dataset.art ?? this._fallback,
-                        tracker: metadata['type'] ? true : false,
-                    };
-                    trackInfo['html'] = this.renderPlaylistItem(trackInfo, index === 0, 'tracker');
-                    resolve(trackInfo);
-                } catch {
-                    const trackInfo = {
-                        src: el.src,
-                        title: el.dataset.title ?? "Unknown title",
-                        artist: el.dataset.artist ?? "Unknown artist",
-                        album: '',
-                        art: el.dataset.art ?? this._fallback
-                    };
-                    resolve(trackInfo);
-                }
-            });
+        if (this._trackerPlayer && this._doTrackerMetadata) {
+            try {
+                this._trackerPlayer?.play(buffer);
+                const metadata = this._trackerPlayer?.metadata();
+                const trackInfo = {
+                    src: el.src,
+                    title: el.dataset.title ?? metadata['title'] ?? "Unknown title",
+                    artist: el.dataset.artist ?? metadata['artist'] ?? "Unknown artist",
+                    album: el.dataset.album ?? metadata['type']?.toUpperCase() ?? '',
+                    art: el.dataset.art ?? this._fallback,
+                    tracker: !!metadata['type'],
+                };
+                trackInfo['html'] = this.renderPlaylistItem(trackInfo, index === 0, 'tracker');
+                return trackInfo;
+            } catch (trackerError) {
+                console.warn("Error processing tracker metadata:", trackerError);
+                return this.createDefaultTrackInfo(el, index);
+            } finally {
+                this._trackerPlayer?.stop();
+            }
         } else {
-            const trackInfo = {
-                src: el.src,
-                title: el.dataset.title ?? "Unknown title",
-                artist: el.dataset.artist ?? "Unknown artist",
-                album: '',
-                art: el.dataset.art ?? this._fallback
-            };
-            trackInfo['html'] = this.renderPlaylistItem(trackInfo, index === 0, 'tracker');
-            resolve(trackInfo);
+            if (this._trackerPlayer) {
+                return this.createDefaultTrackInfo(el, index, true);
+            } else {
+                console.error('Cannot load file', el.src);
+                return undefined;
+            }
         }
     }
 
-    createDefaultTrackInfo(el, index) {
+    createDefaultTrackInfo(el, index, isTracker = false) {
         const parts = el.src.split('/');
-        const trackInfo = {
-            src: el.src,
-            title: el.dataset.title ?? decodeURIComponent(parts[parts.length - 1]),
-            artist: el.dataset.artist ?? "Unknown artist",
-            album: el.dataset.album,
-            art: el.dataset.art ?? this._fallback
-        };
-        trackInfo['html'] = this.renderPlaylistItem(trackInfo, index === 0);
+        const title = el.dataset.title ?? decodeURIComponent(parts[parts.length - 1]);
+        const artist = el.dataset.artist ?? "Unknown artist";
+        const album = el.dataset.album ?? '';
+        const art = el.dataset.art ?? this._fallback;
+        const trackInfo = { src: el.src, title, artist, album, art, tracker: isTracker };
+        trackInfo['html'] = this.renderPlaylistItem(trackInfo, index === 0, isTracker ? 'tracker' : undefined);
         return trackInfo;
     }
 
     async updatePlaylist() {
         this._fallback = this.getAttribute('fallback');
+        const cssUrl = this.getAttribute('css');
+        this._solo = this.getAttribute('solo') !== null;
+        this._doTrackerMetadata = this.getAttribute('do-tracker-metadata') !== null;
         this._playlistSources = Array.from(this.querySelectorAll('source'));
-        this._fetchedPlaylist = await Promise.all(this._playlistSources.map((v) => this.fetchTrackData(v)));
-        this._playlist = await Promise.all(this._playlistSources.map((el, index) =>
+
+        const fetchedDataPromises = this._playlistSources.map((el) =>
+            this.fetchTrackData(el)
+                .catch(error => {
+                    console.error(`Error fetching ${el.src}:`, error);
+                    return { ok: false }; // Ensure a consistent failure object
+                })
+        );
+
+        this._fetchedPlaylist = await Promise.all(fetchedDataPromises);
+
+        const metadataPromises = this._playlistSources.map((el, index) =>
             this.processMetadata(el, this._fetchedPlaylist[index], index)
-        ));
-        this._style = await (await fetch(this.getAttribute('css'))).text();
-        this._solo = this.getAttribute('solo') ? true : false;
-        setTimeout(() => this.render(), 500);
+        );
+        this._playlist = await Promise.all(metadataPromises);
+        this._playlist = this._playlist.filter((s) => s);
+
+        if (cssUrl) {
+            try {
+                const response = await fetch(cssUrl);
+                if (response.ok) {
+                    this._style = await response.text();
+                } else {
+                    console.warn(`Failed to fetch CSS: ${cssUrl} - ${response.status}`);
+                    this._style = '';
+                }
+            } catch (error) {
+                console.error("Error fetching CSS:", error);
+                this._style = '';
+            }
+        } else {
+            this._style = '';
+        }
+
+        setTimeout(() => {
+            this.render();
+            this.initListeners();
+        }, 10);
     }
 }
 
