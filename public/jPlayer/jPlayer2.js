@@ -3,6 +3,8 @@
 
 class jPlayer extends HTMLElement {
     _audioPlayer;
+    /** @type {HTMLVideoElement} */
+    _videoPlayer;
     _trackerPlayer;
     _playlist = [];
     _playlistSources = [];
@@ -156,15 +158,28 @@ class jPlayer extends HTMLElement {
             el.addEventListener('click', () => this.playTrack(el));
         });
 
-        // Ensure there's at least one playlist item to play initially
         if (this.#playlistContainer?.querySelector('.playlist-item')) {
             this.playTrack(this.#playlistContainer.querySelector('.playlist-item'));
         }
 
+        window.addEventListener('resize', () => {
+            this.loadOverflow();
+        })
+
         this.initListeners();
+        this.loadOverflow();
 
         this.rendered = true;
         this.emit('load');
+    }
+
+    loadOverflow() {
+        setTimeout(() => {
+            this.#container.querySelectorAll('.track-info > *').forEach((el, key) => {
+                el.classList.toggle("overflow", isOverflowing(el));
+                el.style.setProperty("--d", (el.textContent.length * 10) + "ms");
+            });
+        }, 150);
     }
 
     initListeners() {
@@ -185,6 +200,11 @@ class jPlayer extends HTMLElement {
 
         const progressBar = this.#playingContainer?.querySelector('.progress input[type="range"]');
         progressBar?.addEventListener('input', () => this.progressChanged(progressBar));
+
+        const videoElement = this.#playingContainer?.querySelector('#jplayer--video-player');
+        videoElement?.appendChild(this._videoPlayer);
+
+        this.loadOverflow();
     }
 
     constructor() {
@@ -198,6 +218,8 @@ class jPlayer extends HTMLElement {
         this._audioPlayer.addEventListener('durationchange', () => this.progress());
         this._audioPlayer.addEventListener('timeupdate', () => this.progress());
         this._audioPlayer.addEventListener('ended', () => this.nextTrack());
+
+        this._videoPlayer = document.createElement('video');
 
         if (typeof ChiptuneJsPlayer !== 'undefined') {
             window['libopenmpt'] = Module;
@@ -625,8 +647,6 @@ class jPlayer extends HTMLElement {
     }
 
     async updatePlaylist() {
-        if (this.rendered) return;
-
         this._fallback = this.getAttribute('fallback');
         const cssUrl = this.getAttribute('css');
         this._solo = this.getAttribute('solo') !== null;
@@ -689,6 +709,18 @@ function getType(base64String) {
     }
     const dataURIPart = base64String.substring(5, base64String.indexOf(';'));
     return dataURIPart;
+}
+
+/** @param {HTMLElement} el  */
+function isOverflowing(el)
+{
+   var curOverflow = getComputedStyle(el, 'overflow');
+   if ( !curOverflow || curOverflow === "visible" )
+      el.style.overflow = "hidden";
+   var isOverflowing = el.clientWidth < el.scrollWidth 
+      || el.clientHeight < el.scrollHeight;
+   el.style.overflow = curOverflow;
+   return isOverflowing;
 }
 
 function formatTime(seconds) {

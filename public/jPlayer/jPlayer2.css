@@ -58,6 +58,17 @@
         display: none;
     }
 
+    .overflow {
+        animation: overflowMarquee 12s calc(1.5s + var(--d, 0)) infinite linear;
+        position: relative;
+
+        @media (prefers-reduced-motion) {
+            animation: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
     .card-background {
         overflow: hidden;
         position: absolute;
@@ -86,7 +97,7 @@
     .album-art-container {
         height: 48px;
         aspect-ratio: 1 / 1;
-        background-image: url('/imgs/albums/fallback.png');
+        background-image: url('/jPlayer2/demo/fallback.png');
         background-size: cover;
 
         img {
@@ -101,15 +112,14 @@
     p {
         max-width: 100%;
         text-wrap-mode: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
-    span[data-tracker] {
+    span.mode {
         padding: 2px;
         border-radius: 3px;
         background-color: var(--jplayer-acc);
         font-size: 0.85em;
+        text-transform: uppercase;
     }
 
     #jplayer--playing-card {
@@ -126,17 +136,22 @@
             padding: 6px;
             position: relative;
             z-index: 1;
-            max-width: 65%;
+            max-width: 100%;
+            flex-grow: 1;
+            flex-shrink: 1;
+            min-width: 0;
 
-            .track-info {
+            .track-info:not(.error) {
                 max-width: 100%;
                 overflow: hidden;
 
                 & > * {
                     max-width: 100%;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
                 }
+            }
+
+            .track-info.error > * {
+                text-wrap-mode: wrap;
             }
         }
 
@@ -365,8 +380,6 @@
 
                     & > * {
                         max-width: 100%;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
                     }
                 }
             }
@@ -390,7 +403,7 @@
     }
 }
 
-@container jplayer-container (width < 600px) {
+@container jplayer-container (width < 640px) {
     .player-controls {
         flex-direction: column !important;
         justify-content: center !important;
@@ -413,7 +426,7 @@
     #jplayer--playing-card {
         .album-art-container {
             height: 64px !important;
-            
+
             img {
                 max-height: 64px !important;
             }
@@ -439,9 +452,24 @@
 
 @keyframes bgmove {
     0% {
-        transform: rotate(0deg) scale(100%);
+        transform: rotate(0deg) translateY(-60px);
     }
     75% {
-        transform: rotate(360deg) scale(150%);
+        transform: rotate(360deg) translateY(60px);
+    }
+}
+
+@keyframes overflowMarquee {
+    0% {
+        left: 0%;
+    }
+    50% {
+        left: -200%;
+    }
+    50.01% {
+        left: 100%;
+    }
+    75% {
+        left: 0%;
     }
 }
