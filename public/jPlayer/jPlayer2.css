@@ -431,6 +431,12 @@
     }
 }
 
+@media (prefers-reduced-motion) {
+    .card-background {
+        display: none
+    }
+}
+
 @keyframes bgmove {
     0% {
         transform: rotate(0deg) scale(100%);
