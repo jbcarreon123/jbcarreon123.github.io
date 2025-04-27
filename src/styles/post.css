@@ -47,7 +47,7 @@ article h1 {
     position: sticky;
     top: 0px;
     background: var(--bg);
-    z-index: 9999;
+    z-index: 99;
 }
 
 article h1::after {
