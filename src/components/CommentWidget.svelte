@@ -114,7 +114,9 @@
 	let s_closedCommentsText = 'Comments are closed temporarily!';
 	let s_websiteText = ' <span class="ms">open_in_new</span> '; // The links to websites left by users on their comments
 	let s_replyButtonText = '<span class="ms">reply</span> Reply'; // The button for replying to someone
+	let s_replyLockedText = '<span class="ms">lock</span> Locked';
 	let s_replyingText = '<span class="ms">reply</span> Replying to'; // The text that displays while the user is typing a reply
+	let s_pinnedText = '<span class="ms c-admin">keep</span>';
 	let s_expandRepliesText = 'Show Replies';
 	let s_leftButtonText = '<<';
 	let s_rightButtonText = '>>';
@@ -286,7 +288,8 @@
 
 			// Reply button
 			let button = document.createElement('button');
-			button.innerHTML = s_replyButtonText;
+			button.disabled = Boolean(comments[i].Locked);
+			button.innerHTML = button.disabled ? s_replyLockedText : s_replyButtonText;
 			button.value = comment.id;
 			button.addEventListener('click', () => openReply(comment.id));
 			button.className = 'c-replyButton';
@@ -299,7 +302,11 @@
 			}
 
 			comment.className = 'c-comment';
-			c_container.appendChild(comment);
+			if (comments[i].Pinned) {
+				c_container.insertBefore(comment, c_container.firstChild);
+			} else {
+				c_container.appendChild(comment);
+			}
 			a_commentDivs.push(document.getElementById(comment.id)); // Add to array for use later
 		}
 
@@ -324,7 +331,11 @@
 			}
 			if (container?.querySelector(`[data-id='${reply.dataset.id}']`)) break;
 			reply.className = 'c-reply';
-			container.appendChild(reply);
+			if (replies[i].Pinned) {
+				container?.insertBefore(reply, container.firstChild);
+			} else {
+				container.appendChild(reply);
+			}
 		}
 
 		// Handle adding the buttons to show or hide replies if collapsed replies are enabled
@@ -402,6 +413,9 @@
 		name.className = 'c-name';
 		if (data.Admin == true) {
 			name.insertAdjacentHTML('beforeend', " <span class='ms c-admin'>shield_person</span> ");
+		}
+		if (data.Pinned == true) {
+			name.insertAdjacentHTML('beforeend', s_pinnedText);
 		}
 		comment.appendChild(name);
 
