@@ -49,7 +49,7 @@
         "button": "https://nirefi.nekoweb.org/images/buttons/nirefi-btn.png"
     },
     {
-        "host": "https://ralsei.tech/",
+        "host": "ralsei.tech",
         "username": "ralsei.tech",
         "framework": "<a href='https://lume.land/' target='_blank'>Lume</a>",
         "pitch": "a small site on the indieweb, centered around tech & fluffy boys."
