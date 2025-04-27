@@ -8,13 +8,6 @@
         "button": "https://jbcarreon123.nekoweb.org/sitebuttonv2.png"
     },
     {
-        "host": "moosyu.nekoweb.org",
-        "username": "moosyu",
-        "framework": "<a href='https://www.11ty.dev/' target='_blank'>Eleventy</a>",
-        "pitch": "moosyus super awesome rambling / reviews hellhole 🤑",
-        "button": "https://moosyu.nekoweb.org/assets/button.png"
-    },
-    {
         "host": "reduxflakes.nekoweb.org",
         "username": "reduxflakes",
         "framework": "<a href='https://www.11ty.dev/' target='_blank'>Eleventy</a>",
