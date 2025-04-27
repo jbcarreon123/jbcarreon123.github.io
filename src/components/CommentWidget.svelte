@@ -289,10 +289,12 @@
 			// Reply button
 			let button = document.createElement('button');
 			button.disabled = Boolean(comments[i].Locked);
-			button.innerHTML = button.disabled ? s_replyLockedText : s_replyButtonText;
-			button.value = comment.id;
-			button.addEventListener('click', () => openReply(comment.id));
-			button.className = 'c-replyButton';
+			button.innerHTML = button.disabled == true ? s_replyLockedText : s_replyButtonText;
+			if (!button.disabled) {
+				button.value = comment.id;
+				button.addEventListener('click', () => openReply(comment.id));
+				button.className = 'c-replyButton';
+			}
 			comment.appendChild(button);
 
 			// Choose whether to display or not based on page number
@@ -302,7 +304,7 @@
 			}
 
 			comment.className = 'c-comment';
-			if (comments[i].Pinned) {
+			if (comments[i].Pinned == true) {
 				c_container.insertBefore(comment, c_container.firstChild);
 			} else {
 				c_container.appendChild(comment);
