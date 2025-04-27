@@ -1,6 +1,7 @@
 <script lang="ts">
 	// Import stuff, do not remove or touch this!
 	import { onMount } from 'svelte';
+	const { disabled } = $props();
 
 	import MarkdownIt from 'markdown-it';
 	import sanitizeHtml from 'sanitize-html';
@@ -88,7 +89,7 @@
 	let s_commentsPerPage = 10; // The max amount of comments that can be displayed on one page, any number >= 1 (Replies not counted)
 	let s_maxLength = 1024; // The max character length of a comment
 	let s_maxLengthName = 24; // The max character length of a name
-	let s_commentsOpen = true; // Change to false if you'd like to close your comment section site-wide (Turn it off on Google Forms too!)
+	let s_commentsOpen = !(false || disabled); // Change to false if you'd like to close your comment section site-wide (Turn it off on Google Forms too!)
 	let s_collapsedReplies = false; // True for collapsed replies with a button, false for replies to display automatically
 	let s_longTimestamp = false; // True for a date + time, false for just the date
 	let s_includeUrlParameters = false; // Makes new comment sections on pages with URL parameters when set to true (If you don't know what this does, leave it disabled)
@@ -111,7 +112,7 @@
 	let s_submitButtonLabel = 'Submit';
 	let s_loadingText = 'Loading comments...';
 	let s_noCommentsText = 'No comments yet!';
-	let s_closedCommentsText = 'Comments are closed temporarily!';
+	let s_closedCommentsText = 'Comments are disabled on this post.';
 	let s_websiteText = ' <span class="ms">open_in_new</span> '; // The links to websites left by users on their comments
 	let s_replyButtonText = '<span class="ms">reply</span> Reply'; // The button for replying to someone
 	let s_replyLockedText = '<span class="ms">lock</span> Locked';

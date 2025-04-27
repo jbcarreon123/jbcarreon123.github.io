@@ -5,6 +5,7 @@ published: 12/23/2024 08:00
 color: 5555ff
 description: The start of this blog site.
 tags: first-one, first
+commentsDisabled: true
 ---
 
 Hey, here's the first blog I have written for this website!
