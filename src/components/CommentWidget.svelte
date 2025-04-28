@@ -462,6 +462,7 @@
 			allowedAttributes: {
 				'iframe': ['src', 'width', 'height'],
 				'img': ['src', 'alt'],
+				'a': ['href', 'target'],
 			}
 		});
 		text.className = 'c-text';
