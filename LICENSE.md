@@ -3,7 +3,7 @@ jbsite4 is subject to the following licensing terms:
 
 ## 1. Website Source Code - All Rights Reserved
 
-All source code, including but not limited to HTML, CSS, JavaScript, server-side code, build scripts, configuration files, and any other code that enables the functionality and appearance of this website is:
+All source code, including but not limited to Astro files, CSS, JavaScript, server-side code, build scripts, configuration files, and any other code that enables the functionality and appearance of this website is:
 
 **© 2025 JB Carreon. All Rights Reserved.**
 
