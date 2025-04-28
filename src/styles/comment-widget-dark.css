@@ -201,6 +201,14 @@
     margin-right: -10px;
     padding: 10px !important;
     font-size: 1.125rem;
+
+    & > * {
+        padding: 6px 0;
+    }
+
+    h1, h2, h3 {
+        padding: 16px 0;
+    }
 }
 
 .c-text p {

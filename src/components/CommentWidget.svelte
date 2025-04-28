@@ -167,16 +167,17 @@
 
 	function getComments() {
 		console.log('loading comments...')
-		// Disable the submit button while comments are reloaded
-		c_submitButton.disabled = true;
 
-		// Reset reply stuff to default
-		c_replyingText.style.display = 'block';
-		c_replyingText.innerText = '';
-		c_replyInput.value = '';
-
-		// Clear input fields too
 		if (s_commentsOpen) {
+			// Disable the submit button while comments are reloaded
+			c_submitButton.disabled = true;
+
+			// Reset reply stuff to default
+			c_replyingText.style.display = 'block';
+			c_replyingText.innerText = '';
+			c_replyInput.value = '';
+
+			// Clear input fields too
 			c_nameInput.value = '';
 			c_siteInput.value = '';
 			c_textInput.value = '';
@@ -288,15 +289,17 @@
 			let comment = createComment(comments[i]);
 
 			// Reply button
-			let button = document.createElement('button');
-			button.disabled = Boolean(comments[i].Locked);
-			button.innerHTML = button.disabled == true ? s_replyLockedText : s_replyButtonText;
-			if (!button.disabled) {
-				button.value = comment.id;
-				button.addEventListener('click', () => openReply(comment.id));
-				button.className = 'c-replyButton';
+			if (s_commentsOpen) {
+				let button = document.createElement('button');
+				button.disabled = Boolean(comments[i].Locked);
+				button.innerHTML = button.disabled == true ? s_replyLockedText : s_replyButtonText;
+				if (!button.disabled) {
+					button.value = comment.id;
+					button.addEventListener('click', () => openReply(comment.id));
+					button.className = 'c-replyButton';
+				}
+				comment.appendChild(button);
 			}
-			comment.appendChild(button);
 
 			// Choose whether to display or not based on page number
 			comment.style.display = 'none';
@@ -774,7 +777,5 @@
 			{/if}
 		</form>
 	</div>
-	{#if s_commentsOpen}
-		<div id="c_container" bind:this={c_container}>{s_loadingText}</div>
-	{/if}
+	<div id="c_container" bind:this={c_container}>{s_loadingText}</div>
 </div>
