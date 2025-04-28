@@ -307,10 +307,12 @@
 			comment.className = 'c-comment';
 			if (comments[i].Pinned == true) {
 				c_container.insertBefore(comment, c_container.firstChild);
+				a_commentDivs.unshift(document.getElementById(comment.id));
+				comment.style.display = 'block';
 			} else {
 				c_container.appendChild(comment);
+				a_commentDivs.push(document.getElementById(comment.id));
 			}
-			a_commentDivs.push(document.getElementById(comment.id)); // Add to array for use later
 		}
 
 		// Replies

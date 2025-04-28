@@ -19,12 +19,15 @@ To implement this to your site, here's the steps:
         if there's not, recreate it and delete it.
 2. Now, we're gonna edit some stuff on the forms. Find the `displayComments()` function
    on your script and find the `// Main comments (not replies)` comment. We're gonna edit the loop below.
-3. Find the `c_container.appendChild(comment);` code. We're gonna replace it to this:
+3. Find the `c_container.appendChild(comment);` and `a_commentDivs.push(document.getElementById(comment.id));` code. We're gonna replace it to this:
    ```javascript title="comment-widget.js"
     if (comments[i].Pinned == true) {
         c_container.insertBefore(comment, c_container.firstChild);
+        a_commentDivs.unshift(document.getElementById(comment.id));
+        comment.style.display = 'block';
     } else {
         c_container.appendChild(comment);
+        a_commentDivs.push(document.getElementById(comment.id));
     }
     ```
 4. Now, find the `// Replies` comment, find the `container.appendChild(reply);` code, and replace that to this:
