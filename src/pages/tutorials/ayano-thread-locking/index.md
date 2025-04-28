@@ -13,7 +13,7 @@ To implement this to your site, here's the steps:
 1. Go to the Google Form you used to set up the widget, add a short-answer text question
    and name it 'Locked', wait a bit, then delete it. Yes, really.
     > ### How does this work then?
-    > We don't need the question to pin comments, we're gonna do it on the google
+    > We don't need the question to lock comments, we're gonna do it on the google
         sheets.
     > You can also verify that 'Locked' is on your Google Sheets for your comments,
         if there's not, recreate it and delete it.
