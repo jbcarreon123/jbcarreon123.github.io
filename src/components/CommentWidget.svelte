@@ -334,8 +334,8 @@
 			}
 			if (container?.querySelector(`[data-id='${reply.dataset.id}']`)) break;
 			reply.className = 'c-reply';
-			if (replies[i].Pinned) {
-				container?.insertBefore(reply, container.firstChild);
+			if (replies[i].Pinned == true) {
+				container.insertBefore(reply, container.firstChild);
 			} else {
 				container.appendChild(reply);
 			}
