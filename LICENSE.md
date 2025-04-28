@@ -11,7 +11,7 @@ No permission is granted to copy, distribute, modify, or create derivative works
 
 ## 2. Website Content - Creative Commons Attribution-ShareAlike 4.0 International License
 
-All content published on this website, including but not limited to blog posts, articles, images, videos, audio files, and other media created specifically for content purposes is licensed under:
+All content published on this website, including but not limited to blog posts, articles, images, and other media created specifically for content purposes is licensed under:
 
 **Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0)**
 
@@ -24,3 +24,6 @@ Under the following terms:
 - **ShareAlike** — If you remix, transform, or build upon the content, you must distribute your contributions under the same license as the original.
 
 For the full text of the CC BY-SA 4.0 license, please visit: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+## Exclusions
+The /public/music folder will not be licensed under CC BY-SA.
