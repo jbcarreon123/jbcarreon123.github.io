@@ -86,7 +86,7 @@
 	let s_dstEnd = ['November', 'Sunday', 1, 2]; // Example shown is the first Sunday of November at 2:00 am
 
 	// Misc - Other random settings
-	let s_commentsPerPage = 10; // The max amount of comments that can be displayed on one page, any number >= 1 (Replies not counted)
+	let s_commentsPerPage = 5; // The max amount of comments that can be displayed on one page, any number >= 1 (Replies not counted)
 	let s_maxLength = 1024; // The max character length of a comment
 	let s_maxLengthName = 24; // The max character length of a name
 	let s_commentsOpen = !(false || disabled); // Change to false if you'd like to close your comment section site-wide (Turn it off on Google Forms too!)
@@ -119,8 +119,8 @@
 	let s_replyingText = '<span class="ms">reply</span> Replying to'; // The text that displays while the user is typing a reply
 	let s_pinnedText = '<span class="ms c-admin">keep</span>';
 	let s_expandRepliesText = 'Show Replies';
-	let s_leftButtonText = '<<';
-	let s_rightButtonText = '>>';
+	let s_leftButtonText = '<span class="ms">arrow_back_ios_new</span> Prev';
+	let s_rightButtonText = 'Next <span class="ms">arrow_forward_ios</span>';
 
 	/*
         DO NOT edit below this point unless you are confident you know what you're doing!
@@ -372,6 +372,11 @@
 			leftButton.className = 'c-paginationButton';
 			pagination.appendChild(leftButton);
 
+			let pageCount = document.createElement('span');
+			pageCount.id = 'c_pageCount';
+			pageCount.textContent = `Page 1 of ${v_amountOfPages}`;
+			pagination.appendChild(pageCount);
+
 			let rightButton = document.createElement('button');
 			rightButton.innerHTML = s_rightButtonText;
 			rightButton.id = 'c_rightButton';
@@ -608,6 +613,7 @@
 	function changePage(dir) {
 		var leftButton = document.getElementById('c_leftButton');
 		var rightButton = document.getElementById('c_rightButton');
+		var pageCount = document.getElementById('c_pageCount');
 
 		// Find directional number
 		var num;
@@ -643,12 +649,14 @@
 		v_pageNum = targetPage;
 		v_commentMax = s_commentsPerPage * v_pageNum;
 		v_commentMin = v_commentMax - s_commentsPerPage;
-		for (i = 0; i < a_commentDivs.length; i++) {
+		for (let i = 0; i < a_commentDivs.length; i++) {
 			a_commentDivs[i].style.display = 'none';
 			if (i >= v_commentMin && i < v_commentMax) {
 				a_commentDivs[i].style.display = 'block';
 			}
 		}
+
+		pageCount.textContent = `Page ${targetPage} of ${v_amountOfPages}`;
 	}
 
 	onMount(() => {

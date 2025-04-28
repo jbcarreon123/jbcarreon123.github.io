@@ -208,7 +208,10 @@
 }
 
 /* Pagination */
-#c_pagination {text-align: center;}
+#c_pagination {
+    display: flex;
+    justify-content: space-between;
+}
 .c-replyButton {
     margin-top: 10px;
     margin-right: 4px;
