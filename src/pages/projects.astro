@@ -1,0 +1,41 @@
+---
+import GitHubProjects from '../components/GitHubProjects.svelte';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="jb's projects" description="some projects that jb did" id="projects">
+    <h1>My Projects</h1>
+    <p>Note that some of it isn't done yet.</p>
+    <div class="projects-container">
+        <GitHubProjects client:only="svelte" name={"jbcarreon123"} />
+    </div>
+
+    <style is:inline>
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(200px, 1fr));
+            gap: 6px;
+        }
+
+        .projects-item {
+            padding: 6px;
+            background: var(--acc);
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .projects-item:hover, .projects-item:has(*:hover) {
+            background: var(--altbg);
+        }
+
+        h2 {
+            padding: 0;
+            margin: 0;
+            padding-bottom: 6px;
+        }
+
+        span.user {
+            font-weight: 500;
+        }
+    </style>
+</Layout>
