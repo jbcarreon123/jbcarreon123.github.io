@@ -328,5 +328,17 @@
         "title": "Pixel art of a mini terminal console window. Inside it, it says 'MEC_v02'.",
         "alt": "MEC_v02",
         "imgUrl": "https://mec-v02.nekoweb.org/images/buttons/mec_v02.gif"
+    },
+    {
+        "url": "https://seeingstarz.nekoweb.org/",
+        "title": "Pry's silly site",
+        "alt": "seeingstarz",
+        "imgUrl": "https://files.catbox.moe/wfsnmh.gif"
+    },
+    {
+        "url": "https://girlvstheinstitute.nekoweb.org/",
+        "title": "Girl(s) vs the Institute",
+        "alt": "Girl vs the Institute",
+        "imgUrl": "https://girlvstheinstitute.nekoweb.org/button.png"
     }
 ]
