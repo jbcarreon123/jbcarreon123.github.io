@@ -17,6 +17,10 @@ import Layout from '../layouts/Layout.astro';
             gap: 6px;
         }
 
+        @media (width <= 640px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
         .projects-item {
             padding: 6px;
             background: var(--acc);
