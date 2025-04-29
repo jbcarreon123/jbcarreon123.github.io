@@ -25,7 +25,8 @@
             'svelte-adapter-nekoweb',
             'inaccessible',
             'nekoweb-api',
-            'jAPI'
+            'jAPI',
+            'neko',
         ]
 
         repos = repos.filter((v) => indiefellas.includes(v.name));
