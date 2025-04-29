@@ -45,7 +45,7 @@ class jPlayer extends HTMLElement {
                             <img loading="lazy" src="${track.art}" alt="">
                         </div>
                         <div class="track-info">
-                            <h2><span class="ms">equalizer</span> ${track.title}</h2>
+                            <h2><span aria-hidden="true" class="ms">equalizer</span> ${track.title}</h2>
                             <p><span>${track.artist}</span> ${track.album ? `- <span>${track.album}</span>` : ''} ${mode ? `<span class="mode">${mode}</span>` : ''}</p>
                         </div>
                     </div>
@@ -94,13 +94,13 @@ class jPlayer extends HTMLElement {
                                 <span id="dur">0:00</span>
                                 <div class="center">
                                     ${this._playlist.length > 1 ? `
-                                    <button class="ms" id="shuffle">shuffle</button>
-                                    <button class="ms" id="prev">skip_previous</button>
+                                    <button aria-hidden="true" class="ms" id="shuffle">shuffle</button>
+                                    <button aria-hidden="true" class="ms" id="prev">skip_previous</button>
                                     ` : ''}
-                                    <button class="ms" id="playpause">${this._paused || paused ? 'play_arrow' : 'pause'}</button>
+                                    <button aria-hidden="true" class="ms" id="playpause">${this._paused || paused ? 'play_arrow' : 'pause'}</button>
                                     ${this._playlist.length > 1 ? `
-                                    <button class="ms" id="next">skip_next</button>
-                                    <button class="ms" id="repeat">repeat</button>
+                                    <button aria-hidden="true" class="ms" id="next">skip_next</button>
+                                    <button aria-hidden="true" class="ms" id="repeat">repeat</button>
                                     ` : ''}
                                 </div>
                             </div>

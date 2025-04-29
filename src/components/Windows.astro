@@ -100,7 +100,7 @@ import Player from "../jwindows/Player.astro";
 <div class="floating-window" id="tty">
     <div class="floating-window-titlebar">
         <p>jTTY</p>
-        <p onclick="closeWindow(this)"><span class="ms">close</span></p>
+        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms">close</span></p>
     </div>
     <div class="jonsole--content floating-window-content">
         <p>[jbcarreon123@nekoweb ~]$ cd ..</p>
@@ -119,7 +119,7 @@ import Player from "../jwindows/Player.astro";
 <!-- <div class="floating-window">
     <div class="floating-window-titlebar">
         <p>jBrowser - https://thinliquid.dev</p>
-        <p onclick="closeWindow(this)"><span class="ms">close</span></p>
+        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms">close</span></p>
     </div>
     <div class="browser--content floating-window-content">
         <iframe src="https://thinliquid.dev">
