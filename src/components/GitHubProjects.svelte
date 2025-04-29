@@ -1,12 +1,6 @@
 <script>
-    let GH_READONLY_KEY = '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'
-
     async function loadRepos() {
-        let repoResponse = await fetch(`https://api.github.com/users/jbcarreon123/repos`, {
-            headers: {
-                Authorization: `Bearer ${GH_READONLY_KEY}`
-            }
-        });
+        let repoResponse = await fetch(`https://api.github.com/users/jbcarreon123/repos`);
 
         if (!repoResponse.ok) throw new Error(`Recieved ${repoResponse.status} from GitHub. Please try again later.`)
 
@@ -22,11 +16,7 @@
     }
 
     async function loadReposWithFilter() {
-        let repoResponse = await fetch(`https://api.github.com/users/indiefellas/repos`, {
-            headers: {
-                Authorization: `Bearer ${GH_READONLY_KEY}`
-            }
-        });
+        let repoResponse = await fetch(`https://api.github.com/users/indiefellas/repos`);
         /** @type {any[]} */
         let repos = await repoResponse.json();
 
@@ -40,11 +30,7 @@
 
         repos = repos.filter((v) => indiefellas.includes(v.name));
 
-        let repo2Response = await fetch(`https://api.github.com/users/Macro-Deck-App/repos`, {
-            headers: {
-                Authorization: `Bearer ${GH_READONLY_KEY}`
-            }
-        });
+        let repo2Response = await fetch(`https://api.github.com/users/Macro-Deck-App/repos`);
         /** @type {any[]} */
         let repos2 = await repo2Response.json();
 
@@ -55,21 +41,9 @@
         repos2 = repos2.filter((v) => macroDeck.includes(v.name));
         repos = repos.concat(repos2);
 
-        repos = repos.concat(await (await fetch(`https://api.github.com/users/liberation-dev/repos`, {
-            headers: {
-                Authorization: `Bearer ${GH_READONLY_KEY}`
-            }
-        })).json());
-        repos = repos.concat(await (await fetch(`https://api.github.com/users/Y2DL/repos`, {
-            headers: {
-                Authorization: `Bearer ${GH_READONLY_KEY}`
-            }
-        })).json());
-        repos = repos.concat(await (await fetch(`https://api.github.com/users/customWin/repos`, {
-            headers: {
-                Authorization: `Bearer ${GH_READONLY_KEY}`
-            }
-        })).json());
+        repos = repos.concat(await (await fetch(`https://api.github.com/users/liberation-dev/repos`)).json());
+        repos = repos.concat(await (await fetch(`https://api.github.com/users/Y2DL/repos`)).json());
+        repos = repos.concat(await (await fetch(`https://api.github.com/users/customWin/repos`)).json());
 
         return repos;
     }
