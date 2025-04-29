@@ -457,7 +457,7 @@
 		text.innerHTML = sanitizeHtml(parser.render(filteredText), {
 			allowedTags: [
 				...sanitizeHtml.defaults.allowedTags,
-				'img', 'iframe'
+				'img', 'iframe', 'video'
 			],
 			allowedClasses: {
 				'span': ['ms'],
@@ -465,6 +465,7 @@
 			allowedAttributes: {
 				'iframe': ['src', 'width', 'height'],
 				'img': ['src', 'alt'],
+				'video': ['src', 'alt', 'controls'],
 				'a': ['href', 'target'],
 			}
 		});
