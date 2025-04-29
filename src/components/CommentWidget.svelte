@@ -425,7 +425,7 @@
 		name.innerText = filteredName;
 		name.className = 'c-name';
 		if (data.Admin == true) {
-			name.insertAdjacentHTML('beforeend', " <span aria-hidden="true" class='ms c-admin'>shield_person</span> ");
+			name.insertAdjacentHTML('beforeend', " <span aria-hidden='true' class='ms c-admin'>shield_person</span> ");
 		}
 		if (data.Pinned == true) {
 			name.insertAdjacentHTML('beforeend', s_pinnedText);
