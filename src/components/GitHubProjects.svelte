@@ -1,6 +1,6 @@
 <script>
     async function loadRepos() {
-        let repoResponse = await fetch(`https://api.github.com/users/jbcarreon123/repos`);
+        let repoResponse = await fetch(`https://api.github.com/users/jbcarreon123/repos?per_page=100`);
 
         if (!repoResponse.ok) throw new Error(`Recieved ${repoResponse.status} from GitHub. Please try again later.`)
 
