@@ -16,6 +16,16 @@ export default {
     </div>
   `,
 
+    localhostWiget: `
+    <div class="phone-container" style="--width: 350px">
+            <div class="phone not">
+              <div id="responeko-phone" class="items">
+                <p>The Responeko widget doesn't work with localhost, sadly :(</p>
+              </div>
+            </div>
+    </div>
+    `
+
     widget: `
     <div class="phone-container">
             <div class="phone">

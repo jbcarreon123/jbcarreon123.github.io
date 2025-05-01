@@ -59,6 +59,7 @@ function centerScrollbar(element) {
     return str;
   }
 
+  
   let widgetHtml = config.defaultWidget;
   if (i > -1) {
     const ctx = {
@@ -84,7 +85,6 @@ function centerScrollbar(element) {
 
     widgetHtml = await asyncReplace(config.widget, evaluateExpression);
 }
-
   const widget = document.createElement('div');
   widget.id = 'responeko';
   widget.dataset.pmoId = crypto.randomUUID ? crypto.randomUUID() : generateB64UniqueIDBrowser();
