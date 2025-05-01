@@ -30,4 +30,4 @@ Alongside that, I'm also actively working on this site (duh!) and a thing that y
 That's about it for now, and I plan to make a thing for my 18th birthday, so also stay
 tuned for that! Thanks for reading my post and thanks for riding in on my journey!
 
-Also seems like I'm nearing 20 followers and 20k views in Nekoweb. Nice!
+Also seems like I'm nearing 50 followers and 20k views in Nekoweb. Nice!
