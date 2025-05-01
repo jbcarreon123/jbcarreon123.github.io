@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Stats from '../components/Stats.svelte';
 import Nekocafe from '../components/Nekocafe.svelte';
+import StatusCafe from '../components/StatusCafe.svelte';
 
 const posts = Object.values(import.meta.glob('./posts/**/*.md', { eager: true }));
 
@@ -49,7 +50,7 @@ const latestPost = postSorted[0];
 			</div>
 			<div>
 				<h2>JB's status</h2>
-				<div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div><script src="https://status.cafe/current-status.js?name=jbcarreon123" defer></script>
+				<StatusCafe client:only="svelte" />
 			</div>
 		</div>
 	</div>

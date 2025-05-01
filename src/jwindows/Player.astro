@@ -5,7 +5,7 @@ import { fromPath } from '@catamphetamine/id3js/node';
 const music = await loadMusic();
 ---
 
-<script is:inline src="/jPlayer/jPlayer2.js"></script>
+<script is:inline src="/jPlayer/jPlayer2.js" transition:persist></script>
 
 <div class="floating-window" id="player">
     <div class="floating-window-titlebar">
@@ -13,17 +13,10 @@ const music = await loadMusic();
         <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms">close</span></p>
     </div>
     <div class="floating-window-content" transition:persist>
-        <player-container id="player" css="/jPlayer/jPlayer2.css" fallback="/imgs/albums/fallback.png">
+        <player-container id="player" css="/jPlayer/jPlayer2.css" fallback="/imgs/albums/fallback.png" transition:persist>
             {music.map((tr) => <source src={"/music/" + tr} data-art={"/music/" + tr.replace('.it', '.jpg')} />)}
         </player-container>
     </div>
-    <script is:inline>
-        let player = document.querySelector('#player')
-        console.log(player.shadowRoot)
-        if (!player?.shadowRoot) {
-            player.updatePlaylist();
-        }
-    </script>
 
     <style>
         .floating-window {

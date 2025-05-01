@@ -647,6 +647,8 @@ class jPlayer extends HTMLElement {
     }
 
     async updatePlaylist() {
+        if (this._playlist.length > 0) return;
+
         this._fallback = this.getAttribute('fallback');
         const cssUrl = this.getAttribute('css');
         this._solo = this.getAttribute('solo') !== null;
