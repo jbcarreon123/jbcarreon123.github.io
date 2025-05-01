@@ -24,7 +24,7 @@ export default {
               </div>
             </div>
     </div>
-    `
+    `,
 
     widget: `
     <div class="phone-container">
