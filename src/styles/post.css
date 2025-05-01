@@ -4,7 +4,7 @@ blockquote {
     padding-left: 12px;
 }
 
-p:not(.small):not(.page-title), li {
+p:not(.small):not(.page-title), li, figure {
     padding: 6px 0;
 }
 
@@ -62,5 +62,9 @@ article h1::after {
 @media (width <= 640px) {
     article h1 {
         position: static;
+    }
+
+    figure, img {
+        max-width: 100%;
     }
 }

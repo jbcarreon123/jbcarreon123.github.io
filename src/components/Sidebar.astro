@@ -5,6 +5,9 @@ const { title, id, description } = Astro.props;
 <aside data-active-page={id} id="sidebar">
     <nav transition:persist>
         <a id="index" href="/home/"><span aria-hidden="true" class="ms">home</span> Home</a>
+        <button onclick="startConfetti()">
+            <span aria-hidden="true" class="ms">celebration</span> I'm 17 now!
+        </button>
         <details>
             <summary>whereabouts</summary>
             <a id="about" href="/about/"

@@ -10,7 +10,7 @@ import Windows from "../components/Windows.astro";
 import CommonHead from "../components/CommonHead.astro";
 import Sidebar from "../components/Sidebar.astro";
 
-const hash = import.meta.env.COMMIT_HASH ?? 'null';
+const hash = import.meta.env.COMMIT_HASH ?? "null";
 ---
 
 <!doctype html>
@@ -19,35 +19,78 @@ const hash = import.meta.env.COMMIT_HASH ?? 'null';
 		<CommonHead title={title} id={id} description={description} />
 	</head>
 	<body class="jcolor">
+		<script is:inline src="/confetti.js"></script>
 		<script is:inline>
 			function loadTooltip() {
-				console.log('loading tooltip event listener');
-				let tooltip = document.querySelector('.hover--tooltip');
+				console.log("loading tooltip event listener");
+				let tooltip = document.querySelector(".hover--tooltip");
 				document.querySelectorAll("[title]").forEach((el) => {
 					if (!el.title && el.dataset.title) return;
-					el.addEventListener('mousemove', (mev) => {
-						tooltip?.style.setProperty('--x', mev.clientX + 'px');
-						tooltip?.style.setProperty('--y', mev.clientY + 'px');
-						tooltip?.style.setProperty('display', 'block');
+					el.addEventListener("mousemove", (mev) => {
+						tooltip?.style.setProperty("--x", mev.clientX + "px");
+						tooltip?.style.setProperty("--y", mev.clientY + "px");
+						tooltip?.style.setProperty("display", "block");
 						if (el.title) {
 							el.dataset.title = el.title;
-							el?.removeAttribute('title');
+							el?.removeAttribute("title");
 						}
 						tooltip.innerHTML = `<p>${el.dataset.title}</p>`;
 					});
-					el.addEventListener('mouseleave', () => {
-						tooltip?.style.setProperty('display', 'none');
+					el.addEventListener("mouseleave", () => {
+						tooltip?.style.setProperty("display", "none");
 					});
 				});
 			}
-			document.addEventListener('DOMContentLoaded', loadTooltip);
-			document.addEventListener('load', loadTooltip);
-			document.addEventListener('astro:page-load', loadTooltip);
-			document.addEventListener('astro:after-swap', loadTooltip);
-		</script>
-		<div class="hover--tooltip" style="display: none">
+			document.addEventListener("DOMContentLoaded", loadTooltip);
+			document.addEventListener("load", loadTooltip);
+			document.addEventListener("astro:page-load", loadTooltip);
+			document.addEventListener("astro:after-swap", loadTooltip);
 
-		</div>
+			function startConfetti() {
+				const duration = 15 * 1000,
+					animationEnd = Date.now() + duration,
+					defaults = {
+						startVelocity: 30,
+						spread: 360,
+						ticks: 60,
+						zIndex: 9999,
+					};
+
+				function randomInRange(min, max) {
+					return Math.random() * (max - min) + min;
+				}
+
+				const interval = setInterval(function () {
+					const timeLeft = animationEnd - Date.now();
+
+					if (timeLeft <= 0) {
+						return clearInterval(interval);
+					}
+
+					const particleCount = 50 * (timeLeft / duration);
+
+					confetti(
+						Object.assign({}, defaults, {
+							particleCount,
+							origin: {
+								x: randomInRange(0.1, 0.3),
+								y: Math.random() - 0.2,
+							},
+						}),
+					);
+					confetti(
+						Object.assign({}, defaults, {
+							particleCount,
+							origin: {
+								x: randomInRange(0.7, 0.9),
+								y: Math.random() - 0.2,
+							},
+						}),
+					);
+				}, 250);
+			}
+		</script>
+		<div class="hover--tooltip" style="display: none"></div>
 		<style>
 			.hover--tooltip {
 				position: fixed;
@@ -63,7 +106,8 @@ const hash = import.meta.env.COMMIT_HASH ?? 'null';
 		<div class="container" transition:animate="none">
 			<main id="main">
 				<header>
-					<a href="#sidebar">Menu</a> <p class="page-title">{title ? title : "jb's site"}</p>
+					<a href="#sidebar">Menu</a>
+					<p class="page-title">{title ? title : "jb's site"}</p>
 				</header>
 				<div>
 					<div id="content" transition:animate="slide">
@@ -72,8 +116,8 @@ const hash = import.meta.env.COMMIT_HASH ?? 'null';
 					<footer transition:persist transition:animate="none">
 						<div class="sec">
 							<p class="small">
-								jbsite4@{version}/<span set:html={hash}></span> © 2025 jbcarreon123. All rights
-								reserved.
+								jbsite4@{version}/<span set:html={hash} /> © 2025
+								jbcarreon123. All rights reserved.
 							</p>
 							<p class="small">
 								Site content are licensed under CC BY-SA 4.0
@@ -88,7 +132,8 @@ const hash = import.meta.env.COMMIT_HASH ?? 'null';
 									target="_blank"
 									>Copying is an act of theft, while taking
 									inspiration is the true act of love. <span
-										aria-hidden="true" class="ms">open_in_new</span
+										aria-hidden="true"
+										class="ms">open_in_new</span
 									></a
 								>
 							</p>
@@ -179,4 +224,3 @@ const hash = import.meta.env.COMMIT_HASH ?? 'null';
 		</div>
 	</body>
 </html>
-
