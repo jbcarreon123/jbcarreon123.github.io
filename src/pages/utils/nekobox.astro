@@ -13,6 +13,8 @@ import Layout from "../../layouts/Layout.astro";
         import "prism-code-editor/prism/languages/css-extras";
         import "prism-code-editor/prism/languages/css";
 
+        import { minify } from 'csso';
+
         const editor = basicEditor(
             "#nekobox-editor",
             {
@@ -40,12 +42,13 @@ import Layout from "../../layouts/Layout.astro";
             return kilobytes.toFixed(2);
         }
 
-        function minifyCSS(css: string) {
-            let minified = css.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
-            minified = minified.replace(/^\s+|\s+$/g, '');
-            minified = minified.replace(/\s{2,}/g, ' ');
-            minified = minified.replace(/\s*([:;{}])\s*/g, '$1');
-            return minified;
+        function minifyCSS(css: string): string {
+            try {
+                return minify(css).css;
+            } catch (error) {
+                console.error('Error minifying CSS:', error);
+                return css;
+            }
         }
 
         function copy(el: Element, isMinified = false) {
