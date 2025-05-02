@@ -32,9 +32,21 @@ import Layout from "../../layouts/Layout.astro";
 }`;
         }
 
-        document.addEventListener("astro:page-load", () =>
-            fChange(document.querySelector("form")),
-        );
+        document.addEventListener("astro:page-load", () => {
+            fChange(document.querySelector("form"));
+
+            document.querySelector('form textarea').addEventListener('keydown', function(e) {
+                if (e.key == 'Tab') {
+                    e.preventDefault();
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    this.value = this.value.substring(0, start) +
+                    " ".repeat(4) + this.value.substring(end);
+                    this.selectionStart =
+                    this.selectionEnd = start + 4;
+                }
+            });
+        });
     </script>
 
     <h1>Nekoweb Feed Box Viewer</h1>
@@ -42,45 +54,45 @@ import Layout from "../../layouts/Layout.astro";
 
     <div id="cont" class="cont">
         <div id="out">
-            <div class="pre-pre-post">
-                <div class="pre-post" style="">
+            <div class="pre-pre-post noreset">
+                <div class="pre-post noreset" style="">
                     <a
                         href="/"
-                        class="post-link"
+                        class="noreset post-link"
                         target="_blank"
                         rel="noopener ugc"
                         style="position:relative!important"
                     >
                         <div
-                            id="post-jbcarreon123-test"
-                            class="post-box t-classic"
+                            id="noreset post-jbcarreon123-test"
+                            class="noreset post-box t-classic"
                             style="width:100%!important;max-height:400px!important;position:relative!important"
                         >
-                            <div class="post-box-inner">
-                                <span class="post-top-dot"></span>
+                            <div class="noreset post-box-inner">
+                                <span class="noreset post-top-dot"></span>
                                 <span
-                                    class="post-author"
+                                    class="noreset post-author"
                                     style="position:relative!important"
                                     >jbcarreon123</span
                                 >
                                 <span
-                                    class="post-dot"
+                                    class="noreset post-dot"
                                     style="position:relative!important">·</span
                                 >
                                 <span
-                                    class="post-date"
+                                    class="noreset post-date"
                                     style="position:relative!important"
                                     >5/2/2025</span
                                 >
                                 <h4
-                                    class="post-title"
+                                    class="noreset post-title"
                                     style="position:relative!important"
                                 >
                                     Example post
                                 </h4>
 
                                 <p
-                                    class="post-description"
+                                    class="noreset post-description"
                                     style="position:relative!important"
                                 >
                                     We're starting to formalize flexible
@@ -93,7 +105,7 @@ import Layout from "../../layouts/Layout.astro";
                                     model.
                                 </p>
 
-                                <span class="post-bottom-dot"></span>
+                                <span class="noreset post-bottom-dot"></span>
                             </div>
                         </div>
                     </a>
