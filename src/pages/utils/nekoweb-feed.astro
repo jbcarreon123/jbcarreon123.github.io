@@ -1,0 +1,243 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+    title="Nekoweb Feed Box Viewer"
+    description="A viewer of a feed box"
+    id="nekoweb-feed"
+>
+    <script is:inline>
+        /** @param {HTMLFormElement} el  */
+        async function fChange(el) {
+            let css = el.querySelector("textarea#css").value;
+            let style = document.querySelector("#user-style");
+
+            style.innerHTML = css
+                ? css
+                : `.post-box {
+    background-color: #fff2cc;
+    border: 4px solid #ecbfa6;
+    padding: 15px;
+    border-radius: 5px;
+    color: #634c53;
+    font-weight: normal;
+}
+
+.post-box .post-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}`;
+        }
+
+        document.addEventListener("astro:page-load", () =>
+            fChange(document.querySelector("form")),
+        );
+    </script>
+
+    <h1>Nekoweb Feed Box Viewer</h1>
+    <p>A basic Nekoweb Feed box viewer, because seems like there is none</p>
+
+    <div id="cont" class="cont">
+        <div id="out">
+            <div class="pre-pre-post">
+                <div class="pre-post" style="">
+                    <a
+                        href="/"
+                        class="post-link"
+                        target="_blank"
+                        rel="noopener ugc"
+                        style="position:relative!important"
+                    >
+                        <div
+                            id="post-jbcarreon123-test"
+                            class="post-box t-classic"
+                            style="width:100%!important;max-height:400px!important;position:relative!important"
+                        >
+                            <div class="post-box-inner">
+                                <span class="post-top-dot"></span>
+                                <span
+                                    class="post-author"
+                                    style="position:relative!important"
+                                    >jbcarreon123</span
+                                >
+                                <span
+                                    class="post-dot"
+                                    style="position:relative!important">·</span
+                                >
+                                <span
+                                    class="post-date"
+                                    style="position:relative!important"
+                                    >5/2/2025</span
+                                >
+                                <h4
+                                    class="post-title"
+                                    style="position:relative!important"
+                                >
+                                    Example post
+                                </h4>
+
+                                <p
+                                    class="post-description"
+                                    style="position:relative!important"
+                                >
+                                    We're starting to formalize flexible
+                                    opinions around our foundations at the end
+                                    of the day highlights, and locked and
+                                    loaded, but organic growth hammer out have
+                                    bandwidth. The horse is out of the barn how
+                                    much bandwidth do you have highlights.
+                                    Corporate synergy we've bootstrapped the
+                                    model.
+                                </p>
+
+                                <span class="post-bottom-dot"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="left">
+            <form class="w-full" oninput="fChange(this)">
+                <div>
+                    <label for="css">Your CSS</label><br />
+                    <textarea
+                        class="w-full border"
+                        id="css"
+                        set:html=`.post-box {
+    background-color: #fff2cc;
+    border: 4px solid #ecbfa6;
+    padding: 15px;
+    border-radius: 5px;
+    color: #634c53;
+    font-weight: normal;
+}
+
+.post-box .post-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}`
+                    />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style is:inline>
+        .cont {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-top: 12px;
+        }
+
+        form > div {
+            padding-top: 12px;
+            padding: 10px;
+        }
+
+        form {
+            padding-bottom: 12px;
+        }
+
+        textarea,
+        input:not(#void),
+        select {
+            height: 300px;
+        }
+
+        #css {
+            width: 100%;
+        }
+
+        @media (width <= 640px) {
+            .cont {
+                grid-template-columns: repeat(1, minmax(100px, 1fr));
+            }
+        }
+
+        #out {
+            background-color: #fff9e6;
+            padding: 6px;
+        }
+
+        /* NEKOWEB FEED BOX STYLES: DEFAULT [DO NOT REMOVE] */
+        .pre-pre-post {
+            font:
+                11pt "MS PGothic",
+                Tahoma,
+                Verdana;
+            padding: 10px;
+            vertical-align: middle;
+            display: inline-grid !important;
+            width: 100% !important;
+            max-height: 400px !important;
+            box-sizing: border-box;
+
+            .pre-post {
+                position: relative;
+                display: inline-block !important;
+                width: 100% !important;
+                max-height: 400px !important;
+                box-sizing: border-box;
+            }
+
+            *:hover {
+                text-decoration: none;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: serif;
+                font-style: italic;
+            }
+        }
+
+        .post-link {
+            text-decoration: none;
+        }
+
+        .post-box {
+            background-color: #fff2cc;
+            border: 4px solid #ecbfa6;
+            padding: 15px;
+            border-radius: 5px;
+            color: #634c53;
+            font-weight: normal;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+    </style>
+
+    <style is:inline id="user-style">
+        .post-box {
+            background-color: #fff2cc;
+            border: 4px solid #ecbfa6;
+            padding: 15px;
+            border-radius: 5px;
+            color: #634c53;
+            font-weight: normal;
+        }
+
+        .post-box .post-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+    </style>
+</Layout>

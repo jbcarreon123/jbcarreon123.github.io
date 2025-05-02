@@ -1,7 +1,7 @@
 * {
     margin: initial;
     padding: initial;
-    box-sizing: content-box;
+    box-sizing: border-box;
     transition: all 100ms;
     text-justify: unset;
     overflow-wrap: anywhere;
