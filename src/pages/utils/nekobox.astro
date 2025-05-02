@@ -15,18 +15,20 @@ import Layout from "../../layouts/Layout.astro";
 
         import { minify } from 'csso';
 
+        let s = localStorage.getItem("nekobox:value") ?? document
+            .querySelector("#user-style")
+            ?.innerHTML.trim().replaceAll("        ", "") ?? ""
+
         const editor = basicEditor(
             "#nekobox-editor",
             {
                 language: "css",
                 theme: "github-dark",
-                value:
-                    document
-                        .querySelector("#user-style")
-                        ?.innerHTML.trim().replaceAll("        ", "") ?? "",
+                value: s,
             },
             () => {
                 console.log("ready");
+                document.querySelector("#user-style").innerHTML = s;
             }
         );
 
@@ -64,10 +66,20 @@ import Layout from "../../layouts/Layout.astro";
             setTimeout(() => el.textContent = o, 2000);
         }
 
+        function save(el: Element) {
+            let val = editor.value;
+            localStorage.setItem("nekobox:value", val);
+            let o = el.textContent;
+            el.textContent = 'Saved!'
+            setTimeout(() => el.textContent = o, 2000);
+        }
+
         let cp = document.querySelector('#copy');
         let cpMin = document.querySelector('#copyMin');
+        let sv = document.querySelector('#save');
         cp?.addEventListener('click', () => copy(cp))
         cpMin?.addEventListener('click', () => copy(cpMin, true))
+        sv?.addEventListener('click', () => save(sv))
     </script>
 
     <script is:inline>
@@ -322,6 +334,7 @@ import Layout from "../../layouts/Layout.astro";
             <div>
                 <button id="copy">Copy</button>
                 <button id="copyMin">Copy (minified)</button>
+                <button id="save">Save</button>
             </div>
             <p id="cssSize">0KB used</p>
         </div>
