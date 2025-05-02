@@ -23,6 +23,7 @@ body {
     flex-direction: row-reverse;
     max-width: 900px;
     margin: 0 auto;
+    min-height: 100vh;
 }
 
 .container > main {
@@ -290,6 +291,7 @@ main > div {
     justify-content: space-between;
     gap: 24px;
     padding: 12px;
+    height: 100%;
 }
 
 div#leftbar>* {
