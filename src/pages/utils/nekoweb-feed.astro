@@ -30,6 +30,10 @@ import Layout from "../../layouts/Layout.astro";
     margin-top: 10px;
     margin-bottom: 0px;
 }`;
+
+            let overflow = el.querySelector('input[type="checkbox"]#overflow').checked;
+            console.log(overflow);
+            document.querySelector('.pre-post').style.setProperty('overflow', overflow == false ? 'hidden' : null);
         }
 
         document.addEventListener("astro:page-load", () => {
@@ -115,6 +119,9 @@ import Layout from "../../layouts/Layout.astro";
         <div id="left">
             <form class="w-full" oninput="fChange(this)">
                 <div>
+                    <input type="checkbox" id="overflow" checked="true" /> <label for="overflow">Allow overflowing?</label>
+                </div>
+                <div>
                     <label for="css">Your CSS</label><br />
                     <textarea
                         class="w-full border"
@@ -157,9 +164,7 @@ import Layout from "../../layouts/Layout.astro";
             padding-bottom: 12px;
         }
 
-        textarea,
-        input:not(#void),
-        select {
+        textarea {
             height: 300px;
         }
 

@@ -178,6 +178,10 @@ input, button, select, textarea {
     padding: 6px;
 }
 
+textarea {
+    font-family: 'Commit Mono', monospace;
+}
+
 .astro-code,
 code,
 .expressive-code {
