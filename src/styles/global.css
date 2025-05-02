@@ -184,12 +184,16 @@ textarea {
 
 .astro-code,
 code,
-.expressive-code {
+.expressive-code,
+.prism-code-editor {
     font-family: 'Commit Mono', monospace;
     font-size: 1.125rem;
+    overflow-x: hidden;
+}
+
+code {
     word-break: break-all;
     word-wrap: break-word;
-    overflow-x: hidden;
 }
 
 .ms {

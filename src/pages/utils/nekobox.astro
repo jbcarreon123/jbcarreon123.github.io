@@ -1,0 +1,607 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+    title="Nekobox"
+    description="The one stop shop for editing and previewing Nekoweb boxes."
+    id="nekobox"
+>
+    <script>
+        import { basicEditor } from "prism-code-editor/setups";
+        import "prism-code-editor/prism/languages/markup";
+        import "prism-code-editor/prism/languages/css-extras";
+        import "prism-code-editor/prism/languages/css";
+
+        const editor = basicEditor(
+            "#nekobox-editor",
+            {
+                language: "css",
+                theme: "github-dark",
+                value:
+                    document
+                        .querySelector("#user-style")
+                        ?.innerHTML.trim().replaceAll("        ", "") ?? "",
+            },
+            () => {
+                console.log("ready");
+            }
+        );
+
+        editor.addListener("update", (value) => {
+            document.querySelector("#user-style").innerHTML = value.replaceAll(/\n.follow ?{/gm, '\n.no {');
+            document.querySelector("#cssSize").innerHTML = `${textToKilobytes(value)}KB used (${textToKilobytes(minifyCSS(value))}KB when minified)`
+        });
+
+        function textToKilobytes(text: string) {
+            const encoder = new TextEncoder();
+            const bytes = encoder.encode(text).length;
+            const kilobytes = bytes / 1024;
+            return kilobytes.toFixed(2);
+        }
+
+        function minifyCSS(css: string) {
+            let minified = css.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+            minified = minified.replace(/^\s+|\s+$/g, '');
+            minified = minified.replace(/\s{2,}/g, ' ');
+            minified = minified.replace(/\s*([:;{}])\s*/g, '$1');
+            return minified;
+        }
+
+        function copy(el: Element, isMinified = false) {
+            let val = editor.value;
+
+            if (isMinified) {
+                val = minifyCSS(val);
+            }
+
+            navigator.clipboard.writeText(val).then();
+            let o = el.textContent;
+            el.textContent = 'Copied!'
+            setTimeout(() => el.textContent = o, 2000);
+        }
+
+        let cp = document.querySelector('#copy');
+        let cpMin = document.querySelector('#copyMin');
+        cp?.addEventListener('click', () => copy(cp))
+        cpMin?.addEventListener('click', () => copy(cpMin, true))
+    </script>
+
+    <script is:inline>
+        function switchTab(el) {
+            document
+                .querySelectorAll("#tab-buttons button")
+                .forEach((el) => el.classList.remove("active"));
+            document
+                .querySelectorAll("#nekobox-tabs > div")
+                .forEach((el) => el.classList.remove("visible"));
+            document
+                .querySelector(`#nekobox-tabs #${el.dataset.target}`)
+                ?.classList.add("visible");
+            el.classList.add("active");
+        }
+
+        let timeout = 0;
+
+        /** @param {HTMLFormElement} el  */
+        async function fChange(el) {
+            let overflow = el.querySelector(
+                'input[type="checkbox"]#overflow',
+            ).checked;
+            console.log(overflow);
+            document
+                .querySelector(".pre-site")
+                .style.setProperty(
+                    "overflow",
+                    overflow == false ? "hidden" : null,
+                );
+            document
+                .querySelector(".pre-post")
+                .style.setProperty(
+                    "overflow",
+                    overflow == false ? "hidden" : null,
+                );
+
+            let username = el.querySelector(`input[type="text"]#username`).value;
+            let domain = el.querySelector('input[type="text"]#domain').value;
+
+            if (domain) {
+                document.querySelector('#NOTUSEDINNEKOWEB_url').href = '//' + domain;
+                document.querySelector('#NOTUSEDINNEKOWEB_posturl').href = '//' + domain;
+                document.querySelector('#NOTUSEDINNEKOWEB_posturl').href = '//' + domain;
+                document.querySelector('#NOTUSEDINNEKOWEB_siteurl').innerHTML = `${domain}
+                
+                <span
+                    style="position:relative!important"
+                    class="noreset follow"
+                    title="Follow">[+]</span
+                >`;
+            }
+
+            clearTimeout(timeout);
+            timeout = setTimeout(async () => {
+                if (document.querySelector('#NOTUSEDINNEKOWEB_url').href == `//${username}.nekoweb.org/`) return;
+                let res = await fetch('https://nekoweb.org/api/site/info/' + username);
+                if (!res.ok) return;
+
+                let json = await res.json();
+                document.querySelector('#NOTUSEDINNEKOWEB_url').href = domain ? '//' + domain : `//${username}.nekoweb.org/`;
+                document.querySelector('#NOTUSEDINNEKOWEB_posturl').href = domain ? '//' + domain : `//${username}.nekoweb.org/`;
+                document.querySelector('#NOTUSEDINNEKOWEB_screenshot').src = `//nekoweb.org/screenshots/${username}/index_large.jpg`;
+                document.querySelector('#NOTUSEDINNEKOWEB_siteurl').innerHTML = domain ? `${domain}
+                
+                <span
+                    style="position:relative!important"
+                    class="noreset follow"
+                    title="Follow">[+]</span
+                >` : `${username}.nekoweb.org
+                
+                <span
+                    style="position:relative!important"
+                    class="noreset follow"
+                    title="Follow">[+]</span
+                >`;
+                document.querySelector('#NOTUSEDINNEKOWEB_sitetitle').textContent = json.title;
+                document.querySelector('#NOTUSEDINNEKOWEB_siteusername').textContent = username;
+
+                let follow = document.querySelector('.follow');
+                follow.addEventListener('click', (ev) => {
+                    ev.preventDefault();
+                    follow.classList.toggle('following');
+                    if (follow.classList.contains('following')) {
+                        follow.textContent = '[-]';
+                    } else {
+                        follow.textContent = '[+]';
+                    }
+                });
+            }, 1000)
+        }
+
+        document.addEventListener("astro:page-load", () => {
+            fChange(document.querySelector("form"));
+        });
+    </script>
+
+    <h1>Nekobox</h1>
+    <p>The one stop shop for editing and previewing Nekoweb boxes.</p>
+
+    <div id="nekobox-tab-container">
+        <div id="tab-buttons">
+            <button
+                onclick="switchTab(this)"
+                data-target="nb-sitebox"
+                class="active">Sitebox</button
+            >
+            <button onclick="switchTab(this)" data-target="nb-postbox"
+                >Postbox</button
+            >
+            <button onclick="switchTab(this)" data-target="nb-options"
+                >Settings</button
+            >
+        </div>
+        <div id="nekobox-tabs" class="nekoweb-colors">
+            <div id="nb-sitebox" class="visible">
+                <div class="pre-pre-site nekoweb-colors">
+                    <div class="pre-site" style="">
+                        <div
+                            id="site"
+                            class="noreset site-box t-classic"
+                            style="width:275px!important;height:190px!important;position:relative!important"
+                        >
+                            <span class="noreset top-dot"></span>
+                            <a
+                                href="//jbcarreon123.nekoweb.org/"
+                                target="_blank"
+                                id="NOTUSEDINNEKOWEB_url"
+                                rel="noopener ugc"
+                                style="position:relative!important"
+                            >
+                                <div
+                                    class="noreset sitefeature"
+                                    style="position:relative!important"
+                                >
+                                    <img
+                                        src="//nekoweb.org/screenshots/jbcarreon123/index_large.jpg"
+                                        class="screenshot"
+                                        id="NOTUSEDINNEKOWEB_screenshot"
+                                        style="position:relative!important"
+                                    />
+                                </div>
+                                <p
+                                    class="noreset"
+                                    style="position:relative!important"
+                                    id="NOTUSEDINNEKOWEB_siteurl"
+                                >
+                                    jbcarreon123.nekoweb.org
+
+                                    <span
+                                        style="position:relative!important"
+                                        class="noreset follow"
+                                        title="Follow">[+]</span
+                                    >
+                                </p>
+                                <span
+                                    class="noreset"
+                                    style="position:relative!important"
+                                    id="NOTUSEDINNEKOWEB_sitetitle"
+                                    >site title</span
+                                >
+                                <br />
+                            </a>
+                            <span class="noreset bottom-dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="nb-postbox">
+                <div class="pre-pre-post noreset">
+                    <div class="pre-post noreset" style="">
+                        <a
+                            href="/"
+                            class="noreset post-link"
+                            target="_blank"
+                            id="NOTUSEDINNEKOWEB_posturl"
+                            rel="noopener ugc"
+                            style="position:relative!important"
+                        >
+                            <div
+                                id="noreset post-jbcarreon123-test"
+                                class="noreset post-box t-classic"
+                                style="width:100%!important;max-height:400px!important;position:relative!important"
+                            >
+                                <div class="noreset post-box-inner">
+                                    <span class="noreset post-top-dot"></span>
+                                    <span
+                                        class="noreset post-author"
+                                        style="position:relative!important"
+                                        id="NOTUSEDINNEKOWEB_siteusername"
+                                        >jbcarreon123</span
+                                    >
+                                    <span
+                                        class="noreset post-dot"
+                                        style="position:relative!important"
+                                        >·</span
+                                    >
+                                    <span
+                                        class="noreset post-date"
+                                        style="position:relative!important"
+                                        >5/2/2025</span
+                                    >
+                                    <h4
+                                        class="noreset post-title"
+                                        style="position:relative!important"
+                                    >
+                                        Example post
+                                    </h4>
+
+                                    <p
+                                        class="noreset post-description"
+                                        style="position:relative!important"
+                                    >
+                                        We're starting to formalize flexible
+                                        opinions around our foundations at the
+                                        end of the day highlights, and locked
+                                        and loaded, but organic growth hammer
+                                        out have bandwidth. The horse is out of
+                                        the barn how much bandwidth do you have
+                                        highlights. Corporate synergy we've
+                                        bootstrapped the model.
+                                    </p>
+
+                                    <span class="noreset post-bottom-dot"
+                                    ></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="nb-options">
+                <form class="w-full" oninput="fChange(this)">
+                    <div>
+                        <input type="checkbox" id="overflow" checked="true" /> <label for="overflow">Allow overflowing? (do you have Nekoweb Supporter)</label>
+                    </div>
+                    <div>
+                        <label for="username">Nekoweb Username ([username].nekoweb.org)</label><br />
+                        <input type="text" id="username" value="jbcarreon123" />
+                    </div>
+                    <div>
+                        <label for="domain">Site Domain (only necessary if you have a custom domain)</label><br />
+                        <input type="text" id="domain" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="btn-cnt">
+            <div>
+                <button id="copy">Copy</button>
+                <button id="copyMin">Copy (minified)</button>
+            </div>
+            <p id="cssSize">0KB used</p>
+        </div>
+        <div id="nekobox-editor"></div>
+    </div>
+
+    <style is:inline>
+        p {
+            margin-bottom: 12px;
+        }
+
+        .btn-cnt {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: end;
+
+            p {
+                text-align: end;
+                margin-bottom: 0;
+            }
+        }
+
+        form {
+            width: 100%;
+
+            div {
+                padding: 3px 0;
+            }
+        }
+
+        #nekobox-tab-container {
+            display: flex;
+            flex-direction: column;
+            background: var(--acc);
+            padding: 6px;
+            margin-bottom: 12px;
+        }
+
+        #tab-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 6px;
+
+            button {
+                border: none;
+
+                &.active {
+                    background: var(--altbg);
+                }
+            }
+        }
+
+        button[data-target="nb-options"] {
+            margin-left: auto;
+        }
+
+        #nekobox-tabs {
+            background: var(--altbg);
+            padding: 6px;
+
+            & > * {
+                display: none;
+
+                &.visible {
+                    display: flex;
+                    justify-content: center;
+                }
+
+                * {
+                    box-sizing: border-box;
+                }
+            }
+
+            #nb-sitebox,
+            #nb-postbox {
+                background: #fff9e6;
+            }
+        }
+
+        .pre-pre-site {
+            font:
+                11pt "MS PGothic",
+                Tahoma,
+                Verdana;
+            margin: 10px;
+            vertical-align: middle;
+            display: inline-block !important;
+            width: 280px;
+            height: 197px !important;
+        }
+
+        .pre-site {
+            position: relative;
+            display: inline-block !important;
+            width: 280px !important;
+            height: 195px !important;
+        }
+
+        .follow {
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .pre-site a {
+            text-decoration: none;
+            color: var(--darkbrown);
+        }
+
+        .pre-site p {
+            color: var(--darkbrown);
+            font-weight: bold;
+            display: block;
+            margin-top: 1px;
+            margin-bottom: 2px;
+            font-size: 16px;
+        }
+
+        .sitefeature {
+            margin-top: 13px;
+            margin-left: 15px;
+            height: 137px;
+            width: 244px;
+            background-image: url("/static/assets/previewplaceholder.png");
+            background-color: white;
+            border: 1px solid #ecbfa6;
+        }
+
+        .screenshot {
+            width: 100%;
+            height: 100%;
+        }
+
+        .site-box {
+            text-align: center;
+            background-image: url("/static/assets/cookiebox.png");
+            background-repeat: no-repeat;
+            width: 228px;
+            height: 160px;
+            display: inline-block;
+            position: relative;
+            margin: 4px;
+            color: #b08271;
+            font-size: 12px;
+        }
+
+        .post-link {
+            text-decoration: none;
+        }
+
+        .post-box {
+            background-color: #fff2cc;
+            border: 4px solid #ecbfa6;
+            padding: 15px;
+            border-radius: 5px;
+            color: #634c53;
+            font-weight: normal;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+
+        .nekoweb-colors {
+            --almostwhite: #fff2cc;
+            --cream: #fff2cc;
+            --orange: #ffc09b;
+            --peach: #ffbbba;
+            --lightgreen: #ffe1b6;
+            --peachier: #ffbbba;
+            --orangish: #ffc09b;
+            --creamish: #ffecd6;
+            --pink: #fc949f;
+            --link: #ea8988;
+            --purple: #fc949f;
+            --palegreen: #bbd8bb;
+            --gray: #d5d5d5;
+            --lightbrown: #825044;
+            --darkbrown: #634c53;
+            --cookie: #875f6b;
+            --dough: #ffd0bc;
+            --light-red: #b95c5c;
+            --crazy-green: #95e995;
+            --gradientorange: linear-gradient(#fff2df, #fadabe);
+        }
+
+        .pre-pre-post {
+            font:
+                11pt "MS PGothic",
+                Tahoma,
+                Verdana;
+            padding: 10px;
+            vertical-align: middle;
+            display: inline-grid !important;
+            width: 100% !important;
+            max-height: 400px !important;
+            box-sizing: border-box;
+
+            .pre-post {
+                position: relative;
+                display: inline-block !important;
+                width: 100% !important;
+                max-height: 400px !important;
+                box-sizing: border-box;
+            }
+
+            *:hover {
+                text-decoration: none;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: serif;
+                font-style: italic;
+            }
+        }
+
+        .post-link {
+            text-decoration: none;
+        }
+
+        .post-box {
+            background-color: #fff2cc;
+            border: 4px solid #ecbfa6;
+            padding: 15px;
+            border-radius: 5px;
+            color: #634c53;
+            font-weight: normal;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+    </style>
+
+    <style is:inline id="user-style">
+        /* 
+            Don't use this file to edit your site style! Create a different CSS file for that.
+            This file defines how custom elements (like sitebox) will look like.
+            Setting CSS that breaks main nekoweb site on purpose is prohibited and may result in ban and site deletion! 
+        */
+
+        /* Must start with ".site-box". Change how your website will appear on main nekoweb site: https://lune.dimden.dev/405a44b7e5.png */
+        .site-box {
+            text-align: center;
+            background-image: url(/static/assets/cookiebox.png); /* Only nekoweb URLs allowed, use full url to your site like https://example.nekoweb.org/images/coolbg.png */
+            background-repeat: no-repeat;
+            color: #b08271;
+            font-size: 12px;
+        }
+        .site-box > a > p {
+            color: var(--darkbrown);
+            font-weight: bold;
+        }
+        .site-box > a > span {
+            color: var(--darkbrown);
+        }
+
+        /* Style for your post box (must start with ".post-box") */
+        .post-box {
+            background-color: #fff2cc;
+            border: 4px solid #ecbfa6;
+            padding: 15px;
+            border-radius: 5px;
+            color: #634c53;
+            font-weight: normal;
+        }
+
+        .post-box .post-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+    </style>
+</Layout>

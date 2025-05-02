@@ -5,9 +5,6 @@ const { title, id, description } = Astro.props;
 <aside data-active-page={id} id="sidebar">
     <nav transition:persist>
         <a id="index" href="/home/"><span aria-hidden="true" class="ms">home</span> Home</a>
-        <button onclick="startConfetti()">
-            <span aria-hidden="true" class="ms">celebration</span> I'm 17 now!
-        </button>
         <details>
             <summary>whereabouts</summary>
             <a id="about" href="/about/"
@@ -28,11 +25,8 @@ const { title, id, description } = Astro.props;
             <a id="split-it" href="/utils/split-it/"
                 ><span aria-hidden="true" class="ms">space_dashboard</span> Split It!</a
             >
-            <a id="nekoweb-feed" href="/utils/nekoweb-feed/"
-                ><span aria-hidden="true" class="ms">rss_feed</span> Nekoweb Feed Box Viewer</a
-            >
-            <a id="nekoweb-sitebox" href="/utils/nekoweb-sitebox/" data-astro-reload
-                ><span aria-hidden="true" class="ms">inventory_2</span> Nekoweb Sitebox Viewer <span aria-hidden="true" class="ms">refresh</span></a
+            <a id="nekobox" href="/utils/nekobox/" data-astro-reload
+                ><span aria-hidden="true" class="ms">inventory_2</span> Nekobox <span aria-hidden="true" class="ms">refresh</span></a
             >
         </details>
         <details>
