@@ -278,6 +278,8 @@
 			}
 		}
 
+		console.log(replies);
+
 		// Values for pagination
 		v_amountOfPages = Math.ceil(comments.length / s_commentsPerPage);
 		v_commentMax = s_commentsPerPage * v_pageNum;
@@ -311,7 +313,16 @@
 			if (comments[i].Pinned == true) {
 				c_container.insertBefore(comment, c_container.firstChild);
 				a_commentDivs.unshift(document.getElementById(comment.id));
-				comment.style.display = 'block';
+				if (!(i >= v_commentMin && i < v_commentMax)) {
+					comment.style.display = 'block';
+					let elm: Element;
+					document.querySelectorAll('.c-comment').forEach((e) => {
+						if (e.style.display == 'block') {
+							elm = e;
+						}
+					});
+					elm.style.display = 'none';
+				}
 			} else {
 				c_container.appendChild(comment);
 				a_commentDivs.push(document.getElementById(comment.id));
@@ -319,6 +330,7 @@
 		}
 
 		// Replies
+		console.log(replies.length);
 		for (let i = 0; i < replies.length; i++) {
 			let reply = createComment(replies[i]);
 			let parentId = replies[i].Reply;
@@ -337,7 +349,7 @@
 			} else {
 				container = document.getElementById(parentId + '-replies');
 			}
-			if (container?.querySelector(`[data-id='${reply.dataset.id}']`)) break;
+			if (container?.querySelector(`[data-id='${reply.dataset.id}']`)) continue;
 			reply.className = 'c-reply';
 			if (replies[i].Pinned == true) {
 				container.insertBefore(reply, container.firstChild);
