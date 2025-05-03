@@ -28,6 +28,7 @@ import Layout from "../../layouts/Layout.astro";
                 `input[type="text"]#username`,
             ) as any).value = localStorage.getItem("nekobox:username") ?? 'jbcarreon123';
         (document.querySelector('input[type="text"]#domain') as any).value = localStorage.getItem("nekobox:domain") ?? '';
+        (document.querySelector('input[type="checkbox"]#overflow') as any).checked = localStorage.getItem("nekobox:overflow") ?? false;
 
         const editor = basicEditor(
             "#nekobox-editor",
@@ -165,6 +166,7 @@ import Layout from "../../layouts/Layout.astro";
             ).value;
             let domain = el.querySelector('input[type="text"]#domain').value;
 
+            localStorage.setItem("nekobox:overflow", overflow);
             localStorage.setItem("nekobox:domain", domain ?? '');
             if (domain) {
                 document.querySelector("#NOTUSEDINNEKOWEB_url").href =
@@ -372,7 +374,7 @@ import Layout from "../../layouts/Layout.astro";
             <div id="nb-options">
                 <form class="w-full" oninput="fChange(this)">
                     <div>
-                        <input type="checkbox" id="overflow" checked="true" />
+                        <input type="checkbox" id="overflow" />
                         <label for="overflow"
                             >Allow overflowing? (do you have Nekoweb Supporter)</label
                         >
