@@ -300,6 +300,7 @@ import Layout from "../../layouts/Layout.astro";
         </div>
         <div id="nekobox-tabs" class="nekoweb-colors">
             <div id="nb-sitebox" class="visible">
+                
                 <div class="pre-pre-site nekoweb-colors">
                     <div class="pre-site" style="">
                         <div
@@ -354,6 +355,7 @@ import Layout from "../../layouts/Layout.astro";
                 </div>
             </div>
             <div id="nb-postbox">
+                
                 <div class="pre-pre-post noreset">
                     <div class="pre-post noreset" style="">
                         <a
@@ -525,6 +527,11 @@ import Layout from "../../layouts/Layout.astro";
             #nb-sitebox,
             #nb-postbox {
                 background: #fff9e6;
+            }
+
+            &:has(input[type="checkbox"]#overflow:checked) #nb-sitebox,
+            &:has(input[type="checkbox"]#overflow:checked) #nb-postbox {
+                padding-block: 64px;
             }
         }
 
