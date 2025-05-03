@@ -46,6 +46,10 @@ body {
         font-size: 0.85em;
     }
 
+    .vcr {
+        --font: 'VCR OSD Mono', monospace;
+    }
+
     .times {
         --font: 'Times New Roman', Times, serif;
     }
@@ -98,6 +102,8 @@ body {
             --link: #89b4fa;
             --link-hover: #89dceb;
         }
+
+        color-scheme: dark;
     }
 
     html[data-color='light'] {
@@ -130,6 +136,8 @@ body {
             --link: #1e66f5;
             --link-hover: #7287fd;
         }
+
+        color-scheme: light;
     }
 }
 
