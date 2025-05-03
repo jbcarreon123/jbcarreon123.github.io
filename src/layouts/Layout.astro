@@ -35,6 +35,9 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 						}
 						tooltip.innerHTML = `<p>${el.dataset.title}</p>`;
 					});
+					el.addEventListener("click", () => {
+						setTimeout(() => tooltip.innerHTML = `<p>${el.dataset.title}</p>`, 25);
+					});
 					el.addEventListener("mouseleave", () => {
 						tooltip?.style.setProperty("display", "none");
 					});

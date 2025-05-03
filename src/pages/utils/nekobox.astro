@@ -100,6 +100,18 @@ import Layout from "../../layouts/Layout.astro";
             setTimeout(() => (el.textContent = o), 2000);
         }
 
+        function getNekowebUsernameFromCSS(css: string, alt = '') {
+            const regex = /(\/\/.+\.nekoweb.org)/gm;
+            let res = regex.exec(css);
+            if (res === null) return '';
+            console.log(res);
+            for (let i = 0; i < res.length; i++) {
+                if (res[i] === '//example.nekoweb.org') continue;
+                return res[i].replace('//', '').split('.')[0];
+            }
+            return alt;
+        }
+
         async function load() {
             let url = prompt("elements.css path?");
             if (url) {
@@ -107,7 +119,12 @@ import Layout from "../../layouts/Layout.astro";
                     let res = await fetch(url);
                     if (res.ok) {
                         let css = await res.text();
+                        let u = url.replace(/https?:\/\//, '').split('.')[0];
+                        alert(`Loaded, reloading...\n\nUsername: ${!url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes('nekoweb.org') ? new URL(url).hostname : u + '.nekoweb.org'}`)
                         localStorage.setItem("nekobox:value", unMinifyCss(css));
+                        localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
+                        localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
+                        localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
                         window.location.reload();
                     } else {
                         alert(`Server returned ${res.status} (${res.statusText})`)
@@ -190,7 +207,23 @@ import Layout from "../../layouts/Layout.astro";
                 let res = await fetch(
                     "https://nekoweb.org/api/site/info/" + username,
                 );
-                if (!res.ok) return;
+                if (!res.ok) {
+                    if (!domain) return;
+                    let val = el.querySelector('input[type="text"]#domain').value;
+                    let u = val.split('.')[0];
+                    res = await fetch(
+                        "https://nekoweb.org/api/site/info/" + u
+                    );
+                    if (!res.ok) {
+                        alert('Nekoweb username ' + username + ' not found.');
+                        return;
+                    } else {
+                        username = u;
+                        el.querySelector(
+                            `input[type="text"]#username`,
+                        ).value = u;
+                    }
+                };
 
                 localStorage.setItem("nekobox:username", username);
 
