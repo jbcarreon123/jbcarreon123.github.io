@@ -560,6 +560,11 @@ import Layout from "../../layouts/Layout.astro";
             &:has(input[type="checkbox"]#overflow:checked) #nb-postbox {
                 padding-block: 64px;
             }
+
+            &:not(:has(input[type="checkbox"]#overflow:checked)) #nb-sitebox .pre-site,
+            &:not(:has(input[type="checkbox"]#overflow:checked)) #nb-postbox .pre-post {
+                outline: 3px dashed red;
+            }
         }
 
         .pre-pre-site {
