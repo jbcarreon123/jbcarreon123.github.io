@@ -24,6 +24,11 @@ import Layout from "../../layouts/Layout.astro";
                 .replaceAll("        ", "") ??
             "";
 
+        (document.querySelector(
+                `input[type="text"]#username`,
+            ) as any).value = localStorage.getItem("nekobox:username") ?? 'jbcarreon123';
+        (document.querySelector('input[type="text"]#domain') as any).value = localStorage.getItem("nekobox:domain") ?? '';
+
         const editor = basicEditor(
             "#nekobox-editor",
             {
@@ -149,6 +154,8 @@ import Layout from "../../layouts/Layout.astro";
             let domain = el.querySelector('input[type="text"]#domain').value;
 
             if (domain) {
+                localStorage.setItem("nekobox:domain", domain);
+
                 document.querySelector("#NOTUSEDINNEKOWEB_url").href =
                     "//" + domain;
                 document.querySelector("#NOTUSEDINNEKOWEB_posturl").href =
@@ -171,6 +178,8 @@ import Layout from "../../layouts/Layout.astro";
                     "https://nekoweb.org/api/site/info/" + username,
                 );
                 if (!res.ok) return;
+
+                localStorage.setItem("nekobox:username", username);
 
                 let json = await res.json();
                 document.querySelector("#NOTUSEDINNEKOWEB_url").href = domain
