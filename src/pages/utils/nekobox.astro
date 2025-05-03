@@ -106,7 +106,7 @@ import Layout from "../../layouts/Layout.astro";
                     let res = await fetch(url);
                     if (res.ok) {
                         let css = await res.text();
-                        localStorage.setItem("nekobox:value", css);
+                        localStorage.setItem("nekobox:value", unMinifyCss(css));
                         window.location.reload();
                     } else {
                         alert(`Server returned ${res.status} (${res.statusText})`)
@@ -165,9 +165,8 @@ import Layout from "../../layouts/Layout.astro";
             ).value;
             let domain = el.querySelector('input[type="text"]#domain').value;
 
+            localStorage.setItem("nekobox:domain", domain ?? '');
             if (domain) {
-                localStorage.setItem("nekobox:domain", domain);
-
                 document.querySelector("#NOTUSEDINNEKOWEB_url").href =
                     "//" + domain;
                 document.querySelector("#NOTUSEDINNEKOWEB_posturl").href =
