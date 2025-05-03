@@ -101,14 +101,26 @@ import Layout from "../../layouts/Layout.astro";
         }
 
         function getNekowebUsernameFromCSS(css: string, alt = '') {
-            const regex = /(\/\/.+\.nekoweb.org)/gm;
+            let regex = /(\/\/.+\.nekoweb.org)/gm;
             let res = regex.exec(css);
-            if (res === null) return '';
-            console.log(res);
-            for (let i = 0; i < res.length; i++) {
-                if (res[i] === '//example.nekoweb.org') continue;
-                return res[i].replace('//', '').split('.')[0];
+            if (res !== null) {
+                console.log(res);
+                for (let i = 0; i < res.length; i++) {
+                    if (res[i] === '//example.nekoweb.org') continue;
+                    return res[i].replace('//', '').split('.')[0];
+                }
             }
+
+            regex = /\/\/nekoweb\.org\/site\/([A-Za-z0-9\-\_]+)/gm;
+            res = regex.exec(css)
+            if (res !== null) {
+                console.log(res);
+                for (let i = 0; i < res.length; i++) {
+                    if (res[i] === '//nekoweb.org/site/example') continue;
+                    return res[i].replace('//nekoweb.org/site/', '');
+                }
+            }
+
             return alt;
         }
 
