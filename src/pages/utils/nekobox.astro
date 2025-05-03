@@ -13,11 +13,16 @@ import Layout from "../../layouts/Layout.astro";
         import "prism-code-editor/prism/languages/css-extras";
         import "prism-code-editor/prism/languages/css";
 
-        import { minify } from 'csso';
+        import { minify } from "csso";
+        import cssbeautify from 'cssbeautify';
 
-        let s = localStorage.getItem("nekobox:value") ?? document
-            .querySelector("#user-style")
-            ?.innerHTML.trim().replaceAll("        ", "") ?? ""
+        let s =
+            localStorage.getItem("nekobox:value") ??
+            document
+                .querySelector("#user-style")
+                ?.innerHTML.trim()
+                .replaceAll("        ", "") ??
+            "";
 
         const editor = basicEditor(
             "#nekobox-editor",
@@ -29,12 +34,16 @@ import Layout from "../../layouts/Layout.astro";
             () => {
                 console.log("ready");
                 document.querySelector("#user-style").innerHTML = s;
-            }
+            },
         );
 
         editor.addListener("update", (value) => {
-            document.querySelector("#user-style").innerHTML = value.replaceAll(/\n.follow ?{/gm, '\n.no {');
-            document.querySelector("#cssSize").innerHTML = `${textToKilobytes(value)}KB used (${textToKilobytes(minifyCSS(value))}KB when minified)`
+            document.querySelector("#user-style").innerHTML = replaceInvalidCSS(value.replaceAll(
+                /\n.follow ?{/gm,
+                "\n.no {",
+            ));
+            document.querySelector("#cssSize").innerHTML =
+                `${textToKilobytes(value)}KB used (${textToKilobytes(minifyCSS(value))}KB when minified)`;
         });
 
         function textToKilobytes(text: string) {
@@ -44,11 +53,28 @@ import Layout from "../../layouts/Layout.astro";
             return kilobytes.toFixed(2);
         }
 
+        function replaceInvalidCSS(cssString: string | null | undefined) {
+            if (!cssString) return '';
+            const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
+            return cssString.replace(regex, '/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {');
+        }
+
         function minifyCSS(css: string): string {
             try {
-                return minify(css).css;
+                return minify(css, {
+                    restructure: false,
+                }).css;
             } catch (error) {
-                console.error('Error minifying CSS:', error);
+                console.error("Error minifying CSS:", error);
+                return css;
+            }
+        }
+
+        function unMinifyCss(css: string) {
+            try {
+                return cssbeautify(css);
+            } catch (error) {
+                console.error("Error minifying CSS:", error);
                 return css;
             }
         }
@@ -62,24 +88,24 @@ import Layout from "../../layouts/Layout.astro";
 
             navigator.clipboard.writeText(val).then();
             let o = el.textContent;
-            el.textContent = 'Copied!'
-            setTimeout(() => el.textContent = o, 2000);
+            el.textContent = "Copied!";
+            setTimeout(() => (el.textContent = o), 2000);
         }
 
         function save(el: Element) {
             let val = editor.value;
             localStorage.setItem("nekobox:value", val);
             let o = el.textContent;
-            el.textContent = 'Saved!'
-            setTimeout(() => el.textContent = o, 2000);
+            el.textContent = "Saved!";
+            setTimeout(() => (el.textContent = o), 2000);
         }
 
-        let cp = document.querySelector('#copy');
-        let cpMin = document.querySelector('#copyMin');
-        let sv = document.querySelector('#save');
-        cp?.addEventListener('click', () => copy(cp))
-        cpMin?.addEventListener('click', () => copy(cpMin, true))
-        sv?.addEventListener('click', () => save(sv))
+        let cp = document.querySelector("#copy");
+        let cpMin = document.querySelector("#copyMin");
+        let sv = document.querySelector("#save");
+        cp?.addEventListener("click", () => copy(cp));
+        cpMin?.addEventListener("click", () => copy(cpMin, true));
+        sv?.addEventListener("click", () => save(sv));
     </script>
 
     <script is:inline>
@@ -117,68 +143,79 @@ import Layout from "../../layouts/Layout.astro";
                     overflow == false ? "hidden" : null,
                 );
 
-            let username = el.querySelector(`input[type="text"]#username`).value;
+            let username = el.querySelector(
+                `input[type="text"]#username`,
+            ).value;
             let domain = el.querySelector('input[type="text"]#domain').value;
 
             if (domain) {
-                document.querySelector('#NOTUSEDINNEKOWEB_url').href = '//' + domain;
-                document.querySelector('#NOTUSEDINNEKOWEB_posturl').href = '//' + domain;
-                document.querySelector('#NOTUSEDINNEKOWEB_posturl').href = '//' + domain;
-                document.querySelector('#NOTUSEDINNEKOWEB_siteurl').innerHTML = `${domain}
-                
-                <span
-                    style="position:relative!important"
-                    class="noreset follow"
-                    title="Follow">[+]</span
-                >`;
+                document.querySelector("#NOTUSEDINNEKOWEB_url").href =
+                    "//" + domain;
+                document.querySelector("#NOTUSEDINNEKOWEB_posturl").href =
+                    "//" + domain;
+                document.querySelector("#NOTUSEDINNEKOWEB_posturl").href =
+                    "//" + domain;
+                document.querySelector(
+                    "#NOTUSEDINNEKOWEB_siteurl",
+                ).textContent = `${domain}`;
             }
 
             clearTimeout(timeout);
             timeout = setTimeout(async () => {
-                if (document.querySelector('#NOTUSEDINNEKOWEB_url').href == `//${username}.nekoweb.org/`) return;
-                let res = await fetch('https://nekoweb.org/api/site/info/' + username);
+                if (
+                    document.querySelector("#NOTUSEDINNEKOWEB_url").href ==
+                    `//${username}.nekoweb.org/`
+                )
+                    return;
+                let res = await fetch(
+                    "https://nekoweb.org/api/site/info/" + username,
+                );
                 if (!res.ok) return;
 
                 let json = await res.json();
-                document.querySelector('#NOTUSEDINNEKOWEB_url').href = domain ? '//' + domain : `//${username}.nekoweb.org/`;
-                document.querySelector('#NOTUSEDINNEKOWEB_posturl').href = domain ? '//' + domain : `//${username}.nekoweb.org/`;
-                document.querySelector('#NOTUSEDINNEKOWEB_screenshot').src = `//nekoweb.org/screenshots/${username}/index_large.jpg`;
-                document.querySelector('#NOTUSEDINNEKOWEB_siteurl').innerHTML = domain ? `${domain}
-                
-                <span
-                    style="position:relative!important"
-                    class="noreset follow"
-                    title="Follow">[+]</span
-                >` : `${username}.nekoweb.org
-                
-                <span
-                    style="position:relative!important"
-                    class="noreset follow"
-                    title="Follow">[+]</span
-                >`;
-                document.querySelector('#NOTUSEDINNEKOWEB_sitetitle').textContent = json.title;
-                document.querySelector('#NOTUSEDINNEKOWEB_siteusername').textContent = username;
-
-                let follow = document.querySelector('.follow');
-                follow.addEventListener('click', (ev) => {
-                    ev.preventDefault();
-                    follow.classList.toggle('following');
-                    if (follow.classList.contains('following')) {
-                        follow.textContent = '[-]';
-                    } else {
-                        follow.textContent = '[+]';
-                    }
-                });
-            }, 1000)
+                document.querySelector("#NOTUSEDINNEKOWEB_url").href = domain
+                    ? "//" + domain
+                    : `//${username}.nekoweb.org/`;
+                document.querySelector("#NOTUSEDINNEKOWEB_posturl").href =
+                    domain ? "//" + domain : `//${username}.nekoweb.org/`;
+                document.querySelector("#NOTUSEDINNEKOWEB_screenshot").src =
+                    `//nekoweb.org/screenshots/${username}/index_large.jpg`;
+                document.querySelector(
+                    "#NOTUSEDINNEKOWEB_siteurl",
+                ).textContent = domain
+                    ? `${domain}`
+                    : `${username}.nekoweb.org`;
+                document.querySelector(
+                    "#NOTUSEDINNEKOWEB_sitetitle",
+                ).textContent = json.title;
+                document.querySelector(
+                    "#NOTUSEDINNEKOWEB_siteusername",
+                ).textContent = username;
+            }, 1000);
         }
 
         document.addEventListener("astro:page-load", () => {
             fChange(document.querySelector("form"));
+
+            let follow = document.querySelector(".follow");
+            follow.addEventListener("click", (ev) => {
+                ev.preventDefault();
+                follow.classList.toggle("following");
+                if (follow.classList.contains("following")) {
+                    follow.textContent = "[-]";
+                    follow.title = "Unfollow";
+                } else {
+                    follow.textContent = "[+]";
+                    follow.title = "Follow";
+                }
+            });
         });
     </script>
 
     <h1>Nekobox</h1>
-    <p class="mg">The one stop shop for editing and previewing Nekoweb boxes.</p>
+    <p class="mg">
+        The one stop shop for editing and previewing Nekoweb boxes.
+    </p>
 
     <div id="nekobox-tab-container">
         <div id="tab-buttons">
@@ -225,9 +262,10 @@ import Layout from "../../layouts/Layout.astro";
                                 <p
                                     class="noreset"
                                     style="position:relative!important"
-                                    id="NOTUSEDINNEKOWEB_siteurl"
                                 >
-                                    jbcarreon123.nekoweb.org
+                                    <span id="NOTUSEDINNEKOWEB_siteurl">
+                                        jbcarreon123.nekoweb.org
+                                    </span>
 
                                     <span
                                         style="position:relative!important"
@@ -314,14 +352,22 @@ import Layout from "../../layouts/Layout.astro";
             <div id="nb-options">
                 <form class="w-full" oninput="fChange(this)">
                     <div>
-                        <input type="checkbox" id="overflow" checked="true" /> <label for="overflow">Allow overflowing? (do you have Nekoweb Supporter)</label>
+                        <input type="checkbox" id="overflow" checked="true" />
+                        <label for="overflow"
+                            >Allow overflowing? (do you have Nekoweb Supporter)</label
+                        >
                     </div>
                     <div>
-                        <label for="username">Nekoweb Username ([username].nekoweb.org)</label><br />
+                        <label for="username"
+                            >Nekoweb Username ([username].nekoweb.org)</label
+                        ><br />
                         <input type="text" id="username" value="jbcarreon123" />
                     </div>
                     <div>
-                        <label for="domain">Site Domain (only necessary if you have a custom domain)</label><br />
+                        <label for="domain"
+                            >Site Domain (only necessary if you have a custom
+                            domain)</label
+                        ><br />
                         <input type="text" id="domain" />
                     </div>
                 </form>
@@ -451,7 +497,11 @@ import Layout from "../../layouts/Layout.astro";
             margin-top: 1px;
             margin-bottom: 2px;
             font-size: 16px;
-            overflow-wrap: initial;
+            overflow-wrap: break-word;
+
+            #NOTUSEDINNEKOWEB_siteurl {
+                overflow-wrap: normal;
+            }
         }
 
         .sitefeature {

@@ -11,12 +11,14 @@
         "@indiefellas/astro-adapter-nekoweb": "^1.1.0",
         "@kindspells/astro-shield": "^1.7.1",
         "@tailwindcss/vite": "^4.0.17",
+        "@types/cssbeautify": "^0.3.5",
         "@types/csso": "^5.0.4",
         "@types/markdown-it": "^14.1.2",
         "@types/sanitize-html": "^2.15.0",
         "astro": "^5.5.5",
         "astro-expressive-code": "^0.41.1",
         "astro-opengraph-image": "^0.2.2",
+        "cssbeautify": "^0.3.1",
         "csso": "^5.0.5",
         "feed": "^4.2.2",
         "markdown-it": "^14.1.0",
@@ -315,6 +317,8 @@
 
     "@types/css-tree": ["@types/css-tree@2.3.10", "", {}, "sha512-WcaBazJ84RxABvRttQjjFWgTcHvZR9jGr0Y3hccPkHjFyk/a3N8EuxjKr+QfrwjoM5b1yI1Uj1i7EzOAAwBwag=="],
 
+    "@types/cssbeautify": ["@types/cssbeautify@0.3.5", "", {}, "sha512-bkxuJdUu7Liw14EouI8IFNvJXvd5IioAZdDvlCFBXv+Sel8uPK9rcxfvOchQKqw2AtppxRvcYaWmimi0t0Yuow=="],
+
     "@types/csso": ["@types/csso@5.0.4", "", { "dependencies": { "@types/css-tree": "*" } }, "sha512-W/FsRkm/9c04x9ON+bj+HQ0cSgNkG1LvcfuBCpkP7cpikM7+RkrNFLGtiofb++xBG6KGMUycLoDbi9/K621ZCw=="],
 
     "@types/debug": ["@types/debug@4.1.12", "", { "dependencies": { "@types/ms": "*" } }, "sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ=="],
@@ -490,6 +494,8 @@
     "css-to-react-native": ["css-to-react-native@3.2.0", "", { "dependencies": { "camelize": "^1.0.0", "css-color-keywords": "^1.0.0", "postcss-value-parser": "^4.0.2" } }, "sha512-e8RKaLXMOFii+02mOlqwjbD00KSEKqblnpO9e++1aXS1fPQOpS1YoqdVHBqPjHNoxeF2mimzVqawm2KCbEdtHQ=="],
 
     "css-tree": ["css-tree@2.2.1", "", { "dependencies": { "mdn-data": "2.0.28", "source-map-js": "^1.0.1" } }, "sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA=="],
+
+    "cssbeautify": ["cssbeautify@0.3.1", "", { "bin": { "cssbeautify": "bin/cssbeautify" } }, "sha512-ljnSOCOiMbklF+dwPbpooyB78foId02vUrTDogWzu6ca2DCNB7Kc/BHEGBnYOlUYtwXvSW0mWTwaiO2pwFIoRg=="],
 
     "cssesc": ["cssesc@3.0.0", "", { "bin": { "cssesc": "bin/cssesc" } }, "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg=="],
 
