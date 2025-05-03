@@ -16,6 +16,12 @@ import Layout from "../../layouts/Layout.astro";
         import { minify } from "csso";
         import cssbeautify from 'cssbeautify';
 
+        var url = window.location;
+        let params = new URLSearchParams(url.search);
+        if (params.has('load')) {
+            loadUrl(decodeURIComponent(params.get('load') ?? ''));
+        }
+
         let s =
             localStorage.getItem("nekobox:value") ??
             document
@@ -138,6 +144,27 @@ import Layout from "../../layouts/Layout.astro";
                         localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
                         localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
                         window.location.reload();
+                    } else {
+                        alert(`Server returned ${res.status} (${res.statusText})`)
+                    }
+                } catch (e) {
+                    alert(`Can't fetch: ${e}`)
+                }
+            }
+        }
+
+        async function loadUrl(url: string) {
+            if (url) {
+                try {
+                    let res = await fetch(url);
+                    if (res.ok) {
+                        let css = await res.text();
+                        let u = url.replace(/https?:\/\//, '').split('.')[0];
+                        localStorage.setItem("nekobox:value", unMinifyCss(css));
+                        localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
+                        localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
+                        localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                        window.location.search = '';
                     } else {
                         alert(`Server returned ${res.status} (${res.statusText})`)
                     }
