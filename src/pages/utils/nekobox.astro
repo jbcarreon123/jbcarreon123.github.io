@@ -49,6 +49,8 @@ import Layout from "../../layouts/Layout.astro";
             ));
             document.querySelector("#cssSize").innerHTML =
                 `${textToKilobytes(value)}KB used (${textToKilobytes(minifyCSS(value))}KB when minified)`;
+
+            localStorage.setItem("nekobox:value", value);
         });
 
         function textToKilobytes(text: string) {
@@ -97,20 +99,30 @@ import Layout from "../../layouts/Layout.astro";
             setTimeout(() => (el.textContent = o), 2000);
         }
 
-        function save(el: Element) {
-            let val = editor.value;
-            localStorage.setItem("nekobox:value", val);
-            let o = el.textContent;
-            el.textContent = "Saved!";
-            setTimeout(() => (el.textContent = o), 2000);
+        async function load() {
+            let url = prompt("elements.css path?");
+            if (url) {
+                try {
+                    let res = await fetch(url);
+                    if (res.ok) {
+                        let css = await res.text();
+                        localStorage.setItem("nekobox:value", css);
+                        window.location.reload();
+                    } else {
+                        alert(`Server returned ${res.status} (${res.statusText})`)
+                    }
+                } catch (e) {
+                    alert(`Can't fetch: ${e}`)
+                }
+            }
         }
 
         let cp = document.querySelector("#copy");
         let cpMin = document.querySelector("#copyMin");
-        let sv = document.querySelector("#save");
+        let sv = document.querySelector("#load");
         cp?.addEventListener("click", () => copy(cp));
         cpMin?.addEventListener("click", () => copy(cpMin, true));
-        sv?.addEventListener("click", () => save(sv));
+        sv?.addEventListener("click", async () => await load());
     </script>
 
     <script is:inline>
@@ -389,7 +401,7 @@ import Layout from "../../layouts/Layout.astro";
             <div>
                 <button id="copy">Copy</button>
                 <button id="copyMin">Copy (minified)</button>
-                <button id="save">Save</button>
+                <button id="load">Load</button>
             </div>
             <p id="cssSize">0KB used</p>
         </div>
