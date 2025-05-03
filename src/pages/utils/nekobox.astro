@@ -478,6 +478,12 @@ import Layout from "../../layouts/Layout.astro";
             display: inline-block !important;
             width: 280px !important;
             height: 195px !important;
+
+            @media only screen and (max-width: 800px) {
+                h2, p, td {
+                    margin: 0 12px;
+                }
+            }
         }
 
         .follow {
