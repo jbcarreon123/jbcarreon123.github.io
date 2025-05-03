@@ -263,6 +263,8 @@
 		});
 	}
 
+	let v_commentCount = 0;
+
 	function displayComments(comments) {
 		// Clear for re-display
 		a_commentDivs = [];
@@ -287,6 +289,7 @@
 
 		// Main comments (not replies)
 		comments.reverse(); // Newest comments go to top
+		v_commentCount = comments.length;
 		for (let i = 0; i < comments.length; i++) {
 			let comment = createComment(comments[i]);
 
@@ -391,7 +394,7 @@
 
 			let pageCount = document.createElement('span');
 			pageCount.id = 'c_pageCount';
-			pageCount.textContent = `Page 1 of ${v_amountOfPages}`;
+			pageCount.textContent = `Page 1 of ${v_amountOfPages} (${v_commentCount} items)`;
 			pagination.appendChild(pageCount);
 
 			let rightButton = document.createElement('button');
@@ -675,7 +678,7 @@
 			}
 		}
 
-		pageCount.textContent = `Page ${targetPage} of ${v_amountOfPages}`;
+		pageCount.textContent = `Page ${targetPage} of ${v_amountOfPages} (${v_commentCount} items)`;
 	}
 
 	onMount(() => {
