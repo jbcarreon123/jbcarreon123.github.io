@@ -340,5 +340,11 @@
         "title": "Girl(s) vs the Institute",
         "alt": "Girl vs the Institute",
         "imgUrl": "https://girlvstheinstitute.nekoweb.org/button.png"
+    },
+    {
+        "url": "https://lexp.dev/en/index.html",
+        "title": "lexp.dev",
+        "alt": "lexp.dev website",
+        "imgUrl": "/imgs/buttons/lexpdev-webring-1.png"
     }
 ]
