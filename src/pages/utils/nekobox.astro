@@ -139,7 +139,7 @@ import Layout from "../../layouts/Layout.astro";
                         let css = await res.text();
                         let u = url.replace(/https?:\/\//, '').split('.')[0];
                         alert(`Loaded, reloading...\n\nUsername: ${!url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes('nekoweb.org') ? new URL(url).hostname : u + '.nekoweb.org'}`)
-                        localStorage.setItem("nekobox:value", unMinifyCss(css));
+                        localStorage.setItem("nekobox:value", replaceInvalidCSS(unMinifyCss(css)));
                         localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
                         localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
                         localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
