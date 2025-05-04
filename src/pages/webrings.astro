@@ -5,7 +5,15 @@ import WebringCard from '../components/WebringCard.astro';
 ---
 
 <Layout title="Webrings" id="webring">
-    <h1>Webrings</h1>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let rings = document.querySelector('#webrings')?.querySelectorAll('&>div:not(.pending)');
+
+            document.querySelector('h1 .count').textContent = `(part of ${rings?.length} rings)`
+        })
+    </script>
+
+    <h1>Webrings <span class="count"></span></h1>
     <p>Moved the webrings page into another page because its getting larger</p>
     <div id="webrings">
         <div>
@@ -60,6 +68,11 @@ import WebringCard from '../components/WebringCard.astro';
                 <script type="text/javascript" src="https://skylerzap.com/webring-webring/onionring-variables.js"></script>
                 <script type="text/javascript" src="https://skylerzap.com/webring-webring/onionring-widget.js"></script>
             </div>
+        </div>
+
+        <div class="pending">
+            <link rel="stylesheet" href="https://ultrakill.nekoweb.org/onionring.css">
+            <div id='skibiring'> <script type="text/javascript" src="https://ultrakill.nekoweb.org/onionring-variables.js"></script> <script type="text/javascript" src="https://ultrakill.nekoweb.org/onionring-widget.js"></script> </div>
         </div>
 
         <div style="height: 200px;">
