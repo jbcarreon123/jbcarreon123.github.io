@@ -1,77 +1,169 @@
 ---
+import type { MarkdownInstance } from "astro";
+interface Frontmatter {
+    title: string;
+    published: string;
+    description: string;
+    tags: string;
+}
 import Layout from "../layouts/Layout.astro";
 
-const posts = Object.values(import.meta.glob('./posts/**/*.md', { eager: true }));
+const posts = Object.values(
+    import.meta.glob<MarkdownInstance<Frontmatter>>("./posts/**/*.md", {
+        eager: true,
+    }),
+);
 
-const postSorted = posts.sort((a, b) => {
-    const dateA = new Date(a.frontmatter.published);
-    const dateB = new Date(b.frontmatter.published);
-    return dateA.getTime() - dateB.getTime();
-}).reverse()
+const postSorted = posts
+    .sort((a, b) => {
+        const dateA = new Date(a.frontmatter.published);
+        const dateB = new Date(b.frontmatter.published);
+        return dateA.getTime() - dateB.getTime();
+    })
+    .reverse();
+
+const tags: { tag: string; count: int }[] = [];
+postSorted.forEach((v) => {
+    v.frontmatter.tags.split(/, ?/).forEach((s) => {
+        if (!tags.find((t) => t.tag == s)) {
+            tags.push({
+                tag: s,
+                count: 1,
+            });
+        } else {
+            let ind = tags.indexOf(
+                tags.find((t) => t.tag == s) ?? { tag: "", count: -1 },
+            );
+            tags[ind].count++;
+        }
+    });
+});
 ---
 
-<Layout title="jb's posts" description="aka stuff that jb yaps about" id="posts">
-<h1>Posts</h1>
-<p class="post-desc">
-    <span>Some posts that JB did</span>
-    <span><a href="/feed.xml"><span aria-hidden="true" class="ms">rss_feed</span> RSS Feed</a> - <a href="/feed.atom"><span aria-hidden="true" class="ms">rss_feed</span> Atom Feed</a> - <a href="/feed.json"><span aria-hidden="true" class="ms">data_object</span> JSON Feed</a></span>
-</p>
-
-<div class="post-container">
-    {
-        postSorted.map((val) => <a href={val.url}>
-            <div class="post">
-                <h2>{val.frontmatter.title}</h2>
-                <p>{val.frontmatter.description}</p>
-            </div>
-        </a>)
-    }
-</div>
-
-<style>
-    .post-container {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(200px, 1fr));
-        gap: 6px;
-    }
-
-    .post {
-        padding: 0 6px;
-        height: 150px;
-        background: var(--acc);
-    }
-
-    .post h2 {
-        text-wrap-mode: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .post:hover, .post:has(*:hover) {
-        background: var(--altbg);
-    }
-
-    .post-desc {
-        display: flex;
-        justify-content: space-between;
-        gap: 6px;
-    }
-
-    @media (width <= 940px) {
-        .post-container {
-            grid-template-columns: repeat(2, minmax(100px, 1fr));
+<Layout
+    title="jb's posts"
+    description="aka stuff that jb yaps about"
+    id="posts"
+>
+    <script is:inline>
+        /**
+         * @param {HTMLButtonElement} el 
+         */
+        function filterTag(el) {
+            let tag = new RegExp(el.dataset.tag, 'g');
+            let tagStr = el.dataset.tag;
+            document.querySelectorAll('.tags button').forEach((e) => e.classList.remove('active'));
+            document.querySelectorAll('.post-container a').forEach((e) => {
+                if (tag.test(e.dataset.tags) || !tagStr) {
+                    e.style.display = 'block';
+                } else {
+                    e.style.display = 'none';
+                }
+            })
+            el.classList.add('active');
         }
-    }
+    </script>
 
-    @media (width <= 640px) {
+    <h1>Posts</h1>
+    <p class="post-desc">
+        <span>Some posts that JB did</span>
+        <span
+            ><a href="/feed.xml"
+                ><span aria-hidden="true" class="ms">rss_feed</span> RSS Feed</a
+            > - <a href="/feed.atom"
+                ><span aria-hidden="true" class="ms">rss_feed</span> Atom Feed</a
+            > - <a href="/feed.json"
+                ><span aria-hidden="true" class="ms">data_object</span> JSON Feed</a
+            ></span
+        >
+    </p>
+
+    <details class="tag-filter">
+        <summary>Filter by tag...</summary>
+        <div class="tags">
+            <button data-tag="" onclick="filterTag(this)">All ({postSorted.length})</button>
+            {
+                tags
+                    .sort((a, b) => b.count - a.count)
+                    .map((s) => (
+                        <button onclick="filterTag(this)" data-tag={s.tag}>
+                            {s.tag} ({s.count})
+                        </button>
+                    ))
+            }
+        </div>
+    </details>
+
+    <div class="post-container">
+        {
+            postSorted.map((val) => (
+                <a href={val.url} data-tags={val.frontmatter.tags}>
+                    <div class="post">
+                        <div>
+                            <h2>{val.frontmatter.title}</h2>
+                            <p>{val.frontmatter.description}</p>
+                        </div>
+                    </div>
+                </a>
+            ))
+        }
+    </div>
+
+    <style>
+        .tag-filter {
+            padding-bottom: 12px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
         .post-container {
-            grid-template-columns: repeat(1, minmax(100px, 1fr));
+            display: grid;
+            grid-template-columns: repeat(3, minmax(200px, 1fr));
+            gap: 6px;
+        }
+
+        .post {
+            padding: 0 6px;
+            height: 150px;
+            background: var(--acc);
+        }
+
+        .post h2 {
+            text-wrap-mode: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .post:hover,
+        .post:has(*:hover) {
+            background: var(--altbg);
         }
 
         .post-desc {
-            justify-content: left;
-            flex-direction: column;
+            display: flex;
+            justify-content: space-between;
+            gap: 6px;
         }
-    }
-</style>
+
+        @media (width <= 940px) {
+            .post-container {
+                grid-template-columns: repeat(2, minmax(100px, 1fr));
+            }
+        }
+
+        @media (width <= 640px) {
+            .post-container {
+                grid-template-columns: repeat(1, minmax(100px, 1fr));
+            }
+
+            .post-desc {
+                justify-content: left;
+                flex-direction: column;
+            }
+        }
+    </style>
 </Layout>

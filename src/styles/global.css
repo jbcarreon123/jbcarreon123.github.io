@@ -24,7 +24,7 @@ body {
 .container {
     background-color: var(--bg);
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     max-width: 900px;
     margin: 0 auto;
 }
@@ -186,6 +186,10 @@ input, button, select, textarea {
     padding: 6px;
 }
 
+button.active, button:hover {
+    background: var(--altbg);
+}
+
 textarea {
     font-family: 'Commit Mono', monospace;
 }
@@ -227,6 +231,16 @@ figcaption {
     font-size: 0.75em;
     color: var(--sec);
     text-transform: uppercase;
+}
+
+#to-top {
+    padding: 12px 0;
+}
+
+#to-top p {
+    padding: 6px;
+    width: fit-content;
+    background: var(--altbg);
 }
 
 aside nav .sep, aside nav summary, optgroup {

@@ -47,6 +47,18 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 			document.addEventListener("load", loadTooltip);
 			document.addEventListener("astro:page-load", loadTooltip);
 			document.addEventListener("astro:after-swap", loadTooltip);
+			document.addEventListener('DOMContentLoaded', () => {
+				document.querySelector('#to-top').addEventListener('click', (e) => {
+					e.preventDefault();
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				});
+
+				window.matchMedia('(width <= 640px)').addEventListener('change', (c) => {
+					if (c.matches) setTimeout(() => document.querySelector('main').scrollIntoView(), 50);
+				}) 
+
+				if (window.matchMedia('(width <= 640px)').matches) setTimeout(() => document.querySelector('main').scrollIntoView(), 50);
+			});
 		</script>
 		<div class="hover--tooltip" style="display: none"></div>
 		<style>
@@ -62,6 +74,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 			}
 		</style>
 		<div class="container" transition:animate="none">
+			<Sidebar title={title} id={id} description={description} />
 			<main id="main">
 				<header>
 					<a href="#sidebar">Menu</a>
@@ -73,6 +86,9 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 					</div>
 					<footer transition:persist transition:animate="none">
 						<div class="sec">
+							<a id="to-top" href="#">
+								<p>Back to top</p>
+							</a>
 							<p class="small">
 								jbsite4@{version}/<span set:html={hash} /> © 2025
 								jbcarreon123. All rights reserved.
@@ -174,7 +190,6 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 					</footer>
 				</div>
 			</main>
-			<Sidebar title={title} id={id} description={description} />
 		</div>
 
 		<div transition:persist>
