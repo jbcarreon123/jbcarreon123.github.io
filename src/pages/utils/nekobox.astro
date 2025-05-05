@@ -15,13 +15,14 @@ import Layout from "../../layouts/Layout.astro";
 
         import { minify } from "csso";
         import cssbeautify from 'cssbeautify';
+import type { MetaStore } from "astro:content";
 
         var url = window.location;
         let params = new URLSearchParams(url.search);
         if (params.has('load')) {
             loadUrl(decodeURIComponent(params.get('load') ?? ''));
         } else if (params.has('username')) {
-            loadUrl(`https://${params.get('username')}/%2F/elements.css?original=1`)
+            loadUrl(`https://${params.get('username')}.nekoweb.org/%2F/elements.css?original=1`)
         }
 
         let s =
@@ -36,7 +37,8 @@ import Layout from "../../layouts/Layout.astro";
                 `input[type="text"]#username`,
             ) as any).value = localStorage.getItem("nekobox:username") ?? 'jbcarreon123';
         (document.querySelector('input[type="text"]#domain') as any).value = localStorage.getItem("nekobox:domain") ?? '';
-        (document.querySelector('input[type="checkbox"]#overflow') as any).checked = localStorage.getItem("nekobox:overflow") === 'true'
+        (document.querySelector('input[type="checkbox"]#overflow') as any).checked = localStorage.getItem("nekobox:overflow") === 'true';
+        (document.querySelector('#nkb-readonly') as any).style.display = localStorage.getItem('nekobox:readonly') === 'true' ? 'block' : 'none';
 
         const editor = basicEditor(
             "#nekobox-editor",
@@ -44,6 +46,7 @@ import Layout from "../../layouts/Layout.astro";
                 language: "css",
                 theme: "github-dark",
                 value: s,
+                readOnly: localStorage.getItem('nekobox:readonly') === 'true'
             },
             () => {
                 console.log("ready");
@@ -95,8 +98,39 @@ import Layout from "../../layouts/Layout.astro";
             }
         }
 
+        interface Metadata {
+            username: string,
+            domain?: string,
+            overflow: boolean,
+            readonly readonly: boolean
+        }
+
+        function loadMetadata(css: string): {data: Metadata, css: string} | null {
+            const regex = /^\/\*!@nkb (.+) \*\/(?:\n?.*)*/gmiyvsd;
+            const excludeRegex = /^\/\*!@nkb .+ \*\/\n?/gmiyvsd;
+            console.log(css.replace(excludeRegex, ''));
+            return {
+                data: JSON.parse(css.replace(regex, '{$1}')),
+                css: unMinifyCss(css.replace(excludeRegex, ''))
+            };
+        }
+
+        function exportMetadata(metadata: Metadata): string {
+            const regex = /{(.+)}/;
+            const data = JSON.stringify(metadata);
+            return data.replace(regex, '/*!@nkb $1 */');
+        }
+
         function copy(el: Element, isMinified = false) {
-            let val = editor.value;
+            let metadata: Metadata = {
+                username: (document.querySelector(`input[type="text"]#username`) as any).value,
+                domain: (document.querySelector('input[type="text"]#domain') as any).value,
+                overflow: (document.querySelector('input[type="checkbox"]#overflow') as any).checked,
+                readonly: (document.querySelector('input[type="checkbox"]#readonly') as any).checked,
+            }
+
+            let val = `${exportMetadata(metadata)}
+${editor.value}`;
 
             if (isMinified) {
                 val = minifyCSS(val);
@@ -139,12 +173,23 @@ import Layout from "../../layouts/Layout.astro";
                     let res = await fetch(url);
                     if (res.ok) {
                         let css = await res.text();
-                        let u = url.replace(/https?:\/\//, '').split('.')[0];
-                        alert(`Loaded, reloading...\n\nUsername: ${!url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes('nekoweb.org') ? new URL(url).hostname : u + '.nekoweb.org'}`)
-                        localStorage.setItem("nekobox:value", replaceInvalidCSS(unMinifyCss(css)));
-                        localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
-                        localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
-                        localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                        let m = loadMetadata(css);
+                        if (m) {
+                            localStorage.setItem("nekobox:value", replaceInvalidCSS(m.css));
+                            localStorage.setItem("nekobox:username", m.data.username);
+                            localStorage.setItem("nekobox:domain", m.data.domain ?? '');
+                            localStorage.setItem("nekobox:overflow", `${m.data.overflow}`);
+                            localStorage.setItem("nekobox:readonly", `${m.data.readonly}`);
+                            alert(`Loaded, reloading...\n\nLoaded from Nekobox Metadata Format`);
+                        } else {
+                            let u = url.replace(/https?:\/\//, '').split('.')[0];
+                            alert(`Loaded, reloading...\n\nUsername: ${!url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes('nekoweb.org') ? new URL(url).hostname : u + '.nekoweb.org'}`)
+                            localStorage.setItem("nekobox:value", replaceInvalidCSS(unMinifyCss(css)));
+                            localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
+                            localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
+                            localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                        }
+                        
                         window.location.reload();
                     } else {
                         alert(`Server returned ${res.status} (${res.statusText})`)
@@ -161,11 +206,20 @@ import Layout from "../../layouts/Layout.astro";
                     let res = await fetch(url);
                     if (res.ok) {
                         let css = await res.text();
-                        let u = url.replace(/https?:\/\//, '').split('.')[0];
-                        localStorage.setItem("nekobox:value", unMinifyCss(css));
-                        localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
-                        localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
-                        localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                        let m = loadMetadata(css);
+                        if (m) {
+                            localStorage.setItem("nekobox:value", replaceInvalidCSS(m.css));
+                            localStorage.setItem("nekobox:username", m.data.username);
+                            localStorage.setItem("nekobox:domain", m.data.domain ?? '');
+                            localStorage.setItem("nekobox:overflow", `${m.data.overflow}`);
+                            localStorage.setItem("nekobox:readonly", `${m.data.readonly}`);
+                        } else {
+                            let u = url.replace(/https?:\/\//, '').split('.')[0];
+                            localStorage.setItem("nekobox:value", replaceInvalidCSS(unMinifyCss(css)));
+                            localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
+                            localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
+                            localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                        }
                         window.location.search = '';
                     } else {
                         alert(`Server returned ${res.status} (${res.statusText})`)
@@ -456,6 +510,12 @@ import Layout from "../../layouts/Layout.astro";
                         >
                     </div>
                     <div>
+                        <input type="checkbox" id="readonly" checked="false" />
+                        <label for="readonly"
+                            >Export as read-only? This will never get disabled if enabled when exporting.</label
+                        >
+                    </div>
+                    <div>
                         <label for="username"
                             >Nekoweb Username ([username].nekoweb.org)</label
                         ><br />
@@ -474,6 +534,7 @@ import Layout from "../../layouts/Layout.astro";
     </div>
 
     <div>
+        <p id="nkb-readonly" style="display: none;">This elements.css is read-only. To undo this, load another elements.css.</p>
         <div class="btn-cnt">
             <div>
                 <button id="copy">Copy</button>
