@@ -20,6 +20,8 @@ import Layout from "../../layouts/Layout.astro";
         let params = new URLSearchParams(url.search);
         if (params.has('load')) {
             loadUrl(decodeURIComponent(params.get('load') ?? ''));
+        } else if (params.has('username')) {
+            loadUrl(`https://${params.get('username')}/%2F/elements.css?original=1`)
         }
 
         let s =
