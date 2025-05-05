@@ -108,11 +108,14 @@ import type { MetaStore } from "astro:content";
         function loadMetadata(css: string): {data: Metadata, css: string} | null {
             const regex = /^\/\*!@nkb (.+) \*\/(?:\n?.*)*/gmiyvsd;
             const excludeRegex = /^\/\*!@nkb .+ \*\/\n?/gmiyvsd;
-            console.log(css.replace(excludeRegex, ''));
-            return {
-                data: JSON.parse(css.replace(regex, '{$1}')),
-                css: unMinifyCss(css.replace(excludeRegex, ''))
-            };
+            try {
+                return {
+                    data: JSON.parse(css.replace(regex, '{$1}')),
+                    css: unMinifyCss(css.replace(excludeRegex, ''))
+                };
+            } catch {
+                return null;
+            }
         }
 
         function exportMetadata(metadata: Metadata): string {
