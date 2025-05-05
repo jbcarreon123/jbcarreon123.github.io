@@ -191,6 +191,7 @@ ${editor.value}`;
                             localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
                             localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
                             localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                            localStorage.setItem("nekobox:readonly", `false`);
                         }
                         
                         window.location.reload();
