@@ -17,7 +17,7 @@ import "../styles/landing.css";
             let historyLength = window.history.length;
 
             if (referrer) {
-                text.textContent = `Go back${historyLength > 1 ? ' to previous page' : ` to ${referrer.replace(/https?:\/\//, '')}`}`;
+                text.textContent = `Go back to ${referrer.replace(/https?:\/\//, '')}`;
                 back.href = referrer;
 
                 back.addEventListener('click', (e) => {
@@ -29,6 +29,13 @@ import "../styles/landing.css";
                         location.href = back.href;
                     }
                 })
+            } else if (historyLength > 1) {
+                text.textContent = `Go back to previous page`;
+
+                back.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.history.back();
+                }
             }
         })
     </script>
