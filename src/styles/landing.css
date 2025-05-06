@@ -18,6 +18,7 @@ html {
 .big {
     font-size: 4em;
     text-align: center;
+    padding-top: 24px;
 }
 
 .big span {
