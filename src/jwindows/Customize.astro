@@ -81,7 +81,7 @@
 <div class="floating-window" id="customize">
     <div class="floating-window-titlebar">
         <p>Customize</p>
-        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms">close</span></p>
+        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms" data-icon="close"></span></p>
     </div>
     <div class="floating-window-content">
         <div class="window-container">
@@ -90,10 +90,10 @@
                     onclick="showTab(this)"
                     class="active"
                     data-tab-id="colors"
-                    ><span aria-hidden="true" class="ms">palette</span> Colors</button
+                    ><span aria-hidden="true" class="ms" data-icon="palette"></span> Colors</button
                 >
                 <button onclick="showTab(this)" data-tab-id="fonts"
-                    ><span aria-hidden="true" class="ms">format_size</span> Fonts</button
+                    ><span aria-hidden="true" class="ms" data-icon="format_size"></span> Fonts</button
                 >
             </div>
             <div class="tab visible" id="colors">

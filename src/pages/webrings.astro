@@ -56,13 +56,23 @@ import WebringCard from '../components/WebringCard.astro';
             ></WebringCard>
         </div>
 
-        <div class="pending">
+        <div>
             <WebringCard
                 name="Webmaster Webring"
                 link="https://webmasterwebring.netlify.app/"
                 prev="https://webmasterwebring.netlify.app?jb-previous"
                 next="https://webmasterwebring.netlify.app?jb-next"
                 random="https://webmasterwebring.netlify.app?jb-random"
+            ></WebringCard>
+        </div>
+
+        <div>
+            <WebringCard
+                name="Bolognese Webring"
+                link="https://daisy.nekoweb.org/webring/"
+                prev="https://spagwhetti.github.io/redirect.html?to=prev&name=jb"
+                next="https://spagwhetti.github.io/redirect.html?to=next&name=jb"
+                random="https://spagwhetti.github.io/redirect.html?to=random&name=jb"
             ></WebringCard>
         </div>
 
@@ -80,12 +90,12 @@ import WebringCard from '../components/WebringCard.astro';
             </div>
         </div>
 
-        <div class="pending">
+        <div>
             <link rel="stylesheet" href="https://ultrakill.nekoweb.org/onionring.css">
             <div id='skibiring'> <script type="text/javascript" src="https://ultrakill.nekoweb.org/onionring-variables.js"></script> <script type="text/javascript" src="https://ultrakill.nekoweb.org/onionring-widget.js"></script> </div>
         </div>
 
-        <div class="pending">
+        <div>
             <link href="https://websetsbylynn.neocities.org/webring/wblstyle2.css" rel="stylesheet" type="text/css" media="all">
             <div id='wbl2'>
                 <script type="text/javascript" src="https://websetsbylynn.neocities.org/webring/wbl2-variables.js"></script>
@@ -113,7 +123,7 @@ import WebringCard from '../components/WebringCard.astro';
             </div>
         </div>
     
-        <div>
+        <div class="trb">
             <script is:inline data-astro-rerun nonce="webring" src="https://astracelestine.nekoweb.org/webring/tropical-rice-bowl/widgettext.js"></script>
         </div>
     
@@ -148,7 +158,7 @@ import WebringCard from '../components/WebringCard.astro';
         </div> 
 
         <div>
-            <script is:inline data-astro-rerun nonce="webring" src="https://jbcarreon123.nekoweb.org/webrings/responeko/pmoring.js"></script>
+            <script is:inline data-astro-rerun nonce="webring" src="/webrings/responeko/pmoring.js"></script>
         </div>
     </div>
 
@@ -162,6 +172,10 @@ import WebringCard from '../components/WebringCard.astro';
         #webrings > * {
             background-color: var(--acc);
             padding: 6px;
+            
+            *:not(.ms) {
+                font-family: var(--font);
+            }
         }
 
         #webring > div {
@@ -171,6 +185,22 @@ import WebringCard from '../components/WebringCard.astro';
         #webring div > * {
             margin: 0 auto;
             text-align: center;
+        }
+
+        html[data-color="dark"] #nekowebring {
+            color: var(--altbg);
+        }
+
+        .trb {
+            text-align: center;
+
+            a {
+                color: var(--link) !important;
+
+                &:hover {
+                    color: var(--link-hover) !important;
+                }
+            }
         }
 
         @media (width <= 640px) {

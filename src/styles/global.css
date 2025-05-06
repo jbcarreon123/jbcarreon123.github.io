@@ -211,7 +211,10 @@ code {
 .ms {
     font-family: 'Material Symbols', serif;
     vertical-align: bottom;
+}
 
+.ms:after {
+    content: attr(data-icon);
 }
 
 img, figure, iframe {

@@ -14,7 +14,7 @@
 	};
 
 	parser.renderer.rules.link_close = function (tokens, idx, options, env, self) {
-		return ' <span aria-hidden="true" class="ms">open_in_new</span>' + self.renderToken(tokens, idx, options);
+		return ' <span aria-hidden="true" class="ms" data-icon="open_in_new"></span>' + self.renderToken(tokens, idx, options);
 	};
 
 	parser.renderer.rules.link_open = function (tokens, idx, options, env, self) {
@@ -113,14 +113,14 @@
 	let s_loadingText = 'Loading comments...';
 	let s_noCommentsText = 'No comments yet!';
 	let s_closedCommentsText = 'Comments are disabled on this post.';
-	let s_websiteText = ' <span aria-hidden="true" class="ms">open_in_new</span> '; // The links to websites left by users on their comments
-	let s_replyButtonText = '<span aria-hidden="true" class="ms">reply</span> Reply'; // The button for replying to someone
-	let s_replyLockedText = '<span aria-hidden="true" class="ms">lock</span> Locked';
-	let s_replyingText = '<span aria-hidden="true" class="ms">reply</span> Replying to'; // The text that displays while the user is typing a reply
+	let s_websiteText = ' <span aria-hidden="true" class="ms" data-icon="open_in_new"></span> '; // The links to websites left by users on their comments
+	let s_replyButtonText = '<span aria-hidden="true" class="ms" data-icon="reply"></span> Reply'; // The button for replying to someone
+	let s_replyLockedText = '<span aria-hidden="true" class="ms" data-icon="lock"></span> Locked';
+	let s_replyingText = '<span aria-hidden="true" class="ms" data-icon="reply"></span> Replying to'; // The text that displays while the user is typing a reply
 	let s_pinnedText = '<span aria-hidden="true" class="ms c-admin">keep</span>';
 	let s_expandRepliesText = 'Show Replies';
-	let s_leftButtonText = '<span aria-hidden="true" class="ms">arrow_back_ios_new</span> Prev';
-	let s_rightButtonText = 'Next <span aria-hidden="true" class="ms">arrow_forward_ios</span>';
+	let s_leftButtonText = '<span aria-hidden="true" class="ms" data-icon="arrow_back_ios_new"></span> Prev';
+	let s_rightButtonText = 'Next <span aria-hidden="true" class="ms" data-icon="arrow_forward_ios"></span>';
 
 	/*
         DO NOT edit below this point unless you are confident you know what you're doing!
@@ -786,7 +786,7 @@
 						type="submit"
 						value={s_submitButtonLabel}
 						disabled={s_commentsOpen}
-					><span aria-hidden="true" class="ms">send</span> Send!</button>
+					><span aria-hidden="true" class="ms" data-icon="send"></span> Send!</button>
 				</div>
 			{:else}
 				<p>{s_closedCommentsText}</p>

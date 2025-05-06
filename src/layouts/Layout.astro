@@ -47,7 +47,10 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 			document.addEventListener("load", loadTooltip);
 			document.addEventListener("astro:page-load", loadTooltip);
 			document.addEventListener("astro:after-swap", loadTooltip);
-			document.addEventListener('DOMContentLoaded', () => {
+			document.addEventListener('DOMContentLoaded', load);
+			document.addEventListener('astro:after-swap', load);
+
+			function load() {
 				document.querySelector('#to-top').addEventListener('click', (e) => {
 					e.preventDefault();
 					window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -58,7 +61,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 				}) 
 
 				if (window.matchMedia('(width <= 640px)').matches) setTimeout(() => document.querySelector('main').scrollIntoView(), 50);
-			});
+			}
 		</script>
 		<div class="hover--tooltip" style="display: none"></div>
 		<style>
@@ -107,7 +110,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 									>Copying is an act of theft, while taking
 									inspiration is the true act of love. <span
 										aria-hidden="true"
-										class="ms">open_in_new</span
+										class="ms" data-icon="open_in_new"></span
 									></a
 								>
 							</p>

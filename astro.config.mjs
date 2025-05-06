@@ -12,7 +12,7 @@ import { env } from 'node:process';
 import rehypeFigure from 'rehype-figure';
 
 import mdx from '@astrojs/mdx';
-
+import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
 
 console.log(env.NEKOWEB_APIKEY);
@@ -56,20 +56,21 @@ export default defineConfig({
         rel: ['nofollow'], target: '_blank',
         content: {
           type: 'element', tagName: 'span',
+          properties: { ariaHidden: "true" },
           children: [
             {
               type: 'text', value: ' '
             },
             {
               type: 'element', tagName: 'span',
-              properties: { className: ['ms'] },
-              children: [{type: 'text', value: 'open_in_new'}]
+              properties: { className: ['ms'], dataIcon: ['open_in_new'] },
             }
           ]
         }
       }
       ],
-      rehypeFigure
+      rehypeFigure,
+      rehypeSectionize
     ],
   }
 });

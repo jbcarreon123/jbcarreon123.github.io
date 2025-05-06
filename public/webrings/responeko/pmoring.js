@@ -86,7 +86,7 @@ function centerScrollbar(element) {
     widgetHtml = await asyncReplace(config.widget, evaluateExpression);
 }
 
-  widgetHtml = location.hostname.startsWith('localhost') || location.hostname.startsWith('127.0.0.1') ? config.localhostWidget : widgetHtml;
+  widgetHtml = location.host.startsWith('localhost') || location.host.startsWith('127.0.0.1') ? config.localhostWiget : widgetHtml;
 
   const widget = document.createElement('div');
   widget.id = 'responeko';

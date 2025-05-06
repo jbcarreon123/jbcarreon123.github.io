@@ -37,7 +37,7 @@ const bookmarkCategories = groupArrayByCategory(bookmarks);
             <div class="bookmark-item-container">
                     <div class="bookmark-item">
                         <a href={bk.url} target="_blank">
-                            <h3 set:html={bk.name + ' <span aria-hidden="true" class="ms">open_in_new</span>'}></h3>
+                            <h3 set:html={bk.name + ' <span aria-hidden="true" class="ms" data-icon="open_in_new"></span>'}></h3>
                         </a>
                         {bk.recommended && <span class="small"><i>(recommended!)</i></span>}
                         {bk.warning && <span class="small"><i set:html={`(${bk.warning})`}></i></span>}
@@ -45,7 +45,7 @@ const bookmarkCategories = groupArrayByCategory(bookmarks);
                     </div>
                 <div class="additional-urls">
                     {bk.additionalUrls?.map((url) => 
-                        <a href={url.url} target="_blank">{url.name} <span aria-hidden="true" class="ms">open_in_new</span></a>
+                        <a href={url.url} target="_blank">{url.name} <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a>
                     )}
                 </div>
             </div>

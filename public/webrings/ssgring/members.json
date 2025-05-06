@@ -53,5 +53,12 @@
         "username": "ralsei.tech",
         "framework": "<a href='https://lume.land/' target='_blank'>Lume</a>",
         "pitch": "a small site on the indieweb, centered around tech & fluffy boys."
+    },
+    {
+        "host": "lime360.nekoweb.org",
+        "username": "lime360",
+        "framework": "<a href='https://codeberg.org/lime360/siteHX' target='_blank'>siteHX (Custom)</a>",
+        "button": "https://lime360.nekoweb.org/img/buttons/lime360_button.gif",
+        "type": "16+"
     }
 ]

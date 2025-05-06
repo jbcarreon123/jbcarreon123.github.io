@@ -10,7 +10,7 @@ const music = await loadMusic();
 <div class="floating-window" id="player">
     <div class="floating-window-titlebar">
         <p>jPlayer2</p>
-        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms">close</span></p>
+        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms" data-icon="close"></span></p>
     </div>
     <div class="floating-window-content" transition:persist>
         <player-container id="player" css="/jPlayer/jPlayer2.css" fallback="/imgs/albums/fallback.png" transition:persist>

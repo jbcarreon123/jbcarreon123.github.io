@@ -4,74 +4,74 @@ const { title, id, description } = Astro.props;
 
 <aside data-active-page={id} id="sidebar">
     <nav transition:persist>
-        <a id="index" href="/home/"><span aria-hidden="true" class="ms">home</span> Home</a>
+        <a id="index" href="/home/"><span aria-hidden="true" class="ms" data-icon="home"></span> Home</a>
         <details>
             <summary>whereabouts</summary>
             <a id="about" href="/about/"
-                ><span aria-hidden="true" class="ms">person</span> About JB</a
+                ><span aria-hidden="true" class="ms" data-icon="person"></span> About JB</a
             >
             <a id="projects" href="/projects/"
-                ><span aria-hidden="true" class="ms">terminal</span> Projects</a
+                ><span aria-hidden="true" class="ms" data-icon="terminal"></span> Projects</a
             >
             <a id="riiatw" href="/riiatw/"
-                ><span aria-hidden="true" class="ms">language</span> RIIAtW</a
+                ><span aria-hidden="true" class="ms" data-icon="language"></span> RIIAtW</a
             >
         </details>
         <details>
             <summary>stuff</summary>
             <a id="chat" href="/chat/"
-                ><span aria-hidden="true" class="ms">smart_toy</span> "AI" Chat</a
+                ><span aria-hidden="true" class="ms" data-icon="smart_toy"></span> "AI" Chat</a
             >
             <a id="split-it" href="/utils/split-it/"
-                ><span aria-hidden="true" class="ms">space_dashboard</span> Split It!</a
+                ><span aria-hidden="true" class="ms" data-icon="space_dashboard"></span> Split It!</a
             >
             <a id="nekobox" href="/utils/nekobox/" data-astro-reload
-                ><span aria-hidden="true" class="ms">inventory_2</span> Nekobox <span aria-hidden="true" class="ms">refresh</span></a
+                ><span aria-hidden="true" class="ms">inventory_2</span> Nekobox <span aria-hidden="true" class="ms" data-icon="refresh"></span></a
             >
         </details>
         <details>
             <summary>writing</summary>
             <a id="posts" href="/posts/"
-                ><span aria-hidden="true" class="ms">article</span> Posts</a
+                ><span aria-hidden="true" class="ms" data-icon="article"></span> Posts</a
             >
             <a id="tutorials" href="/tutorials/"
-                ><span aria-hidden="true" class="ms">help</span> Tutorials</a
+                ><span aria-hidden="true" class="ms" data-icon="help"></span> Tutorials</a
             >
         </details>
         <details>
             <summary>my webrings</summary>
-            <a id="ssgring" href="/webrings/ssgring/"><span aria-hidden="true" class="ms">build</span> SSGRing</a>
-            <a id="responeko" href="/webrings/responeko/"><span aria-hidden="true" class="ms">phone_android</span> Responeko</a>
-            <a id="yamring" href="/webrings/yamring/"><span aria-hidden="true" class="ms">tag</span> YAMring</a>
+            <a id="ssgring" href="/webrings/ssgring/"><span aria-hidden="true" class="ms" data-icon="build"></span> SSGRing</a>
+            <a id="responeko" href="/webrings/responeko/"><span aria-hidden="true" class="ms" data-icon="phone_android"></span> Responeko</a>
+            <a id="yamring" href="/webrings/yamring/"><span aria-hidden="true" class="ms" data-icon="tag"></span> YAMring</a>
         </details>
         <details>
             <summary>outlinks</summary>
             <a id="links" href="/links/"
-                ><span aria-hidden="true" class="ms">link</span> Links</a
+                ><span aria-hidden="true" class="ms" data-icon="link"></span> Links</a
             >
             <a id="webring" href="/webrings/" data-astro-reload
-                ><span aria-hidden="true" class="ms">donut_large</span> Webrings <span aria-hidden="true" class="ms">refresh</span></a
+                ><span aria-hidden="true" class="ms" data-icon="donut_large"></span> Webrings <span aria-hidden="true" class="ms" data-icon="refresh"></span></a
             >
             <a id="bookmarks" href="/bookmarks/"
-                ><span aria-hidden="true" class="ms">bookmark</span> Bookmarks</a
+                ><span aria-hidden="true" class="ms" data-icon="bookmark"></span> Bookmarks</a
             >
         </details>
         <details>
             <summary>liked my site?</summary>
             <a id="guestbook" href="/guestbook/"
-                ><span aria-hidden="true" class="ms">contract_edit</span> Sign my Guestbook</a
+                ><span aria-hidden="true" class="ms" data-icon="contract_edit"></span> Sign my Guestbook</a
             >
             <a href="https://nekoweb.org/follow/jbcarreon123"
-                ><span aria-hidden="true" class="ms">add</span> Follow me on Nekoweb!</a
+                ><span aria-hidden="true" class="ms" data-icon="add"></span> Follow me on Nekoweb!</a
             >
         </details>
         <details>
             <summary>member of</summary>
             <a href="https://team.indieseas.net" target="_blank"
-                >indiefellas <span aria-hidden="true" class="ms">open_in_new</span></a
+                >indiefellas <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a
             >
             <a href="https://macro-deck.app" target="_blank"
-                >Macro Deck <span aria-hidden="true" class="ms">open_in_new</span></a
+                >Macro Deck <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a
             >
         </details>
         <details>

@@ -54,32 +54,32 @@ Let's review the rules on the Nekoweb Discord (as a discord server admin perspec
 
 - don't be bad
 - be good
-> Both of these should be consolidated into one, having 2 rules for the same thing is just unnecessary
+  > Both of these should be consolidated into one, having 2 rules for the same thing is just unnecessary
 
 - don't talk about sexual topics.
-> Self-explanatory but I feel like this rule keeps getting broken without any repercussions
+  > Self-explanatory but I feel like this rule keeps getting broken without any repercussions
 
 - be kind to others
-> This rule might be merged to the first 2 rules also
+  > This rule might be merged to the first 2 rules also
 
 - if something doesn't change or load, press CTRL+SHIFT+R or CTRL+F5 to clear browser cache (or use whatever button your browser has to do it). if it still doesn't work/you cant figure it out, try going on your site from different browser/device, and if it still doesnt load/change, ONLY THEN report a bug. ALSO if you use Cloudflare create Bypass cache rule in Page rules and clear cache in Cloudflare
-> Self-explanatory but some people miss this thing and just ask anyways (always remember to pin this to the specific channels alongside it being a rule)
+  > Self-explanatory but some people miss this thing and just ask anyways (always remember to pin this to the specific channels alongside it being a rule)
 
 - spend at least a hour trying to learn html/css before asking any questions in ⁠#webdev or ⁠#coding-help.
   some resources: #⁠webdev
-> Yeah! I honestly agree on this rule.
+  > Yeah! I honestly agree on this rule.
 
 - read https://nekoweb.org/faq before asking questions
-> Some people won't visit a page to just read stuff before asking. Probably the best thing is to have a copy of the FAQ page on a separate channel on the server.
+  > Some people won't visit a page to just read stuff before asking. Probably the best thing is to have a copy of the FAQ page on a separate channel on the server.
 
 - no political debates
-> Self explanatory
+  > Self explanatory
 
 - dont be annoying
-> This rule might also be possible to be merged into the first 2 rules 
+  > This rule might also be possible to be merged into the first 2 rules 
 
 - only use English
-> Self explanatory also.
+  > Self explanatory also.
 
 There's some rules that should be merged into one rule, and there's some rule that people might not follow. Also, I would suggest adding rules for following the [Discord Community guidelines](https://discord.com/guidelines) and [Discord Terms of Service](https://discord.com/terms) as it aims for a server that's for everyone, and protects the younger members of a server.
 

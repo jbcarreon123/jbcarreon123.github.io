@@ -38,5 +38,10 @@
         "host": "medjed.nekoweb.org",
         "title": "Medjed",
         "expression": "https://medjed.nekoweb.org/assets/images/responeko.jpg"
+    },
+    {
+        "host": "garyswod.nekoweb.org",
+        "title": "Gary's Wod",
+        "expression": "https://garyswod.nekoweb.org/images/geiriinohayashi.png"
     }
 ]

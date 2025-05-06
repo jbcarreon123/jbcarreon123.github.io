@@ -45,7 +45,7 @@ class jPlayer extends HTMLElement {
                             <img loading="lazy" src="${track.art}" alt="">
                         </div>
                         <div class="track-info">
-                            <h2><span aria-hidden="true" class="ms">equalizer</span> ${track.title}</h2>
+                            <h2><span aria-hidden="true" class="ms" data-icon="equalizer"></span> ${track.title}</h2>
                             <p><span>${track.artist}</span> ${track.album ? `- <span>${track.album}</span>` : ''} ${mode ? `<span class="mode">${mode}</span>` : ''}</p>
                         </div>
                     </div>

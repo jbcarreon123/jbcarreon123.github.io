@@ -84,9 +84,9 @@ import Layout from "../../layouts/Layout.astro";
             area.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(area.value);
 
-            el.innerHTML = '<span aria-hidden="true" class="ms">check</span> Copied to clipboard!'
+            el.innerHTML = '<span aria-hidden="true" class="ms" data-icon="check"></span> Copied to clipboard!'
 
-            setTimeout(() => {el.innerHTML = '<span aria-hidden="true" class="ms">content_copy</span> Copy to Clipboard'}, 2500)
+            setTimeout(() => {el.innerHTML = '<span aria-hidden="true" class="ms" data-icon="content_copy"></span> Copy to Clipboard'}, 2500)
         }
     </script>
 
@@ -160,7 +160,7 @@ import Layout from "../../layouts/Layout.astro";
             </form>
 
             <div>
-                <button onclick="copy(this)"><span aria-hidden="true" class="ms">content_copy</span> Copy to Clipboard</button>
+                <button onclick="copy(this)"><span aria-hidden="true" class="ms" data-icon="content_copy"></span> Copy to Clipboard</button>
             </div>
         </div>
         <div id="out">

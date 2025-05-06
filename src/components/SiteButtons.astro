@@ -26,17 +26,38 @@ let nonbtns = Buttons
 buttons = buttons.concat(nonbtns)
 ---
 
+<script>
+	import Freezeframe from 'freezeframe';
+
+	let f = new Freezeframe('.btn-container .btn', {
+		responsive: false,
+		trigger: false
+	});
+
+	function toggleFreezeFrame() {
+		f.toggle();
+	}
+
+	document.querySelector('button#toggle-btn')?.addEventListener('click', () => toggleFreezeFrame());
+</script>
+
+<button id="toggle-btn">Play/Pause Animated Buttons</button>
+
 <div class="btn-container">
     {
         buttons.sort((a, b) => 
             a.alt.localeCompare(b.alt)
         ).map((btn) => <a href={btn.url}>
-            <Image src={btn.slug} alt={btn.alt} title={btn.title} width="88" height="31" />
+            <Image class="btn" src={btn.slug} alt={btn.alt} title={btn.title} width="88" height="31" />
         </a>)
     }
 </div>
 
 <style>
+	button {
+		width: fit-content;
+	}
+
 	img {
 		position: relative;
 		image-rendering: pixelated;
