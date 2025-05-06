@@ -340,5 +340,11 @@
         "title": "lexp.dev",
         "alt": "lexp.dev website",
         "imgUrl": "/imgs/buttons/lexpdev-webring-1.png"
+    },
+    {
+        "url": "https://tagasa.ing/",
+        "title": "Tagasaing",
+        "alt": "tagasaing",
+        "imgUrl": "https://tagasa.ing/saing.gif"
     }
 ]
