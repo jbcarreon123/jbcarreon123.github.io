@@ -5,9 +5,9 @@ import "../styles/landing.css";
 ---
 
 <Layout title="welcome to jb's site" id="landing">
-    <script>
+    <script is:inline> 
         document.addEventListener('DOMContentLoaded', () => {
-            let back: HTMLAnchorElement | null = document.querySelector('a#back');
+            let back = document.querySelector('a#back');
             let icon = back?.querySelector('span.ms');
             let text = back?.querySelector('span#site');
 
@@ -21,11 +21,8 @@ import "../styles/landing.css";
 
                 back.addEventListener('click', (e) => {
                     e.preventDefault();
-                    try {
-                        window.close();
-                    } catch {
-                        location.href = back.href;
-                    }
+                    let c = window.close();
+                    if (!c.closed) location.href = back.href;
                 })
             }
         })
