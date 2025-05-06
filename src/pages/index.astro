@@ -13,16 +13,21 @@ import "../styles/landing.css";
 
             if (!back || !icon || !text) return;
 
-            let referrer = document.referrer;
+            let referrer = document.referrer.replace(/\/$/gm, '');
+            let historyLength = window.history.length;
 
             if (referrer) {
-                text.textContent = `Go back to ${referrer.replace(/https?:\/\//, '')}`;
+                text.textContent = `Go back${historyLength > 1 ? ' to previous page' : ` to ${referrer.replace(/https?:\/\//, '')}`}`;
                 back.href = referrer;
 
                 back.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.close();
-                    location.href = back.href;
+                    if (historyLength > 1) {
+                        window.history.back();
+                    } else {
+                        location.href = back.href;
+                    }
                 })
             }
         })
