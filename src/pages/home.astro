@@ -94,10 +94,10 @@ const latestPost = postSorted[0];
 
 		@keyframes title {
 			from {
-				color: rgb(0, 255, 234);
+				color: var(--anim-color1);
 			}
 			to {
-				color: rgb(0, 132, 255);
+				color: var(--anim-color2);
 			}
 		}
 
@@ -113,7 +113,7 @@ const latestPost = postSorted[0];
 		.big span {
 			position: relative;
 			display: inline-block;
-			color: rgb(0, 255, 234);
+			color: var(--anim-color1);
 		}
 
 		.big span:nth-of-type(odd) {

@@ -73,6 +73,9 @@ body {
 
 @layer theme {
     html {
+        --anim-color1: #00ffea;
+        --anim-color2: #0084ff;
+
         .jcolor {
             --bg: #212529;
             --altbg: #1d1f20;
@@ -103,10 +106,23 @@ body {
             --link-hover: #89dceb;
         }
 
+        .inf {
+            --bg: #26263b;
+            --altbg: #10101a;
+            --acc: #2f2f3f;
+            --text: #fffffe;
+            --sec: #b5b5dd;
+            --link: #85a8ff;
+            --link-hover: #A6FFB0;
+        }
+
         color-scheme: dark;
     }
 
     html[data-color='light'] {
+        --anim-color1: #0365c2;
+        --anim-color2: #033361;
+
         .jcolor {
             --bg: #ffffff;
             --altbg: #f8f9fa;
@@ -122,7 +138,7 @@ body {
             --altbg: #f9f5d7;
             --acc: #d5c4a1;
             --text: #3c3836;
-            --sec: #665c54;
+            --sec: #504842;
             --link: #003d82;
             --link-hover: #143ddd;
         }
@@ -132,9 +148,19 @@ body {
             --altbg: #dce0e8;
             --acc: #ccd0da;
             --text: #4c4f69;
-            --sec: #6c6f85;
-            --link: #1e66f5;
-            --link-hover: #7287fd;
+            --sec: #444552;
+            --link: #0943b8;
+            --link-hover: #12206d;
+        }
+
+        .inf {
+            --bg: #e1e1e4;
+            --altbg: #f4f4fd;
+            --acc: #c0c0ca;
+            --text: #161b39;
+            --sec: #414179;
+            --link: #1e47ae;
+            --link-hover: #195820;
         }
 
         color-scheme: light;

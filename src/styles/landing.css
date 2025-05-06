@@ -23,7 +23,7 @@ html {
 .big span {
     position: relative;
     display: inline-block;
-    color: #00ffea;
+    color: var(--anim-color1);
 }
 
 .un {
@@ -73,10 +73,10 @@ h1, h2 {
 
 @keyframes title {
     from {
-        color: #00ffea;
+        color: var(--anim-color1);
     }
     to {
-        color: #0084ff;
+        color: var(--anim-color2);
     }
 }
 

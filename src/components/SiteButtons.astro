@@ -29,16 +29,21 @@ buttons = buttons.concat(nonbtns)
 <script>
 	import Freezeframe from 'freezeframe';
 
-	let f = new Freezeframe('.btn-container .btn', {
-		responsive: false,
-		trigger: false
-	});
+	document.addEventListener('DOMContentLoaded', load);
+	document.addEventListener('astro:after-swap', load);
 
-	function toggleFreezeFrame() {
-		f.toggle();
+	function load() {
+		let f = new Freezeframe('.btn-container .btn', {
+			responsive: false,
+			trigger: false
+		});
+
+		function toggleFreezeFrame() {
+			f.toggle();
+		}
+
+		document.querySelector('button#toggle-btn')?.addEventListener('click', () => toggleFreezeFrame());
 	}
-
-	document.querySelector('button#toggle-btn')?.addEventListener('click', () => toggleFreezeFrame());
 </script>
 
 <button id="toggle-btn">Play/Pause Animated Buttons</button>
