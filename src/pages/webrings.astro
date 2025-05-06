@@ -11,10 +11,26 @@ import WebringCard from '../components/WebringCard.astro';
 
             document.querySelector('h1 .count').textContent = `(part of ${rings?.length} rings)`
         })
+
+        window.addEventListener('load', () => {
+            document.querySelector('.loadtime').textContent = measureLoadTime();
+        })
+
+        function measureLoadTime() {
+            if (window.performance && window.performance.timing) {
+                let time = performance.timing;
+                let loadTime = time.loadEventStart - time.navigationStart;
+                const loadTimeSec = loadTime / 1000;
+                return `Webrings page loaded in ${loadTimeSec.toFixed(2)} seconds.`;
+            } else {
+                return "Performance timing API is not supported in this browser.";
+            }
+        }
     </script>
 
     <h1>Webrings <span class="count"></span></h1>
     <p>Moved the webrings page into another page because its getting larger</p>
+    <p class="loadtime"></p>
     <div id="webrings">
         <div>
             <WebringCard
