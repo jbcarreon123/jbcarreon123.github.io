@@ -28,14 +28,14 @@ import "../styles/landing.css";
                     } else {
                         location.href = back.href;
                     }
-                })
+                });
             } else if (historyLength > 1) {
                 text.textContent = `Go back to previous page`;
 
                 back.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.history.back();
-                }
+                });
             }
         })
     </script>
