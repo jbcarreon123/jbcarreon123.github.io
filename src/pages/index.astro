@@ -21,8 +21,8 @@ import "../styles/landing.css";
 
                 back.addEventListener('click', (e) => {
                     e.preventDefault();
-                    let c = window.close();
-                    if (!c.closed) location.href = back.href;
+                    window.close();
+                    location.href = back.href;
                 })
             }
         })
