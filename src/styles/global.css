@@ -86,8 +86,8 @@ body {
             --acc: #2d2d2d;
             --text: #ffffff;
             --sec: #e0e0e0;
-            --link: #55ccff;
-            --link-hover: #99eeff;
+            --link: #33cccc;
+            --link-hover: #4ddddd;
         }
 
         .jcolor {
@@ -96,28 +96,28 @@ body {
             --acc: #343a40;
             --text: #f1f3f5;
             --sec: #ced4da;
-            --link: #dbe2fd;
-            --link-hover: #e0e6fd;
+            --link: #30b8e6;
+            --link-hover: #4dc4eb;
         }
-    
+
         .gruvbox {
             --bg: #32302f;
             --altbg: #1d2021;
             --acc: #504945;
             --text: #e8dbb2;
             --sec: #bdae93;
-            --link: #8ab4f8;
-            --link-hover: #b3d4fc;
+            --link: #2ea6b7;
+            --link-hover: #47b6c4;
         }
-    
+
         .ctp {
             --bg: #1e1e2e;
             --altbg: #181825;
             --acc: #313244;
             --text: #cdd6f4;
             --sec: #bac2de;
-            --link: #89b4fa;
-            --link-hover: #89dceb;
+            --link: #2aa5c9;
+            --link-hover: #3fb5d5;
         }
 
         .inf {
@@ -126,8 +126,8 @@ body {
             --acc: #2f2f3f;
             --text: #fffffe;
             --sec: #b5b5dd;
-            --link: #85a8ff;
-            --link-hover: #A6FFB0;
+            --link: #33a6e6;
+            --link-hover: #4db3eb;
         }
 
         color-scheme: dark;
@@ -143,8 +143,8 @@ body {
             --acc: #dddddd;
             --text: #000000;
             --sec: #333333;
-            --link: #0000cc;
-            --link-hover: #3333ff;
+            --link: #666666;
+            --link-hover: #808080;
         }
 
         .jcolor {
@@ -153,8 +153,8 @@ body {
             --acc: #e9ecef;
             --text: #212529;
             --sec: #495057;
-            --link: #003d82;
-            --link-hover: #143ddd;
+            --link: #6a6d73;
+            --link-hover: #83868b;
         }
 
         .gruvbox {
@@ -163,18 +163,18 @@ body {
             --acc: #d5c4a1;
             --text: #3c3836;
             --sec: #504842;
-            --link: #003d82;
-            --link-hover: #143ddd;
+            --link: #7b7670;
+            --link-hover: #938e89;
         }
-    
+
         .ctp {
             --bg: #e6e9ef;
             --altbg: #dce0e8;
             --acc: #ccd0da;
             --text: #4c4f69;
             --sec: #444552;
-            --link: #0943b8;
-            --link-hover: #12206d;
+            --link: #898c9e;
+            --link-hover: #a2a4b4;
         }
 
         .inf {
@@ -183,8 +183,8 @@ body {
             --acc: #c0c0ca;
             --text: #161b39;
             --sec: #414179;
-            --link: #1e47ae;
-            --link-hover: #195820;
+            --link: #5a5e76;
+            --link-hover: #727592;
         }
 
         color-scheme: light;
@@ -402,7 +402,7 @@ aside {
 a,
 .a {
     color: var(--link);
-    text-decoration-style: dotted;
+    text-decoration: none;
 }
 
 #nav-visible {
