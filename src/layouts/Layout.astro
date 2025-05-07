@@ -85,6 +85,9 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 				max-width: 350px;
 			}
 		</style>
+		<div transition:persist>
+			<Windows />
+		</div>
 		<div class="container" transition:animate="none">
 			<Sidebar title={title} id={id} description={description} />
 			<main id="main">
@@ -211,10 +214,6 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 					</footer>
 				</div>
 			</main>
-		</div>
-
-		<div transition:persist>
-			<Windows />
 		</div>
 	</body>
 </html>
