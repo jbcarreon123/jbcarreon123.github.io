@@ -22,19 +22,18 @@ const postSorted = posts
     })
     .reverse();
 
-const tags: { tag: string; count: int }[] = [];
+const tags: { tag: string; count: number }[] = [];
 postSorted.forEach((v) => {
     v.frontmatter.tags.split(/, ?/).forEach((s) => {
-        if (!tags.find((t) => t.tag == s)) {
+        let tag = tags.find((t) => t.tag == s);
+        if (tag) {
+            let tagIndex = tags.indexOf(tag);
+            tags[tagIndex].count += 1;
+        } else {
             tags.push({
                 tag: s,
-                count: 1,
+                count: 1
             });
-        } else {
-            let ind = tags.indexOf(
-                tags.find((t) => t.tag == s) ?? { tag: "", count: -1 },
-            );
-            tags[ind].count++;
         }
     });
 });
@@ -50,11 +49,10 @@ postSorted.forEach((v) => {
          * @param {HTMLButtonElement} el 
          */
         function filterTag(el) {
-            let tag = new RegExp(el.dataset.tag, 'g');
-            let tagStr = el.dataset.tag;
+            let tagStr = `${el.dataset.tag}`;
             document.querySelectorAll('.tags button').forEach((e) => e.classList.remove('active'));
             document.querySelectorAll('.post-container a').forEach((e) => {
-                if (tag.test(e.dataset.tags) || !tagStr) {
+                if (!tagStr || e.dataset.tags.split(/, ?/gm).find((v) => tagStr.includes(v))) {
                     e.style.display = 'block';
                 } else {
                     e.style.display = 'none';
@@ -100,6 +98,7 @@ postSorted.forEach((v) => {
                 <a href={val.url} data-tags={val.frontmatter.tags}>
                     <div class="post">
                         <div>
+                            <p class="tg">{val.frontmatter.tags.split(/, ?/).map((t) => <span>#{t}</span>)}</p>
                             <h2>{val.frontmatter.title}</h2>
                             <p>{val.frontmatter.description}</p>
                         </div>
@@ -128,7 +127,7 @@ postSorted.forEach((v) => {
 
         .post {
             padding: 0 6px;
-            height: 150px;
+            height: 175px;
             background: var(--acc);
         }
 

@@ -256,10 +256,14 @@ aside nav {
     z-index: 99;
 }
 
-figcaption {
+figcaption, .tg {
     font-size: 0.75em;
     color: var(--sec);
     text-transform: uppercase;
+}
+
+.tg span::after {
+    content: ' ';
 }
 
 #to-top {
@@ -509,4 +513,8 @@ footer .right {
     .sidetitle {
         display:none;
     }
+
+    .container:has(aside.visible) main > div {
+        filter: brightness(0.5);
+    }    
 }

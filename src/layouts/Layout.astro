@@ -54,13 +54,16 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 				document.querySelector('#to-top').addEventListener('click', (e) => {
 					e.preventDefault();
 					window.scrollTo({ top: 0, behavior: 'smooth' });
+					if (window.matchMedia('(width <= 640px)').matches) document.querySelector('#main').scrollTop = 0;
 				});
 
 				window.matchMedia('(width <= 640px)').addEventListener('change', (c) => {
-					if (c.matches) setTimeout(() => document.querySelector('main').scrollIntoView(), 50);
+					if (c.matches) {
+						for (let i = 1; i <= 5; i++) {
+							setTimeout(() => document.querySelector('main').scrollIntoView(), 50 * i);
+						}
+					}
 				}) 
-
-				if (window.matchMedia('(width <= 640px)').matches) setTimeout(() => document.querySelector('main').scrollIntoView(), 50);
 			}
 		</script>
 		<div class="hover--tooltip" style="display: none"></div>
@@ -80,7 +83,10 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 			<Sidebar title={title} id={id} description={description} />
 			<main id="main">
 				<header>
-					<a href="#sidebar">Menu</a>
+					<a href="#sidebar"><span
+						aria-hidden="true"
+						class="ms" data-icon="menu"></span
+					> Menu</a>
 					<p class="page-title">{title ? title : "jb's site"}</p>
 				</header>
 				<div>
