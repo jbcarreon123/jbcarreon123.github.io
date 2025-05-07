@@ -76,6 +76,16 @@ body {
         --anim-color1: #00ffea;
         --anim-color2: #0084ff;
 
+        .highcontrast {
+            --bg: #000000;
+            --altbg: #0a0a0a;
+            --acc: #2d2d2d;
+            --text: #ffffff;
+            --sec: #e0e0e0;
+            --link: #55ccff;
+            --link-hover: #99eeff;
+        }
+
         .jcolor {
             --bg: #212529;
             --altbg: #1d1f20;
@@ -122,6 +132,16 @@ body {
     html[data-color='light'] {
         --anim-color1: #0365c2;
         --anim-color2: #033361;
+
+        .highcontrast {
+            --bg: #000000;
+            --altbg: #0a0a0a;
+            --acc: #2d2d2d;
+            --text: #ffffff;
+            --sec: #e0e0e0;
+            --link: #55ccff;
+            --link-hover: #99eeff;
+        }
 
         .jcolor {
             --bg: #ffffff;
