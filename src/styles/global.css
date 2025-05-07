@@ -134,13 +134,13 @@ body {
         --anim-color2: #033361;
 
         .highcontrast {
-            --bg: #000000;
-            --altbg: #0a0a0a;
-            --acc: #2d2d2d;
-            --text: #ffffff;
-            --sec: #e0e0e0;
-            --link: #55ccff;
-            --link-hover: #99eeff;
+            --bg: #ffffff;
+            --altbg: #f5f5f5;
+            --acc: #dddddd;
+            --text: #000000;
+            --sec: #333333;
+            --link: #0000cc;
+            --link-hover: #3333ff;
         }
 
         .jcolor {

@@ -1,3 +1,53 @@
+<script> 
+    /** @ts-ignore */
+    import Uwuifier from "uwuifier";
+
+    function clear(el: HTMLButtonElement) {
+        let func = el.dataset.func;
+        switch (func) {
+            case 'clear-nekobox':
+                [
+                    'nekobox:value', 'nekobox:username',
+                    'nekobox:domain', 'nekobox:overflow',
+                    'nekobox.readonly'
+                ].forEach((a) => localStorage.removeItem(a));
+                break;
+            case 'clear-localstorage':
+                localStorage.clear();
+                break;
+            case 'uwuify':
+                let u = new Uwuifier();
+                if (confirm('Are you sure about this?\nThis will lag a phone or a shitbox.\n\nNote that this will only apply on the current session, and you need to reapply it if you want to do it again on another page,')) {
+                    const textElements = document.querySelectorAll('button, div.select, p, h1, h2, h3, h4, h5, h6, span, strong, em, blockquote, li, dt, dd, label, textarea, input[type="text"], input[type="email"], input[type="number"], input[type="search"], select, option');
+                    textElements.forEach((e) => {
+                        if (e.textContent) {
+                            e.textContent = u.uwuifySentence(e.textContent);
+                        };
+                    })
+                    document.querySelectorAll('[title]').forEach((e) => {
+                        e.title = u.uwuifySentence(e.title);
+                    })
+                    document.title = u.uwuifySentence(document.title);
+                }
+                break;
+            default:
+                [
+                    'jbsite-theme-scheme', 'jbsite-theme',
+                    'jbsite-font',
+                ].forEach((a) => localStorage.removeItem(a));
+                break;
+        }
+
+        let i = el.textContent;
+        el.textContent = 'Done!';
+        setTimeout(() => el.textContent = i, 2500);
+    }
+
+    document.querySelectorAll('.danger-btns button').forEach((e) => {
+        e.addEventListener('click', () => clear(e as HTMLButtonElement));
+    })
+</script>
+
 <script is:inline>
     document.addEventListener("DOMContentLoaded", loadCustomize);
     document.addEventListener("astro:after-swap", loadCustomize);
@@ -17,17 +67,8 @@
         document.querySelectorAll(".scheme .select").forEach((el) => {
             el.addEventListener("click", (e) => {
                 let val = el.dataset.value;
-                if (el.dataset.value === "system") {
-                    val = matchMedia("(prefers-color-scheme:dark)").matches
-                        ? "dark"
-                        : "light";
-                }
-                document.documentElement.dataset.color = val;
-                document.querySelectorAll(".scheme .select").forEach((el) => {
-                    el.classList.remove("selected");
-                });
-                el.classList.add("selected");
                 localStorage.setItem("jbsite-theme-scheme", val);
+                loadTheme();
             });
         });
 
@@ -47,12 +88,17 @@
 
     function loadTheme() {
         let scheme = localStorage.getItem("jbsite-theme-scheme");
-        scheme = scheme ? scheme : "system";
-        if (scheme === "system") {
-            scheme = matchMedia("(prefers-color-scheme:dark)").matches
+        scheme = scheme ? scheme : "";
+        let fScheme = scheme;
+        if (scheme === "") {
+            fScheme = matchMedia("(prefers-color-scheme:dark)").matches
                 ? "dark"
                 : "light";
+
+            matchMedia("(prefers-color-scheme:dark)").addEventListener('change', loadTheme);
         }
+
+        
 
         let theme = localStorage.getItem("jbsite-theme");
         theme = theme ? theme : "jcolor";
@@ -65,7 +111,7 @@
             if (el.dataset.value !== theme) el.classList.remove("selected");
             else el.classList.add("selected");
         });
-        document.documentElement.dataset.color = scheme;
+        document.documentElement.dataset.color = fScheme;
         document.querySelectorAll(".scheme .select").forEach((el) => {
             if (el.dataset.value !== scheme) el.classList.remove("selected");
             else el.classList.add("selected");
@@ -95,20 +141,26 @@
                 <button onclick="showTab(this)" data-tab-id="fonts"
                     ><span aria-hidden="true" class="ms" data-icon="format_size"></span> Fonts</button
                 >
+                <button onclick="showTab(this)" data-tab-id="accessibility"
+                    ><span aria-hidden="true" class="ms" data-icon="settings_accessibility"></span> Accessibility</button
+                >
+                <button onclick="showTab(this)" data-tab-id="danger"
+                    ><span aria-hidden="true" class="ms" data-icon="warning"></span> Danger Zone</button
+                >
             </div>
             <div class="tab visible" id="colors">
                 <h1>Colors</h1>
                 <p>Color scheme</p>
-                <div class="select-container scheme">
-                    <div class="select selected" data-value="system">
+                <div role="listbox" class="select-container scheme">
+                    <div role="listitem" class="select selected" data-value="">
                         System
                     </div>
-                    <div class="select" data-value="dark">Dark</div>
-                    <div class="select" data-value="light">Light</div>
+                    <div role="listitem" class="select" data-value="dark">Dark</div>
+                    <div role="listitem" class="select" data-value="light">Light</div>
                 </div>
                 <p>Color palette</p>
-                <div class="select-container palette" id="palette">
-                    <div class="select selected" data-value="jcolor">
+                <div role="listbox" class="select-container palette" id="palette">
+                    <div role="listitem" class="select selected" data-value="jcolor">
                         jColor 2
                         <div class="jcolor color-preview">
                             <div style="--cl:var(--bg)"></div>
@@ -120,7 +172,7 @@
                             <div style="--cl:var(--link-hover)"></div>
                         </div>
                     </div>
-                    <div class="select" data-value="gruvbox">
+                    <div role="listitem" class="select" data-value="gruvbox">
                         Gruvbox
                         <div class="gruvbox color-preview">
                             <div style="--cl:var(--bg)"></div>
@@ -132,7 +184,7 @@
                             <div style="--cl:var(--link-hover)"></div>
                         </div>
                     </div>
-                    <div class="select" data-value="ctp">
+                    <div role="listitem" class="select" data-value="ctp">
                         Catppuccin
                         <div class="ctp color-preview">
                             <div style="--cl:var(--bg)"></div>
@@ -144,7 +196,7 @@
                             <div style="--cl:var(--link-hover)"></div>
                         </div>
                     </div>
-                    <div class="select" data-value="inf">
+                    <div role="listitem" class="select" data-value="inf">
                         indietheme
                         <div class="inf color-preview">
                             <div style="--cl:var(--bg)"></div>
@@ -156,7 +208,7 @@
                             <div style="--cl:var(--link-hover)"></div>
                         </div>
                     </div>
-                    <div class="select" data-value="highcontrast">
+                    <div role="listitem" class="select" data-value="highcontrast">
                         High Contrast
                         <div class="highcontrast color-preview">
                             <div style="--cl:var(--bg)"></div>
@@ -173,39 +225,58 @@
             <div class="tab" id="fonts">
                 <h1>Fonts</h1>
                 <p>Main font</p>
-                <div class="select-container main-font">
-                    <div class="inter select selected" data-value="inter">
+                <div role="listbox" class="select-container main-font">
+                    <div role="listitem" class="inter select selected" data-value="inter">
                         Inter
                     </div>
-                    <div class="commit-mono select" data-value="commit-mono">
+                    <div role="listitem" class="commit-mono select" data-value="commit-mono">
                         Commit Mono
                     </div>
-                    <div class="vcr select" data-value="vcr">
+                    <div role="listitem" class="vcr select" data-value="vcr">
                         VCR OSD Mono
                     </div>
-                    <div class="times select" data-value="times">
+                    <div role="listitem" class="times select" data-value="times">
                         Times
                     </div>
-                    <div class="opendyslexic select" data-value="opendyslexic">
+                    <div role="listitem" class="opendyslexic select" data-value="opendyslexic">
                         OpenDyslexic
                     </div>
-                    <div class="default select" data-value="default">
+                    <div role="listitem" class="default select" data-value="default">
                         Default
                     </div>
-                    <div class="default-serif select" data-value="default-serif">
+                    <div role="listitem" class="default-serif select" data-value="default-serif">
                         Default (Serif)
                     </div>
-                    <div class="default-mono select" data-value="default-mono">
+                    <div role="listitem" class="default-mono select" data-value="default-mono">
                         Default (Mono)
                     </div>
                 </div>
                 <p>Sadly, you cannot change the monospace font. Sorry!</p>
+            </div>
+            <div class="tab" id="accessibility">
+                <h1>Accessibility</h1>
+                
+            </div>
+            <div class="tab" id="danger">
+                <h1>Danger Zone</h1>
+                <div class="danger-btns">
+                    <button>Clear Customize-releated items on localStorage</button>
+                    <button data-func="clear-nekobox">Clear Nekobox-releated items on localStorage</button>
+                    <button data-func="clear-localstorage">Clear localStorage</button>
+                    <button data-func="uwuify">uwu-ify jbSite</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <style>
+    .danger-btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
     #customize {
         width: 600px;
 
@@ -228,7 +299,7 @@
 
                 button {
                     text-align: left;
-                    width: 100px;
+                    width: 135px;
                     margin-left: 6px;
                     color: var(--link);
                 }

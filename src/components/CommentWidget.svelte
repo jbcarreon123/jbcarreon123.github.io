@@ -117,7 +117,7 @@
 	let s_replyButtonText = '<span aria-hidden="true" class="ms" data-icon="reply"></span> Reply'; // The button for replying to someone
 	let s_replyLockedText = '<span aria-hidden="true" class="ms" data-icon="lock"></span> Locked';
 	let s_replyingText = '<span aria-hidden="true" class="ms" data-icon="reply"></span> Replying to'; // The text that displays while the user is typing a reply
-	let s_pinnedText = '<span aria-hidden="true" class="ms c-admin">keep</span>';
+	let s_pinnedText = '<span aria-hidden="true" class="ms c-admin" data-icon="keep"></span>';
 	let s_expandRepliesText = 'Show Replies';
 	let s_leftButtonText = '<span aria-hidden="true" class="ms" data-icon="arrow_back_ios_new"></span> Prev';
 	let s_rightButtonText = 'Next <span aria-hidden="true" class="ms" data-icon="arrow_forward_ios"></span>';
@@ -440,7 +440,7 @@
 		name.innerText = filteredName;
 		name.className = 'c-name';
 		if (data.Admin == true) {
-			name.insertAdjacentHTML('beforeend', " <span aria-hidden='true' class='ms c-admin'>shield_person</span> ");
+			name.insertAdjacentHTML('beforeend', " <span aria-hidden='true' class='ms c-admin' data-icon='shield_person'></span> ");
 		}
 		if (data.Pinned == true) {
 			name.insertAdjacentHTML('beforeend', s_pinnedText);

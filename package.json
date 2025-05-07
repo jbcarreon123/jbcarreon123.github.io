@@ -34,7 +34,8 @@
     "sharp": "^0.34.1",
     "svelte": "^5.25.10",
     "tailwindcss": "^4.0.17",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "uwuifier": "^4.2.2"
   },
   "patchedDependencies": {
     "astro-opengraph-images@1.12.1": "patches/astro-opengraph-images@1.12.1.patch",
