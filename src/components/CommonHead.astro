@@ -36,7 +36,7 @@ import { ClientRouter } from "astro:transitions";
     @font-face {
         font-family: Atkinson Hyperlegible;
         src: url(/fonts/Atkinson-Hyperlegible-Regular.woff2)
-             url(/fonts/Atkinson-Hyperlegible-Bold.woff2);
+            url(/fonts/Atkinson-Hyperlegible-Bold.woff2);
         font-display: swap;
     }
 
@@ -138,8 +138,6 @@ import { ClientRouter } from "astro:transitions";
                 e.classList.add("active");
                 if (e.parentNode.tagName.toLowerCase() === "details") {
                     e.parentElement.setAttribute("open", true);
-                    
-                    
                 }
             } else {
                 e.classList.remove("active");
@@ -199,4 +197,32 @@ import { ClientRouter } from "astro:transitions";
         observer.observe(asideElement);
     });
     document.addEventListener("astro:after-swap", () => load());
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log(
+            "%cSTOP!",
+            "color: red; font-size: 64px; font-weight: bold;",
+        );
+        console.log(
+            "%cDo NOT paste anything here unless you understand exactly what it does!",
+            "color: white; background-color: red; font-size: 24px; font-weight: bold; border-radius: 3px;",
+        );
+        console.log(
+            "%cPasting something here that you don't know how it works, can lead to your Nekoweb cookie being stolen!",
+            "color: orange; font-size: 18px; font-weight: bold",
+        );
+        console.log(
+            "%cIf someone asked you to paste something here, they are likely trying to hijack your account!",
+            "color: red; font-size: 18px; font-weight: bold; background-color: black; border-radius: 3px;",
+        );
+        console.log("\n\n");
+        console.log(
+            "%c👍 Only paste code from sources you fully trust and understand.",
+            "color: green; font-size: 16px; font-weight: bold;",
+        );
+        console.log(
+            "%c🔒 Remember: Security is YOUR responsibility.",
+            "color: yellow; font-size: 16px; font-weight: bold;",
+        );
+    });
 </script>
