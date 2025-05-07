@@ -46,6 +46,10 @@ body {
         font-size: 0.85em;
     }
 
+    .atkinson-hyperlegible {
+        --font: 'Atkinson Hyperlegible', sans-serif;
+    }
+
     .vcr {
         --font: 'VCR OSD Mono', monospace;
     }
@@ -92,8 +96,8 @@ body {
             --acc: #343a40;
             --text: #f1f3f5;
             --sec: #ced4da;
-            --link: #a4b6fd;
-            --link-hover: #c7d2fd;
+            --link: #dbe2fd;
+            --link-hover: #e0e6fd;
         }
     
         .gruvbox {
@@ -398,7 +402,7 @@ aside {
 a,
 .a {
     color: var(--link);
-    text-decoration: none;
+    text-decoration-style: dotted;
 }
 
 #nav-visible {
