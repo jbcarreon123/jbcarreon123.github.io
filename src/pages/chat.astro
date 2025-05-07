@@ -112,14 +112,14 @@ import Layout from "../layouts/Layout.astro";
                         while (!isPop) {
                             pop.push(po.popChunk(Math.floor(Math.random() * 5)));
                             isPop = !po.hasRemaining();
-                            console.log(pop);
+                            
                         }
                         pop.forEach((p) => {
                             if (p) {
                                 setTimeout(() => {
                                     bval.innerHTML += p;
-                                    console.log(p);
-                                    console.log(bval.innerText);
+                                    
+                                    
                                 }, del);
                                 del += Math.floor(Math.random() * (150 - 25 + 1)) + 25;
                             }

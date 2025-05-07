@@ -15,7 +15,7 @@ import mdx from '@astrojs/mdx';
 import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
 
-console.log(env.NEKOWEB_APIKEY);
+
 
 // https://astro.build/config
 export default defineConfig({

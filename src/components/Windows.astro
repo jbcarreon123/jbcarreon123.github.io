@@ -73,7 +73,7 @@ import Player from "../jwindows/Player.astro";
     }
 
     function loadEvents() {
-        console.log("loading window events");
+        
 
         document.querySelectorAll(".floating-window").forEach((window) => {
             window.addEventListener("click", clickWindowEvent);
@@ -113,14 +113,14 @@ import Player from "../jwindows/Player.astro";
     }
 
     function closeWindow(el) {
-        console.log(el);
+        
         let pa = el.parentElement.parentElement;
         pa.classList.remove("visible");
         pa.classList.remove("focused");
-        console.log(pa);
+        
         document.querySelectorAll(".window-toggle").forEach((ele) => {
             if (ele.dataset.id === pa.id) {
-                console.log(ele);
+                
                 ele.classList.remove("active");
             }
         });

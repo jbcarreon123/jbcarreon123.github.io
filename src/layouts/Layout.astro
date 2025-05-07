@@ -21,7 +21,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 	<body class="jcolor">
 		<script is:inline>
 			function loadTooltip() {
-				console.log("loading tooltip event listener");
+				
 				let tooltip = document.querySelector(".hover--tooltip");
 				document.querySelectorAll("[title]").forEach((el) => {
 					if (!el.title && el.dataset.title) return;

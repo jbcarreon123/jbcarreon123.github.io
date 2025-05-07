@@ -490,7 +490,7 @@ class jPlayer extends HTMLElement {
                     }
                 });
             } else {
-                console.log('loading file');
+                
                 clearInterval(this._trackerInterval);
                 this._trackerPlayer?.stop();
                 this._audioPlayer.src = el.dataset.src;

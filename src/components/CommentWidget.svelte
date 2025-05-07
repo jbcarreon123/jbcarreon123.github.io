@@ -280,7 +280,7 @@
 			}
 		}
 
-		console.log(replies);
+		
 
 		// Values for pagination
 		v_amountOfPages = Math.ceil(comments.length / s_commentsPerPage);
@@ -333,7 +333,7 @@
 		}
 
 		// Replies
-		console.log(replies.length);
+		
 		for (let i = 0; i < replies.length; i++) {
 			let reply = createComment(replies[i]);
 			let parentId = replies[i].Reply;
@@ -683,7 +683,7 @@
 
 	onMount(() => {
 		v_pagePath = window.location.pathname;
-        console.log(document);
+        
         link = document.createElement('a');
 	    link.href = '#c_inputDiv';
 		getComments();
