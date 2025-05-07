@@ -26,8 +26,14 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 				document.querySelectorAll("[title]").forEach((el) => {
 					if (!el.title && el.dataset.title) return;
 					el.addEventListener("mousemove", (mev) => {
+						let height = window.innerHeight;
+
 						tooltip?.style.setProperty("--x", mev.clientX + "px");
-						tooltip?.style.setProperty("--y", mev.clientY + "px");
+						if (mev.clientY + 24 + tooltip.clientHeight > height) {
+							tooltip?.style.setProperty("--y", (height - 24 - tooltip.clientHeight) + "px");
+						} else {
+							tooltip?.style.setProperty("--y", mev.clientY + "px");
+						}
 						tooltip?.style.setProperty("display", "block");
 						if (el.title) {
 							el.dataset.title = el.title;
@@ -132,8 +138,8 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 									src="/imgs/buttons/smil.svg"
 									alt="Enhanced with SMIL :D"
 									title="Enhanced with SMIL :D"
-									width="88px"
-									height="31px"
+									width="88"
+									height="31"
 								/>
 							</a>
 							<a
@@ -146,8 +152,8 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 									src="/imgs/buttons/indiefellas.svg"
 									alt="Indiefellas"
 									title="indieweb devs with no idea what they're doing"
-									width="88px"
-									height="31px"
+									width="88"
+									height="31"
 								/>
 							</a>
 							<a
@@ -160,8 +166,8 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 									loading="lazy"
 									alt="Nekoweb"
 									title="Nekoweb (button by maxpixels)"
-									width="88px"
-									height="31px"
+									width="88"
+									height="31"
 								/></a
 							>
 							<a
@@ -171,8 +177,8 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 									alt="Nekoweb Districts"
 									title="Nekoweb Districts"
 									src="https://districts.nekoweb.org/img/districts002.png"
-									width="88px"
-									height="31px"
+									width="88"
+									height="31"
 								/>
 								<a
 									target="_blank"
@@ -183,17 +189,23 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 										src="/imgs/buttons/responsive-web-directory.png"
 										alt="Responsive Web Directory"
 										title="Responsive Web Directory"
-										width="88px"
-										height="31px"
+										width="88"
+										height="31"
 									/>
 								</a>
-								<Image
-									src="/imgs/buttons/mobilefriendly.png"
-									alt="Mobile friendly"
-									title="This site is mobile friendly!"
-									width="88px"
-									height="31px"
-								/>
+								<a
+									target="_blank"
+									class="w-fit shrink-0"
+									href="https://pinkvampyr.leprd.space/accessiblenet/index.php"
+								>
+									<Image
+										src="/imgs/buttons/accessible-net.webp"
+										alt="Accessible Net Directory"
+										title="Accessible Net Directory"
+										width="88"
+										height="31"
+									/>
+								</a>
 							</a>
 						</div>
 					</footer>
