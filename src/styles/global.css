@@ -471,14 +471,23 @@ footer .right {
     overflow-x: auto;
 }
 
-
-
 .motd {
     writing-mode: vertical-rl;
     font-size: 0.85em;
     padding-right: 6px;
     padding-top: 10px;
     max-height: 250px;
+}
+
+@media (prefers-reduced-motion) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .big span {
+        top: 0 !important;
+    }
 }
 
 @media (width > 640px) {
