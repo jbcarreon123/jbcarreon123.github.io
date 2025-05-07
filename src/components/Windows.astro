@@ -11,9 +11,9 @@ import Player from "../jwindows/Player.astro";
     function clickWindowEvent(mev) {
         let window = mev.target.parentElement.parentElement;
         document.querySelectorAll(".floating-window").forEach((w) => {
-            w.classList.remove('focused');
+            w.classList.remove("focused");
         });
-        window.classList.add('focused');
+        window.classList.add("focused");
     }
 
     function clickTitlebarEvent(mev) {
@@ -31,19 +31,55 @@ import Player from "../jwindows/Player.astro";
         }
     }
 
-    function loadEvents() {
-        console.log('loading window events')
+    function dragElement(elmnt) {
+        var pos1 = 0,
+            pos2 = 0,
+            pos3 = 0,
+            pos4 = 0;
+        let bar = elmnt.querySelector('.floating-window-titlebar p:first-child');
+        if (bar) {
+            bar.onmousedown =
+                dragMouseDown;
+        } else {
+            elmnt.onmousedown = dragMouseDown;
+        }
 
-        document.querySelectorAll(".floating-window").forEach((window) => {
-            window.addEventListener('click', clickWindowEvent)
+        function dragMouseDown(e) {
+            elmnt.classList.add("move");
+            e = e || window.event;
+            e.preventDefault();
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+        }
 
-            let titlebar = window.querySelector(".floating-window-titlebar p:first-child");
-            if (matchMedia('(width <= 640px)').matches) return;
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+            elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+        }
 
-            titlebar.addEventListener("click", clickTitlebarEvent);
-        });
+        function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+            elmnt.classList.remove("move");
+        }
     }
 
+    function loadEvents() {
+        console.log("loading window events");
+
+        document.querySelectorAll(".floating-window").forEach((window) => {
+            window.addEventListener("click", clickWindowEvent);
+            dragElement(window);
+        });
+    }
 
     function titlebarMove(mev, ev, window) {
         if (!window.classList.contains("move")) return;
@@ -79,17 +115,15 @@ import Player from "../jwindows/Player.astro";
     function closeWindow(el) {
         console.log(el);
         let pa = el.parentElement.parentElement;
-        pa.classList.remove('visible');
-        pa.classList.remove('focused');
+        pa.classList.remove("visible");
+        pa.classList.remove("focused");
         console.log(pa);
-        document
-            .querySelectorAll(".window-toggle")
-            .forEach((ele) => {
-                if (ele.dataset.id === pa.id) {
-                    console.log(ele);
-                    ele.classList.remove('active');
-                }
-            });
+        document.querySelectorAll(".window-toggle").forEach((ele) => {
+            if (ele.dataset.id === pa.id) {
+                console.log(ele);
+                ele.classList.remove("active");
+            }
+        });
     }
 </script>
 
@@ -100,13 +134,17 @@ import Player from "../jwindows/Player.astro";
 <div class="floating-window" id="tty">
     <div class="floating-window-titlebar">
         <p>jTTY</p>
-        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms" data-icon="close"></span></p>
+        <p onclick="closeWindow(this)">
+            <span aria-hidden="true" class="ms" data-icon="close"></span>
+        </p>
     </div>
     <div class="jonsole--content floating-window-content">
         <p>[jbcarreon123@nekoweb ~]$ cd ..</p>
         <p>cd: /home/: Permission denied</p>
         <p>[jbcarreon123@nekoweb ~]$ ls</p>
-        <p style="color: var(--link-hover); font-weight: 700;">fonts imgs webrings ocs</p>
+        <p style="color: var(--link-hover); font-weight: 700;">
+            fonts imgs webrings ocs
+        </p>
         <p>[jbcarreon123@nekoweb ~]$ cd ocs</p>
         <p>[jbcarreon123@nekoweb ~/ocs]$ ls</p>
         <p style="font-weight: 700;">test1 test2</p>
@@ -156,13 +194,13 @@ import Player from "../jwindows/Player.astro";
             padding: 0 6px;
 
             p:first-child {
-                flex-grow: 1
-            }   
+                flex-grow: 1;
+            }
 
             p {
                 cursor: pointer;
             }
-        }        
+        }
 
         .floating-window-content {
             display: flex;

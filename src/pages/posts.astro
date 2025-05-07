@@ -98,7 +98,7 @@ postSorted.forEach((v) => {
                 <a href={val.url} data-tags={val.frontmatter.tags}>
                     <div class="post">
                         <div>
-                            <p class="tg">{val.frontmatter.tags.split(/, ?/).map((t) => <span>#{t}</span>)}</p>
+                            <p class="tg">{val.frontmatter.tags.split(/, ?/).slice(0, 2).map((t) => <span>#{t}</span>)} {val.frontmatter.tags.split(/, ?/).slice(2).length > 0 ? `+${val.frontmatter.tags.split(/, ?/).slice(2).length}` : ''}</p>
                             <h2>{val.frontmatter.title}</h2>
                             <p>{val.frontmatter.description}</p>
                         </div>
