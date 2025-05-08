@@ -29,23 +29,26 @@ export async function generateFeed(context: APIContext, type: 'json' | 'rss' | '
         return dateA.getTime() - dateB.getTime();
     }).reverse();
 
-    feed.items = await Promise.all<Item>(sortedPosts.map(async (post: any) => (({
-        id: new URL(post.url, context.site).toString(),
-        title: post.frontmatter.title,
-        description: post.frontmatter.description,
-        link: new URL(post.url, context.site).toString(),
-        date: new Date(post.frontmatter.published),
-        content: sanitize(await post.compiledContent(), {
+    feed.items = await Promise.all<Item>(sortedPosts.map(async (post: any) => {
+        let cnt = sanitize(await post.compiledContent(), {
             allowedTags: sanitize.defaults.allowedTags.concat(['img', 'code', 'a', 'p', 'figure', 'figcaption']),
             disallowedTagsMode: 'discard'
-            
-        }).replaceAll(' <span>open_in_new</span>', '').replaceAll('<span><span></span></span>', ''),
-        image: `${context.site}post-og/${post.url.replace('/posts/', '').replace('/', '')}.png`,
-        author: [{
-            name: 'JB Carreon',
-            link: context.site?.toString()
-        }]
-    }))));
+        }).replace(/="(\/[a-zA-Z0-9\/_ \+\.]+)"/gm, '="https://jbcarreon123.nekoweb.org$1"').replaceAll(' <span>open_in_new</span>', '').replaceAll('<span><span></span></span>', '');
+
+        return ({
+            id: new URL(post.url, context.site).toString(),
+            title: post.frontmatter.title,
+            description: post.frontmatter.description,
+            link: new URL(post.url, context.site).toString(),
+            date: new Date(post.frontmatter.published),
+            content: cnt,
+            image: `${context.site}post-og/${post.url.replace('/posts/', '').replace('/', '')}.png`,
+            author: [{
+                name: 'JB Carreon',
+                link: context.site?.toString()
+            }]
+        })
+    }));
 
     switch (type) {
         case 'atom':
