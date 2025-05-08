@@ -53,6 +53,8 @@ import "prism-code-editor/invisibles.css";
             localStorage.getItem("nekobox:username") ?? "jbcarreon123";
         (document.querySelector('input[type="text"]#domain') as any).value =
             localStorage.getItem("nekobox:domain") ?? "";
+            (document.querySelector('input[type="text"]#rss') as any).value =
+            localStorage.getItem("nekobox:rss") ?? "";
         (
             document.querySelector('input[type="checkbox"]#overflow') as any
         ).checked = localStorage.getItem("nekobox:overflow") === "true";
