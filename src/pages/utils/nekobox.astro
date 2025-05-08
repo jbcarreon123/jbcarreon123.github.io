@@ -1,5 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
+import "prism-code-editor/search.css";
+import "prism-code-editor/invisibles.css";
+import "prism-code-editor/autocomplete.css";
+import "prism-code-editor/autocomplete-icons.css";
 ---
 
 <Layout
@@ -9,20 +14,32 @@ import Layout from "../../layouts/Layout.astro";
 >
     <script>
         import { basicEditor } from "prism-code-editor/setups";
+        import {
+            searchWidget,
+            highlightSelectionMatches,
+            highlightCurrentWord,
+            showInvisibles,
+        } from "prism-code-editor/search";
+        import {
+            registerCompletions,
+            autoComplete,
+            fuzzyFilter,
+            completeSnippets,
+        } from "prism-code-editor/autocomplete";
+        import { cssCompletion } from 'prism-code-editor/autocomplete/css';
         import "prism-code-editor/prism/languages/markup";
-        import "prism-code-editor/prism/languages/css-extras";
         import "prism-code-editor/prism/languages/css";
-
         import { minify } from "csso";
-        import cssbeautify from 'cssbeautify';
-import type { MetaStore } from "astro:content";
+        import cssbeautify from "cssbeautify";
 
         var url = window.location;
         let params = new URLSearchParams(url.search);
-        if (params.has('load')) {
-            loadUrl(decodeURIComponent(params.get('load') ?? ''));
-        } else if (params.has('username')) {
-            loadUrl(`https://${params.get('username')}.nekoweb.org/%2F/elements.css?original=1`)
+        if (params.has("load")) {
+            loadUrl(decodeURIComponent(params.get("load") ?? ""));
+        } else if (params.has("username")) {
+            loadUrl(
+                `https://${params.get("username")}.nekoweb.org/%2F/elements.css?original=1`,
+            );
         }
 
         let s =
@@ -33,12 +50,17 @@ import type { MetaStore } from "astro:content";
                 .replaceAll("        ", "") ??
             "";
 
-        (document.querySelector(
-                `input[type="text"]#username`,
-            ) as any).value = localStorage.getItem("nekobox:username") ?? 'jbcarreon123';
-        (document.querySelector('input[type="text"]#domain') as any).value = localStorage.getItem("nekobox:domain") ?? '';
-        (document.querySelector('input[type="checkbox"]#overflow') as any).checked = localStorage.getItem("nekobox:overflow") === 'true';
-        (document.querySelector('#nkb-readonly') as any).style.display = localStorage.getItem('nekobox:readonly') === 'true' ? 'block' : 'none';
+        (document.querySelector(`input[type="text"]#username`) as any).value =
+            localStorage.getItem("nekobox:username") ?? "jbcarreon123";
+        (document.querySelector('input[type="text"]#domain') as any).value =
+            localStorage.getItem("nekobox:domain") ?? "";
+        (
+            document.querySelector('input[type="checkbox"]#overflow') as any
+        ).checked = localStorage.getItem("nekobox:overflow") === "true";
+        (document.querySelector("#nkb-readonly") as any).style.display =
+            localStorage.getItem("nekobox:readonly") === "true"
+                ? "block"
+                : "none";
 
         const editor = basicEditor(
             "#nekobox-editor",
@@ -46,19 +68,31 @@ import type { MetaStore } from "astro:content";
                 language: "css",
                 theme: "github-dark",
                 value: s,
-                readOnly: localStorage.getItem('nekobox:readonly') === 'true'
+                readOnly: localStorage.getItem("nekobox:readonly") === "true",
             },
             () => {
-                
                 document.querySelector("#user-style").innerHTML = s;
             },
         );
 
+        registerCompletions(['css'], {
+            sources: [cssCompletion()],
+        });
+
+        editor.addExtensions(
+            highlightSelectionMatches(),
+            searchWidget(),
+            highlightCurrentWord(),
+            showInvisibles(),
+            autoComplete({ 
+                filter: fuzzyFilter
+            }),
+        );
+
         editor.addListener("update", (value) => {
-            document.querySelector("#user-style").innerHTML = replaceInvalidCSS(value.replaceAll(
-                /\n.follow ?{/gm,
-                "\n.no {",
-            ));
+            document.querySelector("#user-style").innerHTML = replaceInvalidCSS(
+                value.replaceAll(/\n.follow ?{/gm, "\n.no {"),
+            );
             document.querySelector("#cssSize").innerHTML =
                 `${textToKilobytes(value)}KB used (${textToKilobytes(minifyCSS(value))}KB when minified)`;
 
@@ -73,9 +107,12 @@ import type { MetaStore } from "astro:content";
         }
 
         function replaceInvalidCSS(cssString: string | null | undefined) {
-            if (!cssString) return '';
+            if (!cssString) return "";
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
-            return cssString.replace(regex, '/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {');
+            return cssString.replace(
+                regex,
+                "/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {",
+            );
         }
 
         function minifyCSS(css: string): string {
@@ -99,19 +136,21 @@ import type { MetaStore } from "astro:content";
         }
 
         interface Metadata {
-            username: string,
-            domain?: string,
-            overflow: boolean,
-            readonly readonly: boolean
+            username: string;
+            domain?: string;
+            overflow: boolean;
+            readonly readonly: boolean;
         }
 
-        function loadMetadata(css: string): {data: Metadata, css: string} | null {
-            const regex = /^\/\*!@nkb (.+) \*\/(?:\n?.*)*/gmiyvsd;
-            const excludeRegex = /^\/\*!@nkb .+ \*\/\n?/gmiyvsd;
+        function loadMetadata(
+            css: string,
+        ): { data: Metadata; css: string } | null {
+            const regex = /^\/\*!@nkb (.+) \*\/(?:\n?.*)*/dgimsvy;
+            const excludeRegex = /^\/\*!@nkb .+ \*\/\n?/dgimsvy;
             try {
                 return {
-                    data: JSON.parse(css.replace(regex, '{$1}')),
-                    css: unMinifyCss(css.replace(excludeRegex, ''))
+                    data: JSON.parse(css.replace(regex, "{$1}")),
+                    css: unMinifyCss(css.replace(excludeRegex, "")),
                 };
             } catch {
                 return null;
@@ -121,16 +160,28 @@ import type { MetaStore } from "astro:content";
         function exportMetadata(metadata: Metadata): string {
             const regex = /{(.+)}/;
             const data = JSON.stringify(metadata);
-            return data.replace(regex, '/*!@nkb $1 */');
+            return data.replace(regex, "/*!@nkb $1 */");
         }
 
         function copy(el: Element, isMinified = false) {
             let metadata: Metadata = {
-                username: (document.querySelector(`input[type="text"]#username`) as any).value,
-                domain: (document.querySelector('input[type="text"]#domain') as any).value,
-                overflow: (document.querySelector('input[type="checkbox"]#overflow') as any).checked,
-                readonly: (document.querySelector('input[type="checkbox"]#readonly') as any).checked,
-            }
+                username: (
+                    document.querySelector(`input[type="text"]#username`) as any
+                ).value,
+                domain: (
+                    document.querySelector('input[type="text"]#domain') as any
+                ).value,
+                overflow: (
+                    document.querySelector(
+                        'input[type="checkbox"]#overflow',
+                    ) as any
+                ).checked,
+                readonly: (
+                    document.querySelector(
+                        'input[type="checkbox"]#readonly',
+                    ) as any
+                ).checked,
+            };
 
             let val = `${exportMetadata(metadata)}
 ${editor.value}`;
@@ -145,24 +196,22 @@ ${editor.value}`;
             setTimeout(() => (el.textContent = o), 2000);
         }
 
-        function getNekowebUsernameFromCSS(css: string, alt = '') {
+        function getNekowebUsernameFromCSS(css: string, alt = "") {
             let regex = /(\/\/.+\.nekoweb.org)/gm;
             let res = regex.exec(css);
             if (res !== null) {
-                
                 for (let i = 0; i < res.length; i++) {
-                    if (res[i] === '//example.nekoweb.org') continue;
-                    return res[i].replace('//', '').split('.')[0];
+                    if (res[i] === "//example.nekoweb.org") continue;
+                    return res[i].replace("//", "").split(".")[0];
                 }
             }
 
             regex = /\/\/nekoweb\.org\/site\/([A-Za-z0-9\-\_]+)/gm;
-            res = regex.exec(css)
+            res = regex.exec(css);
             if (res !== null) {
-                
                 for (let i = 0; i < res.length; i++) {
-                    if (res[i] === '//nekoweb.org/site/example') continue;
-                    return res[i].replace('//nekoweb.org/site/', '');
+                    if (res[i] === "//nekoweb.org/site/example") continue;
+                    return res[i].replace("//nekoweb.org/site/", "");
                 }
             }
 
@@ -178,28 +227,67 @@ ${editor.value}`;
                         let css = await res.text();
                         let m = loadMetadata(css);
                         if (m) {
-                            localStorage.setItem("nekobox:value", replaceInvalidCSS(m.css));
-                            localStorage.setItem("nekobox:username", m.data.username);
-                            localStorage.setItem("nekobox:domain", m.data.domain ?? '');
-                            localStorage.setItem("nekobox:overflow", `${m.data.overflow}`);
-                            localStorage.setItem("nekobox:readonly", `${m.data.readonly}`);
-                            alert(`Loaded, reloading...\n\nLoaded from Nekobox Metadata Format`);
+                            localStorage.setItem(
+                                "nekobox:value",
+                                replaceInvalidCSS(m.css),
+                            );
+                            localStorage.setItem(
+                                "nekobox:username",
+                                m.data.username,
+                            );
+                            localStorage.setItem(
+                                "nekobox:domain",
+                                m.data.domain ?? "",
+                            );
+                            localStorage.setItem(
+                                "nekobox:overflow",
+                                `${m.data.overflow}`,
+                            );
+                            localStorage.setItem(
+                                "nekobox:readonly",
+                                `${m.data.readonly}`,
+                            );
+                            alert(
+                                `Loaded, reloading...\n\nLoaded from Nekobox Metadata Format`,
+                            );
                         } else {
-                            let u = url.replace(/https?:\/\//, '').split('.')[0];
-                            alert(`Loaded, reloading...\n\nUsername: ${!url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes('nekoweb.org') ? new URL(url).hostname : u + '.nekoweb.org'}`)
-                            localStorage.setItem("nekobox:value", replaceInvalidCSS(unMinifyCss(css)));
-                            localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
-                            localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
-                            localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                            let u = url
+                                .replace(/https?:\/\//, "")
+                                .split(".")[0];
+                            alert(
+                                `Loaded, reloading...\n\nUsername: ${!url.includes("nekoweb.org") ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes("nekoweb.org") ? new URL(url).hostname : u + ".nekoweb.org"}`,
+                            );
+                            localStorage.setItem(
+                                "nekobox:value",
+                                replaceInvalidCSS(unMinifyCss(css)),
+                            );
+                            localStorage.setItem(
+                                "nekobox:username",
+                                !url.includes("nekoweb.org")
+                                    ? getNekowebUsernameFromCSS(css, u)
+                                    : u,
+                            );
+                            localStorage.setItem(
+                                "nekobox:domain",
+                                !url.includes("nekoweb.org")
+                                    ? new URL(url).hostname
+                                    : "",
+                            );
+                            localStorage.setItem(
+                                "nekobox:overflow",
+                                `${!url.includes("nekoweb.org")}`,
+                            );
                             localStorage.setItem("nekobox:readonly", `false`);
                         }
-                        
+
                         window.location.reload();
                     } else {
-                        alert(`Server returned ${res.status} (${res.statusText})`)
+                        alert(
+                            `Server returned ${res.status} (${res.statusText})`,
+                        );
                     }
                 } catch (e) {
-                    alert(`Can't fetch: ${e}`)
+                    alert(`Can't fetch: ${e}`);
                 }
             }
         }
@@ -212,25 +300,60 @@ ${editor.value}`;
                         let css = await res.text();
                         let m = loadMetadata(css);
                         if (m) {
-                            localStorage.setItem("nekobox:value", replaceInvalidCSS(m.css));
-                            localStorage.setItem("nekobox:username", m.data.username);
-                            localStorage.setItem("nekobox:domain", m.data.domain ?? '');
-                            localStorage.setItem("nekobox:overflow", `${m.data.overflow}`);
-                            localStorage.setItem("nekobox:readonly", `${m.data.readonly}`);
+                            localStorage.setItem(
+                                "nekobox:value",
+                                replaceInvalidCSS(m.css),
+                            );
+                            localStorage.setItem(
+                                "nekobox:username",
+                                m.data.username,
+                            );
+                            localStorage.setItem(
+                                "nekobox:domain",
+                                m.data.domain ?? "",
+                            );
+                            localStorage.setItem(
+                                "nekobox:overflow",
+                                `${m.data.overflow}`,
+                            );
+                            localStorage.setItem(
+                                "nekobox:readonly",
+                                `${m.data.readonly}`,
+                            );
                         } else {
-                            let u = url.replace(/https?:\/\//, '').split('.')[0];
-                            localStorage.setItem("nekobox:value", replaceInvalidCSS(unMinifyCss(css)));
-                            localStorage.setItem("nekobox:username", !url.includes('nekoweb.org') ? getNekowebUsernameFromCSS(css, u) : u);
-                            localStorage.setItem("nekobox:domain", !url.includes('nekoweb.org') ? new URL(url).hostname : '');
-                            localStorage.setItem("nekobox:overflow", `${!url.includes('nekoweb.org')}`)
+                            let u = url
+                                .replace(/https?:\/\//, "")
+                                .split(".")[0];
+                            localStorage.setItem(
+                                "nekobox:value",
+                                replaceInvalidCSS(unMinifyCss(css)),
+                            );
+                            localStorage.setItem(
+                                "nekobox:username",
+                                !url.includes("nekoweb.org")
+                                    ? getNekowebUsernameFromCSS(css, u)
+                                    : u,
+                            );
+                            localStorage.setItem(
+                                "nekobox:domain",
+                                !url.includes("nekoweb.org")
+                                    ? new URL(url).hostname
+                                    : "",
+                            );
+                            localStorage.setItem(
+                                "nekobox:overflow",
+                                `${!url.includes("nekoweb.org")}`,
+                            );
                             localStorage.setItem("nekobox:readonly", `false`);
                         }
-                        window.location.search = '';
+                        window.location.search = "";
                     } else {
-                        alert(`Server returned ${res.status} (${res.statusText})`)
+                        alert(
+                            `Server returned ${res.status} (${res.statusText})`,
+                        );
                     }
                 } catch (e) {
-                    alert(`Can't fetch: ${e}`)
+                    alert(`Can't fetch: ${e}`);
                 }
             }
         }
@@ -264,7 +387,7 @@ ${editor.value}`;
             let overflow = el.querySelector(
                 'input[type="checkbox"]#overflow',
             ).checked;
-            
+
             document
                 .querySelector(".pre-site")
                 .style.setProperty(
@@ -284,7 +407,7 @@ ${editor.value}`;
             let domain = el.querySelector('input[type="text"]#domain').value;
 
             localStorage.setItem("nekobox:overflow", overflow);
-            localStorage.setItem("nekobox:domain", domain ?? '');
+            localStorage.setItem("nekobox:domain", domain ?? "");
             if (domain) {
                 document.querySelector("#NOTUSEDINNEKOWEB_url").href =
                     "//" + domain;
@@ -309,21 +432,20 @@ ${editor.value}`;
                 );
                 if (!res.ok) {
                     if (!domain) return;
-                    let val = el.querySelector('input[type="text"]#domain').value;
-                    let u = val.split('.')[0];
-                    res = await fetch(
-                        "https://nekoweb.org/api/site/info/" + u
-                    );
+                    let val = el.querySelector(
+                        'input[type="text"]#domain',
+                    ).value;
+                    let u = val.split(".")[0];
+                    res = await fetch("https://nekoweb.org/api/site/info/" + u);
                     if (!res.ok) {
-                        alert('Nekoweb username ' + username + ' not found.');
+                        alert("Nekoweb username " + username + " not found.");
                         return;
                     } else {
                         username = u;
-                        el.querySelector(
-                            `input[type="text"]#username`,
-                        ).value = u;
+                        el.querySelector(`input[type="text"]#username`).value =
+                            u;
                     }
-                };
+                }
 
                 localStorage.setItem("nekobox:username", username);
 
@@ -388,7 +510,6 @@ ${editor.value}`;
         </div>
         <div id="nekobox-tabs" class="nekoweb-colors">
             <div id="nb-sitebox" class="visible">
-                
                 <div class="pre-pre-site nekoweb-colors">
                     <div class="pre-site" style="">
                         <div
@@ -443,7 +564,6 @@ ${editor.value}`;
                 </div>
             </div>
             <div id="nb-postbox">
-                
                 <div class="pre-pre-post noreset">
                     <div class="pre-post noreset" style="">
                         <a
@@ -517,7 +637,8 @@ ${editor.value}`;
                     <div>
                         <input type="checkbox" id="readonly" checked="false" />
                         <label for="readonly"
-                            >Export as read-only? This will never get disabled if enabled when exporting.</label
+                            >Export as read-only? This will never get disabled
+                            if enabled when exporting.</label
                         >
                     </div>
                     <div>
@@ -539,7 +660,10 @@ ${editor.value}`;
     </div>
 
     <div>
-        <p id="nkb-readonly" style="display: none;">This elements.css is read-only. To undo this, load another elements.css.</p>
+        <p id="nkb-readonly" style="display: none;">
+            This elements.css is read-only. To undo this, load another
+            elements.css.
+        </p>
         <div class="btn-cnt">
             <div>
                 <button id="copy">Copy</button>
@@ -629,8 +753,12 @@ ${editor.value}`;
                 padding-block: 64px;
             }
 
-            &:not(:has(input[type="checkbox"]#overflow:checked)) #nb-sitebox .pre-site,
-            &:not(:has(input[type="checkbox"]#overflow:checked)) #nb-postbox .pre-post {
+            &:not(:has(input[type="checkbox"]#overflow:checked))
+                #nb-sitebox
+                .pre-site,
+            &:not(:has(input[type="checkbox"]#overflow:checked))
+                #nb-postbox
+                .pre-post {
                 outline: 3px dashed red;
             }
         }
@@ -654,7 +782,9 @@ ${editor.value}`;
             height: 195px !important;
 
             @media only screen and (max-width: 800px) {
-                h2, p, td {
+                h2,
+                p,
+                td {
                     margin: 0 12px;
                 }
             }
@@ -680,7 +810,8 @@ ${editor.value}`;
             overflow-wrap: break-word;
         }
 
-        #NOTUSEDINNEKOWEB_siteurl, #NOTUSEDINNEKOWEB_siteusername {
+        #NOTUSEDINNEKOWEB_siteurl,
+        #NOTUSEDINNEKOWEB_siteusername {
             overflow-wrap: normal;
         }
 
