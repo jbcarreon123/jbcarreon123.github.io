@@ -9,7 +9,7 @@
                 [
                     'nekobox:value', 'nekobox:username',
                     'nekobox:domain', 'nekobox:overflow',
-                    'nekobox.readonly'
+                    'nekobox.readonly', 'nekobox.rss'
                 ].forEach((a) => localStorage.removeItem(a));
                 break;
             case 'clear-localstorage':
@@ -124,7 +124,7 @@
     }
 </script>
 
-<div class="floating-window" id="customize">
+<div class="floating-window" id="customize" style="display: none;">
     <div class="floating-window-titlebar">
         <p>Customize</p>
         <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms" data-icon="close"></span></p>

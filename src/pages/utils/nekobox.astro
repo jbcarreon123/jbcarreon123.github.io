@@ -29,6 +29,7 @@ import "prism-code-editor/invisibles.css";
         import "prism-code-editor/prism/languages/css";
         import { minify } from "csso";
         import cssbeautify from "cssbeautify";
+        import Parser from "rss-parser";
 
         var url = window.location;
         let params = new URLSearchParams(url.search);
@@ -69,9 +70,11 @@ import "prism-code-editor/invisibles.css";
                 readOnly: localStorage.getItem("nekobox:readonly") === "true",
             },
             () => {
-                document.querySelector("#user-style").innerHTML = replaceInvalidCSS(s);
+                document.querySelector("#user-style").innerHTML =
+                    replaceInvalidCSS(s);
                 lint(s);
-                document.querySelector('textarea#nb-validate-textarea').value = s;
+                document.querySelector("textarea#nb-validate-textarea").value =
+                    s;
             },
         );
 
@@ -98,38 +101,43 @@ import "prism-code-editor/invisibles.css";
 
             localStorage.setItem("nekobox:value", value);
             lint(value);
-            document.querySelector('textarea#nb-validate-textarea').value = value;
+            document.querySelector("textarea#nb-validate-textarea").value =
+                value;
         });
 
         function lint(css: string) {
             let lines: {
-                line: number,
-                entry: string
-            }[] = []
+                line: number;
+                entry: string;
+            }[] = [];
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
-            let clines = css.split('\n');
+            let clines = css.split("\n");
             clines.forEach((s, i) => {
                 if (regex.test(s)) {
                     if (/{ ?$/.test(s)) {
                         lines.push({
                             line: i + 1,
-                            entry: s.match(s)[0]
+                            entry: s.match(s)[0],
                         });
                     }
                 }
-            })
+            });
             if (lines.length > 0) {
-                document.querySelector('#nb-errors div').innerHTML = lines.map((v) => {
-                    if (v.entry.startsWith('@')) {
-                        return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, '')}. Nekoweb does not support @at-rules as of now.</p>`
-                    } else {
-                        return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, '')}. Please make sure that every entry on the elements.css starts with '.site-box' for the sitebox and '.post-box' for the postbox.</p>`
-                    }
-                }).join('')
+                document.querySelector("#nb-errors div").innerHTML = lines
+                    .map((v) => {
+                        if (v.entry.startsWith("@")) {
+                            return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, "")}. Nekoweb does not support @at-rules as of now.</p>`;
+                        } else {
+                            return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, "")}. Please make sure that every entry on the elements.css starts with '.site-box' for the sitebox and '.post-box' for the postbox.</p>`;
+                        }
+                    })
+                    .join("");
             } else {
-                document.querySelector('#nb-errors div').innerHTML = `<p>No errors found for now.</p>`
+                document.querySelector("#nb-errors div").innerHTML =
+                    `<p>No errors found for now.</p>`;
             }
-            document.querySelector('#nb-error-btn').innerHTML = `Errors (${lines.length})`;
+            document.querySelector("#nb-error-btn").innerHTML =
+                `Errors (${lines.length})`;
         }
 
         function textToKilobytes(text: string) {
@@ -172,6 +180,7 @@ import "prism-code-editor/invisibles.css";
             username: string;
             domain?: string;
             overflow: boolean;
+            rss?: string;
             readonly readonly: boolean;
         }
 
@@ -204,6 +213,8 @@ import "prism-code-editor/invisibles.css";
                 domain: (
                     document.querySelector('input[type="text"]#domain') as any
                 ).value,
+                rss: (document.querySelector('input[type="text"]#rss') as any)
+                    .value,
                 overflow: (
                     document.querySelector(
                         'input[type="checkbox"]#overflow',
@@ -260,10 +271,7 @@ ${editor.value}`;
                         let css = await res.text();
                         let m = loadMetadata(css);
                         if (m) {
-                            localStorage.setItem(
-                                "nekobox:value",
-                                m.css,
-                            );
+                            localStorage.setItem("nekobox:value", m.css);
                             localStorage.setItem(
                                 "nekobox:username",
                                 m.data.username,
@@ -279,6 +287,10 @@ ${editor.value}`;
                             localStorage.setItem(
                                 "nekobox:readonly",
                                 `${m.data.readonly}`,
+                            );
+                            localStorage.setItem(
+                                "nekobox:rss",
+                                `${m.data.rss}`,
                             );
                             alert(
                                 `Loaded, reloading...\n\nLoaded from Nekobox Metadata Format`,
@@ -311,6 +323,7 @@ ${editor.value}`;
                                 `${!url.includes("nekoweb.org")}`,
                             );
                             localStorage.setItem("nekobox:readonly", `false`);
+                            localStorage.setItem("nekobox:rss", ``);
                         }
 
                         window.location.reload();
@@ -333,10 +346,7 @@ ${editor.value}`;
                         let css = await res.text();
                         let m = loadMetadata(css);
                         if (m) {
-                            localStorage.setItem(
-                                "nekobox:value",
-                                m.css,
-                            );
+                            localStorage.setItem("nekobox:value", m.css);
                             localStorage.setItem(
                                 "nekobox:username",
                                 m.data.username,
@@ -352,6 +362,10 @@ ${editor.value}`;
                             localStorage.setItem(
                                 "nekobox:readonly",
                                 `${m.data.readonly}`,
+                            );
+                            localStorage.setItem(
+                                "nekobox:rss",
+                                `${m.data.rss}`,
                             );
                         } else {
                             let u = url
@@ -378,6 +392,7 @@ ${editor.value}`;
                                 `${!url.includes("nekoweb.org")}`,
                             );
                             localStorage.setItem("nekobox:readonly", `false`);
+                            localStorage.setItem("nekobox:rss", ``);
                         }
                         window.location.search = "";
                     } else {
@@ -391,53 +406,32 @@ ${editor.value}`;
             }
         }
 
-        let cp = document.querySelector("#copy");
-        let cpMin = document.querySelector("#copyMin");
-        let sv = document.querySelector("#load");
-        cp?.addEventListener("click", () => copy(cp));
-        cpMin?.addEventListener("click", () => copy(cpMin, true));
-        sv?.addEventListener("click", async () => await load());
-    </script>
-
-    <script is:inline>
-        function switchTab(el) {
-            document
-                .querySelectorAll("#tab-buttons button")
-                .forEach((el) => el.classList.remove("active"));
-            document
-                .querySelectorAll("#nekobox-tabs > div")
-                .forEach((el) => el.classList.remove("visible"));
-            document
-                .querySelector(`#nekobox-tabs #${el.dataset.target}`)
-                ?.classList.add("visible");
-            el.classList.add("active");
-        }
-
         let timeout = 0;
+        let rssItems: ({
+            [key: string]: any;
+        } & Parser.Item)[] = [];
+        let rssOld = "";
+        let userOld = "";
 
         /** @param {HTMLFormElement} el  */
         async function fChange(el) {
-            let overflow = el.querySelector(
-                'input[type="checkbox"]#overflow',
-            ).checked;
+            let overflow = el.querySelector('input[type="checkbox"]#overflow').checked;
 
-            document
-                .querySelector(".pre-site")
-                .style.setProperty(
-                    "overflow",
-                    overflow == false ? "hidden" : null,
-                );
-            document
-                .querySelector(".pre-post")
-                .style.setProperty(
-                    "overflow",
-                    overflow == false ? "hidden" : null,
-                );
+            let presite = document.querySelector(".pre-site") as HTMLDivElement;
+            let prepost = document.querySelector(".pre-post") as HTMLDivElement;
+            if (!overflow) {
+                presite.style.overflow = 'hidden';
+                prepost.style.overflow = "hidden";
+            } else {
+                presite.style.removeProperty('overflow');
+                prepost.style.removeProperty('overflow');
+            }
 
             let username = el.querySelector(
                 `input[type="text"]#username`,
             ).value;
             let domain = el.querySelector('input[type="text"]#domain').value;
+            let rss = el.querySelector('input[type="text"]#rss').value;
 
             localStorage.setItem("nekobox:overflow", overflow);
             localStorage.setItem("nekobox:domain", domain ?? "");
@@ -455,57 +449,155 @@ ${editor.value}`;
 
             clearTimeout(timeout);
             timeout = setTimeout(async () => {
-                if (
-                    document.querySelector("#NOTUSEDINNEKOWEB_url").href ==
-                    `//${username}.nekoweb.org/`
-                )
-                    return;
-                let res = await fetch(
-                    "https://nekoweb.org/api/site/info/" + username,
-                );
-                if (!res.ok) {
-                    if (!domain) return;
-                    let val = el.querySelector(
-                        'input[type="text"]#domain',
-                    ).value;
-                    let u = val.split(".")[0];
-                    res = await fetch("https://nekoweb.org/api/site/info/" + u);
+                if (username !== userOld) {
+                    userOld = username;
+                    let res = await fetch(
+                        "https://nekoweb.org/api/site/info/" + username,
+                    );
                     if (!res.ok) {
-                        alert("Nekoweb username " + username + " not found.");
-                        return;
+                        if (domain) {
+                            let val = el.querySelector(
+                                'input[type="text"]#domain',
+                            ).value;
+                            let u = val.split(".")[0];
+                            res = await fetch(
+                                "https://nekoweb.org/api/site/info/" + u,
+                            );
+                            if (!res.ok) {
+                                if (res.status === 404)
+                                    alert(
+                                        "Nekoweb username " +
+                                            username +
+                                            " not found.",
+                                    );
+                                else
+                                    alert(
+                                        "Nekoweb sent status code " +
+                                            res.status +
+                                            ". Please try again later.",
+                                    );
+                            } else {
+                                username = u;
+                                el.querySelector(
+                                    `input[type="text"]#username`,
+                                ).value = u;
+                            }
+                        }
                     } else {
-                        username = u;
-                        el.querySelector(`input[type="text"]#username`).value =
-                            u;
+                        localStorage.setItem("nekobox:username", username);
+
+                        let json = await res.json();
+                        document.querySelector("#NOTUSEDINNEKOWEB_url").href =
+                            domain
+                                ? "//" + domain
+                                : `//${username}.nekoweb.org/`;
+                        document.querySelector(
+                            "#NOTUSEDINNEKOWEB_posturl",
+                        ).href = domain
+                            ? "//" + domain
+                            : `//${username}.nekoweb.org/`;
+                        document.querySelector(
+                            "#NOTUSEDINNEKOWEB_screenshot",
+                        ).src =
+                            `//nekoweb.org/screenshots/${username}/index_large.jpg`;
+                        document.querySelector(
+                            "#NOTUSEDINNEKOWEB_siteurl",
+                        ).textContent = domain
+                            ? `${domain}`
+                            : `${username}.nekoweb.org`;
+                        document.querySelector(
+                            "#NOTUSEDINNEKOWEB_sitetitle",
+                        ).textContent = json.title;
+                        document.querySelector(
+                            "#NOTUSEDINNEKOWEB_siteusername",
+                        ).textContent = username;
                     }
                 }
 
-                localStorage.setItem("nekobox:username", username);
+                if (rss && rssOld !== rss) {
+                    let f = await fetch(rss);
+                    rssOld = rss;
+                    if (f.ok) {
+                        let p = new Parser();
+                        p.parseString(await f.text(), (error, feed) => {
+                            let frs = feed.items[0];
+                            rssItems = feed.items;
+                            document.querySelector(
+                                "#NOTUSEDINNEKOWEB_feeddate",
+                            ).textContent = new Date(
+                                frs.isoDate,
+                            ).toLocaleDateString(undefined, {
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                            });
+                            document.querySelector(
+                                "#NOTUSEDINNEKOWEB_feedtitle",
+                            ).textContent = frs.title;
+                            document.querySelector(
+                                "#NOTUSEDINNEKOWEB_feeddesc",
+                            ).textContent = frs.content;
+                            document.querySelector(
+                                "#NOTUSEDINNEKOWEB_posturl",
+                            ).href = frs.link;
 
-                let json = await res.json();
-                document.querySelector("#NOTUSEDINNEKOWEB_url").href = domain
-                    ? "//" + domain
-                    : `//${username}.nekoweb.org/`;
-                document.querySelector("#NOTUSEDINNEKOWEB_posturl").href =
-                    domain ? "//" + domain : `//${username}.nekoweb.org/`;
-                document.querySelector("#NOTUSEDINNEKOWEB_screenshot").src =
-                    `//nekoweb.org/screenshots/${username}/index_large.jpg`;
-                document.querySelector(
-                    "#NOTUSEDINNEKOWEB_siteurl",
-                ).textContent = domain
-                    ? `${domain}`
-                    : `${username}.nekoweb.org`;
-                document.querySelector(
-                    "#NOTUSEDINNEKOWEB_sitetitle",
-                ).textContent = json.title;
-                document.querySelector(
-                    "#NOTUSEDINNEKOWEB_siteusername",
-                ).textContent = username;
+                            let rssopt = document.querySelector(
+                                ".nb-form #rsspost",
+                            ) as HTMLSelectElement;
+                            rssopt.innerHTML = feed.items
+                                .map(
+                                    (v, i) =>
+                                        `<option value="${i}">${v.title}</option>`,
+                                )
+                                .join("");
+                            rssopt.value = "0";
+                        });
+                    }
+                }
+
+                localStorage.setItem("nekobox:rss", rss ?? "");
             }, 1000);
+
+            let rssopt = document.querySelector(
+                ".nb-form #rsspost",
+            ) as HTMLSelectElement;
+            let val = Number(rssopt.value);
+            let frs = rssItems[val];
+            if (frs) {
+                document.querySelector(
+                    "#NOTUSEDINNEKOWEB_feeddate",
+                ).textContent = new Date(frs.isoDate).toLocaleDateString(
+                    undefined,
+                    {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                    },
+                );
+                document.querySelector(
+                    "#NOTUSEDINNEKOWEB_feedtitle",
+                ).textContent = frs.title;
+                document.querySelector(
+                    "#NOTUSEDINNEKOWEB_feeddesc",
+                ).textContent = frs.content;
+                document.querySelector("#NOTUSEDINNEKOWEB_posturl").href =
+                    frs.link;
+            }
         }
 
+        let form = document.querySelector("form.nb-form") as HTMLFormElement;
+        form?.addEventListener("change", () => fChange(form));
+
+        let cp = document.querySelector("#copy");
+        let cpMin = document.querySelector("#copyMin");
+        let sv = document.querySelector("#load");
+        cp?.addEventListener("click", () => copy(cp));
+        cpMin?.addEventListener("click", () => copy(cpMin, true));
+        sv?.addEventListener("click", async () => await load());
+
         document.addEventListener("astro:page-load", () => {
-            fChange(document.querySelector("form"));
+            let form = document.querySelector("form.nb-form");
+            setTimeout(() => fChange(form), 250);
 
             let follow = document.querySelector(".follow");
             follow.addEventListener("click", (ev) => {
@@ -520,6 +612,21 @@ ${editor.value}`;
                 }
             });
         });
+    </script>
+
+    <script is:inline>
+        function switchTab(el) {
+            document
+                .querySelectorAll("#tab-buttons button")
+                .forEach((el) => el.classList.remove("active"));
+            document
+                .querySelectorAll("#nekobox-tabs > div")
+                .forEach((el) => el.classList.remove("visible"));
+            document
+                .querySelector(`#nekobox-tabs #${el.dataset.target}`)
+                ?.classList.add("visible");
+            el.classList.add("active");
+        }
     </script>
 
     <h1>Nekobox</h1>
@@ -537,8 +644,10 @@ ${editor.value}`;
             <button onclick="switchTab(this)" data-target="nb-postbox"
                 >Postbox</button
             >
-            <button onclick="switchTab(this)" id="nb-error-btn" data-target="nb-errors"
-                >Errors (0)</button
+            <button
+                onclick="switchTab(this)"
+                id="nb-error-btn"
+                data-target="nb-errors">Errors (0)</button
             >
             <button onclick="switchTab(this)" data-target="nb-options"
                 >Settings</button
@@ -631,11 +740,13 @@ ${editor.value}`;
                                     <span
                                         class="noreset post-date"
                                         style="position:relative!important"
+                                        id="NOTUSEDINNEKOWEB_feeddate"
                                         >5/2/2025</span
                                     >
                                     <h4
                                         class="noreset post-title"
                                         style="position:relative!important"
+                                        id="NOTUSEDINNEKOWEB_feedtitle"
                                     >
                                         Example post
                                     </h4>
@@ -643,6 +754,7 @@ ${editor.value}`;
                                     <p
                                         class="noreset post-description"
                                         style="position:relative!important"
+                                        id="NOTUSEDINNEKOWEB_feeddesc"
                                     >
                                         We're starting to formalize flexible
                                         opinions around our foundations at the
@@ -666,19 +778,35 @@ ${editor.value}`;
                 <div>
                     <p>No errors found for now.</p>
                 </div>
-                <form action="https://jigsaw.w3.org/css-validator/validator" enctype="multipart/form-data" method="post" target="_blank">
-                    <p>Unfortunately due to technical limitations, Nekobox can't validate your CSS. But, you can press the button below and it will check your CSS using W3C's CSS validator:</p>
-                    <textarea name="text" id="nb-validate-textarea" style="display: none;"></textarea>
-                    <input type="hidden" name="lang" value="en">
-                    <input type="hidden" name="profile" value="css3">
-                    
-                    <button type="submit">Validate your CSS <span
-                        aria-hidden="true"
-                        class="ms" data-icon="open_in_new"></span></button>
+                <form
+                    action="https://jigsaw.w3.org/css-validator/validator"
+                    enctype="multipart/form-data"
+                    method="post"
+                    target="_blank"
+                >
+                    <p>
+                        Unfortunately due to technical limitations, Nekobox
+                        can't validate your CSS. But, you can press the button
+                        below and it will check your CSS using W3C's CSS
+                        validator:
+                    </p>
+                    <textarea
+                        name="text"
+                        id="nb-validate-textarea"
+                        style="display: none;"></textarea>
+                    <input type="hidden" name="lang" value="en" />
+                    <input type="hidden" name="profile" value="css3" />
+
+                    <button type="submit"
+                        >Validate your CSS <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></button
+                    >
                 </form>
             </div>
             <div id="nb-options">
-                <form class="w-full" oninput="fChange(this)">
+                <form class="nb-form">
                     <div>
                         <input type="checkbox" id="overflow" checked="false" />
                         <label for="overflow"
@@ -689,7 +817,9 @@ ${editor.value}`;
                         <input type="checkbox" id="readonly" checked="false" />
                         <label for="readonly"
                             >Export as read-only? This will never get disabled
-                            if enabled when exporting.</label
+                            if enabled when exporting. Note that this isn't
+                            bulletproof as a user can copy paste it they really
+                            really wants to copy your elements.css.</label
                         >
                     </div>
                     <div>
@@ -704,6 +834,21 @@ ${editor.value}`;
                             domain)</label
                         ><br />
                         <input type="text" id="domain" />
+                    </div>
+                    <div>
+                        <label for="rss"
+                            >RSS feed path? If this is blank or if Nekobox can't
+                            load the path, it will use the default one.</label
+                        ><br />
+                        <input type="text" id="rss" />
+                    </div>
+                    <div>
+                        <label for="rsspost"
+                            >Post to show? (Note that this won't be saved.)</label
+                        ><br />
+                        <select id="rsspost">
+                            <option value="-1">No posts to show</option>
+                        </select>
                     </div>
                 </form>
             </div>

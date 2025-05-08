@@ -125,13 +125,17 @@ import Player from "../jwindows/Player.astro";
             }
         });
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.floating-window').forEach((e) => e.style.display = null);
+    })
 </script>
 
 <Customize />
 
 <Player />
 
-<div class="floating-window" id="tty">
+<div class="floating-window" id="tty" style="display: none;">
     <div class="floating-window-titlebar">
         <p>jTTY</p>
         <p onclick="closeWindow(this)">

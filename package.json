@@ -30,6 +30,7 @@
     "rehype-figure": "^1.0.1",
     "remark-sectionize": "^2.1.0",
     "remark-toc": "^9.0.0",
+    "rss-parser": "^3.13.0",
     "sanitize-html": "^2.16.0",
     "satori-astro": "^0.3.0",
     "sharp": "^0.34.1",

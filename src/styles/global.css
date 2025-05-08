@@ -537,10 +537,12 @@ footer .right {
     .container aside {
         scroll-snap-align: start;
         min-width: 150px;
+        max-height: 100vh;
+        overflow-y: auto;
     }
 
     main {
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     main > div {
@@ -555,7 +557,12 @@ footer .right {
         display:none;
     }
 
-    .container:has(aside.visible) main > div {
-        filter: brightness(0.5);
+    .container:has(aside.visible) main {
+        overflow-y: hidden;
+
+        &>div {
+            opacity: 0.35;
+            pointer-events: none;
+        }
     }    
 }
