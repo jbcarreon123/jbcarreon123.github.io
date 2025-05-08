@@ -69,7 +69,9 @@ import "prism-code-editor/invisibles.css";
                 readOnly: localStorage.getItem("nekobox:readonly") === "true",
             },
             () => {
-                document.querySelector("#user-style").innerHTML = s;
+                document.querySelector("#user-style").innerHTML = replaceInvalidCSS(s);
+                lint(s);
+                document.querySelector('textarea#nb-validate-textarea').value = s;
             },
         );
 
@@ -95,7 +97,40 @@ import "prism-code-editor/invisibles.css";
                 `${textToKilobytes(value)}KB used (${textToKilobytes(minifyCSS(value))}KB when minified)`;
 
             localStorage.setItem("nekobox:value", value);
+            lint(value);
+            document.querySelector('textarea#nb-validate-textarea').value = value;
         });
+
+        function lint(css: string) {
+            let lines: {
+                line: number,
+                entry: string
+            }[] = []
+            const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
+            let clines = css.split('\n');
+            clines.forEach((s, i) => {
+                if (regex.test(s)) {
+                    if (/{ ?$/.test(s)) {
+                        lines.push({
+                            line: i + 1,
+                            entry: s.match(s)[0]
+                        });
+                    }
+                }
+            })
+            if (lines.length > 0) {
+                document.querySelector('#nb-errors div').innerHTML = lines.map((v) => {
+                    if (v.entry.startsWith('@')) {
+                        return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, '')}. Nekoweb does not support @at-rules as of now.</p>`
+                    } else {
+                        return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, '')}. Please make sure that every entry on the elements.css starts with '.site-box' for the sitebox and '.post-box' for the postbox.</p>`
+                    }
+                }).join('')
+            } else {
+                document.querySelector('#nb-errors div').innerHTML = `<p>No errors found for now.</p>`
+            }
+            document.querySelector('#nb-error-btn').innerHTML = `Errors (${lines.length})`;
+        }
 
         function textToKilobytes(text: string) {
             const encoder = new TextEncoder();
@@ -227,7 +262,7 @@ ${editor.value}`;
                         if (m) {
                             localStorage.setItem(
                                 "nekobox:value",
-                                replaceInvalidCSS(m.css),
+                                m.css,
                             );
                             localStorage.setItem(
                                 "nekobox:username",
@@ -257,7 +292,7 @@ ${editor.value}`;
                             );
                             localStorage.setItem(
                                 "nekobox:value",
-                                replaceInvalidCSS(unMinifyCss(css)),
+                                unMinifyCss(css),
                             );
                             localStorage.setItem(
                                 "nekobox:username",
@@ -300,7 +335,7 @@ ${editor.value}`;
                         if (m) {
                             localStorage.setItem(
                                 "nekobox:value",
-                                replaceInvalidCSS(m.css),
+                                m.css,
                             );
                             localStorage.setItem(
                                 "nekobox:username",
@@ -324,7 +359,7 @@ ${editor.value}`;
                                 .split(".")[0];
                             localStorage.setItem(
                                 "nekobox:value",
-                                replaceInvalidCSS(unMinifyCss(css)),
+                                unMinifyCss(css),
                             );
                             localStorage.setItem(
                                 "nekobox:username",
@@ -502,6 +537,9 @@ ${editor.value}`;
             <button onclick="switchTab(this)" data-target="nb-postbox"
                 >Postbox</button
             >
+            <button onclick="switchTab(this)" id="nb-error-btn" data-target="nb-errors"
+                >Errors (0)</button
+            >
             <button onclick="switchTab(this)" data-target="nb-options"
                 >Settings</button
             >
@@ -624,6 +662,21 @@ ${editor.value}`;
                     </div>
                 </div>
             </div>
+            <div id="nb-errors" style="flex-direction: column;">
+                <div>
+                    <p>No errors found for now.</p>
+                </div>
+                <form action="https://jigsaw.w3.org/css-validator/validator" enctype="multipart/form-data" method="post" target="_blank">
+                    <p>Unfortunately due to technical limitations, Nekobox can't validate your CSS. But, you can press the button below and it will check your CSS using W3C's CSS validator:</p>
+                    <textarea name="text" id="nb-validate-textarea" style="display: none;"></textarea>
+                    <input type="hidden" name="lang" value="en">
+                    <input type="hidden" name="profile" value="css3">
+                    
+                    <button type="submit">Validate your CSS <span
+                        aria-hidden="true"
+                        class="ms" data-icon="open_in_new"></span></button>
+                </form>
+            </div>
             <div id="nb-options">
                 <form class="w-full" oninput="fChange(this)">
                     <div>
@@ -720,8 +773,12 @@ ${editor.value}`;
             }
         }
 
-        button[data-target="nb-options"] {
+        button[data-target="nb-errors"] {
             margin-left: auto;
+        }
+
+        #nb-errors p {
+            width: 100%;
         }
 
         #nekobox-tabs {
