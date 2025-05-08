@@ -3,8 +3,6 @@ import Layout from "../../layouts/Layout.astro";
 
 import "prism-code-editor/search.css";
 import "prism-code-editor/invisibles.css";
-import "prism-code-editor/autocomplete.css";
-import "prism-code-editor/autocomplete-icons.css";
 ---
 
 <Layout
@@ -26,7 +24,7 @@ import "prism-code-editor/autocomplete-icons.css";
             fuzzyFilter,
             completeSnippets,
         } from "prism-code-editor/autocomplete";
-        import { cssCompletion } from 'prism-code-editor/autocomplete/css';
+        import { cssCompletion } from "prism-code-editor/autocomplete/css";
         import "prism-code-editor/prism/languages/markup";
         import "prism-code-editor/prism/languages/css";
         import { minify } from "csso";
@@ -75,7 +73,7 @@ import "prism-code-editor/autocomplete-icons.css";
             },
         );
 
-        registerCompletions(['css'], {
+        registerCompletions(["css"], {
             sources: [cssCompletion()],
         });
 
@@ -84,9 +82,9 @@ import "prism-code-editor/autocomplete-icons.css";
             searchWidget(),
             highlightCurrentWord(),
             showInvisibles(),
-            autoComplete({ 
-                filter: fuzzyFilter
-            }),
+            // autoComplete({
+            //     filter: fuzzyFilter,
+            // }),
         );
 
         editor.addListener("update", (value) => {
