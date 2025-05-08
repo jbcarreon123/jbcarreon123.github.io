@@ -415,16 +415,18 @@ ${editor.value}`;
 
         /** @param {HTMLFormElement} el  */
         async function fChange(el) {
-            let overflow = el.querySelector('input[type="checkbox"]#overflow').checked;
+            let overflow = el.querySelector(
+                'input[type="checkbox"]#overflow',
+            ).checked;
 
             let presite = document.querySelector(".pre-site") as HTMLDivElement;
             let prepost = document.querySelector(".pre-post") as HTMLDivElement;
             if (!overflow) {
-                presite.style.overflow = 'hidden';
+                presite.style.overflow = "hidden";
                 prepost.style.overflow = "hidden";
             } else {
-                presite.style.removeProperty('overflow');
-                prepost.style.removeProperty('overflow');
+                presite.style.removeProperty("overflow");
+                prepost.style.removeProperty("overflow");
             }
 
             let username = el.querySelector(
