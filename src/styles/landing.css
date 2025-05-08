@@ -15,6 +15,10 @@ html {
     height: 100%;
 }
 
+h1, h2 {
+    width: fit-content;
+}
+
 .big {
     font-size: 4em;
     text-align: center;
@@ -33,10 +37,6 @@ html {
 
 marquee {
     text-wrap-mode:nowrap;
-}
-
-h1, h2 {
-    width: fit-content;
 }
 
 .cnt, .cntn {

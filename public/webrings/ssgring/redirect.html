@@ -1,7 +1,9 @@
 <html>
-	<head>
-		<script>
-			(async()=>{let params = new URLSearchParams(window.location.search);
+
+<head>
+	<!-- <script>
+		(async () => {
+			let params = new URLSearchParams(window.location.search);
 			const slug = params.get('slug');
 			const way = params.get('way');
 
@@ -30,11 +32,74 @@
 					break;
 				default:
 					location.replace('/webrings/ssgring/');
-			}})()
-		</script>
-	</head>
-	<body>
-		<h1>Redirecting you to the destination. Please wait.</h1>
+			}
+		})()
+	</script> -->
+
+	<style>
+		@font-face {
+			font-family: Inter;
+			src: url(/fonts/Inter-Variable.ttf);
+			font-display: swap;
+		}
+
+		* {
+			margin: initial;
+			padding: initial;
+			box-sizing: content-box;
+			transition: all 100ms;
+			text-justify: unset;
+			overflow-wrap: anywhere;
+			scroll-behavior: smooth;
+		}
+
+		.noreset {
+			all: revert;
+		}
+
+		:root {
+			--bg: #212529;
+			--altbg: #1d1f20;
+			--acc: #343a40;
+			--text: #f1f3f5;
+			--sec: #ced4da;
+			--link: #30b8e6;
+			--link-hover: #4dc4eb;
+		}
+
+		main {
+			max-width: 800px;
+			background-color: var(--bg);
+			color: var(--text);
+			padding: 12px 24px;
+			padding-bottom: 24px;
+		}
+
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: var(--altbg);
+		}
+
+		html {
+			width: 100%;
+			height: 100%;
+			font-size: 1.125rem;
+		}
+
+		h1,
+		h2 {
+			width: fit-content;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<h1>Redirecting to the site...</h1>
 		<p>Unfortunately, this requires JS.</p>
-	</body>
+	</main>
+</body>
+
 </html>
