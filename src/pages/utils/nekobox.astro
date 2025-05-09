@@ -111,26 +111,40 @@ import "prism-code-editor/invisibles.css";
             let lines: {
                 line: number;
                 entry: string;
+                reason: 'selector' | 'link';
             }[] = [];
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
+            const linkRegex = /^.+url\(((?!(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org).+)\);?/gm;
             let clines = css.split("\n");
             clines.forEach((s, i) => {
                 if (regex.test(s)) {
                     if (/{ ?$/.test(s)) {
                         lines.push({
                             line: i + 1,
-                            entry: s.match(s)[0],
+                            entry: s.match(regex)[0],
+                            reason: 'selector'
                         });
                     }
+                } else if (linkRegex.test(s)) {
+                    lines.push({
+                        line: i + 1,
+                        entry: s.replace(linkRegex, '$1'),
+                        reason: 'link'
+                    })
                 }
             });
             if (lines.length > 0) {
                 document.querySelector("#nb-errors div").innerHTML = lines
                     .map((v) => {
-                        if (v.entry.startsWith("@")) {
-                            return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, "")}. Nekoweb does not support @at-rules as of now.</p>`;
-                        } else {
-                            return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, "")}. Please make sure that every entry on the elements.css starts with '.site-box' for the sitebox and '.post-box' for the postbox.</p>`;
+                        switch (v.reason) {
+                            case 'link':
+                            return `<p>(${v.line}) URL not allowed: ${v.entry}. Nekoweb elements.css does not support anything beyond [sitename].nekoweb.org.</p>`
+                            default:
+                            if (v.entry.startsWith("@")) {
+                                return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, "")}. Nekoweb does not support @at-rules as of now.</p>`;
+                            } else {
+                                return `<p>(${v.line}) Unrecognized selector: ${v.entry.replace(/ { ?$/, "")}. Please make sure that every entry on the elements.css starts with '.site-box' for the sitebox and '.post-box' for the postbox.</p>`;
+                            }
                         }
                     })
                     .join("");
@@ -152,10 +166,11 @@ import "prism-code-editor/invisibles.css";
         function replaceInvalidCSS(cssString: string | null | undefined) {
             if (!cssString) return "";
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
+            const linkRegex = /(^.+url\()((?!(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org).+)(\);?)/gm;
             return cssString.replace(
                 regex,
                 "/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {",
-            );
+            ).replace(linkRegex, '$1);');
         }
 
         function minifyCSS(css: string): string {
