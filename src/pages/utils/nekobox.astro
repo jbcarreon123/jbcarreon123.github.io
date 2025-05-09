@@ -126,11 +126,13 @@ import "prism-code-editor/invisibles.css";
                         });
                     }
                 } else if (linkRegex.test(s)) {
-                    lines.push({
-                        line: i + 1,
-                        entry: s.replace(linkRegex, '$1'),
-                        reason: 'link'
-                    })
+                    if (!/^\//.test(s.replace(linkRegex, '$1'))) {
+                        lines.push({
+                            line: i + 1,
+                            entry: s.replace(linkRegex, '$1'),
+                            reason: 'link'
+                        })
+                    }
                 }
             });
             if (lines.length > 0) {
@@ -167,10 +169,19 @@ import "prism-code-editor/invisibles.css";
             if (!cssString) return "";
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
             const linkRegex = /(^.+url\()((?!(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org).+)(\);?)/gm;
-            return cssString.replace(
+            let c = cssString.replace(
                 regex,
                 "/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {",
-            ).replace(linkRegex, '$1);');
+            );
+            let clines = c.split("\n");
+            clines.forEach((s, i) => {
+                if (linkRegex.test(s)) {
+                    if (!/^\//.test(s.replace(linkRegex, '$2'))) {
+                        clines[i] = s.replace(linkRegex, '$1);')
+                    }
+                }
+            });
+            return clines.join('\n');
         }
 
         function minifyCSS(css: string): string {
