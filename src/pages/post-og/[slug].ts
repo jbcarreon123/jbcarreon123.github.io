@@ -25,7 +25,7 @@ export const GET: APIRoute = async ({ params }) => {
 			<div style="display: flex; justify-content: space-between; flex-direction: column; background-color: #212529; color: #f1f3f5; width: 100%; height: 100%; padding: 24px;">
 				<p style="margin: 0; font-size: 2em; color: #ced4da;">jb's site: ${post.url}</p>
 				<div style="display: flex; flex-direction: column">
-					<h1 style="margin: 0; font-size: 6em;">${post.frontmatter.title}</h1>
+					<h1 style="margin: 0; font-size: 5.5em;">${post.frontmatter.title}</h1>
 					<p style="margin: 0; font-size: 2.5em;">${post.frontmatter.description}</p>
 				</div>
 			</div>

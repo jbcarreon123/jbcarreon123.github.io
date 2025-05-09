@@ -9,7 +9,7 @@ p:not(.small):not(.page-title), li, figure {
 }
 
 .post-title {
-    font-size: 3em;
+    font-size: 2.5em;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 85vw;
@@ -48,6 +48,7 @@ article h1 {
     top: 0px;
     background: var(--bg);
     z-index: 99;
+    padding-top: 12px;
 }
 
 article h1::after {
