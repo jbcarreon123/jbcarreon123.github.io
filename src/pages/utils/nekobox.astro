@@ -114,7 +114,7 @@ import "prism-code-editor/invisibles.css";
                 reason: 'selector' | 'link';
             }[] = [];
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
-            const linkRegex = /^.+url\(((?!(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org).+)\);?/gm;
+            const linkRegex = /(^.+url\((?!["']?(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org).+)(\);?)/gm;
             let clines = css.split("\n");
             clines.forEach((s, i) => {
                 if (regex.test(s)) {
@@ -127,6 +127,7 @@ import "prism-code-editor/invisibles.css";
                     }
                 } else if (linkRegex.test(s)) {
                     if (!/^\//.test(s.replace(linkRegex, '$1'))) {
+                        console.log(s, linkRegex.test(s))
                         lines.push({
                             line: i + 1,
                             entry: s.replace(linkRegex, '$1'),
@@ -168,7 +169,7 @@ import "prism-code-editor/invisibles.css";
         function replaceInvalidCSS(cssString: string | null | undefined) {
             if (!cssString) return "";
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
-            const linkRegex = /(^.+url\()((?!(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org).+)(\);?)/gm;
+            const linkRegex = /(^.+url\((?!["']?(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org).+)(\);?)/gm;
             let c = cssString.replace(
                 regex,
                 "/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {",
