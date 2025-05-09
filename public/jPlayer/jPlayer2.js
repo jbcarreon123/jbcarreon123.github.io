@@ -120,9 +120,9 @@ class jPlayer extends HTMLElement {
         return /* html */ `
                 <section id="jplayer--playlist-card" style="display: ${this._solo ? 'none' : ''};">
                     ${this._playlist.length > 0 ?
-                        `${this._playlist.map(({ html }) => html).join('')}` :
-                        `Loading tracks...`
-                    }
+                `${this._playlist.map(({ html }) => html).join('')}` :
+                `Loading tracks...`
+            }
                 </section>
             `;
     }
@@ -173,6 +173,35 @@ class jPlayer extends HTMLElement {
         this.emit('load');
     }
 
+    constructor() {
+        super();
+        this._internals = this.attachInternals();
+        this._shadow = this.attachShadow({ mode: 'open' });
+        this._mutationObserver = new MutationObserver(() => this.updatePlaylist());
+        this._intersectionObserver = null;
+        this._audioPlayer = new Audio();
+        this._paused = true;
+
+        this._audioPlayer.addEventListener('durationchange', () => this.progress());
+        this._audioPlayer.addEventListener('timeupdate', () => this.progress());
+        this._audioPlayer.addEventListener('ended', () => this.nextTrack());
+
+        this._videoPlayer = document.createElement('video');
+
+        if (typeof ChiptuneJsPlayer !== 'undefined') {
+            window['libopenmpt'] = Module;
+            this._trackerAudioContext = new AudioContext();
+            this._trackerPlayer = new ChiptuneJsPlayer(new ChiptuneJsConfig(0, undefined, undefined, this._trackerAudioContext));
+        }
+
+        if (typeof window.jsmediatags !== 'undefined') {
+            this._mediaTags = window.jsmediatags;
+        }
+
+        this._shadow.innerHTML = this.renderLoading();
+        this._playlistPlaceholder = this._shadow.querySelector('article');
+    }
+
     loadOverflow() {
         setTimeout(() => {
             this.#container.querySelectorAll('.track-info > *').forEach((el, key) => {
@@ -207,40 +236,47 @@ class jPlayer extends HTMLElement {
         this.loadOverflow();
     }
 
-    constructor() {
-        super();
-        this._internals = this.attachInternals();
-        this._shadow = this.attachShadow({ mode: 'open' });
-        this._observer = new MutationObserver(() => this.updatePlaylist());
-        this._audioPlayer = new Audio();
-        this._paused = true;
-
-        this._audioPlayer.addEventListener('durationchange', () => this.progress());
-        this._audioPlayer.addEventListener('timeupdate', () => this.progress());
-        this._audioPlayer.addEventListener('ended', () => this.nextTrack());
-
-        this._videoPlayer = document.createElement('video');
-
-        if (typeof ChiptuneJsPlayer !== 'undefined') {
-            window['libopenmpt'] = Module;
-            this._trackerAudioContext = new AudioContext();
-            this._trackerPlayer = new ChiptuneJsPlayer(new ChiptuneJsConfig(0, undefined, undefined, this._trackerAudioContext));
-        }
-
-        if (typeof window.jsmediatags !== 'undefined') {
-            this._mediaTags = window.jsmediatags;
-        }
-
-        this._shadow.innerHTML = this.renderLoading();
-    }
-
     connectedCallback() {
-        this._observer.observe(this, { childList: true });
-        this.updatePlaylist();
+        this._intersectionObserver = new IntersectionObserver(this._handleIntersection.bind(this), {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        });
+        this._intersectionObserver.observe(this._playlistPlaceholder);
     }
 
     disconnectedCallback() {
-        this._observer.disconnect();
+        this._mutationObserver.disconnect();
+        if (this._intersectionObserver) {
+            this._intersectionObserver.unobserve(this._playlistPlaceholder);
+            this._intersectionObserver.disconnect();
+            this._intersectionObserver = null;
+        }
+    }
+
+    _handleIntersection(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log('player is loading');
+                this._mutationObserver.observe(this, { childList: true });
+                const placeholder = entry.target;
+                const placeholderStyle = window.getComputedStyle(placeholder);
+                const hostElement = this;
+                if (placeholderStyle.display === 'none' || placeholderStyle.visibility === 'hidden') {
+                    return;
+                }
+                let parent = hostElement.parentElement;
+                while (parent) {
+                    const parentStyle = window.getComputedStyle(parent);
+                    if (parentStyle.display === 'none' || parentStyle.visibility === 'hidden') {
+                        return;
+                    }
+                    parent = parent.parentElement;
+                }
+                observer.unobserve(placeholder);
+                this.updatePlaylist();
+            }
+        });
     }
 
     emit(type, detail = {}) {
@@ -490,7 +526,7 @@ class jPlayer extends HTMLElement {
                     }
                 });
             } else {
-                
+
                 clearInterval(this._trackerInterval);
                 this._trackerPlayer?.stop();
                 this._audioPlayer.src = el.dataset.src;
@@ -714,15 +750,14 @@ function getType(base64String) {
 }
 
 /** @param {HTMLElement} el  */
-function isOverflowing(el)
-{
-   var curOverflow = getComputedStyle(el, 'overflow');
-   if ( !curOverflow || curOverflow === "visible" )
-      el.style.overflow = "hidden";
-   var isOverflowing = el.clientWidth < el.scrollWidth 
-      || el.clientHeight < el.scrollHeight;
-   el.style.overflow = curOverflow;
-   return isOverflowing;
+function isOverflowing(el) {
+    var curOverflow = getComputedStyle(el, 'overflow');
+    if (!curOverflow || curOverflow === "visible")
+        el.style.overflow = "hidden";
+    var isOverflowing = el.clientWidth < el.scrollWidth
+        || el.clientHeight < el.scrollHeight;
+    el.style.overflow = curOverflow;
+    return isOverflowing;
 }
 
 function formatTime(seconds) {

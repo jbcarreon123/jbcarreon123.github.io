@@ -332,6 +332,11 @@ aside h1 {
     flex-direction: column;
 }
 
+#content:first-of-type h1 {
+    padding-top: 0;
+    margin-top: 0;
+}
+
 aside div {
     writing-mode: vertical-rl;
     text-orientation: sideways;
