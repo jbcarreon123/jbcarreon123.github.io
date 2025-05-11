@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadGallery } from "../assets/loadGallery.ts";
+
+const gallery = loadGallery();
+---
+
+<Layout title="Gallery" id="gallery">
+    <h1>Gallery</h1>
+    <div class="images">
+        {
+            gallery.map((m) => (
+                <div class="image">
+                    <a href={"/imgs/gallery/" + m.name}>
+                        <p class="tg">
+                            {m.data.Model?.description} -{" "}
+                            {new Date(m.time).toLocaleDateString()}
+                        </p>
+                        <p>
+                            {m.data["Image Width"]?.description}*
+                            {m.data["Image Height"]?.description} -{" "}
+                            {m.data.ShutterSpeedValue?.description}s - ISO{" "}
+                            {m.data.ISOSpeedRatings?.description} -{" "}
+                            {m.data.FNumber?.description} -{" "}
+                            {m.data.FocalLengthIn35mmFilm?.description}
+                        </p>
+                        <img loading="lazy" src={"/imgs/gallery/" + m.name} />
+                    </a>
+                </div>
+            ))
+        }
+    </div>
+
+    <style>
+        .images {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .image {
+            width: 200px;
+            background: var(--acc);
+            padding: 6px;
+
+            a,
+            a img {
+                width: inherit;
+            }
+        }
+    </style>
+</Layout>
