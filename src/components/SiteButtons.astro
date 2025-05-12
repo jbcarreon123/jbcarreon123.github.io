@@ -26,34 +26,14 @@ let nonbtns = Buttons
 buttons = buttons.concat(nonbtns)
 ---
 
-<script>
-	import Freezeframe from 'freezeframe';
-
-	document.addEventListener('DOMContentLoaded', load);
-	document.addEventListener('astro:after-swap', load);
-
-	function load() {
-		let f = new Freezeframe('.btn-container .btn', {
-			responsive: false,
-			trigger: false
-		});
-
-		function toggleFreezeFrame() {
-			f.toggle();
-		}
-
-		document.querySelector('button#toggle-btn')?.addEventListener('click', () => toggleFreezeFrame());
-	}
-</script>
-
-<button id="toggle-btn">Play/Pause Animated Buttons</button>
-
 <div class="btn-container">
     {
         buttons.sort((a, b) => 
             a.alt.localeCompare(b.alt)
         ).map((btn) => <a href={btn.url}>
-            <Image class="btn" src={btn.slug} alt={btn.alt} title={btn.title} width="88" height="31" />
+            <Image class="btn" src={btn.slug} alt={btn.alt} title={btn.title} data-tooltip-data={
+				`<p class='tg'>${new URL(btn.url).hostname}</p><h2>${btn.alt}</h2>${btn.alt != btn.title ? `<p>${btn.title}</p>` : ''}`
+			} width="88" height="31" />
         </a>)
     }
 </div>

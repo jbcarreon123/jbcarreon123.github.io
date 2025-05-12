@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Buttons from '../components/SiteButtons.astro'
+import { linksStuff } from '../assets/linksstuff';
 import { Code } from 'astro-expressive-code/components';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -41,6 +42,15 @@ const oldsitebtns = [
     <p>This is loaded from a JSON file, so you can just fetch /buttons.json if you want lol</p>
     <Buttons />
 
+    <h2>Other Projects and stuff</h2>
+    <div class="projs">
+        {linksStuff.map((link) => <a href={link.url} data-tooltip-data={
+                `${link.author ? `<p class="tg">${link.author}</p>` : ''}<h2>${link.name}</h2><p>${link.description}</p>${link.tags ? `<p class="tg"><span class="ms" aria-hidden="true" data-icon="sell"></span> ${link.tags.join(' ')}</p>` : ''}`
+            }>
+            {link.button ? <img src={link.button} alt={link.name} /> : <p>{link.name}</p>} 
+        </a>)}
+    </div>
+
     <h2>Cliques</h2>
     <p>soon...</p>
 
@@ -72,6 +82,13 @@ const oldsitebtns = [
     </div>
 
     <style is:inline>
+        .projs {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
         #linksiframe {
             display: grid;
             grid-template-columns: repeat(3, minmax(100px, 1fr));

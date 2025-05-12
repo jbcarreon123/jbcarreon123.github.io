@@ -6,12 +6,6 @@
         "imgUrl": "https://dimden.dev/services/images/88x31.gif"
     },
     {
-        "url": "https://nekoweb.org/",
-        "title": "Nekoweb (button by maxpixels)",
-        "alt": "Nekoweb (button by maxpixels)",
-        "imgUrl": "https://nekoweb.org/assets/buttons/button5.gif"
-    },
-    {
         "url": "https://status.cafe/",
         "title": "Status Cafe",
         "alt": "Status Cafe",
@@ -99,7 +93,7 @@
         "url": "https://biofreak.world/",
         "title": "biofreak.world",
         "alt": "biofreak.world",
-        "imgUrl": "https://softatrocity.nekoweb.org/sitebuttons/biofreak-dark.png"
+        "imgUrl": "https://biofreak.world/sitebuttons/biofreak-light.png"
     },
     {
         "url": "https://amoebalous.net/",
@@ -168,7 +162,7 @@
         "imgUrl": "/imgs/buttons/hellomortal.png"
     },
     {
-        "url": "https://ducdat0507.github.io/",
+        "url": "https://duducat.moe/",
         "title": "duducat's corner on the interwebz!",
         "alt": "duducat's corner on the interwebz!",
         "imgUrl": "/imgs/buttons/duducat.svg"

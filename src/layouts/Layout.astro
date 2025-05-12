@@ -9,6 +9,7 @@ const { title, id, description } = Astro.props;
 import Windows from "../components/Windows.astro";
 import CommonHead from "../components/CommonHead.astro";
 import Sidebar from "../components/Sidebar.astro";
+import RichTooltip from "../components/RichTooltip.astro";
 
 const hash = import.meta.env.COMMIT_HASH ?? "null";
 ---
@@ -19,72 +20,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 		<CommonHead title={title} id={id} description={description} />
 	</head>
 	<body class="jcolor">
-		<script is:inline>
-			function loadTooltip() {
-				
-				let tooltip = document.querySelector(".hover--tooltip");
-				document.querySelectorAll("[title]").forEach((el) => {
-					if (!el.title && el.dataset.title) return;
-					el.addEventListener("mousemove", (mev) => {
-						let height = window.innerHeight;
-
-						tooltip?.style.setProperty("--x", mev.clientX + "px");
-						if (mev.clientY + 24 + tooltip.clientHeight > height) {
-							tooltip?.style.setProperty("--y", (height - 24 - tooltip.clientHeight) + "px");
-						} else {
-							tooltip?.style.setProperty("--y", mev.clientY + "px");
-						}
-						tooltip?.style.setProperty("display", "block");
-						if (el.title) {
-							el.dataset.title = el.title;
-							el?.removeAttribute("title");
-						}
-						tooltip.innerHTML = `<p>${el.dataset.title}</p>`;
-					});
-					el.addEventListener("click", () => {
-						setTimeout(() => tooltip.innerHTML = `<p>${el.dataset.title}</p>`, 25);
-					});
-					el.addEventListener("mouseleave", () => {
-						tooltip?.style.setProperty("display", "none");
-					});
-				});
-			}
-			document.addEventListener("DOMContentLoaded", loadTooltip);
-			document.addEventListener("load", loadTooltip);
-			document.addEventListener("astro:page-load", loadTooltip);
-			document.addEventListener("astro:after-swap", loadTooltip);
-			document.addEventListener('DOMContentLoaded', load);
-			document.addEventListener('astro:after-swap', load);
-
-			function load() {
-				document.querySelector('#to-top').addEventListener('click', (e) => {
-					e.preventDefault();
-					window.scrollTo({ top: 0, behavior: 'smooth' });
-					if (window.matchMedia('(width <= 640px)').matches) document.querySelector('#main').scrollTop = 0;
-				});
-
-				window.matchMedia('(width <= 640px)').addEventListener('change', (c) => {
-					if (c.matches) {
-						for (let i = 1; i <= 5; i++) {
-							setTimeout(() => document.querySelector('main').scrollIntoView(), 50 * i);
-						}
-					}
-				}) 
-			}
-		</script>
-		<div class="hover--tooltip" style="display: none"></div>
-		<style>
-			.hover--tooltip {
-				position: fixed;
-				left: calc(var(--x) + 15px);
-				top: calc(var(--y) + 15px);
-				transition: none;
-				z-index: 99999;
-				background: var(--altbg);
-				padding: 6px;
-				max-width: 350px;
-			}
-		</style>
+		<RichTooltip />
 		<div transition:persist>
 			<Windows />
 		</div>

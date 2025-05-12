@@ -1,0 +1,62 @@
+<script>
+    const tooltip: HTMLDivElement | null = document.querySelector('div.richtooltip--tooltip');
+
+    function updateTooltip(ev: MouseEvent, el: HTMLElement) {
+        let tooltipData = el.dataset.tooltipData;
+        if (!tooltipData || !tooltip) return;
+        tooltipData = tooltipData.trim();
+        if (tooltipData.startsWith('<')) {
+            tooltip.innerHTML = tooltipData;
+        } else {
+            tooltip.innerHTML = `<p>${tooltipData}</p>`;
+        }
+        tooltip.style.display = 'flex';
+        tooltip.style.top = (ev.clientY + 10) + "px";
+        tooltip.style.left = (ev.clientX + 10) + "px";
+    }
+
+    function removeTooltip() {
+        if (tooltip) tooltip.style.display = 'none';
+    }
+
+    function loadTooltipListeners() {
+        document.querySelectorAll('[title]').forEach((el) => {
+            if (!el.dataset.tooltipData) el.dataset.tooltipData = el.title;
+            el.title = '';
+        })
+
+        document.querySelectorAll('[data-tooltip-data]').forEach((el) => {
+            el.addEventListener('mousemove', (ev) => updateTooltip(ev as MouseEvent, el as HTMLElement));
+            el.addEventListener('mouseout', () => removeTooltip())
+        })
+    }
+
+    if (tooltip) {
+        document.addEventListener('DOMContentLoaded', () => loadTooltipListeners())
+        document.addEventListener('astro:page-load', () => loadTooltipListeners())
+    }
+</script>
+
+<div class="richtooltip--tooltip"></div>
+
+<style>
+    .richtooltip--tooltip {
+        position: fixed;
+        padding: 6px;
+        margin: 6px;
+        max-width: 300px;
+        background: var(--acc);
+        transition: none !important;
+        flex-direction: column;
+        z-index: 999;
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .tg {
+            padding-top: 3px !important;
+        }
+    }
+</style>
