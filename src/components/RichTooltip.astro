@@ -34,10 +34,11 @@
     if (tooltip) {
         document.addEventListener('DOMContentLoaded', () => loadTooltipListeners())
         document.addEventListener('astro:page-load', () => loadTooltipListeners())
+        document.addEventListener('astro:after-swap', () => loadTooltipListeners())
     }
 </script>
 
-<div class="richtooltip--tooltip"></div>
+<div class="richtooltip--tooltip" style="display: none;"></div>
 
 <style>
     .richtooltip--tooltip {
