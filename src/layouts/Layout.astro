@@ -10,6 +10,7 @@ import Windows from "../components/Windows.astro";
 import CommonHead from "../components/CommonHead.astro";
 import Sidebar from "../components/Sidebar.astro";
 import RichTooltip from "../components/RichTooltip.astro";
+import NotifModal from "../components/NotifModal.astro";
 
 const hash = import.meta.env.COMMIT_HASH ?? "null";
 ---
@@ -20,6 +21,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 		<CommonHead title={title} id={id} description={description} />
 	</head>
 	<body class="jcolor">
+		<NotifModal />
 		<RichTooltip />
 		<div transition:persist>
 			<Windows />

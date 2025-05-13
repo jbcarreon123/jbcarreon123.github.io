@@ -127,7 +127,6 @@ import "prism-code-editor/invisibles.css";
                     }
                 } else if (linkRegex.test(s)) {
                     if (!/^\//.test(s.replace(linkRegex, '$1'))) {
-                        console.log(s, linkRegex.test(s), s.replace(linkRegex, '$0'), s.replace(linkRegex, '$1'), s.replace(linkRegex, '$2'), s.replace(linkRegex, '$3'))
                         lines.push({
                             line: i + 1,
                             entry: s.replace(linkRegex, '$1'),
@@ -321,16 +320,12 @@ ${editor.value}`;
                                 "nekobox:rss",
                                 `${m.data.rss}`,
                             );
-                            alert(
-                                `Loaded, reloading...\n\nLoaded from Nekobox Metadata Format`,
-                            );
+                            createNotif('Loaded, reloading...', 'Loaded from Nekobox Metadata Format')
                         } else {
                             let u = url
                                 .replace(/https?:\/\//, "")
                                 .split(".")[0];
-                            alert(
-                                `Loaded, reloading...\n\nUsername: ${!url.includes("nekoweb.org") ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes("nekoweb.org") ? new URL(url).hostname : u + ".nekoweb.org"}`,
-                            );
+                            createNotif('Loaded, reloading...', `Username: ${!url.includes("nekoweb.org") ? getNekowebUsernameFromCSS(css, u) : u}\nDomain: ${!url.includes("nekoweb.org") ? new URL(url).hostname : u + ".nekoweb.org"}`);
                             localStorage.setItem(
                                 "nekobox:value",
                                 unMinifyCss(css),

@@ -1,0 +1,75 @@
+<script is:inline>
+    setInterval(() => {
+        document.querySelectorAll('.modal--notifcontainer .notif:not(.ok):not(.pr)').forEach((v) => {
+            setTimeout(() => v.classList.add('ok'), 5600);
+            v.classList.add('pr')
+            requestAnimationFrame(() => {
+                setTimeout(() => v.style.cssText = 'animation: notif-rem 500ms 5s linear forwards !important', 100)
+            })
+        })
+    }, 50)
+
+    function createNotif(title, desc) {
+        const container = document.querySelector('.modal--notifcontainer');
+
+        let notif = document.createElement('div');
+        notif.classList.add('notif');
+        notif.innerHTML = `
+            <h2>${title}</h2>
+            <p>${desc.replaceAll('\n', '<br />')}</p>
+        `
+        container.appendChild(notif);
+    }
+</script>
+
+<div class="modal--notifcontainer" transition:persist>
+    <noscript>
+        <div class="notif pr" style="animation: notif-rem 500ms 5s linear forwards !important;">
+            <h2>JavaScript is disabled.</h2>
+            <p>jbSite should work without JS, but I recommend enabling JS.</p>
+        </div>
+    </noscript>
+</div>
+
+<style is:inline>
+    .modal--notifcontainer {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 6px;
+        position: fixed;
+        right: 12px;
+        bottom: 12px;
+        z-index: 999;
+    }
+
+    .modal--notifcontainer .notif {
+        padding: 6px;
+        max-width: 350px;
+        background: var(--altbg);
+        opacity: 1;
+        pointer-events: none;
+
+        &>* {
+            padding: 0;
+            margin: 0;
+            text-align: end;
+        }
+
+        &.ok {
+            display: none;
+        }
+    }
+
+
+
+    @keyframes notif-rem {
+        from {
+            opacity: 1;
+            visibility: visible;
+        }
+        to {
+            opacity: 0;
+            visibility: collapse;
+        }
+    }
+</style>

@@ -10,6 +10,7 @@ const { url, site } = Astro;
 import { OgImage } from "astro-opengraph-image/components";
 import CommonHead from "../components/CommonHead.astro";
 import Windows from "../components/Windows.astro";
+import NotifModal from "../components/NotifModal.astro";
 
 const ogImage = url
 	.toString()
@@ -103,6 +104,7 @@ const ogImage = url
 		</script>
 	</head>
     <body class="jcolor" transition:animate="fade">
+		<NotifModal />
         <main>
             <slot />
         </main>
