@@ -28,7 +28,8 @@
 
         document.querySelectorAll('[data-tooltip-data]').forEach((el) => {
             el.addEventListener('mousemove', updateTooltip);
-            el.addEventListener('mouseout', removeTooltip)
+            el.addEventListener('mouseover', updateTooltip);
+            el.addEventListener('mouseout', removeTooltip);
         })
     }
 
