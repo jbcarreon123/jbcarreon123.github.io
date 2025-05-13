@@ -1,7 +1,8 @@
 <script>
     const tooltip: HTMLDivElement | null = document.querySelector('div.richtooltip--tooltip');
 
-    function updateTooltip(ev: MouseEvent, el: HTMLElement) {
+    function updateTooltip(ev: MouseEvent) {
+        let el = ev.currentTarget as HTMLElement;
         let tooltipData = el.dataset.tooltipData;
         if (!tooltipData || !tooltip) return;
         tooltipData = tooltipData.trim();
@@ -26,8 +27,8 @@
         })
 
         document.querySelectorAll('[data-tooltip-data]').forEach((el) => {
-            el.addEventListener('mousemove', (ev) => updateTooltip(ev as MouseEvent, el as HTMLElement));
-            el.addEventListener('mouseout', () => removeTooltip())
+            el.addEventListener('mousemove', updateTooltip);
+            el.addEventListener('mouseout', removeTooltip)
         })
     }
 
@@ -35,6 +36,7 @@
         document.addEventListener('DOMContentLoaded', () => loadTooltipListeners())
         document.addEventListener('astro:page-load', () => loadTooltipListeners())
         document.addEventListener('astro:after-swap', () => loadTooltipListeners())
+        setInterval(() => loadTooltipListeners(), 5000);
     }
 </script>
 
