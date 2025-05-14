@@ -16,7 +16,7 @@
         notif.classList.add('notif');
         notif.innerHTML = `
             <h2>${title}</h2>
-            <p>${desc.replaceAll('\n', '<br />')}</p>
+            <p>${`${desc}`.replaceAll('\n', '<br />')}</p>
         `
         container.appendChild(notif);
     }
