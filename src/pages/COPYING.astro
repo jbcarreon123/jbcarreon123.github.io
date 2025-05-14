@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CommentWidget from '../components/CommentWidget.svelte';
+import '../styles/post.css';
+import '../styles/comment-widget-dark.css';
+---
+
+<Layout title="COPYING" description="Jb's own perspective around the 'Copying is an act of love' manifesto" style="user-select: none !important">
+    <script>
+        const t3hY1rh = (foW24s: Event) => {
+            foW24s.preventDefault();
+            createNotif('Function is disabled', 'To prevent mishap, this function is disabled on this page.');
+        }
+
+        const iSe94me = () => {
+            document.addEventListener('contextmenu', t3hY1rh);
+        }
+
+        document.addEventListener('astro:after-swap', iSe94me);
+        document.addEventListener('DOMContentLoaded', iSe94me);
+    </script>
+
+    <h1 class="post-title">COPYING</h1>
+    <article>
+        <p>testing</p>
+    </article>
+    <div style="width: 100%;">
+        <CommentWidget client:only="svelte" disabled={false} />
+    </div>
+
+    <style is:global>
+        main #content {
+            user-select: none !important;
+        }
+
+        main {
+            #content {
+                user-select: none !important;
+            }
+        }
+    </style>
+</Layout>

@@ -37,7 +37,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 					<p class="page-title">{title ? title : "jb's site"}</p>
 				</header>
 				<div>
-					<div id="content" transition:animate="slide">
+					<div id="content" transition:animate="slide" style={Astro.props.style}>
 						<slot />
 					</div>
 					<footer transition:persist transition:animate="none">
