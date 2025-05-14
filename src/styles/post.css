@@ -43,6 +43,10 @@ article:not(.link-preview) {
     font-weight: bold;
 }
 
+h1 {
+    font-size: 2em;
+}
+
 article h1 {
     position: sticky;
     top: 0px;
