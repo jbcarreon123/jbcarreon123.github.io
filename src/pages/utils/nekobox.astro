@@ -352,12 +352,10 @@ ${editor.value}`;
 
                         window.location.reload();
                     } else {
-                        alert(
-                            `Server returned ${res.status} (${res.statusText})`,
-                        );
+                        createNotif(`Can't fetch ${url}`, `Server returned ${res.status} (${res.statusText})`)
                     }
                 } catch (e) {
-                    alert(`Can't fetch: ${e}`);
+                    createNotif(`Can't fetch ${url}`, e);
                 }
             }
         }
@@ -420,12 +418,10 @@ ${editor.value}`;
                         }
                         window.location.search = "";
                     } else {
-                        alert(
-                            `Server returned ${res.status} (${res.statusText})`,
-                        );
+                        createNotif(`Can't fetch ${url}`, `Server returned ${res.status} (${res.statusText})`)
                     }
                 } catch (e) {
-                    alert(`Can't fetch: ${e}`);
+                    createNotif(`Can't fetch ${url}`, e);
                 }
             }
         }
