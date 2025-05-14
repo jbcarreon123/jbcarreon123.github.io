@@ -1,66 +1,17 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/LayoutNoSidebar.astro';
 import CommentWidget from '../components/CommentWidget.svelte';
 import '../styles/post.css';
 import '../styles/comment-widget-dark.css';
 import Copying from './COPYING-SRC.md';
 ---
 
-<Layout title="COPYING" description="Jb's own perspective around the 'Copying is an act of love' manifesto" style="user-select: none !important">
-    <script>
-        const t3hY1rh = (foW24s: Event) => {
-            if (window.location.pathname.includes('COPYING')) {
-                foW24s.preventDefault();
-                foW24s.stopPropagation();
-                foW24s.stopImmediatePropagation();
-                createNotif('Function is disabled', 'To prevent mishap, this function is disabled on this page.');
-            }
-        }
-
-        const Qeo32ms = (foW24s: KeyboardEvent) => {
-            if ((foW24s.ctrlKey || foW24s.altKey) && window.location.pathname.includes('COPYING')) {
-                foW24s.preventDefault();
-                foW24s.stopPropagation();
-                foW24s.stopImmediatePropagation();
-                createNotif('Function is disabled', 'To prevent mishap, this function is disabled on this page.');
-            }
-        }
-
-        const iSe94me = () => {
-            document.addEventListener('contextmenu', t3hY1rh);
-            document.addEventListener('keydown', Qeo32ms);
-        }
-
-        const u3sWke1 = () => {
-            document.removeEventListener('contextmenu', t3hY1rh);
-            document.removeEventListener('keydown', Qeo32ms);
-        }
-
-        document.addEventListener('astro:after-swap', iSe94me);
-        document.addEventListener('DOMContentLoaded', iSe94me);
-
-        document.addEventListener('astro:before-preparation', u3sWke1);
-        document.addEventListener('astro:before-swap', u3sWke1);
-        window.addEventListener('beforeunload', u3sWke1);
-    </script>
-
-    <h1 class="post-title">COPYING</h1>
+<Layout title="COPYING (is plagiarism)" description="Jb's own approach against the 'Copying is an act of love' manifesto">
+    <h1 class="post-title">COPYING (is plagiarism)</h1>
     <article>
         <Copying />
     </article>
     <div style="width: 100%;">
         <CommentWidget client:only="svelte" disabled={false} />
     </div>
-
-    <style is:global>
-        main #content {
-            user-select: none !important;
-        }
-
-        main {
-            #content {
-                user-select: none !important;
-            }
-        }
-    </style>
 </Layout>
