@@ -9,15 +9,35 @@ import '../styles/comment-widget-dark.css';
     <script>
         const t3hY1rh = (foW24s: Event) => {
             foW24s.preventDefault();
+            foW24s.stopPropagation();
+            foW24s.stopImmediatePropagation();
             createNotif('Function is disabled', 'To prevent mishap, this function is disabled on this page.');
+        }
+
+        const Qeo32ms = (foW24s: KeyboardEvent) => {
+            if (foW24s.ctrlKey || foW24s.altKey) {
+                foW24s.preventDefault();
+                foW24s.stopPropagation();
+                foW24s.stopImmediatePropagation();
+                createNotif('Function is disabled', 'To prevent mishap, this function is disabled on this page.');
+            }
         }
 
         const iSe94me = () => {
             document.addEventListener('contextmenu', t3hY1rh);
+            document.addEventListener('keydown', Qeo32ms);
+        }
+
+        const u3sWke1 = () => {
+            document.removeEventListener('contextmenu', t3hY1rh);
+            document.removeEventListener('keydown', Qeo32ms);
         }
 
         document.addEventListener('astro:after-swap', iSe94me);
         document.addEventListener('DOMContentLoaded', iSe94me);
+
+        document.addEventListener('astro:before-preparation', u3sWke1);
+        window.addEventListener('beforeunload', u3sWke1);
     </script>
 
     <h1 class="post-title">COPYING</h1>
