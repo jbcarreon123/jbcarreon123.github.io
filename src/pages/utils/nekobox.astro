@@ -167,12 +167,15 @@ import "prism-code-editor/invisibles.css";
 
         function replaceInvalidCSS(cssString: string | null | undefined) {
             if (!cssString) return "";
+            const urlRegex1 = /((?:https:)?\/\/)([\S]+).nekoweb.org([\S]+)(\);)/gm;
+            const urlRegex2 = '$1nekoweb.org/site/$2/files$3?original=1$4';
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
             const linkRegex = /(^.+url)\((?!["']?(?:(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org)|(?:\/)).+(\);?)/gm;
             let c = cssString.replace(
                 regex,
                 "/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {",
             );
+            c = c.replace(urlRegex1, urlRegex2);
             let clines = c.split("\n");
             clines.forEach((s, i) => {
                 if (linkRegex.test(s)) {
@@ -355,7 +358,7 @@ ${editor.value}`;
                         createNotif(`Can't fetch ${url}`, `Server returned ${res.status} (${res.statusText})`)
                     }
                 } catch (e) {
-                    createNotif(`Can't fetch ${url}`, e);
+                    createNotif(`Can't fetch ${url}`, `${e}\n\nMost likely, this is a CORS error. Try setting <code>jbcarreon123.nekoweb.org</code> on your <code>Access-Control-Allow-Origin</code> header.`);
                 }
             }
         }
