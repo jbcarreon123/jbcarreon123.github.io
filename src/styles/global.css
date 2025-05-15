@@ -1,7 +1,7 @@
 * {
     margin: initial;
     padding: initial;
-    box-sizing: content-box;
+    box-sizing: border-box;
     transition: all 100ms;
     text-justify: unset;
     overflow-wrap: anywhere;
@@ -352,7 +352,7 @@ aside nav a, aside nav button {
     padding: 6px;
     margin-left: 6px;
     background-color: var(--acc);
-    width: 132px;
+    width: 144px;
     text-align: left;
     color: var(--link);
 }
