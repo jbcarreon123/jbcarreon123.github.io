@@ -147,8 +147,7 @@
 }
 
 .c-textInput {
-    width: calc(100% - 10px);
-    max-width: 900px;
+    width: 100%;
     resize: none;
 }
 #c_submit {

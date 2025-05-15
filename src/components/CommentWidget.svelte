@@ -482,6 +482,7 @@
 				'img': ['src', 'alt'],
 				'video': ['src', 'alt', 'controls'],
 				'a': ['href', 'target'],
+				'span': ['class', 'data-icon'],
 			}
 		});
 		text.className = 'c-text';
