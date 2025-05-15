@@ -14,10 +14,10 @@
 
         let notif = document.createElement('div');
         notif.classList.add('notif');
-        notif.innerHTML = `
-            <h2>${title}</h2>
-            <p>${`${desc}`.replaceAll('\n', '<br />')}</p>
-        `
+        let h2 = document.createElement('h2');
+        h2.textContent = title;
+        let p = document.createElement('p');
+        p.textContent = desc;
         container.appendChild(notif);
     }
 </script>
