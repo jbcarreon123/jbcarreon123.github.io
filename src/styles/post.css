@@ -1,6 +1,7 @@
 blockquote {
     border-left: 3px solid var(--acc);
     padding: 3px;
+    margin-block: 3px;
     padding-left: 12px;
 }
 

@@ -280,7 +280,7 @@ aside nav {
     z-index: 99;
 }
 
-figcaption, .tg {
+figcaption, .tg, .text-xs {
     font-size: 0.75em;
     color: var(--sec);
     text-transform: uppercase;

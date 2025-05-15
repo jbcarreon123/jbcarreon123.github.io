@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../layouts/LayoutNoSidebar.astro";
 
 import "prism-code-editor/search.css";
 import "prism-code-editor/invisibles.css";
@@ -885,9 +885,7 @@ ${editor.value}`;
                 </form>
             </div>
         </div>
-    </div>
 
-    <div>
         <p id="nkb-readonly" style="display: none;">
             This elements.css is read-only. To undo this, load another
             elements.css.
@@ -900,6 +898,9 @@ ${editor.value}`;
             </div>
             <p id="cssSize">0KB used</p>
         </div>
+    </div>
+
+    <div>
         <div id="nekobox-editor"></div>
     </div>
 
@@ -930,6 +931,9 @@ ${editor.value}`;
 
         #nekobox-tab-container {
             display: flex;
+            position: sticky;
+            top: 0;
+            z-index: 9;
             flex-direction: column;
             background: var(--acc);
             padding: 6px;
