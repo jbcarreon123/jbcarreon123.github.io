@@ -710,34 +710,36 @@
 			{#if s_commentsOpen}
 				<h1 id="c_widgetTitle" hidden={v_pagePath.includes('guestbook')}>{s_widgetTitle}</h1>
 
-				<div id="c_nameWrapper" class="c-inputWrapper">
-					<input
-						class="c-input c-nameInput"
-						bind:this={c_nameInput}
-						aria-label="Your name"
-						placeholder="name *"
-						name="entry.{s_nameId}"
-						id="entry.{s_nameId}"
-						type="text"
-						maxlength={s_maxLengthName}
-						required
-					/>
+				<div id="c_commentInput">
+					<div id="c_nameWrapper" class="c-inputWrapper name">
+						<input
+							class="c-input c-nameInput"
+							bind:this={c_nameInput}
+							aria-label="Your name"
+							placeholder="name *"
+							name="entry.{s_nameId}"
+							id="entry.{s_nameId}"
+							type="text"
+							maxlength={s_maxLengthName}
+							required
+						/>
+					</div>
+
+					<div id="c_websiteWrapper" class="c-inputWrapper website">
+						<input
+							class="c-input c-websiteInput"
+							bind:this={c_siteInput}
+							aria-label="Your website (optional)"
+							placeholder="website"
+							name="entry.{s_websiteId}"
+							id="entry.{s_websiteId}"
+							type="url"
+							pattern="https?://.*"
+						/>
+					</div>
 				</div>
 
-				<div id="c_websiteWrapper" class="c-inputWrapper">
-					<input
-						class="c-input c-websiteInput"
-						bind:this={c_siteInput}
-						aria-label="Your website (optional)"
-						placeholder="website"
-						name="entry.{s_websiteId}"
-						id="entry.{s_websiteId}"
-						type="url"
-						pattern="https?://.*"
-					/>
-				</div>
-
-				<div id="c_textWrapper" class="c-inputWrapper">
+				<div id="c_textWrapper" class="c-inputWrapper comment">
 					<textarea
 						class="c-input c-textInput"
 						bind:this={c_textInput}

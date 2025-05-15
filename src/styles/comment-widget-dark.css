@@ -92,6 +92,22 @@
     cursor:not-allowed;
 }
 
+#c_commentInput {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    gap: 6px;
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    @media (width <= 640px) {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
 /* Input section */
 #c_inputDiv {
     margin-bottom: 15px;
@@ -110,7 +126,7 @@
 }
 
 .c-inputWrapper {
-    max-width: 90vw;
+    width: 100%;
     display: inline-block;
     text-align: left;
     z-index: 1;
@@ -118,7 +134,6 @@
 }
 
 .c-input {
-    max-width: 90vw;
     padding: 4px;
     border-bottom: 1px solid;
 	outline: none;
