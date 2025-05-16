@@ -151,7 +151,7 @@ import { ClientRouter } from "astro:transitions";
         window.scroll(window.scrollX, v);
     }
 
-    document.addEventListener("astro:page-load", () => {
+    document.addEventListener("DOMContentLoaded", () => {
         let el = document.querySelector("aside")?.dataset.activePage;
         document.querySelectorAll("nav a").forEach((e) => {
             if (e.id === el) {

@@ -27,7 +27,7 @@ import Layout from "../layouts/Layout.astro";
             return this[Math.floor(Math.random() * this.length)];
         };
 
-        document.addEventListener("astro:page-load", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             document
                 .querySelector(".chatbox form")
                 ?.addEventListener("submit", (ev) => showResult(ev));

@@ -620,7 +620,7 @@ ${editor.value}`;
         cpMin?.addEventListener("click", () => copy(cpMin, true));
         sv?.addEventListener("click", async () => await load());
 
-        document.addEventListener("astro:page-load", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             let form = document.querySelector("form.nb-form");
             setTimeout(() => fChange(form), 250);
 
