@@ -394,6 +394,10 @@ div#leftbar>* {
     border-right: 1px solid var(--text);
 }
 
+pre {
+    overflow-x: auto;
+}
+
 div#leftbar>*:last-child {
     border-right: none;
 }
