@@ -7,8 +7,10 @@ const { frontmatter } = Astro.props;
 ---
 
 <Layout title={frontmatter.title} description={frontmatter.description} id="posts">
-    <p class="tg">{frontmatter.tags.split(/, ?/).map((t) => <span>#{t} </span>)}</p>
-    <h1 class="post-title">{frontmatter.title}</h1>
+    <div class="article-info" style={'--banner:url(' + frontmatter.background + ')'}>
+        <p class="tg">{frontmatter.tags.split(/, ?/).map((t: any) => <span>#{t} </span>)}</p>
+        <h1 class="post-title">{frontmatter.title}</h1>
+    </div>
     <article>
         <slot />
     </article>

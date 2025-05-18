@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CommentWidget from '../components/CommentWidget.svelte';
+import '../styles/post.css';
+import '../styles/comment-widget-dark.css';
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description} id={frontmatter.id}>
+    <h1 class="post-title">{frontmatter.title}</h1>
+    <article>
+        <slot />
+    </article>
+</Layout>

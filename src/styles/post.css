@@ -5,6 +5,20 @@ blockquote {
     padding-left: 12px;
 }
 
+.article-info {
+    background-image: var(--banner);
+    background-color: var(--altbg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.article-info > * {
+    padding: 0;
+}
+
 p:not(.small):not(.page-title), li, figure {
     padding: 6px 0;
 }

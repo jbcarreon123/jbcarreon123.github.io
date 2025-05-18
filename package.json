@@ -54,6 +54,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@types/node": "^22.15.18",
     "stylelint-config-standard": "^38.0.0"
   }
 }

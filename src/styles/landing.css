@@ -48,6 +48,7 @@ marquee {
 
 .cnt {
     justify-content: space-between;
+    min-height: inherit !important;
 }
 
 .cnt .right {

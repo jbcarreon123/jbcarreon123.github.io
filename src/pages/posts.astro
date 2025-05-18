@@ -5,6 +5,7 @@ interface Frontmatter {
     published: string;
     description: string;
     tags: string;
+    background: string;
 }
 import Layout from "../layouts/Layout.astro";
 
@@ -96,7 +97,7 @@ postSorted.forEach((v) => {
         {
             postSorted.map((val) => (
                 <a href={val.url} data-tags={val.frontmatter.tags}>
-                    <div class="post">
+                    <div class="post" style={"--banner:url(" + (val.frontmatter.background ?? '') + ')'}>
                         <div>
                             <p class="tg">{val.frontmatter.tags.split(/, ?/).slice(0, 2).map((t) => <span>#{t}</span>)} {val.frontmatter.tags.split(/, ?/).slice(2).length > 0 ? `+${val.frontmatter.tags.split(/, ?/).slice(2).length}` : ''}</p>
                             <h2>{val.frontmatter.title}</h2>
@@ -128,7 +129,11 @@ postSorted.forEach((v) => {
         .post {
             padding: 0 6px;
             height: 100%;
-            background: var(--acc);
+            background-color: var(--altbg);
+            background-image: var(--banner);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;
         }
 
         .post h2 {
@@ -139,7 +144,7 @@ postSorted.forEach((v) => {
 
         .post:hover,
         .post:has(*:hover) {
-            background: var(--altbg);
+            background-color: var(--acc);
         }
 
         .post-desc {
