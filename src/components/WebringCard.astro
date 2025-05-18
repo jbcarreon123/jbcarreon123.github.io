@@ -1,17 +1,17 @@
 ---
-const { name, link, prev, next, random } = Astro.props;
+const { name, link, prev, next, random, style, textStyle } = Astro.props;
 ---
 
-<div class="webring-card">
+<div class="webring-card" style={style ?? ''}>
     <a href={link}>
-        <p>{name}</p>
+        <p style={textStyle}>{name}</p>
     </a>
-    <div class="webring-links">
-        <a href={prev} aria-label="previous site"><span aria-hidden="true" class="ms" data-icon="keyboard_double_arrow_left"></span></a>{random && <a href={random} aria-label="random site"><span aria-hidden="true" class="ms" data-icon="shuffle"></span></a>}<a href={next} aria-label="next site"><span aria-hidden="true" class="ms" data-icon="keyboard_double_arrow_right"></span></a>
+    <div>
+        <a href={prev} aria-label="previous site"><span aria-hidden="true" class="ms" data-icon="keyboard_double_arrow_left" class="webring-links" style={textStyle}></span></a>{random && <a href={random} aria-label="random site"><span aria-hidden="true" class="ms" data-icon="shuffle" class="webring-links" style={textStyle}></span></a>}<a href={next} aria-label="next site"><span aria-hidden="true" class="ms" data-icon="keyboard_double_arrow_right" class="webring-links" style={textStyle}></span></a>
     </div>
 </div>
 
-<style>
+<style is:inline>
     .webring-card {
         display: flex;
         flex-direction: row;
@@ -32,6 +32,13 @@ const { name, link, prev, next, random } = Astro.props;
                 text-wrap-mode: nowrap;
                 text-overflow: ellipsis;
             }
+        }
+    }
+
+    html[data-color='light'] .webring-card {
+        background-clip: border-box !important;
+        & * {
+            color: var(--link) !important;
         }
     }
 </style>
