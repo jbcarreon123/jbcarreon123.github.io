@@ -27,9 +27,9 @@ Most people (like me) browse the internet mostly on windowed browsers, this brea
 This also affects people who needs accessibility features, like zooming. Your site breaking due to it requiring a specific viewport makes it so people that needs zooming can't view your site properly. Same goes for sites that disables zooming entirely.
 
 # How do I make my site responsive?
-Use things like media queries and flexboxes to make your layout responsive. Depending on your current site's layout, it can vary from easily done to impossible to be done without a major overhaul, which is fine because it's not too late to implement responsiveness on your site!
+Use things like media queries and flexboxes to make your layout responsive. Depending on your current site's layout, it can vary from easily done to impossible to be done without a major overhaul, which is fine because it's not too late to implement responsiveness on your site! You can also do a separate page for mobile users, which is also fine but if you aren't using an SSG, it can be difficult to sync data around.
 
-Also, consider trying your site in different sizes, like resize your browser window, use [your browser's mobile viewport emulator](https://www.digitalcitizen.life/emulate-mobile-device-desktop-browser/), or just visiting your site on your phone!
+Also, consider trying your site in different sizes, like resizing your browser window, use [your browser's mobile viewport emulator](https://www.digitalcitizen.life/emulate-mobile-device-desktop-browser/), or just visiting your site on your phone!
 
 # Resources
 Here's some resources you want to see when you're making your site responsive:
