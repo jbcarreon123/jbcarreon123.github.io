@@ -9,7 +9,7 @@
         "@astrojs/svelte": "^7.0.13",
         "@catamphetamine/id3js": "^1.0.2",
         "@hbsnow/rehype-sectionize": "^1.0.7",
-        "@indiefellas/astro-adapter-nekoweb": "^2.0.0",
+        "@indiefellas/astro-adapter-nekoweb": "^2.0.2",
         "@kindspells/astro-shield": "^1.7.1",
         "@tailwindcss/vite": "^4.1.7",
         "@types/cssbeautify": "^0.3.5",
@@ -197,9 +197,9 @@
 
     "@img/sharp-win32-x64": ["@img/sharp-win32-x64@0.34.1", "", { "os": "win32", "cpu": "x64" }, "sha512-hw1iIAHpNE8q3uMIRCgGOeDoz9KtFNarFLQclLxr/LK1VBkj8nby18RjFvr6aP7USRYAjTZW6yisnBWMX571Tw=="],
 
-    "@indiefellas/astro-adapter-nekoweb": ["@indiefellas/astro-adapter-nekoweb@2.0.2", "", { "dependencies": { "@indiefellas/nekoweb-api": "^1.1.0", "archiver": "^7.0.1" }, "peerDependencies": { "typescript": "^5.8.2" } }, "sha512-C9VxS5ug94NyyIUcdOIAROn1997NX6V/6p9un7041l/sUpqUViq8yJaECp1skJnvYYP34Vhm6soXJjnXXmiCBA=="],
+    "@indiefellas/astro-adapter-nekoweb": ["@indiefellas/astro-adapter-nekoweb@2.1.0", "", { "dependencies": { "@indiefellas/nekoweb-api": "^1.2.0", "archiver": "^7.0.1" }, "peerDependencies": { "typescript": "^5.8.2" } }, "sha512-K+tqTMbzEpJaxJDhKA1G926DpP8CP2KWzQB2QFKB8ParU2t1y8VrZN9QXq+ppIfokKq/oonnCnblcVPlKiIJ2Q=="],
 
-    "@indiefellas/nekoweb-api": ["@indiefellas/nekoweb-api@1.1.0", "", { "dependencies": { "axios": "^1.9.0", "form-data": "^4.0.2" }, "peerDependencies": { "typescript": "^5" } }, "sha512-8lBezJQ9Juf8wueq5WN0FQIbdNNJn5tM+F50LmfIIBe8YU+VGuCX+DDJLwMbsEEk8uccWDSZOx2Nin2b1RFmxg=="],
+    "@indiefellas/nekoweb-api": ["@indiefellas/nekoweb-api@1.2.0", "", { "dependencies": { "axios": "^1.9.0", "form-data": "^4.0.2" }, "peerDependencies": { "typescript": "^5" } }, "sha512-IY4Y4//rsNBFSAegbttmWvXKyz+BnkfvE2+M1d89SoYKh4rMVZ/QaE6H/Dsk/Hwh0U9MfQxsSHZ5KDz89OvA6Q=="],
 
     "@isaacs/cliui": ["@isaacs/cliui@8.0.2", "", { "dependencies": { "string-width": "^5.1.2", "string-width-cjs": "npm:string-width@^4.2.0", "strip-ansi": "^7.0.1", "strip-ansi-cjs": "npm:strip-ansi@^6.0.1", "wrap-ansi": "^8.1.0", "wrap-ansi-cjs": "npm:wrap-ansi@^7.0.0" } }, "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA=="],
 
