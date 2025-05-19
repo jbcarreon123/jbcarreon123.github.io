@@ -24,6 +24,14 @@ export const linksStuff: LinksStuff[] = [
         button: 'https://psfla.net/resc/img/psflabutton.png'
     },
     {
+        author: 'sen.fish',
+        name: 'The Ad Archive',
+        url: 'https://ads.sen.fish/',
+        description: 'An archive of static image ads from the late 1990s to the early 2000s',
+        tags: ['ads', 'old-net'],
+        button: '/imgs/buttons/ad-archive-88x31-mosaic.png'
+    },
+    {
         name: 'IndieSeas',
         url: 'https://indieseas.net',
         description: 'An indie web search engine',
