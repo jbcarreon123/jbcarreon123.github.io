@@ -9,12 +9,12 @@
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@indiefellas/astro-adapter-nekoweb": "^2.0.0",
     "@kindspells/astro-shield": "^1.7.1",
-    "@tailwindcss/vite": "^4.1.5",
+    "@tailwindcss/vite": "^4.1.7",
     "@types/cssbeautify": "^0.3.5",
     "@types/csso": "^5.0.4",
     "@types/markdown-it": "^14.1.2",
     "@types/sanitize-html": "^2.16.0",
-    "astro": "^5.7.11",
+    "astro": "^5.7.13",
     "astro-expressive-code": "^0.41.2",
     "astro-opengraph-image": "^0.2.2",
     "cssbeautify": "^0.3.1",
@@ -33,12 +33,12 @@
     "remark-sectionize": "^2.1.0",
     "remark-toc": "^9.0.0",
     "rss-parser": "^3.13.0",
-    "sanitize-html": "^2.16.0",
+    "sanitize-html": "^2.17.0",
     "satori-astro": "^0.3.0",
     "sharp": "^0.34.1",
     "stylelint": "^16.19.1",
-    "svelte": "^5.28.2",
-    "tailwindcss": "^4.1.5",
+    "svelte": "^5.30.2",
+    "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3",
     "uwuifier": "^4.2.2"
   },
@@ -54,7 +54,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "@types/node": "^22.15.18",
+    "@types/node": "^22.15.19",
     "stylelint-config-standard": "^38.0.0"
   }
 }
