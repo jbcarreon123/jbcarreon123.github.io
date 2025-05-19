@@ -86,7 +86,18 @@
         loadTheme();
     }
 
+    function loadCustomCSS(el) {
+        let css = document.querySelector('#customCSS');
+        css.innerHTML = el.value;
+        localStorage.setItem("jbsite-customcss", el.value);
+    }
+
     function loadTheme() {
+        let css = document.querySelector('#customCSS');
+        if (css) css.innerHTML = localStorage.getItem("jbsite-customcss");
+        let cssField = document.querySelector('#customCSSField');
+        if (cssField) cssField.value = localStorage.getItem("jbsite-customcss");
+
         let scheme = localStorage.getItem("jbsite-theme-scheme");
         scheme = scheme ? scheme : "";
         let fScheme = scheme;
@@ -144,6 +155,9 @@
                 <!-- <button onclick="showTab(this)" data-tab-id="accessibility"
                     ><span aria-hidden="true" class="ms" data-icon="settings_accessibility"></span> Accessibility</button
                 > -->
+                <button onclick="showTab(this)" data-tab-id="custom"
+                    ><span aria-hidden="true" class="ms" data-icon="code"></span> Custom CSS (yes, really)</button
+                >
                 <button onclick="showTab(this)" data-tab-id="danger"
                     ><span aria-hidden="true" class="ms" data-icon="warning"></span> Danger Zone</button
                 >
@@ -259,6 +273,11 @@
             <div class="tab" id="accessibility">
                 <h1>Accessibility</h1>
                 
+            </div>
+            <div class="tab" id="custom">
+                <h1>Custom CSS</h1>
+                <p>Yes, really. Just put any stuff here and my site will use it.</p>
+                <textarea id="customCSSField" placeholder="CSS here" aria-label="Custom CSS field" oninput="loadCustomCSS(this)"></textarea>
             </div>
             <div class="tab" id="danger">
                 <h1>Danger Zone</h1>
