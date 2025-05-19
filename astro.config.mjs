@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig, envField, passthroughImageService } from 'astro/config';
 import { loadEnv } from "vite";
-import nekoweb from '@indiefellas/astro-adapter-nekoweb';
+import nekoweb from "@indiefellas/astro-adapter-nekoweb";
 import svelte from '@astrojs/svelte';
 import remarkToc from 'remark-toc';
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
