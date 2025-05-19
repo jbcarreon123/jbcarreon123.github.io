@@ -7,7 +7,7 @@
     "@astrojs/svelte": "^7.0.13",
     "@catamphetamine/id3js": "^1.0.2",
     "@hbsnow/rehype-sectionize": "^1.0.7",
-    "@indiefellas/astro-adapter-nekoweb": "^2.1.0",
+    "@indiefellas/astro-adapter-nekoweb": "^2.1.1",
     "@kindspells/astro-shield": "^1.7.1",
     "@tailwindcss/vite": "^4.1.7",
     "@types/cssbeautify": "^0.3.5",
