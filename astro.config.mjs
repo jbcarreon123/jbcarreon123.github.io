@@ -25,6 +25,10 @@ export default defineConfig({
     prefetchAll: true
   },
 
+  build: {
+    concurrency: 3
+  },
+
   image: {
     service: passthroughImageService()
   },
