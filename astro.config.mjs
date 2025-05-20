@@ -26,7 +26,7 @@ export default defineConfig({
   },
 
   build: {
-    concurrency: 6
+    concurrency: 12
   },
 
   image: {
