@@ -10,12 +10,10 @@ import rehypeExternalLinks from 'rehype-external-links';
 import { env } from 'node:process';
 // @ts-ignore
 import rehypeFigure from 'rehype-figure';
-
+import serviceWorker from "astrojs-service-worker";
 import mdx from '@astrojs/mdx';
 import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
-
-
 
 // https://astro.build/config
 export default defineConfig({
@@ -38,7 +36,7 @@ export default defineConfig({
       codeFontFamily: "'Commit Mono', monospace",
       codeFontSize: '1.125rem'
     }
-  }), svelte(), mdx()],
+  }), svelte(), mdx(), serviceWorker()],
 
   adapter: nekoweb({
     apiKey: env.NEKOWEB_APIKEY,

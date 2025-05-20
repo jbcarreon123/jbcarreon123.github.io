@@ -665,7 +665,7 @@ class jPlayer extends HTMLElement {
             if (this._trackerPlayer) {
                 return this.createDefaultTrackInfo(el, index, true);
             } else {
-                console.error('Cannot load file', el.src);
+                console.error('Cannot load file', el.src, error);
                 return undefined;
             }
         }
@@ -768,7 +768,7 @@ function formatTime(seconds) {
 
 /** @param {ArrayBuffer} buffer  */
 function readMetadata(buffer) {
-    metadata = { info: {}, tags: [] };
+    var metadata = { info: {}, tags: [] };
     let dec = new TextDecoder("windows-1252");
     let dv = new DataView(buffer, 0);
 
