@@ -38,7 +38,18 @@ export default defineConfig({
       codeFontFamily: "'Commit Mono', monospace",
       codeFontSize: '1.125rem'
     }
-  }), svelte(), mdx(), serviceWorker(), sitemap(), nekoweb({
+  }), svelte(), mdx(), serviceWorker(), sitemap({
+    xslURL: '/sitemap.xsl',
+    changefreq: 'weekly',
+    priority: 0.7,
+    lastmod: new Date(),
+    serialize(item) {
+      if (/posts\//.test(item.url)) {
+        return undefined;
+      }
+      return item;
+    },
+  }), nekoweb({
     apiKey: env.NEKOWEB_APIKEY,
     cookie: env.NEKOWEB_COOKIE,
     folder: 'jbsite4_test'
