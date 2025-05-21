@@ -15,6 +15,8 @@ import mdx from '@astrojs/mdx';
 import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://jbcarreon123.nekoweb.org",
@@ -36,7 +38,7 @@ export default defineConfig({
       codeFontFamily: "'Commit Mono', monospace",
       codeFontSize: '1.125rem'
     }
-  }), svelte(), mdx(), serviceWorker()],
+  }), svelte(), mdx(), serviceWorker(), sitemap()],
 
   adapter: nekoweb({
     apiKey: env.NEKOWEB_APIKEY,
