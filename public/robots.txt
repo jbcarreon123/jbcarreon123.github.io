@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jbcarreon123.nekoweb.org/sitemap-index.xml
