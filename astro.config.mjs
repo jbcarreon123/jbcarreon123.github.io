@@ -44,7 +44,7 @@ export default defineConfig({
     priority: 0.7,
     lastmod: new Date(),
     serialize(item) {
-      if (/posts\//.test(item.url)) {
+      if (/blogs\//.test(item.url)) {
         return undefined;
       }
       return item;
