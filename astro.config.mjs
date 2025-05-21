@@ -38,13 +38,11 @@ export default defineConfig({
       codeFontFamily: "'Commit Mono', monospace",
       codeFontSize: '1.125rem'
     }
-  }), svelte(), mdx(), serviceWorker(), sitemap()],
-
-  adapter: nekoweb({
+  }), svelte(), mdx(), serviceWorker(), sitemap(), nekoweb({
     apiKey: env.NEKOWEB_APIKEY,
     cookie: env.NEKOWEB_COOKIE,
     folder: 'jbsite4_test'
-  }),
+  })],
 
   trailingSlash: 'always',
 
