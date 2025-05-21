@@ -12,7 +12,7 @@
             <p><a href="https://status.cafe/users/{username}"
                 >{status.author}</a
             >: {status.face} ({status.timeAgo})</p>
-            <p>{status.content}</p>
+            <p>{@html status.content}</p>
         {/await}
     {:catch err}
         <p>Error occured. {err}</p>
