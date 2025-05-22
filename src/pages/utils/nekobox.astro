@@ -671,7 +671,7 @@ ${editor.value}`;
                 ov.style.display = 'block';
                 let rect = el?.getBoundingClientRect();
                 tl.innerHTML = `
-                    <p class="tg">${el?.tagName.toLowerCase()}${el?.id && !el.id.includes('NOTUSEDINNEKOWEB') ? `#${el.id}` : ''}${el?.className ? `${el?.className.split(' ').map(e => e.includes('post-jbcarreon123') || e.includes('noreset') ? '' : `.${e}`).join('')}` : ''}</p>
+                    <p class="small">${el?.tagName.toLowerCase()}${el?.id && !el.id.includes('NOTUSEDINNEKOWEB') ? `#${el.id}` : ''}${el?.className ? `${el?.className.split(' ').map(e => e.includes('post-jbcarreon123') || e.includes('noreset') ? '' : `.${e}`).join('')}` : ''}</p>
                     <p>${Math.round(rect?.width)}x${Math.round(rect?.height)}</p>
                 `;
                 if (rect) {
@@ -890,19 +890,19 @@ ${editor.value}`;
             <div id="nb-options">
                 <form class="nb-form">
                     <div>
-                        <input type="checkbox" id="inspect" checked="false" />
+                        <input type="checkbox" id="inspect"/>
                         <label for="inspect"
                             >Enable inspector mode?</label
                         >
                     </div>
                     <div>
-                        <input type="checkbox" id="overflow" checked="false" />
+                        <input type="checkbox" id="overflow"/>
                         <label for="overflow"
                             >Allow overflowing? (do you have Nekoweb Supporter)</label
                         >
                     </div>
                     <div>
-                        <input type="checkbox" id="readonly" checked="false" />
+                        <input type="checkbox" id="readonly"/>
                         <label for="readonly"
                             >Export as read-only? This will never get disabled
                             if enabled when exporting. Note that this isn't
