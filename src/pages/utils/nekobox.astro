@@ -652,6 +652,39 @@ ${editor.value}`;
                 }
             });
         });
+
+        document.addEventListener('mousemove', (ev) => {
+            let ins = document.querySelector('#inspect') as HTMLInputElement;
+            if (!ins.checked) return;
+            let tl = document.querySelector('#nkb-insp') as HTMLDivElement;
+            let ov = document.querySelector('#nkb-insp-ovr') as HTMLDivElement;
+            let brect = document.querySelector('#nekobox-tab-container').getBoundingClientRect();
+            tl.style.top = (ev.clientY + 10) + "px";
+            tl.style.left = (ev.clientX + 10) + "px";
+
+            let sb = document.querySelector('#nb-sitebox');
+            let pb = document.querySelector('#nb-postbox');
+            let el = document.elementFromPoint(ev.clientX, ev.clientY);
+
+            if ((sb?.contains(el) || pb?.contains(el)) && (!el?.id.includes('sitebox') && !el?.id.includes('postbox'))) {
+                tl.style.display = 'block';
+                ov.style.display = 'block';
+                let rect = el?.getBoundingClientRect();
+                tl.innerHTML = `
+                    <p class="tg">${el?.tagName.toLowerCase()}${el?.id && !el.id.includes('NOTUSEDINNEKOWEB') ? `#${el.id}` : ''}${el?.className ? `${el?.className.split(' ').map(e => e.includes('post-jbcarreon123') || e.includes('noreset') ? '' : `.${e}`).join('')}` : ''}</p>
+                    <p>${Math.round(rect?.width)}x${Math.round(rect?.height)}</p>
+                `;
+                if (rect) {
+                    ov.style.top = (rect.top - brect.top) + 'px';
+                    ov.style.left = (rect.left - brect.left) + 'px';
+                    ov.style.width = rect?.width + 'px';
+                    ov.style.height = rect?.height + 'px';
+                }
+            } else {
+                tl.style.display = 'none';
+                ov.style.display = 'none';
+            }
+        })
     </script>
 
     <script is:inline>
@@ -669,6 +702,8 @@ ${editor.value}`;
         }
     </script>
 
+    <div id="nkb-insp" style="display: none;"></div>
+
     <h1>Nekobox</h1>
     <p>
         The one stop shop for editing and previewing Nekoweb boxes.
@@ -682,6 +717,7 @@ ${editor.value}`;
     </p>
 
     <div id="nekobox-tab-container">
+        <div id="nkb-insp-ovr" style="display: none;"></div>
         <div id="tab-buttons">
             <button
                 onclick="switchTab(this)"
@@ -767,7 +803,6 @@ ${editor.value}`;
                             style="position:relative!important"
                         >
                             <div
-                                id="noreset post-jbcarreon123-test"
                                 class="noreset post-box t-classic"
                                 style="width:100%!important;max-height:400px!important;position:relative!important"
                             >
@@ -855,6 +890,12 @@ ${editor.value}`;
             <div id="nb-options">
                 <form class="nb-form">
                     <div>
+                        <input type="checkbox" id="inspect" checked="false" />
+                        <label for="inspect"
+                            >Enable inspector mode?</label
+                        >
+                    </div>
+                    <div>
                         <input type="checkbox" id="overflow" checked="false" />
                         <label for="overflow"
                             >Allow overflowing? (do you have Nekoweb Supporter)</label
@@ -922,6 +963,21 @@ ${editor.value}`;
     <style is:inline>
         .mg {
             margin-bottom: 12px;
+        }
+
+        #nkb-insp, #nkb-insp-ovr {
+            padding: 6px;
+            position: fixed;
+            z-index: 999;
+            background: var(--altbg);
+            pointer-events: none;
+        }
+
+        #nkb-insp-ovr {
+            position: absolute;
+            background: green;
+            border: 5px dashed lightgreen;
+            opacity: 0.25;
         }
 
         .btn-cnt {
@@ -997,6 +1053,13 @@ ${editor.value}`;
             #nb-sitebox,
             #nb-postbox {
                 background: #fff9e6;
+            }
+
+            .site-box::before,
+            .site-box::after,
+            .post-box::before,
+            .post-box::after {
+                content: '';
             }
 
             &:has(input[type="checkbox"]#overflow:checked) #nb-sitebox,
