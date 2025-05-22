@@ -961,6 +961,13 @@ ${editor.value}`;
     </div>
 
     <style is:inline>
+        .site-box::before,
+        .site-box::after,
+        .post-box::before,
+        .post-box::after {
+            content: '';
+        }
+
         .mg {
             margin-bottom: 12px;
         }
@@ -1053,13 +1060,6 @@ ${editor.value}`;
             #nb-sitebox,
             #nb-postbox {
                 background: #fff9e6;
-            }
-
-            .site-box::before,
-            .site-box::after,
-            .post-box::before,
-            .post-box::after {
-                content: '';
             }
 
             &:has(input[type="checkbox"]#overflow:checked) #nb-sitebox,
