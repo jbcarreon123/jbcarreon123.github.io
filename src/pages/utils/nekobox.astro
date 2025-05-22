@@ -543,10 +543,18 @@ ${editor.value}`;
                     let f = await fetch(rss);
                     rssOld = rss;
                     if (f.ok) {
-                        let p = new Parser();
+                        let p = new Parser({
+                            customFields: {
+                                item: ['style']
+                            }
+                        });
                         p.parseString(await f.text(), (error, feed) => {
                             let frs = feed.items[0];
                             rssItems = feed.items;
+                            console.log(feed);
+                            if (frs.style) {
+                                document.querySelector('#feed-style').innerHTML = frs.style;
+                            }
                             document.querySelector(
                                 "#NOTUSEDINNEKOWEB_feeddate",
                             ).textContent = new Date(
@@ -589,6 +597,9 @@ ${editor.value}`;
             let val = Number(rssopt.value);
             let frs = rssItems[val];
             if (frs) {
+                if (frs.style) {
+                    document.querySelector('#feed-style').innerHTML = frs.style;
+                }
                 document.querySelector(
                     "#NOTUSEDINNEKOWEB_feeddate",
                 ).textContent = new Date(frs.isoDate).toLocaleDateString(
@@ -1218,4 +1229,6 @@ ${editor.value}`;
             margin-bottom: 0px;
         }
     </style>
+
+    <style is:inline id="feed-style"></style>
 </Layout>
