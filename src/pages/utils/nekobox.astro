@@ -175,7 +175,7 @@ import "prism-code-editor/invisibles.css";
                 regex,
                 "/* This will not work in Nekoweb, unfortunately. */\n#WILL-NOT-WORK {",
             );
-            c = c.replace(urlRegex1, urlRegex2);
+            c = c.replace(urlRegex1, urlRegex2).replaceAll('"', '').replaceAll("'", '');
             let clines = c.split("\n");
             clines.forEach((s, i) => {
                 if (linkRegex.test(s)) {
