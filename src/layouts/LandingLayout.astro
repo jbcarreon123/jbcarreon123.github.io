@@ -4,6 +4,7 @@ import "../styles/landing.css";
 import { ClientRouter } from "astro:transitions";
 import { version } from "../../package.json";
 import { Image } from "astro:assets";
+import { Head } from 'astro-capo'
 
 const { title, id, description } = Astro.props;
 const { url, site } = Astro;
@@ -19,8 +20,28 @@ const ogImage = url
 ---
 
 <!doctype html>
+<!--
+
+     ▘▌ ▌      ▘▗              ▘      ▖▖
+     ▌▛▌ ▛▘  ▛▘▌▜▘█▌▖  ▌▌█▌▛▘▛▘▌▛▌▛▌  ▙▌
+     ▌▙▌ ▄▌  ▄▌▌▐▖▙▖▖  ▚▘▙▖▌ ▄▌▌▙▌▌▌   ▌
+    ▙▌                                  
+
+    (c) 2024-2025 JB Carreon, All rights reserved.
+
+    There's nothing you can copy here,
+    everything is minified and obfuscated.
+    But, you can go to https://git.gay/jbcarreon123/jbsite4
+    for the source code.
+    
+    Inspirations are welcome, copying is prohibited.
+    See LICENSE file for details.
+    - https://rice.place/manifesto.html
+    - https://maxpixels.moe/manifesto/
+
+-->
 <html lang="en" class="inter" data-color="dark">
-	<head>
+	<Head>
 		<CommonHead title={title} id={id} description={description} />
 		<slot name="head">
 
@@ -103,7 +124,7 @@ const ogImage = url
 				});
 			}
 		</script>
-	</head>
+	</Head>
     <body class="jcolor" transition:animate="fade">
 		<NotifModal />
         <main>
