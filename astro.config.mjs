@@ -54,7 +54,8 @@ export default defineConfig({
   }), playformCompress({
     CSS: false,
     HTML: false,
-    JavaScript: false
+    JavaScript: false,
+    SVG: false
   }), nekoweb({
     apiKey: env.NEKOWEB_APIKEY,
     cookie: env.NEKOWEB_COOKIE,
