@@ -10,6 +10,7 @@ import "prism-code-editor/invisibles.css";
     description="The one stop shop for editing and previewing Nekoweb boxes."
     id="nekobox"
 >
+    <script src="../../assets/previewTab.ts"></script>
     <script>
         import { basicEditor } from "prism-code-editor/setups";
         import {
@@ -688,18 +689,18 @@ ${editor.value}`;
     </script>
 
     <script is:inline>
-        function switchTab(el) {
-            document
-                .querySelectorAll("#tab-buttons button")
-                .forEach((el) => el.classList.remove("active"));
-            document
-                .querySelectorAll("#nekobox-tabs > div")
-                .forEach((el) => el.classList.remove("visible"));
-            document
-                .querySelector(`#nekobox-tabs #${el.dataset.target}`)
-                ?.classList.add("visible");
-            el.classList.add("active");
-        }
+        // function switchTab(el) {
+        //     document
+        //         .querySelectorAll("#tab-buttons button")
+        //         .forEach((el) => el.classList.remove("active"));
+        //     document
+        //         .querySelectorAll("#nekobox-tabs > div")
+        //         .forEach((el) => el.classList.remove("visible"));
+        //     document
+        //         .querySelector(`#nekobox-tabs #${el.dataset.target}`)
+        //         ?.classList.add("visible");
+        //     el.classList.add("active");
+        // }
     </script>
 
     <div id="nkb-insp" style="display: none;"></div>
@@ -716,28 +717,29 @@ ${editor.value}`;
         If you liked Nekobox, consider <a href="/links">grabbing my button</a>!
     </p>
 
-    <div id="nekobox-tab-container">
+    <div id="nekobox-tab-container" class="previewTabLayout">
         <div id="nkb-insp-ovr" style="display: none;"></div>
-        <div id="tab-buttons">
+        <div id="tab-buttons" class="previewTabButtons">
             <button
-                onclick="switchTab(this)"
-                data-target="nb-sitebox"
-                class="active">Sitebox</button
+                data-tab-layout="nb-sitebox"
+                class="tabLayoutButton active">Sitebox</button
             >
-            <button onclick="switchTab(this)" data-target="nb-postbox"
+            <button data-tab-layout="nb-postbox"
+                class="tabLayoutButton"
                 >Postbox</button
             >
             <button
-                onclick="switchTab(this)"
                 id="nb-error-btn"
-                data-target="nb-errors">Errors (0)</button
+                class="tabLayoutButton"
+                data-tab-layout="nb-errors">Errors (0)</button
             >
-            <button onclick="switchTab(this)" data-target="nb-options"
+            <button data-tab-layout="nb-options"
+                class="tabLayoutButton"
                 >Settings</button
             >
         </div>
-        <div id="nekobox-tabs" class="nekoweb-colors">
-            <div id="nb-sitebox" class="visible">
+        <div id="nekobox-tabs" class="previewTabs nekoweb-colors">
+            <div data-display="flex" id="nb-sitebox" class="tabLayout active">
                 <div class="pre-pre-site nekoweb-colors">
                     <div class="pre-site" style="">
                         <div
@@ -791,7 +793,7 @@ ${editor.value}`;
                     </div>
                 </div>
             </div>
-            <div id="nb-postbox">
+            <div data-display="flex" id="nb-postbox" class="tabLayout">
                 <div class="pre-pre-post noreset">
                     <div class="pre-post noreset" style="">
                         <a
@@ -856,7 +858,7 @@ ${editor.value}`;
                     </div>
                 </div>
             </div>
-            <div id="nb-errors" style="flex-direction: column;">
+            <div data-display="flex" id="nb-errors" style="flex-direction: column;" class="tabLayout">
                 <div>
                     <p>No errors found for now.</p>
                 </div>
@@ -887,7 +889,7 @@ ${editor.value}`;
                     >
                 </form>
             </div>
-            <div id="nb-options">
+            <div data-display="flex" id="nb-options" class="tabLayout">
                 <form class="nb-form">
                     <div>
                         <input type="checkbox" id="inspect"/>
@@ -1032,7 +1034,7 @@ ${editor.value}`;
             }
         }
 
-        button[data-target="nb-errors"] {
+        button#nb-error-btn {
             margin-left: auto;
         }
 
@@ -1047,7 +1049,7 @@ ${editor.value}`;
             & > * {
                 display: none;
 
-                &.visible {
+                &.active {
                     display: flex;
                     justify-content: center;
                 }

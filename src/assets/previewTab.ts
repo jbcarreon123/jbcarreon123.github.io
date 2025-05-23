@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll('.tabLayoutButton').forEach(el => {
                 (el as HTMLButtonElement).classList.remove('active');
             });
-            layout.style.display = 'block';
+            layout.style.display = layout.dataset.display ?? 'block';
             layout.classList.add('active');
             btn.classList.add('active');
         })
