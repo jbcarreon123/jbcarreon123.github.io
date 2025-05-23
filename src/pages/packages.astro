@@ -5,7 +5,7 @@ import { listInstalled } from 'list-installed';
 
 const __dirname = path.resolve(path.dirname(''));
 const pkgMap = await listInstalled(__dirname);
-const packages = Array.from(pkgMap.entries());
+const packages = Array.from(pkgMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
 console.log(packages.length);
 const packageChunks = [];
 for (let i = 0; i < packages.length; i += 100) {
