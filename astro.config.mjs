@@ -40,7 +40,7 @@ export default defineConfig({
       codeFontFamily: "'Commit Mono', monospace",
       codeFontSize: '1.125rem'
     }
-  }), svelte(), mdx(), serviceWorker(), sitemap({
+  }), mdx(), serviceWorker(), sitemap({
     xslURL: '/sitemap.xsl',
     changefreq: 'weekly',
     priority: 0.7,
@@ -51,7 +51,7 @@ export default defineConfig({
       }
       return item;
     },
-  }), playformCompress({
+  }), svelte(), playformCompress({
     CSS: false,
     HTML: false,
     JavaScript: false,

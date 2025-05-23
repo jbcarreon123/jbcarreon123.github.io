@@ -2,11 +2,11 @@
   "name": "jbsite4",
   "version": "4.24.1",
   "dependencies": {
-    "@astrojs/mdx": "^4.2.6",
+    "@astrojs/mdx": "^4.3.0",
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.4.0",
-    "@astrojs/svelte": "^7.0.13",
+    "@astrojs/svelte": "^7.1.0",
     "@catamphetamine/id3js": "^1.0.2",
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@indiefellas/astro-adapter-nekoweb": "^2.1.2",
@@ -17,7 +17,7 @@
     "@types/csso": "^5.0.4",
     "@types/markdown-it": "^14.1.2",
     "@types/sanitize-html": "^2.16.0",
-    "astro": "^5.7.13",
+    "astro": "^5.8.0",
     "astro-capo": "^0.0.1",
     "astro-expressive-code": "^0.41.2",
     "astro-opengraph-image": "^0.2.2",
@@ -41,9 +41,9 @@
     "rss-parser": "^3.13.0",
     "sanitize-html": "^2.17.0",
     "satori-astro": "^0.3.0",
-    "sharp": "^0.34.1",
+    "sharp": "^0.34.2",
     "stylelint": "^16.19.1",
-    "svelte": "^5.30.2",
+    "svelte": "^5.33.1",
     "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3",
     "uwuifier": "^4.2.2"
@@ -60,7 +60,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.21",
     "stylelint-config-standard": "^38.0.0"
   }
 }
