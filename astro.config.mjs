@@ -17,6 +17,8 @@ import expressiveCode from 'astro-expressive-code';
 
 import sitemap from '@astrojs/sitemap';
 
+import playformCompress from '@playform/compress';
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://jbcarreon123.nekoweb.org",
@@ -49,7 +51,7 @@ export default defineConfig({
       }
       return item;
     },
-  }), nekoweb({
+  }), playformCompress(), nekoweb({
     apiKey: env.NEKOWEB_APIKEY,
     cookie: env.NEKOWEB_COOKIE,
     folder: 'jbsite4_test'
