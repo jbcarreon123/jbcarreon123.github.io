@@ -19,6 +19,7 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 <html lang="en" class="inter" data-color="dark">
 	<head>
 		<CommonHead title={title} id={id} description={description} />
+		<slot name="head">
 	</head>
 	<body class="jcolor">
 		<NotifModal />

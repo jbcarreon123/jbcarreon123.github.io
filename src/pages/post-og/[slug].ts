@@ -37,7 +37,7 @@ export const GET: APIRoute = async ({ params }) => {
 				</div>
 			</div>
 
-			<style>
+			<style slot="head">
 				.container {
 					position: relative;
 					background-color: #1d1f20;

@@ -1,0 +1,28 @@
+---
+const { lang = 'html' } = Astro.props;
+const html = await Astro.slots.render('default');
+const b64html = "data:text/html;base64," + btoa(html);
+import { Code } from 'astro-expressive-code/components';
+---
+
+<script src="../assets/previewTab.ts"></script>
+
+<div class="previewTabLayout">
+    <div class="previewTabButtons">
+        <button class="tabLayoutButton" data-tab-layout="code">Code</button>
+        <button class="tabLayoutButton" data-tab-layout="preview">Preview</button>
+    </div>
+    <div class="previewTabs">
+        <div class="tabLayout" id="code">
+            <Code code={html} lang={lang} />
+        </div>
+        <div class="tabLayout" id="preview">
+            <iframe src={b64html} title="Code Preview" style="width: 100%; height: 100%;">
+                loading iframe
+            </iframe>
+        </div>
+    </div>
+</div>
+
+<style>
+</style>

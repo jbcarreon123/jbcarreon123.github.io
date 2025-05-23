@@ -21,7 +21,7 @@ const tutorials = Object.values(import.meta.glob('./tutorials/**/*.md', { eager:
         }
     </div>
     
-    <style>
+    <style slot="head">
         .tutorial-container {
             display: grid;
             grid-template-columns: repeat(3, minmax(200px, 1fr));
