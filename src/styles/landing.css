@@ -1,14 +1,49 @@
-main {
-    max-width: 800px;
+.main {
     background-color: var(--bg);
     padding: 12px 24px;
     padding-bottom: 24px;
+    max-width: 800px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+.cols {
+    display: grid;
+    grid-template-columns: repeat(2, 0.5fr);
+    gap: 6px;
+    width: 775px;
+}
+
+.colContainer h2 {
+    padding-top: 0;
+}
+
+.col {
+    padding: 6px;
+    background-color: var(--acc);
+}
+
+.col .links {
+    display: grid;
+    grid-template-columns: repeat(3, 0.33fr);
+    gap: 6px;
 }
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+main > div {
+    min-height: unset;
+    display: block;
 }
 
 html {
@@ -32,7 +67,7 @@ h1, h2 {
 }
 
 .un {
-    padding-top: 24px;
+    
 }
 
 marquee {
@@ -48,7 +83,6 @@ marquee {
 
 .cnt {
     justify-content: space-between;
-    min-height: inherit !important;
 }
 
 .cnt .right {

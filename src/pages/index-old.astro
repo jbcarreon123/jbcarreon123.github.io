@@ -1,0 +1,95 @@
+---
+import Layout from "../layouts/LandingLayout.astro";
+import Buttons from "../components/SiteButtons.astro";
+import "../styles/landing.css";
+import { LinkObjs } from "../assets/links";
+---
+
+<Layout title="welcome to jb's site" id="landing">
+    <script is:inline> 
+        document.addEventListener('DOMContentLoaded', () => {
+            let back = document.querySelector('a#back');
+            let icon = back?.querySelector('span.ms');
+            let text = back?.querySelector('span#site');
+
+            if (!back || !icon || !text) return;
+
+            let referrer = document.referrer.replace(/\/$/gm, '');
+            let historyLength = window.history.length;
+
+            if (referrer) {
+                text.textContent = `Go back to ${referrer.replace(/https?:\/\//, '')}`;
+                back.href = referrer;
+
+                back.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.close();
+                    if (historyLength > 1) {
+                        window.history.back();
+                    } else {
+                        location.href = back.href;
+                    }
+                });
+            } else if (historyLength > 1) {
+                text.textContent = `Go back to previous page`;
+                back.href = 'javascript:void()';
+
+                back.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.close();
+                    window.history.back();
+                });
+            }
+        })
+    </script>
+
+    <div class="main">
+        <a id="back" href="https://nekoweb.org/"></span>
+            <span aria-hidden="true" class="ms" data-icon="arrow_back_ios_new"></span> <span id="site">Go back to nekoweb.org</span>
+        </a>
+        <h1 class="big">
+            <span><span style="--d:000ms">w</span><span style="--d:100ms">e</span><span
+                style="--d:200ms">l</span
+            ><span style="--d:300ms">c</span><span style="--d:400ms">o</span><span
+                style="--d:500ms">m</span
+            ><span style="--d:600ms">e</span></span>
+            <span><span style="--d:800ms">t</span><span style="--d:900ms">o</span></span>
+            <span><span style="--d:1100ms">j</span><span style="--d:1200ms">b</span><span
+                style="--d:1300ms">'</span
+            ><span style="--d:1400ms">s</span></span>
+            <span><span style="--d:1600ms">s</span><span style="--d:1700ms">i</span><span
+                style="--d:1800ms">t</span
+            ><span style="--d:1900ms">e</span><span style="--d:2000ms">!</span></span>
+        </h1>
+        <h3 class="un">Before you enter, please note that:</h3>
+        <p>This site is 14+, and contains swearing and such!</p>
+        <p>
+            Will work without JS, but some functions absolutely requires JS,
+            unfortunately
+        </p>
+    
+        <div class="cnt">
+            <div>
+                <h3 class="un">Understood?</h3>
+                <h1 class="enter">
+                    <a href="/"
+                        ><span aria-hidden="true" class="ms" data-icon="door_open"></span> Enter jb's site</a>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="colContainer">
+        <h2>Ultimate Teleporter 3000</h2>
+        <div class="cols">
+            {LinkObjs.map((obj) => <div class="col">
+                <p class="tg">{obj.name}</p>
+                <div class="links">
+                    {obj.links.map((l) => {if (!l.redirect) return <a href={l.path}>
+                        <span aria-hidden="true" class="ms" data-icon={l.icon}></span> {l.name}
+                    </a>})}
+                </div>
+            </div>)}
+        </div>
+    </div>
+</Layout>

@@ -1,79 +1,17 @@
 ---
 const { title, id, description } = Astro.props;
+import { LinkObjs } from "../assets/links";
 ---
 
 <aside data-active-page={id} id="sidebar">
     <nav transition:persist>
-        <a id="index" href="/home/"><span aria-hidden="true" class="ms" data-icon="home"></span> Home</a>
-        <details>
-            <summary>whereabouts</summary>
-            <a id="about" href="/about/"
-                ><span aria-hidden="true" class="ms" data-icon="person"></span> About JB</a
-            >
-            <a id="projects" href="/projects/"
-                ><span aria-hidden="true" class="ms" data-icon="terminal"></span> Projects</a
-            >
-            <a id="riiatw" href="/riiatw/"
-                ><span aria-hidden="true" class="ms" data-icon="language"></span> RIIAtW</a
-            >
-            <a id="gallery" href="/gallery/"
-                ><span aria-hidden="true" class="ms" data-icon="photo_library"></span> Gallery</a
-            >
-        </details>
-        <details>
-            <summary>tools & stuff</summary>
-            <a id="chat" href="/chat/"
-                ><span aria-hidden="true" class="ms" data-icon="smart_toy"></span> "AI" Chat</a
-            >
-            <a id="split-it" href="/utils/split-it/"
-                ><span aria-hidden="true" class="ms" data-icon="space_dashboard"></span> Split It!</a
-            >
-            <a id="nekobox" href="/utils/nekobox/" data-astro-reload
-                ><span aria-hidden="true" class="ms" data-icon="inventory_2"></span> Nekobox</a
-            >
-            <a href="https://inaccessible.nekoweb.org" target="_blank"
-                ><span aria-hidden="true" class="ms" data-icon="not_accessible"></span> The Inaccessible Website (soon) <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a
-            >
-            <a href="https://jbcarreon123.github.io/jPlayer2" target="_blank"
-                ><span aria-hidden="true" class="ms" data-icon="music_note"></span> jPlayer2 <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a
-            >
-            <a href="https://nkko.link" target="_blank"
-                ><span aria-hidden="true" class="ms" data-icon="link"></span> nkko.link <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a
-            >
-            <a href="https://deploy.nekoweb.org" target="_blank"
-                ><span aria-hidden="true" class="ms" data-icon="rocket_launch"></span> Nekoweb Deployment Adapters <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a
-            >
-            <a href="https://github.com/jbcarreon123/simple-webring-redirect" target="_blank"
-                ><span aria-hidden="true" class="ms" data-icon="call_split"></span> simple-webring-redirect <span aria-hidden="true" class="ms" data-icon="open_in_new"></span></a
-            >
-        </details>
-        <details>
-            <summary>writing</summary>
-            <a id="posts" href="/posts/"
-                ><span aria-hidden="true" class="ms" data-icon="article"></span> Posts</a
-            >
-            <a id="tutorials" href="/tutorials/"
-                ><span aria-hidden="true" class="ms" data-icon="help"></span> Tutorials</a
-            >
-        </details>
-        <details>
-            <summary>my webrings</summary>
-            <a id="ssgring" href="/webrings/ssgring/"><span aria-hidden="true" class="ms" data-icon="build"></span> SSGRing</a>
-            <a id="responeko" href="/webrings/responeko/"><span aria-hidden="true" class="ms" data-icon="phone_android"></span> Responeko</a>
-            <a id="yamring" href="/webrings/yamring/"><span aria-hidden="true" class="ms" data-icon="tag"></span> YAMring</a>
-        </details>
-        <details>
-            <summary>outlinks</summary>
-            <a id="links" href="/links/"
-                ><span aria-hidden="true" class="ms" data-icon="link"></span> Links</a
-            >
-            <a id="webring" href="/webrings/" data-astro-reload
-                ><span aria-hidden="true" class="ms" data-icon="donut_large"></span> Webrings</a
-            >
-            <a id="bookmarks" href="/bookmarks/"
-                ><span aria-hidden="true" class="ms" data-icon="bookmark"></span> Bookmarks</a
-            >
-        </details>
+        <a id="index" href="/"><span aria-hidden="true" class="ms" data-icon="home"></span> Home</a>
+        {LinkObjs.map((obj) => <details>
+            <summary>{obj.name}</summary>
+            {obj.links.map((l) => <a id={l.path.replace(/\/$/, '').split('/')[l.path.replace(/\/$/, '').split('/').length - 1]} href={l.path} target={l.redirect ? '_blank' : '_parent'}>
+                <span aria-hidden="true" class="ms" data-icon={l.icon}></span> {l.name} {l.redirect && <span aria-hidden="true" class="ms" data-icon="open_in_new"></span>}
+            </a>)}
+        </details>)}
         <details>
             <summary>liked my site?</summary>
             <a id="guestbook" href="/guestbook/"

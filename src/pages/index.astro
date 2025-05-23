@@ -1,92 +1,151 @@
 ---
-import Layout from "../layouts/LandingLayout.astro";
-import Buttons from "../components/SiteButtons.astro";
-import "../styles/landing.css";
+import Layout from '../layouts/Layout.astro';
+import Stats from '../components/Stats.svelte';
+import Nekocafe from '../components/Nekocafe.svelte';
+import StatusCafe from '../components/StatusCafe.svelte';
+
+const posts = Object.values(import.meta.glob('./posts/**/*.md', { eager: true }));
+
+const postSorted = posts.sort((a, b) => {
+    const dateA = new Date(a.frontmatter.published);
+    const dateB = new Date(b.frontmatter.published);
+    return dateA.getTime() - dateB.getTime();
+}).reverse()
+
+const latestPost = postSorted[0];
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout title="welcome to jb's site" id="landing">
-    <script is:inline> 
-        document.addEventListener('DOMContentLoaded', () => {
-            let back = document.querySelector('a#back');
-            let icon = back?.querySelector('span.ms');
-            let text = back?.querySelector('span#site');
+<Layout id="index" title="jb's site" description="a website">
+	<h1 class="big">
+		Hello, folks! <br class="beforeim" />I'm <br class="afterim" />
+		<span style="--d:0ms">j</span><span style="--d:100ms">b</span><span style="--d:200ms">c</span><span style="--d:300ms">a</span><span style="--d:400ms">r</span><span style="--d:500ms">r</span><span style="--d:600ms">e</span><span style="--d:700ms">o</span><span style="--d:800ms">n</span><span style="--d:900ms">1</span><span style="--d:1000ms">2</span><span style="--d:1100ms">3</span>,
+	</h1>
+	<h2>and welcome to my webbed site!</h2>
+	<p>I do stuff, yap about stuff, and procrastinate on stuff!</p>
+	<p>In this site, you can find stuff that I have interests on, from writing, to tools, to tutorials, and more!</p>
+	<p>Wanted to know the things powering this site? Check out the <a href="/riiatw/">RIIAtW page</a>!</p>
+	<p>Wanna learn about me? Check out my <a href="/about/">about page</a>!</p>
 
-            if (!back || !icon || !text) return;
+	<div class="widget-container">
+		<div class="widget-full">
+			<div>
+				<h2>Latest post</h2>
+				<div>
+					<h3><a href={latestPost.url}>{latestPost.frontmatter.title}</a></h3>
+					<p>{latestPost.frontmatter.description}</p>
+				</div>
+			</div>
+			<div>
+				<h2>Latest ramble (via Nekocafe)</h2>
+				<Nekocafe client:only="svelte" />
+			</div>
+		</div>
+		<div class="widgets">
+			<div>
+				<h2>Stats</h2>
+				<Stats client:only="svelte" />
+			</div>
+			<div>
+				<h2>JB's status</h2>
+				<StatusCafe client:only="svelte" />
+			</div>
+		</div>
+	</div>
 
-            let referrer = document.referrer.replace(/\/$/gm, '');
-            let historyLength = window.history.length;
+	<style is:inline>
+		.widget-container {
+			padding-top: 12px;
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+		}
 
-            if (referrer) {
-                text.textContent = `Go back to ${referrer.replace(/https?:\/\//, '')}`;
-                back.href = referrer;
+		.widget-full {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+		}
 
-                back.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.close();
-                    if (historyLength > 1) {
-                        window.history.back();
-                    } else {
-                        location.href = back.href;
-                    }
-                });
-            } else if (historyLength > 1) {
-                text.textContent = `Go back to previous page`;
-                back.href = 'javascript:void()';
+		.widgets {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(100px, 1fr));
+			gap: 6px;
+		}
 
-                back.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.close();
-                    window.history.back();
-                });
-            }
-        })
-    </script>
+		.widgets div, .widget-full div {
+			background-color: var(--acc);
+			padding: 6px;
+		}
 
-    <a id="back" href="https://nekoweb.org/"></span>
-        <span aria-hidden="true" class="ms" data-icon="arrow_back_ios_new"></span> <span id="site">Go back to nekoweb.org</span>
-    </a>
-    <h1 class="big">
-        <span><span style="--d:000ms">w</span><span style="--d:100ms">e</span><span
-            style="--d:200ms">l</span
-        ><span style="--d:300ms">c</span><span style="--d:400ms">o</span><span
-            style="--d:500ms">m</span
-        ><span style="--d:600ms">e</span></span>
-        <span><span style="--d:800ms">t</span><span style="--d:900ms">o</span></span>
-        <span><span style="--d:1100ms">j</span><span style="--d:1200ms">b</span><span
-            style="--d:1300ms">'</span
-        ><span style="--d:1400ms">s</span></span>
-        <span><span style="--d:1600ms">s</span><span style="--d:1700ms">i</span><span
-            style="--d:1800ms">t</span
-        ><span style="--d:1900ms">e</span><span style="--d:2000ms">!</span></span>
-    </h1>
-    <h3 class="un">Before you enter, please note that:</h3>
-    <p>This site is 14+, and contains swearing and such!</p>
-    <p>
-        Will work without JS, but some functions absolutely requires JS,
-        unfortunately
-    </p>
+		.big {
+			font-size: 3em;
+		}
 
-    <div class="cnt">
-        <div>
-            <h3 class="un">Understood?</h3>
-            <h1 class="enter">
-                <a href="/home/"
-                    ><span aria-hidden="true" class="ms" data-icon="door_open"></span> Enter jb's site</a>
-            </h1>
-        </div>
-        <div class="right">
-            <h3 class="un">ooorrrrr...</h3>
-            <div class="cntn">
-                <h2 class="enter">
-                    <a href="/chat/"><span aria-hidden="true" class="ms" data-icon="smart_toy"></span> "AI"</a>
-                </h2>
-                <h2 class="enter">
-                    <a href="/links/" data-astro-reload><span aria-hidden="true" class="ms" data-icon="link"></span> Links</a>
-                </h2>
-                <h2 class="enter">
-                    <a href="/posts/"><span aria-hidden="true" class="ms" data-icon="article"></span> Posts</a>
-                </h2>
-            </div>
-        </div>
-    </div>
+		.beforeim {
+			display: inline-block;
+		}
+
+		.afterim {
+			display: none;
+		}
+
+		@keyframes title {
+			from {
+				color: var(--anim-color1);
+			}
+			to {
+				color: var(--anim-color2);
+			}
+		}
+
+		@keyframes transform {
+			from {
+				top: -6px;
+			}
+			to {
+				top: 6px;
+			}
+		}
+
+		.big span {
+			position: relative;
+			display: inline-block;
+			color: var(--anim-color1);
+		}
+
+		.big span:nth-of-type(odd) {
+			animation:
+				title 1200ms var(--d) infinite alternate,
+				transform 2400ms calc(var(--d)*2) infinite alternate ease-in-out;
+			top: -6px;
+		}
+
+		.big span:nth-of-type(even) {
+			animation:
+				title 1200ms var(--d) infinite alternate,
+				transform 2400ms calc(var(--d)*2) infinite alternate-reverse ease-in-out;
+			top: 6px;
+		}
+
+		@media (width <= 640px) {
+			.big {
+				font-size: 2.5em;
+			}
+
+			.beforeim {
+				display: none;
+			}
+
+			.afterim {
+				display: inline-block;
+			}
+
+			.widgets {
+				grid-template-columns: repeat(1, minmax(100px, 1fr));
+			}
+		}
+	</style>
 </Layout>

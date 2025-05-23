@@ -17,5 +17,7 @@ const { slug } = Astro.params;
     <head>
         <meta http-equiv="refresh" content={"0; url=/posts/" + slug + '/'} />
     </head>
-    <h1>Redirecting to /posts/{slug}/, please wait...</h1>
+    <div class="main">
+        <h1>Redirecting to /posts/{slug}/, please wait...</h1>
+    </div>
 </Layout>
