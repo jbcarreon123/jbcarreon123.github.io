@@ -51,7 +51,9 @@ export default defineConfig({
       }
       return item;
     },
-  }), playformCompress(), nekoweb({
+  }), playformCompress({
+    CSS: false // disable css compression
+  }), nekoweb({
     apiKey: env.NEKOWEB_APIKEY,
     cookie: env.NEKOWEB_COOKIE,
     folder: 'jbsite4_test'
