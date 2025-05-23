@@ -52,7 +52,9 @@ export default defineConfig({
       return item;
     },
   }), playformCompress({
-    CSS: false // disable css compression
+    CSS: false,
+    HTML: false,
+    JavaScript: false
   }), nekoweb({
     apiKey: env.NEKOWEB_APIKEY,
     cookie: env.NEKOWEB_COOKIE,
