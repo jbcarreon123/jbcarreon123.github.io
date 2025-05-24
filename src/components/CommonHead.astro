@@ -105,6 +105,42 @@ import { ClientRouter } from "astro:transitions";
 <!-- <ClientRouter /> -->
 
 <script is:inline>
+    let cLog = console.log;
+    console.log = (message, ...params) => {
+        if (typeof message === 'string' && message.includes('%c')) {
+            msg = message;
+            message = params[1] ?? ' ';
+            let tg1 = params.shift();
+            cLog(`%cjbsite4%c ${msg}`,
+                "background: #0084ff; color: white; padding-inline: 4px; border-radius: 2px; font-family: monospace;",
+                "background: initial; color: initial;",
+                tg1,
+                message,
+                ...params
+            )
+        } else {
+            cLog(`%cjbsite4`,
+                "background: #0084ff; color: white; padding-inline: 4px; border-radius: 2px; font-family: monospace;",
+                message,
+                ...params
+            )
+        }
+    }
+
+    let cErr = console.error;
+    console.error = (message, ...params) => {
+        cErr(`%cjbsite4`,
+            "background: #ff2424; color: white; padding-inline: 4px; border-radius: 2px; font-family: monospace;",
+            message,
+            ...params
+        )
+    }
+
+    if ('serviceWorker' in navigator && window.location.href.includes('jbcarreon123')) {
+        console.log('Registering service worker...');
+        navigator.serviceWorker.register('/service-worker.js');
+    }
+
     Array.prototype.sample = function () {
         return this[Math.floor(Math.random() * this.length)];
     };
