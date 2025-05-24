@@ -73,7 +73,9 @@ export default defineConfig({
     },
     HTML: {
       'html-minifier-terser': {
-        minifyCSS: false
+        minifyCSS: false,
+        conservativeCollapse: true,
+        removeComments: false
       }
     },
     JavaScript: {
