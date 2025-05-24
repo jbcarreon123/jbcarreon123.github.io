@@ -14,7 +14,6 @@ import serviceWorker from "astrojs-service-worker";
 import mdx from '@astrojs/mdx';
 import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
-import htmlStyleMinify from './html-style-minify.ts';
 
 import sitemap from '@astrojs/sitemap';
 
