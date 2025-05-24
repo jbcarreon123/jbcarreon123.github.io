@@ -84,7 +84,7 @@ export default defineConfig({
       }
     },
     Image: (process.env.GITHUB_ACTIONS === 'true')
-  }), htmlStyleMinify(), ...nkw],
+  }), ...nkw],
 
   trailingSlash: 'always',
 
