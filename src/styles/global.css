@@ -36,161 +36,157 @@ body {
     width: calc(100vw - 150px);
 }
 
-@layer transitions, theme, fonts;
-
-@layer fonts {
-    .inter {
-        --font: 'Inter', sans-serif;
-    }
-
-    .opendyslexic {
-        --font: 'OpenDyslexic', 'sans-serif';
-        font-size: 0.85em;
-    }
-
-    .atkinson-hyperlegible {
-        --font: 'Atkinson Hyperlegible', sans-serif;
-    }
-
-    .vcr {
-        --font: 'VCR OSD Mono', monospace;
-    }
-
-    .times {
-        --font: 'Times New Roman', Times, serif;
-    }
-
-    .commit-mono {
-        --font: 'Commit Mono', monospace;
-    }
-
-    .default {
-        --font: sans-serif;
-    }
-
-    .default-serif {
-        --font: serif;
-    }
-
-    .default-mono {
-        --font: monospace;
-    }
+/* Font classes */
+.inter {
+    --font: 'Inter', sans-serif;
 }
 
-@layer theme {
-    html {
-        --anim-color1: #00ffea;
-        --anim-color2: #0084ff;
+.opendyslexic {
+    --font: 'OpenDyslexic', 'sans-serif';
+    font-size: 0.85em;
+}
 
-        .highcontrast {
-            --bg: #000000;
-            --altbg: #0a0a0a;
-            --acc: #2d2d2d;
-            --text: #ffffff;
-            --sec: #e0e0e0;
-            --link: #33cccc;
-            --link-hover: #4ddddd;
-        }
+.atkinson-hyperlegible {
+    --font: 'Atkinson Hyperlegible', sans-serif;
+}
 
-        .jcolor {
-            --bg: #212529;
-            --altbg: #1d1f20;
-            --acc: #343a40;
-            --text: #f1f3f5;
-            --sec: #ced4da;
-            --link: #30b8e6;
-            --link-hover: #4dc4eb;
-        }
+.vcr {
+    --font: 'VCR OSD Mono', monospace;
+}
 
-        .gruvbox {
-            --bg: #32302f;
-            --altbg: #1d2021;
-            --acc: #504945;
-            --text: #e8dbb2;
-            --sec: #bdae93;
-            --link: #2ea6b7;
-            --link-hover: #47b6c4;
-        }
+.times {
+    --font: 'Times New Roman', Times, serif;
+}
 
-        .ctp {
-            --bg: #1e1e2e;
-            --altbg: #181825;
-            --acc: #313244;
-            --text: #cdd6f4;
-            --sec: #bac2de;
-            --link: #2aa5c9;
-            --link-hover: #3fb5d5;
-        }
+.commit-mono {
+    --font: 'Commit Mono', monospace;
+}
 
-        .inf {
-            --bg: #26263b;
-            --altbg: #10101a;
-            --acc: #2f2f3f;
-            --text: #fffffe;
-            --sec: #b5b5dd;
-            --link: #33a6e6;
-            --link-hover: #4db3eb;
-        }
+.default {
+    --font: sans-serif;
+}
 
-        color-scheme: dark;
-    }
+.default-serif {
+    --font: serif;
+}
 
-    html[data-color='light'] {
-        --anim-color1: #0365c2;
-        --anim-color2: #033361;
+.default-mono {
+    --font: monospace;
+}
 
-        .highcontrast {
-            --bg: #ffffff;
-            --altbg: #f5f5f5;
-            --acc: #dddddd;
-            --text: #000000;
-            --sec: #333333;
-            --link: #666666;
-            --link-hover: #808080;
-        }
+/* Theme variables */
+html {
+    --anim-color1: #00ffea;
+    --anim-color2: #0084ff;
+    color-scheme: dark;
+}
 
-        .jcolor {
-            --bg: #ffffff;
-            --altbg: #f8f9fa;
-            --acc: #e9ecef;
-            --text: #212529;
-            --sec: #495057;
-            --link: #6a6d73;
-            --link-hover: #83868b;
-        }
+html[data-color='light'] {
+    --anim-color1: #0365c2;
+    --anim-color2: #033361;
+    color-scheme: light;
+}
 
-        .gruvbox {
-            --bg: #f2e5bc;
-            --altbg: #f9f5d7;
-            --acc: #d5c4a1;
-            --text: #3c3836;
-            --sec: #504842;
-            --link: #7b7670;
-            --link-hover: #938e89;
-        }
+/* Dark theme variants */
+.highcontrast {
+    --bg: #000000;
+    --altbg: #0a0a0a;
+    --acc: #2d2d2d;
+    --text: #ffffff;
+    --sec: #e0e0e0;
+    --link: #33cccc;
+    --link-hover: #4ddddd;
+}
 
-        .ctp {
-            --bg: #e6e9ef;
-            --altbg: #dce0e8;
-            --acc: #ccd0da;
-            --text: #4c4f69;
-            --sec: #444552;
-            --link: #898c9e;
-            --link-hover: #a2a4b4;
-        }
+.jcolor {
+    --bg: #212529;
+    --altbg: #1d1f20;
+    --acc: #343a40;
+    --text: #f1f3f5;
+    --sec: #ced4da;
+    --link: #30b8e6;
+    --link-hover: #4dc4eb;
+}
 
-        .inf {
-            --bg: #e1e1e4;
-            --altbg: #f4f4fd;
-            --acc: #c0c0ca;
-            --text: #161b39;
-            --sec: #414179;
-            --link: #5a5e76;
-            --link-hover: #727592;
-        }
+.gruvbox {
+    --bg: #32302f;
+    --altbg: #1d2021;
+    --acc: #504945;
+    --text: #e8dbb2;
+    --sec: #bdae93;
+    --link: #2ea6b7;
+    --link-hover: #47b6c4;
+}
 
-        color-scheme: light;
-    }
+.ctp {
+    --bg: #1e1e2e;
+    --altbg: #181825;
+    --acc: #313244;
+    --text: #cdd6f4;
+    --sec: #bac2de;
+    --link: #2aa5c9;
+    --link-hover: #3fb5d5;
+}
+
+.inf {
+    --bg: #26263b;
+    --altbg: #10101a;
+    --acc: #2f2f3f;
+    --text: #fffffe;
+    --sec: #b5b5dd;
+    --link: #33a6e6;
+    --link-hover: #4db3eb;
+}
+
+/* Light theme variants */
+html[data-color='light'] .highcontrast {
+    --bg: #ffffff;
+    --altbg: #f5f5f5;
+    --acc: #dddddd;
+    --text: #000000;
+    --sec: #333333;
+    --link: #666666;
+    --link-hover: #808080;
+}
+
+html[data-color='light'] .jcolor {
+    --bg: #ffffff;
+    --altbg: #f8f9fa;
+    --acc: #e9ecef;
+    --text: #212529;
+    --sec: #495057;
+    --link: #6a6d73;
+    --link-hover: #83868b;
+}
+
+html[data-color='light'] .gruvbox {
+    --bg: #f2e5bc;
+    --altbg: #f9f5d7;
+    --acc: #d5c4a1;
+    --text: #3c3836;
+    --sec: #504842;
+    --link: #7b7670;
+    --link-hover: #938e89;
+}
+
+html[data-color='light'] .ctp {
+    --bg: #e6e9ef;
+    --altbg: #dce0e8;
+    --acc: #ccd0da;
+    --text: #4c4f69;
+    --sec: #444552;
+    --link: #898c9e;
+    --link-hover: #a2a4b4;
+}
+
+html[data-color='light'] .inf {
+    --bg: #e1e1e4;
+    --altbg: #f4f4fd;
+    --acc: #c0c0ca;
+    --text: #161b39;
+    --sec: #414179;
+    --link: #5a5e76;
+    --link-hover: #727592;
 }
 
 @keyframes fade-in {
@@ -391,7 +387,7 @@ main > div {
     min-height: 100vh;
 }
 
-div#leftbar>* {
+div#leftbar > * {
     border-right: 1px solid var(--text);
 }
 
@@ -399,7 +395,7 @@ pre {
     overflow-x: auto;
 }
 
-div#leftbar>*:last-child {
+div#leftbar > *:last-child {
     border-right: none;
 }
 
@@ -534,7 +530,7 @@ footer .right {
     }
 }
 
-@media (width <=800px) {
+@media (width <= 800px) {
     footer {
         flex-direction: column;
         gap: 24px;
@@ -548,7 +544,7 @@ footer .right {
     }
 }
 
-@media (width <=640px) {
+@media (width <= 640px) {
     .container {
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
@@ -593,12 +589,12 @@ footer .right {
 
     .container:has(aside.visible) main {
         overflow-y: hidden;
-
-        &>div {
-            opacity: 0.35;
-            pointer-events: none;
-        }
-    }    
+    }
+    
+    .container:has(aside.visible) main > div {
+        opacity: 0.35;
+        pointer-events: none;
+    }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {

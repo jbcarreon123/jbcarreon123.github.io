@@ -1,51 +1,59 @@
-<script> 
+<script>
     /** @ts-ignore */
     import Uwuifier from "uwuifier";
 
     function clear(el: HTMLButtonElement) {
         let func = el.dataset.func;
         switch (func) {
-            case 'clear-nekobox':
+            case "clear-nekobox":
                 [
-                    'nekobox:value', 'nekobox:username',
-                    'nekobox:domain', 'nekobox:overflow',
-                    'nekobox.readonly', 'nekobox.rss'
+                    "nekobox:value",
+                    "nekobox:username",
+                    "nekobox:domain",
+                    "nekobox:overflow",
+                    "nekobox.readonly",
+                    "nekobox.rss",
                 ].forEach((a) => localStorage.removeItem(a));
                 break;
-            case 'clear-localstorage':
+            case "clear-localstorage":
                 localStorage.clear();
                 break;
-            case 'uwuify':
+            case "uwuify":
                 let u = new Uwuifier();
-                if (confirm('Are you sure about this?\nThis will lag a phone or a shitbox.\n\nNote that this will only apply on the current session, and you need to reapply it if you want to do it again on another page,')) {
-                    const textElements = document.querySelectorAll('button, div.select, p, h1, h2, h3, h4, h5, h6, span, strong, em, blockquote, li, dt, dd, label, textarea, input[type="text"], input[type="email"], input[type="number"], input[type="search"], select, option');
+                if (
+                    confirm(
+                        "Are you sure about this?\nThis will lag a phone or a shitbox.\n\nNote that this will only apply on the current session, and you need to reapply it if you want to do it again on another page,",
+                    )
+                ) {
+                    const textElements = document.querySelectorAll(
+                        'button, div.select, p, h1, h2, h3, h4, h5, h6, span, strong, em, blockquote, li, dt, dd, label, textarea, input[type="text"], input[type="email"], input[type="number"], input[type="search"], select, option',
+                    );
                     textElements.forEach((e) => {
                         if (e.textContent) {
                             e.textContent = u.uwuifySentence(e.textContent);
-                        };
-                    })
-                    document.querySelectorAll('[title]').forEach((e) => {
+                        }
+                    });
+                    document.querySelectorAll("[title]").forEach((e) => {
                         e.title = u.uwuifySentence(e.title);
-                    })
+                    });
                     document.title = u.uwuifySentence(document.title);
                 }
                 break;
             default:
-                [
-                    'jbsite-theme-scheme', 'jbsite-theme',
-                    'jbsite-font',
-                ].forEach((a) => localStorage.removeItem(a));
+                ["jbsite-theme-scheme", "jbsite-theme", "jbsite-font"].forEach(
+                    (a) => localStorage.removeItem(a),
+                );
                 break;
         }
 
         let i = el.textContent;
-        el.textContent = 'Done!';
-        setTimeout(() => el.textContent = i, 2500);
+        el.textContent = "Done!";
+        setTimeout(() => (el.textContent = i), 2500);
     }
 
-    document.querySelectorAll('.danger-btns button').forEach((e) => {
-        e.addEventListener('click', () => clear(e as HTMLButtonElement));
-    })
+    document.querySelectorAll(".danger-btns button").forEach((e) => {
+        e.addEventListener("click", () => clear(e as HTMLButtonElement));
+    });
 </script>
 
 <script is:inline>
@@ -75,9 +83,11 @@
         document.querySelectorAll(".main-font .select").forEach((el) => {
             el.addEventListener("click", (e) => {
                 document.documentElement.className = el.dataset.value;
-                document.querySelectorAll(".main-font .select").forEach((el) => {
-                    el.classList.remove("selected");
-                });
+                document
+                    .querySelectorAll(".main-font .select")
+                    .forEach((el) => {
+                        el.classList.remove("selected");
+                    });
                 el.classList.add("selected");
                 localStorage.setItem("jbsite-font", el.dataset.value);
             });
@@ -87,15 +97,15 @@
     }
 
     function loadCustomCSS(el) {
-        let css = document.querySelector('#customCSS');
+        let css = document.querySelector("#customCSS");
         css.innerHTML = el.value;
         localStorage.setItem("jbsite-customcss", el.value);
     }
 
     function loadTheme() {
-        let css = document.querySelector('#customCSS');
+        let css = document.querySelector("#customCSS");
         if (css) css.innerHTML = localStorage.getItem("jbsite-customcss");
-        let cssField = document.querySelector('#customCSSField');
+        let cssField = document.querySelector("#customCSSField");
         if (cssField) cssField.value = localStorage.getItem("jbsite-customcss");
 
         let scheme = localStorage.getItem("jbsite-theme-scheme");
@@ -106,16 +116,17 @@
                 ? "dark"
                 : "light";
 
-            matchMedia("(prefers-color-scheme:dark)").addEventListener('change', loadTheme);
+            matchMedia("(prefers-color-scheme:dark)").addEventListener(
+                "change",
+                loadTheme,
+            );
         }
-
-        
 
         let theme = localStorage.getItem("jbsite-theme");
         theme = theme ? theme : "jcolor";
 
         let font = localStorage.getItem("jbsite-font");
-        font = font ? font : "inter"
+        font = font ? font : "inter";
 
         document.body.className = theme;
         document.querySelectorAll(".palette .select").forEach((el) => {
@@ -138,7 +149,9 @@
 <div class="floating-window" id="customize" style="display: none;">
     <div class="floating-window-titlebar">
         <p>Customize</p>
-        <p onclick="closeWindow(this)"><span aria-hidden="true" class="ms" data-icon="close"></span></p>
+        <p onclick="closeWindow(this)">
+            <span aria-hidden="true" class="ms" data-icon="close"></span>
+        </p>
     </div>
     <div class="floating-window-content">
         <div class="window-container">
@@ -147,19 +160,23 @@
                     onclick="showTab(this)"
                     class="active"
                     data-tab-id="colors"
-                    ><span aria-hidden="true" class="ms" data-icon="palette"></span> Colors</button
+                    ><span aria-hidden="true" class="ms" data-icon="palette"
+                    ></span> Colors</button
                 >
                 <button onclick="showTab(this)" data-tab-id="fonts"
-                    ><span aria-hidden="true" class="ms" data-icon="format_size"></span> Fonts</button
+                    ><span aria-hidden="true" class="ms" data-icon="format_size"
+                    ></span> Fonts</button
                 >
                 <!-- <button onclick="showTab(this)" data-tab-id="accessibility"
                     ><span aria-hidden="true" class="ms" data-icon="settings_accessibility"></span> Accessibility</button
                 > -->
                 <button onclick="showTab(this)" data-tab-id="custom"
-                    ><span aria-hidden="true" class="ms" data-icon="code"></span> Custom CSS (yes, really)</button
+                    ><span aria-hidden="true" class="ms" data-icon="code"
+                    ></span> Custom CSS (yes, really)</button
                 >
                 <button onclick="showTab(this)" data-tab-id="danger"
-                    ><span aria-hidden="true" class="ms" data-icon="warning"></span> Danger Zone</button
+                    ><span aria-hidden="true" class="ms" data-icon="warning"
+                    ></span> Danger Zone</button
                 >
             </div>
             <div class="tab visible" id="colors">
@@ -169,12 +186,24 @@
                     <div role="listitem" class="select selected" data-value="">
                         System
                     </div>
-                    <div role="listitem" class="select" data-value="dark">Dark</div>
-                    <div role="listitem" class="select" data-value="light">Light</div>
+                    <div role="listitem" class="select" data-value="dark">
+                        Dark
+                    </div>
+                    <div role="listitem" class="select" data-value="light">
+                        Light
+                    </div>
                 </div>
                 <p>Color palette</p>
-                <div role="listbox" class="select-container palette" id="palette">
-                    <div role="listitem" class="select selected" data-value="jcolor">
+                <div
+                    role="listbox"
+                    class="select-container palette"
+                    id="palette"
+                >
+                    <div
+                        role="listitem"
+                        class="select selected"
+                        data-value="jcolor"
+                    >
                         jColor 2
                         <div class="jcolor color-preview">
                             <div style="--cl:var(--bg)"></div>
@@ -222,7 +251,11 @@
                             <div style="--cl:var(--link-hover)"></div>
                         </div>
                     </div>
-                    <div role="listitem" class="select" data-value="highcontrast">
+                    <div
+                        role="listitem"
+                        class="select"
+                        data-value="highcontrast"
+                    >
                         High Contrast
                         <div class="highcontrast color-preview">
                             <div style="--cl:var(--bg)"></div>
@@ -240,31 +273,63 @@
                 <h1>Fonts</h1>
                 <p>Main font</p>
                 <div role="listbox" class="select-container main-font">
-                    <div role="listitem" class="inter select selected" data-value="inter">
+                    <div
+                        role="listitem"
+                        class="inter select selected"
+                        data-value="inter"
+                    >
                         Inter
                     </div>
-                    <div role="listitem" class="commit-mono select" data-value="commit-mono">
+                    <div
+                        role="listitem"
+                        class="commit-mono select"
+                        data-value="commit-mono"
+                    >
                         Commit Mono
                     </div>
                     <div role="listitem" class="vcr select" data-value="vcr">
                         VCR OSD Mono
                     </div>
-                    <div role="listitem" class="times select" data-value="times">
+                    <div
+                        role="listitem"
+                        class="times select"
+                        data-value="times"
+                    >
                         Times
                     </div>
-                    <div role="listitem" class="opendyslexic select" data-value="opendyslexic">
+                    <div
+                        role="listitem"
+                        class="opendyslexic select"
+                        data-value="opendyslexic"
+                    >
                         OpenDyslexic
                     </div>
-                    <div role="listitem" class="atkinson-hyperlegible select" data-value="atkinson-hyperlegible">
+                    <div
+                        role="listitem"
+                        class="atkinson-hyperlegible select"
+                        data-value="atkinson-hyperlegible"
+                    >
                         Atkinson Hyperlegible
                     </div>
-                    <div role="listitem" class="default select" data-value="default">
+                    <div
+                        role="listitem"
+                        class="default select"
+                        data-value="default"
+                    >
                         Default
                     </div>
-                    <div role="listitem" class="default-serif select" data-value="default-serif">
+                    <div
+                        role="listitem"
+                        class="default-serif select"
+                        data-value="default-serif"
+                    >
                         Default (Serif)
                     </div>
-                    <div role="listitem" class="default-mono select" data-value="default-mono">
+                    <div
+                        role="listitem"
+                        class="default-mono select"
+                        data-value="default-mono"
+                    >
                         Default (Mono)
                     </div>
                 </div>
@@ -272,19 +337,31 @@
             </div>
             <div class="tab" id="accessibility">
                 <h1>Accessibility</h1>
-                
             </div>
             <div class="tab" id="custom">
                 <h1>Custom CSS</h1>
-                <p>Yes, really. Just put any stuff here and my site will use it.</p>
-                <textarea id="customCSSField" placeholder="CSS here" aria-label="Custom CSS field" oninput="loadCustomCSS(this)"></textarea>
+                <p>
+                    Yes, really. Just put any stuff here and my site will use
+                    it.
+                </p>
+                <textarea
+                    id="customCSSField"
+                    placeholder="CSS here"
+                    aria-label="Custom CSS field"
+                    oninput="loadCustomCSS(this)"></textarea>
             </div>
             <div class="tab" id="danger">
                 <h1>Danger Zone</h1>
                 <div class="danger-btns">
-                    <button>Clear Customize-releated items on localStorage</button>
-                    <button data-func="clear-nekobox">Clear Nekobox-releated items on localStorage</button>
-                    <button data-func="clear-localstorage">Clear localStorage</button>
+                    <button
+                        >Clear Customize-releated items on localStorage</button
+                    >
+                    <button data-func="clear-nekobox"
+                        >Clear Nekobox-releated items on localStorage</button
+                    >
+                    <button data-func="clear-localstorage"
+                        >Clear localStorage</button
+                    >
                     <button data-func="uwuify">uwu-ify jbSite</button>
                 </div>
             </div>
@@ -293,6 +370,118 @@
 </div>
 
 <style>
+    .floating-window {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: var(--top, 0);
+        left: var(--left, 0);
+        min-width: 350px;
+        z-index: 998;
+        transition: none !important;
+        border: 1px solid var(--link-hover);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        max-width: calc(100vw - 2px);
+    }
+
+    .floating-window.focused {
+        border: 1px solid var(--link);
+        z-index: 999;
+    }
+
+    .floating-window .floating-window-titlebar {
+        display: flex;
+        flex-direction: row;
+        background-color: var(--acc);
+        padding: 0 6px;
+    }
+
+    .floating-window .floating-window-titlebar p:first-child {
+        flex-grow: 1;
+    }
+
+    .floating-window .floating-window-titlebar p {
+        cursor: pointer;
+    }
+
+    .floating-window .floating-window-content {
+        display: flex;
+        flex-direction: column;
+        min-height: 200px;
+        background-color: var(--bg);
+        padding: 6px;
+        overflow: auto;
+    }
+
+    .floating-window.move * {
+        cursor: grabbing !important;
+    }
+
+    .floating-window:not(.visible) {
+        display: none;
+    }
+
+    .jonsole--content {
+        background-color: var(--altbg) !important;
+        font-family: "Commit Mono", monospace;
+        width: 500px;
+        height: 250px;
+    }
+
+    .jonsole--content * {
+        padding: 0 !important;
+    }
+
+    .browser--content {
+        height: 400px;
+        width: 600px;
+    }
+
+    .browser--content iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        background: 0;
+        max-width: initial !important;
+    }
+
+    .select-container {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(6px, 1fr));
+        gap: 12px;
+    }
+
+    .select-container .select {
+        flex-grow: 1;
+        padding: 6px;
+        background-color: var(--bg);
+        cursor: pointer;
+        font-family: var(--font);
+    }
+
+    .select-container .select:hover {
+        background-color: var(--altbg);
+    }
+
+    .select-container .select.selected {
+        background-color: var(--acc);
+    }
+
+    .select-container .select .color-preview {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(6px, 1fr));
+        gap: 3px;
+    }
+
+    .select-container .select .color-preview div {
+        margin-top: 6px;
+        height: 20px;
+        background-color: var(--cl);
+    }
+
     .danger-btns {
         display: flex;
         flex-wrap: wrap;
@@ -301,65 +490,70 @@
 
     #customize {
         width: 600px;
+    }
 
-        .floating-window-content {
-            height: 400px;
-            padding: 0;
-        }
+    #customize .floating-window-content {
+        height: 400px;
+        padding: 0;
+    }
 
-        .window-container {
-            display: flex;
-            flex-direction: row;
-            gap: 6px;
-            align-items: stretch;
-            height: 100%;
+    #customize .window-container {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        align-items: stretch;
+        height: 100%;
+    }
 
-            .tab-buttons {
-                display: flex;
-                flex-direction: column;
-                background: var(--acc);
+    #customize .window-container .tab-buttons {
+        display: flex;
+        flex-direction: column;
+        background: var(--acc);
+    }
 
-                button {
-                    text-align: left;
-                    width: 135px;
-                    margin-left: 6px;
-                    color: var(--link);
-                }
+    #customize .window-container .tab-buttons button {
+        text-align: left;
+        width: 135px;
+        margin-left: 6px;
+        color: var(--link);
+    }
 
-                button.active {
-                    background: var(--bg);
-                    color: var(--link-hover);
-                }
+    #customize .window-container .tab-buttons button.active {
+        background: var(--bg);
+        color: var(--link-hover);
+    }
 
-                button:hover {
-                    background-color: var(--altbg);
-                    color: var(--link-hover);
-                }
-            }
+    #customize .window-container .tab-buttons button:hover {
+        background-color: var(--altbg);
+        color: var(--link-hover);
+    }
 
-            .tab:not(.visible) {
-                display: none;
-            }
+    #customize .window-container .tab:not(.visible) {
+        display: none;
+    }
 
-            .tab {
-                width: 100%;
-                padding-right: 6px;
-            }
-        }
+    #customize .window-container .tab {
+        width: 100%;
+        padding-right: 6px;
     }
 
     @media (width <= 640px) {
-        #customize {
-            .window-container {
-                flex-direction: column;
+        .floating-window {
+            top: 0;
+            left: 0;
+            max-height: 100vh;
+        }
 
-                .tab-buttons {
-                    flex-direction: row;
-                    .tab {
-                        width: calc(100vw - 12px);
-                    }
-                }
-            }
+        #customize .window-container {
+            flex-direction: column;
+        }
+
+        #customize .window-container .tab-buttons {
+            flex-direction: row;
+        }
+
+        #customize .window-container .tab-buttons .tab {
+            width: calc(100vw - 12px);
         }
     }
 </style>

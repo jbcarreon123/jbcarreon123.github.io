@@ -137,11 +137,6 @@ import { ClientRouter } from "astro:transitions";
         )
     }
 
-    if ('serviceWorker' in navigator && window.location.href.includes('jbcarreon123')) {
-        console.log('Registering service worker...');
-        navigator.serviceWorker.register('/service-worker.js');
-    }
-
     Array.prototype.sample = function () {
         return this[Math.floor(Math.random() * this.length)];
     };

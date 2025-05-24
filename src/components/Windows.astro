@@ -36,10 +36,11 @@ import Player from "../jwindows/Player.astro";
             pos2 = 0,
             pos3 = 0,
             pos4 = 0;
-        let bar = elmnt.querySelector('.floating-window-titlebar p:first-child');
+        let bar = elmnt.querySelector(
+            ".floating-window-titlebar p:first-child",
+        );
         if (bar) {
-            bar.onmousedown =
-                dragMouseDown;
+            bar.onmousedown = dragMouseDown;
         } else {
             elmnt.onmousedown = dragMouseDown;
         }
@@ -73,8 +74,6 @@ import Player from "../jwindows/Player.astro";
     }
 
     function loadEvents() {
-        
-
         document.querySelectorAll(".floating-window").forEach((window) => {
             window.addEventListener("click", clickWindowEvent);
             dragElement(window);
@@ -113,22 +112,22 @@ import Player from "../jwindows/Player.astro";
     }
 
     function closeWindow(el) {
-        
         let pa = el.parentElement.parentElement;
         pa.classList.remove("visible");
         pa.classList.remove("focused");
-        
+
         document.querySelectorAll(".window-toggle").forEach((ele) => {
             if (ele.dataset.id === pa.id) {
-                
                 ele.classList.remove("active");
             }
         });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.floating-window').forEach((e) => e.style.display = null);
-    })
+    document.addEventListener("DOMContentLoaded", () => {
+        document
+            .querySelectorAll(".floating-window")
+            .forEach((e) => (e.style.display = null));
+    });
 </script>
 
 <Customize />
@@ -185,45 +184,43 @@ import Player from "../jwindows/Player.astro";
         display: flex;
         flex-direction: column;
         max-width: calc(100vw - 2px);
+    }
 
-        &.focused {
-            border: 1px solid var(--link);
-            z-index: 999;
-        }
+    .floating-window.focused {
+        border: 1px solid var(--link);
+        z-index: 999;
+    }
 
-        .floating-window-titlebar {
-            display: flex;
-            flex-direction: row;
-            background-color: var(--acc);
-            padding: 0 6px;
+    .floating-window .floating-window-titlebar {
+        display: flex;
+        flex-direction: row;
+        background-color: var(--acc);
+        padding: 0 6px;
+    }
 
-            p:first-child {
-                flex-grow: 1;
-            }
+    .floating-window .floating-window-titlebar p:first-child {
+        flex-grow: 1;
+    }
 
-            p {
-                cursor: pointer;
-            }
-        }
+    .floating-window .floating-window-titlebar p {
+        cursor: pointer;
+    }
 
-        .floating-window-content {
-            display: flex;
-            flex-direction: column;
-            min-height: 200px;
-            background-color: var(--bg);
-            padding: 6px;
-            overflow: auto;
-        }
+    .floating-window .floating-window-content {
+        display: flex;
+        flex-direction: column;
+        min-height: 200px;
+        background-color: var(--bg);
+        padding: 6px;
+        overflow: auto;
+    }
 
-        &.move {
-            * {
-                cursor: grabbing !important;
-            }
-        }
+    .floating-window.move * {
+        cursor: grabbing !important;
+    }
 
-        &:not(.visible) {
-            display: none;
-        }
+    .floating-window:not(.visible) {
+        display: none;
     }
 
     .jonsole--content {
@@ -231,58 +228,58 @@ import Player from "../jwindows/Player.astro";
         font-family: "Commit Mono", monospace;
         width: 500px;
         height: 250px;
+    }
 
-        * {
-            padding: 0 !important;
-        }
+    .jonsole--content * {
+        padding: 0 !important;
     }
 
     .browser--content {
         height: 400px;
         width: 600px;
+    }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-            padding: 0;
-            background: 0;
-            max-width: initial !important;
-        }
+    .browser--content iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        background: 0;
+        max-width: initial !important;
     }
 
     .select-container {
         display: grid;
         grid-template-columns: repeat(3, minmax(6px, 1fr));
         gap: 12px;
+    }
 
-        .select {
-            flex-grow: 1;
-            padding: 6px;
-            background-color: var(--bg);
-            cursor: pointer;
-            font-family: var(--font);
+    .select-container .select {
+        flex-grow: 1;
+        padding: 6px;
+        background-color: var(--bg);
+        cursor: pointer;
+        font-family: var(--font);
+    }
 
-            &:hover {
-                background-color: var(--altbg);
-            }
+    .select-container .select:hover {
+        background-color: var(--altbg);
+    }
 
-            &.selected {
-                background-color: var(--acc);
-            }
+    .select-container .select.selected {
+        background-color: var(--acc);
+    }
 
-            .color-preview {
-                display: grid;
-                grid-template-columns: repeat(7, minmax(6px, 1fr));
-                gap: 3px;
+    .select-container .select .color-preview {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(6px, 1fr));
+        gap: 3px;
+    }
 
-                div {
-                    margin-top: 6px;
-                    height: 20px;
-                    background-color: var(--cl);
-                }
-            }
-        }
+    .select-container .select .color-preview div {
+        margin-top: 6px;
+        height: 20px;
+        background-color: var(--cl);
     }
 
     @media (width <= 640px) {

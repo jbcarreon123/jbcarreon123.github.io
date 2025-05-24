@@ -14,10 +14,24 @@ import serviceWorker from "astrojs-service-worker";
 import mdx from '@astrojs/mdx';
 import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
+import htmlStyleMinify from './html-style-minify.ts';
 
 import sitemap from '@astrojs/sitemap';
 
 import playformCompress from '@playform/compress';
+import { transform } from 'lightningcss';
+
+let nkw = [];
+
+if (process.env.GITHUB_ACTIONS === 'true') {
+  nkw.push(nekoweb({
+    apiKey: env.NEKOWEB_APIKEY,
+    cookie: env.NEKOWEB_COOKIE,
+    folder: 'jbsite4_test'
+  }));
+} else {
+  console.log(!(process.env.GITHUB_ACTIONS !== 'true'));
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -41,7 +55,7 @@ export default defineConfig({
       codeFontFamily: "'Commit Mono', monospace",
       codeFontSize: '1.125rem'
     }
-  }), mdx(), serviceWorker(), sitemap({
+  }), mdx(), sitemap({
     xslURL: '/sitemap.xsl',
     changefreq: 'weekly',
     priority: 0.7,
@@ -53,15 +67,24 @@ export default defineConfig({
       return item;
     },
   }), svelte(), playformCompress({
-    CSS: false,
-    HTML: false,
-    JavaScript: false,
-    SVG: false
-  }), nekoweb({
-    apiKey: env.NEKOWEB_APIKEY,
-    cookie: env.NEKOWEB_COOKIE,
-    folder: 'jbsite4_test'
-  })],
+    SVG: false,
+    CSS: {
+      'csso': false,
+      'lightningcss': {}
+    },
+    HTML: {
+      'html-minifier-terser': {
+        minifyCSS: false
+      }
+    },
+    JavaScript: {
+      'terser': {
+        keep_classnames: false,
+        keep_fnames: false
+      }
+    },
+    Image: (process.env.GITHUB_ACTIONS === 'true')
+  }), htmlStyleMinify(), ...nkw],
 
   trailingSlash: 'always',
 
