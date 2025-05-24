@@ -6,6 +6,7 @@
     text-justify: unset;
     overflow-wrap: anywhere;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
 }
 
 .noreset {
@@ -429,6 +430,10 @@ body:has(#nav-visible:checked) .a {
     text-decoration: underline;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
 h1 {
     font-size: 2.75rem;
     padding-top: 12px;
@@ -594,4 +599,10 @@ footer .right {
             pointer-events: none;
         }
     }    
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    h1, h2, h3, h4, h5, h6, b {
+        font-synthesis: none;
+    }
 }

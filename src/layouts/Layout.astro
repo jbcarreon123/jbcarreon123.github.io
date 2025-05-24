@@ -1,4 +1,5 @@
 ---
+import 'normalize.css';
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import { version } from "../../package.json";
@@ -45,9 +46,6 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 	<body class="jcolor">
 		<NotifModal />
 		<RichTooltip />
-		<div transition:persist>
-			<Windows />
-		</div>
 		<div class="container" transition:animate="none">
 			<Sidebar title={title} id={id} description={description} />
 			<main id="main">
@@ -174,6 +172,9 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 					</footer>
 				</div>
 			</main>
+		</div>
+		<div transition:persist>
+			<Windows />
 		</div>
 	</body>
 </html>

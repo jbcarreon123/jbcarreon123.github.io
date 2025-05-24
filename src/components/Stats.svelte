@@ -43,7 +43,7 @@
 
 <style>
     tr td:first-child {
-        width: 90px;
+        width: 100px;
     }
 
     tr td:last-child {

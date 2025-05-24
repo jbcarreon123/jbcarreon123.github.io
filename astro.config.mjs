@@ -24,7 +24,8 @@ export default defineConfig({
   site: "https://jbcarreon123.nekoweb.org",
 
   prefetch: {
-    prefetchAll: true
+    prefetchAll: true,
+    defaultStrategy: 'viewport'
   },
 
   build: {
