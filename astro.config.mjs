@@ -14,6 +14,7 @@ import serviceWorker from "astrojs-service-worker";
 import mdx from '@astrojs/mdx';
 import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
+import htmlStyleMinify from './html-style-minify.ts';
 
 import sitemap from '@astrojs/sitemap';
 
@@ -81,11 +82,13 @@ export default defineConfig({
     JavaScript: {
       'terser': {
         keep_classnames: false,
-        keep_fnames: false
+        keep_fnames: false,
+        mangle: true,
+        toplevel: true
       }
     },
     Image: (process.env.GITHUB_ACTIONS === 'true')
-  }), ...nkw],
+  }), htmlStyleMinify(), ...nkw],
 
   trailingSlash: 'always',
 
