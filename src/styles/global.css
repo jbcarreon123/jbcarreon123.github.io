@@ -597,8 +597,17 @@ footer .right {
     }
 }
 
+/*
+    Safari related hacks, because seems like
+    Apple wants Safari to be the modern
+    Internet Explorer
+*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    h1, h2, h3, h4, h5, h6, b {
+    h1, h2, h3, h4, h5, h6, b, strong {
         font-synthesis: none;
+    }
+
+    * {
+        text-rendering: optimizeLegibility;
     }
 }
