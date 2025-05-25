@@ -19,6 +19,12 @@ const latestPost = postSorted[0];
 ---
 
 <Layout id="index" title="jb's site" description="a website">
+	<div class="widget-full">
+		<div class="c">
+			<h3>Content Warning: 14+, contains swears.</h3>
+		</div>
+	</div>
+
 	<h1 class="big">
 		Hello, folks! <br class="beforeim" />I'm <br class="afterim" />
 		<span style="--d:0ms">j</span><span style="--d:100ms">b</span><span style="--d:200ms">c</span><span style="--d:300ms">a</span><span style="--d:400ms">r</span><span style="--d:500ms">r</span><span style="--d:600ms">e</span><span style="--d:700ms">o</span><span style="--d:800ms">n</span><span style="--d:900ms">1</span><span style="--d:1000ms">2</span><span style="--d:1100ms">3</span>,
@@ -78,6 +84,15 @@ const latestPost = postSorted[0];
 		.widgets div, .widget-full div {
 			background-color: var(--acc);
 			padding: 6px;
+		}
+
+		.widget-full div .c {
+			text-align: center;
+			width: 100%;
+		}
+
+		.widget-full:has(.c) {
+			padding-bottom: 12px;
 		}
 
 		.big {
