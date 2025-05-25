@@ -31,6 +31,7 @@ jobs:
         id: commit
         uses: prompt/actions-commit-hash@v3
       - name: Build jbsite
+        continue-on-error: true
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
           NEKOWEB_APIKEY: '${{ secrets.NEKOWEB_APIKEY }}'

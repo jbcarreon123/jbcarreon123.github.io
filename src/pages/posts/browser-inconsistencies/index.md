@@ -1,7 +1,7 @@
 ---
 layout: '../../../layouts/PostLayout.astro'
 title: '[RANT] Browser inconsistencies, yes it still exists.'
-published: 05/24/2025 10:29
+published: 05/25/2025 23:00
 tags: rant, webdev, browsers
 description: I'm looking at you, WebKit.
 ---
