@@ -91,12 +91,12 @@
     .imageviewer--container img {
         object-fit: contain;
         max-height: 80vh;
-        max-width: initial;
+        max-width: calc(100vw - 24px);
     }
 
     .imageviewer--container.hide img {
         z-index: 1000;
-        min-width: 80vw;
+        width: 100vw;
         height: 100vh;
         max-height: 100vh;
         object-fit: contain;
