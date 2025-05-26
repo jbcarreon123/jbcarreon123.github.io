@@ -89,13 +89,14 @@
 
     .imageviewer--container img {
         object-fit: contain;
-        height: 80vh;
-        min-width: 100vw;
+        max-height: 80vh;
     }
 
     .imageviewer--container.hide img {
         z-index: 1000;
+        min-width: 80vw;
         height: 100vh;
+        max-height: 100vh;
         object-fit: contain;
         position: fixed;
         top: 0;
