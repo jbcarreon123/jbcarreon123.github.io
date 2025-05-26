@@ -87,10 +87,15 @@
         opacity: 0;
     }
 
+    .imageviewer--container img {
+        object-fit: contain;
+        height: 80vh;
+        min-width: 100vw;
+    }
+
     .imageviewer--container.hide img {
         z-index: 1000;
         height: 100vh;
-        min-width: 100vw;
         object-fit: contain;
         position: fixed;
         top: 0;
