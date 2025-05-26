@@ -2,6 +2,7 @@
     function containerClicked(el, ev) {
         ev.stopPropagation();
         el.classList.add('fadeout');
+        el.classList.remove('hide');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
