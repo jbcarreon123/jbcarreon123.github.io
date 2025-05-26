@@ -1,0 +1,130 @@
+<script is:inline>
+    function containerClicked(el, ev) {
+        ev.stopPropagation();
+        el.classList.add('fadeout');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        let container = document.querySelector('.imageviewer--container');
+        container.addEventListener('click', (ev) => containerClicked(container, ev))
+
+        document.querySelectorAll('.imageviewer--container a.link').forEach((el) => {
+            el.addEventListener('click', (ev) => ev.stopPropagation());
+        });
+
+        document.querySelector('.imageviewer--container img#image').addEventListener('click', (ev) => {
+            container.classList.toggle('hide');
+            ev.stopPropagation();
+        })
+
+        document.querySelectorAll('img').forEach(el => {
+            if (el.width <= 100) return;
+
+            el.addEventListener('click', ev => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                console.log(el.src);
+                showImageViewer(el.src, el.alt ?? el.title ?? 'No description');
+            })
+        })
+    })
+
+    function showImageViewer(src, alt) {
+        let container = document.querySelector('.imageviewer--container');
+        container.querySelector('img#image').src = src;
+        container.querySelector('img#image').alt = alt;
+        container.querySelector('p#alt').textContent = alt;
+        let url = new URL((src.startsWith('/') ? window.location.protocol + '//' + window.location.host : '') + src);
+        let spl = url.pathname.split('/');
+        let filename = spl.pop();
+        let path = spl.join('/');
+        container.querySelector('p#filename').innerHTML = `${path}/<b>${filename}</b>`;
+        container.querySelectorAll('a.link').forEach((el) => el.href = src);
+        container.classList.remove('fadeout');
+    }
+</script>
+
+<div class="imageviewer--container fadeout">
+    <div class="main">
+        <div class="controls">
+            <a class="link" href="" download>Download image</a> <a class="link" href="" target="_blank">Open in new tab</a>
+        </div>
+        <div class="actualimage">
+            <p id="filename">/imgs/gallery/<b>IMG_20250510_183933_570.jpg</b></p>
+            <img id="image" src="https://jbcarreon123.nekoweb.org/imgs/gallery/IMG_20250510_183933_570.jpg" alt="" />
+            <p id="alt">Test image</p>
+        </div>
+        <div class="placeholder"></div>
+    </div>
+</div>
+
+<style slot="head">
+    .imageviewer--container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+        z-index: 999;
+        background: #000000A0;
+        opacity: 0;
+        visibility: hidden;
+        animation: ivfadein 0.15s ease-in-out forwards;
+    }
+
+    body:has(.imageviewer--container:not(.fadeout)) {
+        overflow: hidden;
+    }
+
+    .imageviewer--container.fadeout {
+        opacity: 1;
+        visibility: visible;
+        animation: ivfadeout 0.15s ease-in-out forwards;
+    }    
+
+    .imageviewer--container.hide p,
+    .imageviewer--container.hide a {
+        opacity: 0;
+    }
+
+    .imageviewer--container.hide img {
+        z-index: 1000;
+        height: 100vh;
+        min-width: 100vw;
+        object-fit: contain;
+        position: fixed;
+        top: 0;
+    }
+
+    .imageviewer--container .main {
+        display: grid;
+        height: 100vh;
+        padding: 12px;
+        grid-template-rows: 0.05fr 0.9fr 0.05fr;
+    }
+
+    .imageviewer--container .main .controls {
+        display: flex;
+        gap: 12px;
+        flex-direction: row;
+        justify-content: end;
+        height: fit-content;
+    }
+
+    .imageviewer--container .main .actualimage {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @keyframes ivfadein {
+        from { opacity: 0; visibility: hidden; }
+        to { opacity: 1; visibility: visible; }
+    }
+
+    @keyframes ivfadeout {
+        from { opacity: 1; visibility: visible; }
+        to { opacity: 0; visibility: hidden; }
+    }
+</style>
