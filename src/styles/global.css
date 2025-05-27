@@ -89,9 +89,9 @@ html[data-color='light'] {
 
 /* Dark theme variants */
 .highcontrast {
-    --bg: #000000;
-    --altbg: #0a0a0a;
-    --acc: #2d2d2d;
+    --bg: #0a0a0a;
+    --altbg: #000000;
+    --acc: #1a1919;
     --text: #ffffff;
     --sec: #e0e0e0;
     --link: #33cccc;

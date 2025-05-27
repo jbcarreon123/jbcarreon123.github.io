@@ -3,6 +3,7 @@
         ev.stopPropagation();
         el.classList.add('fadeout');
         el.classList.remove('hide');
+        setTimeout(() => el.style.display = 'none', 260);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -42,10 +43,12 @@
         container.querySelector('p#filename').innerHTML = `${path}/<b>${filename}</b>`;
         container.querySelectorAll('a.link').forEach((el) => el.href = src);
         container.classList.remove('fadeout');
+        container.style.display = 'block';
     }
 </script>
 
-<div class="imageviewer--container fadeout">
+<div class="imageviewer--container fadeout" style="display: none;">
+    <div class="span"></div>
     <div class="main">
         <div class="controls">
             <a class="link" href="" download>Download image</a> <a class="link" href="" target="_blank">Open in new tab</a>
@@ -67,10 +70,21 @@
         min-width: 100vw;
         min-height: 100vh;
         z-index: 999;
-        background: #000000A0;
         opacity: 0;
         visibility: hidden;
         animation: ivfadein 0.15s ease-in-out forwards;
+    }
+
+    .imageviewer--container .span {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+        pointer-events: none;
+        z-index: 99;
+        opacity: 0.8;
+        background: var(--altbg);
     }
 
     body:has(.imageviewer--container:not(.fadeout)) {
@@ -105,6 +119,8 @@
     }
 
     .imageviewer--container .main {
+        position: relative;
+        z-index: 999;
         display: grid;
         height: 100vh;
         padding: 12px;

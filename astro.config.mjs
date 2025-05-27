@@ -70,7 +70,10 @@ export default defineConfig({
     SVG: false,
     CSS: {
       'csso': false,
-      'lightningcss': {}
+      'lightningcss': {
+        minify: true,
+        targets: { chrome: 95 << 16 }
+      }
     },
     HTML: {
       'html-minifier-terser': {

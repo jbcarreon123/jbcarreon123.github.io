@@ -27,6 +27,7 @@
             'nekoweb-api',
             'jAPI',
             'neko',
+            'nkko'
         ]
 
         repos = repos.filter((v) => indiefellas.includes(v.name));
