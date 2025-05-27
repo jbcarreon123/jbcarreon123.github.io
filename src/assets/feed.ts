@@ -1,6 +1,7 @@
 import type { APIContext } from 'astro';
 import { Feed, type Item } from 'feed';
 import sanitize from 'sanitize-html';
+import { minify } from 'html-minifier-terser';
 
 export async function generateFeed(context: APIContext, type: 'json' | 'rss' | 'atom'): Promise<string> {
     const posts = Object.values(import.meta.glob('../pages/posts/**/*.md', { eager: true }));
@@ -30,10 +31,15 @@ export async function generateFeed(context: APIContext, type: 'json' | 'rss' | '
     }).reverse();
 
     feed.items = await Promise.all<Item>(sortedPosts.map(async (post: any) => {
-        let cnt = sanitize(await post.compiledContent(), {
+        let cnt = await minify(sanitize(await post.compiledContent(), {
             allowedTags: sanitize.defaults.allowedTags.concat(['img', 'code', 'a', 'p', 'figure', 'figcaption']),
             disallowedTagsMode: 'discard'
-        }).replace(/="(\/[a-zA-Z0-9\/_ \+\.]+)"/gm, '="https://jbcarreon123.nekoweb.org$1"').replaceAll(' <span>open_in_new</span>', '').replaceAll('<span><span></span></span>', '');
+        }).replace(/="(\/[a-zA-Z0-9\/_ \+\.]+)"/gm, '="https://jbcarreon123.nekoweb.org$1"').replaceAll(' <span>open_in_new</span>', '').replaceAll('<span><span></span></span>', ''), {
+            removeAttributeQuotes: true,
+            removeEmptyElements: true,
+            minifyCSS: false,
+            removeRedundantAttributes: true,
+        });
 
         return ({
             id: new URL(post.url, context.site).toString(),
