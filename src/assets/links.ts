@@ -19,6 +19,12 @@ export const LinkObjs: LinkObj = [
                 icon: "person"
             },
             {
+                name: "Time",
+                path: "/time/",
+                redirect: false,
+                icon: "schedule"
+            },
+            {
                 name: "Projects",
                 path: "/projects/",
                 redirect: false,
