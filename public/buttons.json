@@ -340,5 +340,11 @@
         "title": "Tagasaing",
         "alt": "tagasaing",
         "imgUrl": "https://tagasa.ing/saing.gif"
+    },
+    {
+        "url": "https://moondvsted.space/",
+        "title": "Tagasaing",
+        "alt": "stel @ moondvsted",
+        "imgUrl": "/imgs/buttons/stel-at-moondvsted.gif"
     }
 ]
