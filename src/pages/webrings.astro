@@ -220,7 +220,7 @@ import WebringCard from '../components/WebringCard.astro';
     <style is:inline>
         #webrings {
             display: grid;
-            grid-template-columns: repeat(2, minmax(100px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 6px;
         }
 
@@ -260,7 +260,7 @@ import WebringCard from '../components/WebringCard.astro';
 
         @media (width <= 640px) {
             #webrings {
-                grid-template-columns: repeat(1, minmax(100px, 1fr));
+                grid-template-columns: repeat(1, 1fr);
             }
         }
     </style>

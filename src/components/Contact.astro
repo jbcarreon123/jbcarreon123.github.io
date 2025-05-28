@@ -4,16 +4,39 @@
     target="contact_Iframe"
 >
     <div class="form_1">
-        <input type="text" placeholder="name *" name="entry.134602215" required aria-label="your name (required)" />
-        <input type="text" placeholder="email *" name="entry.1177902446" required aria-label="your email (required)" />
-        <input type="text" placeholder="website" name="entry.189094834" aria-label="your website (optional)" />
+        <input
+            type="text"
+            placeholder="name *"
+            name="entry.134602215"
+            required
+            aria-label="your name (required)"
+        />
+        <input
+            type="text"
+            placeholder="email *"
+            name="entry.1177902446"
+            required
+            aria-label="your email (required)"
+        />
+        <input
+            type="text"
+            placeholder="website"
+            name="entry.189094834"
+            aria-label="your website (optional)"
+        />
     </div>
 
-    <textarea placeholder="your query *" name="entry.512548917" required aria-label="your query (required)" ></textarea>
+    <textarea
+        placeholder="your query *"
+        name="entry.512548917"
+        required
+        aria-label="your query (required)"></textarea>
 
     <div class="form_2">
         <p id="req"><i>* required</i></p>
-        <button type="submit"><span aria-hidden="true" class="ms" data-icon="send"></span> Send!</button>
+        <button type="submit"
+            ><span aria-hidden="true" class="ms" data-icon="send"></span> Send!</button
+        >
     </div>
 </form>
 
@@ -22,17 +45,18 @@
     name="contact_Iframe"
     title="contact form"
     style="display: none !important;"
-    src="/"
     onload="
         document.querySelectorAll('input, textarea').forEach(el => el.value = '');
-        let a=document.querySelector('#req');
-        let b=a.innerHTML;
-        a.innerHTML='Your response has been submitted!!!';
-        setTimeout(() => a.innerHTML = b, 5000);
-    "></iframe>
+        let a=document.querySelector(`.form_2 button[type='submit']`);
+        a.disabled = true;
+        setTimeout(() => a.disabled = false, 5000);
+    "
+></iframe>
 
 <style slot="head">
-    input, textarea, button {
+    input,
+    textarea,
+    button {
         padding: 6px;
         background: var(--altbg);
         text: var(--text);
@@ -45,6 +69,10 @@
         padding-bottom: 6px;
     }
 
+    .form_1 input {
+        width: 100%;
+    }
+
     .form_2 {
         display: flex;
         flex-direction: row;
@@ -55,5 +83,11 @@
     textarea {
         width: 100%;
         height: 200px;
+    }
+
+    @media (width <= 640px) {
+        .form_1 {
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 </style>

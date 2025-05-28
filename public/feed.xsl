@@ -47,7 +47,7 @@
           }
           ul {
           display: grid;
-          grid-template-columns: repeat(3, minmax(100px, 1fr));
+          grid-template-columns: repeat(3, 1fr);
           list-style: none;
           padding: 0;
           margin: 0;
