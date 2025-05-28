@@ -3,6 +3,7 @@ layout: '../../../layouts/TutorialLayout.astro'
 title: Thread Locking Addon
 description: This thing is a modification to Ayano's Comment Widget that allows you to lock specific comment threads.
 category: Ayano's Comment Widget
+published: 05/02/2025
 ---
 
 This thing is a modification to

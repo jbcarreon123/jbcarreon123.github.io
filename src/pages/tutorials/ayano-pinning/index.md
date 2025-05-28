@@ -3,6 +3,7 @@ layout: '../../../layouts/TutorialLayout.astro'
 title: Comment Pinning Addon
 description: This thing is a modification to Ayano's Comment Widget that allows you to pin specific comments.
 category: Ayano's Comment Widget
+published: 05/02/2025
 ---
 
 This thing is a modification to

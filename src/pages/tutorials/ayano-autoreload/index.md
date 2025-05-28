@@ -3,6 +3,7 @@ layout: '../../../layouts/TutorialLayout.astro'
 title: Auto Reload Addon
 description: This thing is just a really simple modification on Ayano's Comment Widget that makes it so the widget auto reloads when the user submits a comment.
 category: Ayano's Comment Widget
+published: 05/02/2025
 ---
 
 This thing is just a really simple modification on 

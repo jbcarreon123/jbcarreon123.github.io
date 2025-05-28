@@ -3,6 +3,7 @@ layout: '../../../layouts/TutorialLayout.astro'
 title: Astro (in the indie web)
 description: Astro is a web framework that you can use to build your indie site!
 category: SSGs/Frameworks
+published: 05/29/2025 12:00
 ---
 
 Astro is a web framework for building fast, content-driven websites. It allows you to have components/layouts that you can use anywhere on your site without ever thinking or worrying of having mismatched data on your site's pages, with the expense of running a command to make Astro build the site from Astro's syntax to HTML for you.
