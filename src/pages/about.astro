@@ -1,60 +1,58 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Contact from "../components/Contact.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="About JB" description="about this fella" id="about">
     <h1>About me</h1>
-    <p>
-        Hi there! I'm JB, the webbed master of this webbed site! I'm a 16 year old Filipino that does
-        something on my free time! I loved the indie web as it shows the creativity of each person and
-        lets them have fun!
-    </p>
-    <p>I enjoy coding something, listening to music, chatting and helping people!</p>
-    
-    <div class="about-buttons">
-        <img src="/imgs/id/male.png" alt="Male" />
-        <img src="/imgs/id/He_Him_They.png" alt="He/Him/They" />
-        <img src="/imgs/id/16_years_old.png" alt="16 years old" />
-        <img src="/imgs/id/filipino.png" alt="Filipino" />
-        <img src="/imgs/id/eng_second_lang.png" alt="English is my second and preferred language!" />
-        <img src="/imgs/id/left_handed.png" alt="Left-handed" />
-        <img src="/imgs/id/rat.png" alt="Year of the Rat" />
+    <div class="card">
+        <p>
+            Hi there! I'm JB, the webbed master of this webbed site! I'm a 17
+            year old Filipino that does something on my free time! I loved the
+            indie web as it shows the creativity of each person and lets them
+            have fun!
+        </p>
+        <p>
+            I enjoy coding something, listening to music, chatting and helping
+            people!
+        </p>
+
+        <div class="about-buttons">
+            <img src="/imgs/id/male.png" alt="Male" />
+            <img src="/imgs/id/He_Him_They.png" alt="He/Him/They" />
+            <img src="/imgs/id/filipino.png" alt="Filipino" />
+            <img
+                src="/imgs/id/eng_second_lang.png"
+                alt="English is my second and preferred language!"
+            />
+            <img src="/imgs/id/left_handed.png" alt="Left-handed" />
+            <img src="/imgs/id/rat.png" alt="Year of the Rat" />
+        </div>
     </div>
 
-<h1>What am I enjoying right now?</h1>
-<p>Coding my site and the things around it, it's really fun doing it and having feedback about it</p>
-<p>Playing games, but because I currently have the shitbox at hand, I currently enjoy playing mostly incremental games lol</p>
-<p>Helping people is also fun, I really enjoy helping people and see that it fixes their problem</p>
-<p>And also lastly, walking (but I do not enjoy the high heats here in the PH)</p>
-    
-    <h1 class="mt-4">Albums I liked</h1>
-    <div id="albums" class="flex flex-wrap gap-2 pt-2">
-        <a href="https://goodkid.bandcamp.com/album/good-kid-2" target="_blank">
-            <img
-                src="/imgs/albums/gk2.jpg"
-                alt="Good Kid 2 by Good Kid"
-                data-desc="especially Down with the King and Drifting"
-            />
-        </a>
-        <a href="https://soundcloud.com/goodkidband/sets/good-kid-4" target="_blank">
-            <img
-                src="/imgs/albums/gk4.jpg"
-                alt="Good Kid 4 by Good Kid"
-                data-desc="especially Break, Dance Class, and Premier Inn"
-            />
-        </a>
-        <a href="https://soundcloud.com/porter-robinson/sets/smile-d-2" target="_blank">
-            <img
-                src="/imgs/albums/smile_d.jpg"
-                alt="SMILE:: D by Porter Robinson"
-                data-desc="especially Cheerleader, Russian Roulette, and Perfect Pinterest Garden"
-            />
-        </a>
+    <h1>What am I enjoying right now?</h1>
+    <div class="card">
+        <p>
+            Coding my site and the things around it, it's really fun doing it
+            and having feedback about it
+        </p>
+        <p>
+            Playing games, but because I currently have the shitbox at hand, I
+            currently enjoy playing mostly incremental games lol
+        </p>
+        <p>
+            Helping people is also fun, I really enjoy helping people and see
+            that it fixes their problem
+        </p>
+        <p>
+            And also lastly, walking (but I do not enjoy the high heats here in
+            the PH)
+        </p>
     </div>
-    
+
     <h1 class="mt-4">My system specs</h1>
     <div id="specs">
-        <div>
+        <div class="card">
             <h2>Main system (laptop)</h2>
             <table>
                 <tbody>
@@ -68,7 +66,10 @@ import Layout from '../layouts/Layout.astro';
                     </tr>
                     <tr>
                         <td>GPU</td>
-                        <td>Nvidia RTX 3050 6GB Mobile Refresh + Intel UHD Graphics</td>
+                        <td
+                            >Nvidia RTX 3050 6GB Mobile Refresh + Intel UHD
+                            Graphics</td
+                        >
                     </tr>
                     <tr>
                         <td>RAM</td>
@@ -85,7 +86,7 @@ import Layout from '../layouts/Layout.astro';
                 </tbody>
             </table>
         </div>
-        <div>
+        <div class="card">
             <h2>The Shitbox (second system)</h2>
             <table>
                 <tbody>
@@ -117,14 +118,123 @@ import Layout from '../layouts/Layout.astro';
             </table>
         </div>
     </div>
-    
+
+    <h1>Reaching me out</h1>
+    <div class="cards">
+        <div class="col">
+            <div class="card">
+                <h2>
+                    <a
+                        href="https://discord.com/users/908002848967626842"
+                        target="_blank"
+                        >Discord: @jbcrn <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></a>
+                </h2>
+                <p>I'm active on these servers:</p>
+                <ul>
+                    <li>
+                        <a href="https://discord.gg/hvfHKyVS6b" target="_blank"
+                            >Nekoweb Discord <span
+                                aria-hidden="true"
+                                class="ms"
+                                data-icon="open_in_new"></span></a>
+                    </li>
+                    <li>
+                        <a href="https://discord.gg/etaj8Pb7FS" target="_blank"
+                            >Pebble Lounge <span
+                                aria-hidden="true"
+                                class="ms"
+                                data-icon="open_in_new"></span></a>
+                    </li>
+                    <li>
+                        <a href="https://discord.gg/TxWGcBmeEc" target="_blank"
+                            >Lua's Hotel <span
+                                aria-hidden="true"
+                                class="ms"
+                                data-icon="open_in_new"></span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>
+                    <a href="https://github.com/jbcarreon123" target="_blank"
+                        >GitHub: jbcarreon123 <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></a>
+                </h2>
+                <a href="/projects">Looking at my projects?</a>
+            </div>
+            <div class="card">
+                <h2>
+                    <a href="mailto:jbcarreon212@gmail.com" target="_blank"
+                        >Email: jbcarreon212 [at] gmail [dot] com <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></a>
+                </h2>
+                <p>You can also use the contact form below!</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <h2>
+                    <a
+                        href="https://bsky.app/profile/jb.is-a.dev"
+                        target="_blank"
+                        >Bluesky: @jb.is-a.dev <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></a>
+                </h2>
+            </div>
+            <div class="card">
+                <h2>
+                    <a href="https://spacehey.com/jbcarreon123" target="_blank"
+                        >Spacehey: jbcarreon123 <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></a>
+                </h2>
+            </div>
+            <div class="card">
+                <h2>
+                    <a href="https://fosstodon.org/@jbcarreon123" target="_blank"
+                        >Mastodon: jbcarreon123 @ fosstodon.org <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></a>
+                </h2>
+            </div>
+            <div class="card">
+                <h2>
+                    SHARP: jb#twoblade.com
+                </h2>
+                <p>You can use any SHARP clients, like
+                    <a href="https://twoblade.com" target="_blank"
+                        >Twoblade <span
+                            aria-hidden="true"
+                            class="ms"
+                            data-icon="open_in_new"></span></a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card contact">
+        <h2>You can also contact me here!</h2>
+        <Contact />
+    </div>
+
     <style is:inline>
         img {
             image-rendering: pixelated;
             position: relative;
             z-index: 2;
         }
-    
+
         img:hover {
             z-index: 50;
             transform: scale(1.25);
@@ -136,8 +246,9 @@ import Layout from '../layouts/Layout.astro';
             flex-wrap: wrap;
             gap: 6px;
         }
-    
-        .about-buttons:has(img:hover) img:not(:hover), #albums:has(img:hover) img:not(:hover) {
+
+        .about-buttons:has(img:hover) img:not(:hover),
+        #albums:has(img:hover) img:not(:hover) {
             z-index: 1;
             opacity: 0.5;
             filter: blur(1px);
@@ -146,23 +257,49 @@ import Layout from '../layouts/Layout.astro';
         tr td:first-child {
             width: 80px;
         }
-    
+
         tr td:last-child {
             padding-left: 8px;
         }
-    
+
         #albums img {
             width: 128px;
             height: auto;
         }
 
-        #specs {
+        #specs,
+        .cards {
             display: grid;
             grid-template-columns: repeat(2, minmax(100px, 1fr));
+            gap: 6px;
+        }
+
+        .cards .col {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card {
+            padding: 6px;
+            background: var(--acc);
+        }
+
+        .card.contact {
+            margin-top: 6px;
+        }
+
+        .card h2 {
+            padding-top: 0;
+        }
+
+        .card ul {
+            margin-left: 0;
         }
 
         @media (width <= 640px) {
-            #specs {
+            #specs,
+            .cards {
                 grid-template-columns: repeat(1, minmax(100px, 1fr));
             }
         }

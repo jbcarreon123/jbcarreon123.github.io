@@ -32,7 +32,7 @@
           }
           #container {
           max-width: 800px;
-          min-height: 100vh;
+          min-height: 100dvh;
           margin: 0 auto;
           background-color: var(--bg);
           padding: 20px;

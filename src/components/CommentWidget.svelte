@@ -6,7 +6,8 @@
 	import MarkdownIt from 'markdown-it';
 	import sanitizeHtml from 'sanitize-html';
 	const parser = new MarkdownIt({
-		html: true
+		html: true,
+		linkify: true
 	});
 
 	var defaultRender = parser.renderer.rules.link_open || function (tokens, idx, options, env, self) {

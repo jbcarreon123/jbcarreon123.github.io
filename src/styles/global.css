@@ -28,12 +28,12 @@ body {
     flex-direction: row;
     max-width: 900px;
     margin: 0 auto;
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 .container > main {
     min-width: 0;
-    width: calc(100vw - 150px);
+    width: calc(100dvw - 150px);
 }
 
 /* Font classes */
@@ -266,7 +266,7 @@ code {
 }
 
 img, figure, iframe {
-    max-width: clamp(100px, 80vw, 500px);
+    max-width: clamp(100px, 80dvw, 500px);
 }
 
 aside nav {
@@ -371,7 +371,7 @@ aside {
     align-content: stretch;
     justify-content: space-between;
     padding: 12px 0;
-    min-height: calc(100vh - 24px);
+    min-height: calc(100dvh - 24px);
     align-items: end;
     background-color: var(--acc);
     grid-area: aside;
@@ -384,7 +384,7 @@ main > div {
     justify-content: space-between;
     gap: 24px;
     padding: 12px;
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 div#leftbar > * {
@@ -549,7 +549,7 @@ footer .right {
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
         width: auto;
-        max-height: 100vh;
+        max-height: 100dvh;
     }
 
     header {
@@ -561,13 +561,13 @@ footer .right {
 
     .container main {
         scroll-snap-align: end;
-        min-width: 100vw;
+        min-width: 100dvw;
     }
 
     .container aside {
         scroll-snap-align: start;
         min-width: 150px;
-        max-height: 100vh;
+        max-height: 100dvh;
         overflow-y: auto;
     }
 
@@ -576,7 +576,7 @@ footer .right {
     }
 
     main > div {
-        max-height: 100vh;
+        max-height: 100dvh;
     }
 
     aside nav {
