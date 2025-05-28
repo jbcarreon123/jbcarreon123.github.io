@@ -2,7 +2,6 @@
 import '../styles/fa-brands.css';
 const { title, id, description } = Astro.props;
 const { url, site } = Astro;
-import { OgImage } from "astro-opengraph-image/components";
 const ogImage = url
     .toString()
     .replace("/posts/", "/post-og/")

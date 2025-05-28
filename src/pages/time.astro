@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/BgOnlyLayout.astro';
+---
+
+<Layout title="time." id="time">
+    <script is:inline slot="head">
+        document.addEventListener('DOMContentLoaded', () => {
+            let time = document.querySelector('#time');
+            let date = document.querySelector('#date');
+            let s = document.querySelector('#s');
+
+            updateClock(time, date, s);
+            setInterval(() => updateClock(time, date, s), 950)
+        })
+
+        function updateClock(time, date, s) {
+            const now = new Date();
+            const clockHM = now.toLocaleTimeString('en-US', {
+                timeZone: 'Asia/Manila',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            }).split(' ');
+            const clockD = now.toLocaleDateString('en-US', {
+                timeZone: 'Asia/Manila'
+            })
+
+            time.textContent = clockHM[0];
+            date.textContent = clockD;
+            s.textContent = " " + clockHM[1];
+        }
+    </script>
+
+    <div class="c">
+        <div>
+            <p style="padding-bottom: 16px;"><a href="/">Go back home?</a></p>
+            <p class="tg">jb's local time</p>
+            <h1><span id="time">12:00:00</span><span id="s" class="tg"> AM</span></h1>
+            <p class="tg" style="padding-top: 6px;"><span id="date">01/01/1970</span> @ Philippine Standard Time</p>
+        </div>
+    </div>
+
+    <style slot="head">
+        h1 {
+            font-size: 4em;
+        }
+
+        .c {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100dvh;
+        }
+
+        * {
+            padding: 0; 
+            font-family: 'VCR OSD Mono', monospace;
+        }
+
+        @media screen and (width <= 640px) {
+            h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</Layout>

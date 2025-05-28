@@ -1,12 +1,10 @@
 ---
 import '@csstools/normalize.css';
 import "../styles/global.css";
-import "../styles/landing.css";
 import { ClientRouter } from "astro:transitions";
 import { version } from "../../package.json";
 import { Image } from "astro:assets";
 import { Head } from 'astro-capo'
-
 const { title, id, description } = Astro.props;
 const { url, site } = Astro;
 import CommonHead from "../components/CommonHead.astro";
@@ -127,8 +125,6 @@ const ogImage = url
 	</head>
     <body class="jcolor" transition:animate="fade">
 		<NotifModal />
-        <main>
-            <slot />
-        </main>
+        <slot />
     </body>
 </html>
