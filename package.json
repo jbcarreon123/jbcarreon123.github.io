@@ -9,6 +9,7 @@
     "@astrojs/svelte": "^7.1.0",
     "@catamphetamine/id3js": "^1.0.2",
     "@csstools/normalize.css": "^12.1.1",
+    "@expressive-code/plugin-collapsible-sections": "^0.41.2",
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@indiefellas/astro-adapter-nekoweb": "^2.1.2",
     "@kindspells/astro-shield": "^1.7.1",
