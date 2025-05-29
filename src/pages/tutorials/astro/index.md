@@ -201,13 +201,13 @@ Now, you want to pass properties from your index file to the base layout. How do
 Let's pass a title and make the base layout use it, with a default if nothing has set!
 
 1. Go back to your `base.astro` file, and add this to the file's frontmatter:
-   ```astro title="src/pages/base.astro"
+   ```astro title="src/layouts/base.astro"
    ---
    const { title = "My site title!" } = Astro.props;
    ---
    ```
 2. Now, let's use it. We will change the content of the `<title></title>` element from 'Hello World!' to `{title}`!
-   ```astro title="src/pages/base.astro" collapse={1-9, 13-16}
+   ```astro title="src/layouts/base.astro" collapse={1-9, 13-16}
    ---
    const { title = "My site title!" } = Astro.props;
    ---
@@ -238,6 +238,116 @@ Let's pass a title and make the base layout use it, with a default if nothing ha
    ```
 4. Now, after you save it, it should now say 'Hello World!'!
 
+# Styling and CSS
+In Astro, you can use either the `<style></style>` tag or you can import the CSS file entirely. Astro will process it automatically and will choose what's best on build time.
+
+Let's make it so our base layout has a style that the pages can use!
+
+First, go back to the `base.astro`, and just put `<style></style>` tags inside the `<head></head>` element, then, let's make the header blue and the background orange, like this:
+
+```astro title="src/layouts/base.astro" collapse={1-10, 22-25}
+---
+const { title = "My site title!" } = Astro.props;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <style>
+            body {
+                background: orange;
+            }
+
+            h1 {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <slot></slot>
+    </body>
+</html>
+```
+
+Now save it. You'll find that only the body selector got affected, and not the heading. That's because Astro uses [Scoped styling](https://docs.astro.build/en/guides/styling/#scoped-styles) by default, which for a base layout, we want it to be global. To fix that, we can put `is:global` after the `<style>` opening tag like this:
+
+```astro title="src/layouts/base.astro" collapse={1-10, 14-25}
+---
+const { title = "My site title!" } = Astro.props;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <style is:global>
+            body {
+                background: orange;
+            }
+
+            h1 {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <slot></slot>
+    </body>
+</html>
+```
+
+After that, you will see that your styles now work and selects everything!
+
+## External Styles
+Now, if you want to have external styles, just create a `styles` folder inside of the `src` folder, then create a normal CSS file inside of it! External styles are global, so you don't need to worry about using `is:global`.
+
+Then, you can import it on the frontmatter, like if you want to create a `base.css` file that is imported on `base.astro`, you can add the code below:
+```astro title="src/layouts/base.astro"
+---
+import '../styles/base.css';
+---
+```
+
+Now, after saving, it should work and should select everything!
+
+# JavaScript
+In Astro, there's two kinds of scripts. Server-side scripts, which resides inside of the `---` frontmatter block and on the `{}` expressions, and client-side scripts, which resides on HTML `<script></script>` elements.
+
+Server-side scripts are ran when your page gets rendered, like if you're developing your side in the dev server, or when building your site. These are useful for things like prop passing, file handling, and many more. If you know how JSX/React works, this might be familiar to you!
+
+For example, this code below looks for blog posts, and shows a list to the user:
+
+```astro title="src/pages/blogs.astro"
+---
+import Base from "../layouts/base.astro";
+const blogs = Object.values(import.meta.glob('./blogs/**/*.md', { eager: true }));
+---
+
+<Base title="My Blogs!">
+    {blogs.map(blog => 
+        <a href={blog.url}>
+            {blog.url}
+        </a>
+    )}
+</Base>
+```
+
+Client-side scripts, on the other hand, are scripts ran by the browser. This can include things like loading event handlers, loading interactivity, and more! It's like the typical JavaScript syntax you find in HTML code!
+
+## TypeScript
+Astro uses TypeScript on it's syntax, whether on the server-side scripts or the client-side scripts. This provides you greater flexibility with defining types, and linting capabilities you won't find in regular JavaScript.
+
+In build time, Astro automatically transpiles TypeScript syntax to JavaScript syntax for you.
+
+If you want to disable TypeScript, you can put `//@ts-nocheck` on the start of the script syntax, or you can disable it project-wide by disabling type checking on your code editor. A simple Google search should suffice.
+
 # Markdown
 Astro natively supports Markdown, which is a popular markup language for formatting text. It's useful for making blog posts, tutorials, and more!
 
@@ -249,6 +359,74 @@ Markdown is supported!!!
 ```
 
 Now, navigate to `http://localhost:4321/cool`, and you will see your Markdown file being translated to HTML, without any external libraries!
+
+## Frontmatter
+You can also put frontmatter inside of your Markdown files like this:
+```markdown title="src/pages/cool.md"
+---
+title: Astro is really cool!
+---
+
+# Astro is cool!
+Markdown is supported!!!
+```
+
+Now, we can't access it yet, but we can use layouts to access the frontmatter!
+
+## Markdown Layouts
+Like Astro files can have it's layouts, Markdown files can also have it's own layouts. But, unlike Astro files, you can also get the Frontmatter information in Markdown layouts. Let's make one and use it for our `cool.md` file! Let's name it `markdown_base.astro`!
+
+You can copy the existing code on the `base.astro` or we can also make it so `cool.md` references `markdown_base.astro` then we reference the markdown layout to use the `base.astro` file, so if you want to edit the layout, you can just edit the `base.astro` file and it will reflect to the markdown layout! We will use the latter here.
+
+Firstly, create a `markdown_base.astro` file inside the `layouts` folder. Then to simplify our lives, we can copy the code on the `index.astro` as we will use the base layout, but we will replace the thing inside of the `<Base></Base>` layout to `<slot></slot>`. It should look like this:
+
+```astro title="src/layouts/markdown_base.astro"
+---
+import Base from "../layouts/base.astro";
+---
+
+<Base title="Hello World!">
+	<slot></slot>
+</Base>
+```
+
+Now, save it. We go back to the `cool.md` file and let's put a `layout` value on the frontmatter with the Markdown base layout, like this:
+```markdown title="src/pages/cool.md"
+---
+layout: '../layouts/markdown_base.astro'
+title: Astro is really cool!
+---
+
+# Astro is cool!
+Markdown is supported!!!
+```
+
+Now, after we save the markdown file, and load it on our browser, we see that the styles we made on the Base layout is now there!
+
+## Passing Frontmatter to Markdown Layouts
+You will see that it says 'Hello World!' on the title, and it doesn't say the title we specify on the markdown frontmatter, that's because we need to tell it to use the title element!
+
+Now, on your Markdown layout file (which is `markdown_base.astro`), put this code:
+```astro title="src/layouts/markdown_base.astro"
+---
+import Base from "../layouts/base.astro";
+const { title = "My Markdown Page!" } = Astro.props.frontmatter;
+---
+```
+
+Now, we will define it on the base title property, which will look like this:
+```astro title="src/layouts/markdown_base.astro"
+---
+import Base from "../layouts/base.astro";
+const { title = "My Markdown Page!" } = Astro.props.frontmatter;
+---
+
+<Base title={title}>
+	<slot></slot>
+</Base>
+```
+
+Now, save it. It should now say the thing you specify on the title frontmatter, with a default 'My Markdown Page!' if there's no specified title!
 
 # Building your site
 Now, if you wanna export your site, just run `npm run build`! It should build your site inside the `dist` folder on the root of your project folder!

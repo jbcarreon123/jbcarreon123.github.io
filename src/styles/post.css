@@ -62,6 +62,10 @@ h1 {
     font-size: 2em;
 }
 
+code {
+    text-wrap-mode: nowrap;
+}
+
 article h1 {
     position: sticky;
     top: 0px;
