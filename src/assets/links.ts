@@ -31,6 +31,12 @@ export const LinkObjs: LinkObj = [
                 icon: "terminal"
             },
             {
+                name: "FAQs",
+                path: "/faq/",
+                redirect: false,
+                icon: "quick_reference"
+            },
+            {
                 name: "RIIAtW",
                 path: "/riiatw/",
                 redirect: false,
