@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Import stuff, do not remove or touch this!
 	import { onMount } from 'svelte';
-	const { disabled } = $props();
+	const { disabled, pagePath, hideTitle = false } = $props();
 
 	import MarkdownIt from 'markdown-it';
 	import sanitizeHtml from 'sanitize-html';
@@ -684,7 +684,7 @@
 	}
 
 	onMount(() => {
-		v_pagePath = window.location.pathname;
+		v_pagePath = pagePath ?? window.location.pathname;
         
         link = document.createElement('a');
 	    link.href = '#c_inputDiv';
@@ -710,7 +710,7 @@
 			action="https://docs.google.com/forms/d/e/{s_formId}/formResponse"
 		>
 			{#if s_commentsOpen}
-				<h1 id="c_widgetTitle" hidden={v_pagePath.includes('guestbook')}>{s_widgetTitle}</h1>
+				<h1 id="c_widgetTitle" hidden={v_pagePath.includes('guestbook') || hideTitle}>{s_widgetTitle}</h1>
 
 				<div id="c_commentInput">
 					<div id="c_nameWrapper" class="c-inputWrapper name">

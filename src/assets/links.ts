@@ -37,6 +37,12 @@ export const LinkObjs: LinkObj = [
                 icon: "language"
             },
             {
+                name: "Packages",
+                path: "/packages/",
+                redirect: false,
+                icon: "inventory_2"
+            },
+            {
                 name: "Gallery",
                 path: "/gallery/",
                 redirect: false,

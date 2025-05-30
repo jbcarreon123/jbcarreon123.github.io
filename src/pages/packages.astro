@@ -6,39 +6,21 @@ import { listInstalled } from 'list-installed';
 const __dirname = path.resolve(path.dirname(''));
 const pkgMap = await listInstalled(__dirname);
 const packages = Array.from(pkgMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
-console.log(packages.length);
-const packageChunks = [];
-for (let i = 0; i < packages.length; i += 100) {
-    const chunk = packages.slice(i, i + 100);
-    packageChunks.push(chunk); }
 ---
 
 <Layout title="Packages" description="The packages used to build and develop jb's site" id="packages">
-    <script src="../assets/previewTab.ts"></script>
-
     <h1>Packages</h1>
-    <p>The packages used to build and develop jb's site. There's currently {packages.length} packages here!</p>
-    <div class="previewTabLayout">
-        <div class="previewTabButtons">
-            {packageChunks.map((v, ind) => 
-                <button class={"tabLayoutButton" + (ind == 0 ? ' active' : '')} data-tab-layout={"page-" + (ind + 1)}>P{ind+1}</button>
-            )}
-        </div>
-        <div class="previewTabs">
-            {packageChunks.map((pkgs, ind) =>
-                <div class={"tabLayout" + (ind == 0 ? ' active' : '')} id={"page-" + (ind + 1)}>
-                    {pkgs.map((pkg, ind) =>
-                        <a href={pkg[1].homepage} target="_blank" data-index={ind} style={ind >= 100 ? 'display: none;' : ''}>
-                            <div class="packageCard">
-                                <h2>{pkg[0]} <span class="ms" aria-hidden="true" data-icon="open_in_new"></span></h2>
-                                <p>{pkg[1].description}</p>
-                                <p class="tg">{pkg[1].keywords?.join(', ')}</p>
-                            </div>
-                        </a>
-                    )}
+    <p>The packages used to build and develop jb's site. There's currently {packages.length} packages here, which is lower than a <a href="https://www.reddit.com/r/node/comments/fy335j/typical_npm_install/" target="_blank">typical NPM project! <span class="ms" data-icon="open_in_new" aria-hidden="true"></span></a></p>
+    <div>
+        {packages.map((pkg, ind) =>
+            <a href={pkg[1].homepage} target="_blank">
+                <div class="packageCard">
+                    <h2>{pkg[0]} <span class="ms" aria-hidden="true" data-icon="open_in_new"></span></h2>
+                    <p>{pkg[1].description}</p>
+                    <p class="tg">{pkg[1].keywords?.join(', ')}</p>
                 </div>
-            )}
-        </div>
+            </a>
+        )}
     </div>
 
     <style slot="head" is:inline>
