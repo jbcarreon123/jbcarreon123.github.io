@@ -28,12 +28,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
       - name: Install dependencies (using Bun)
-        id: installBun
         continue-on-error: true
         run: bun install
-      - name: Install dependencies (using NPM)
-        if: failure() && steps.installBun.outcome == 'failure'
-        run: npm install --force
       - name: Get commit hash
         id: commit
         uses: prompt/actions-commit-hash@v3
