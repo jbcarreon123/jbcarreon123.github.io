@@ -5,6 +5,7 @@ import { LinkObjs } from "../assets/links";
 
 <aside data-active-page={id} id="sidebar">
     <nav transition:persist>
+        <slot />
         <a id="index" href="/"><span aria-hidden="true" class="ms" data-icon="home"></span> Home</a>
         {LinkObjs.map((obj) => <details>
             <summary>{obj.name}</summary>

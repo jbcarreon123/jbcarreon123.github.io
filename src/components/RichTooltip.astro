@@ -36,7 +36,7 @@
     if (tooltip) {
         document.addEventListener('DOMContentLoaded', () => loadTooltipListeners())
         document.addEventListener('DOMContentLoaded', () => loadTooltipListeners())
-        document.addEventListener('astro:after-swap', () => loadTooltipListeners())
+        document.addEventListener('DOMContentLoaded', () => loadTooltipListeners())
         setInterval(() => loadTooltipListeners(), 5000);
     }
 </script>

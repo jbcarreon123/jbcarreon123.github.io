@@ -282,6 +282,10 @@ aside nav {
     z-index: 99;
 }
 
+aside nav #toc {
+    padding-bottom: 20px;
+}
+
 figcaption, .tg, .text-xs {
     font-size: 0.75em;
     color: var(--sec);

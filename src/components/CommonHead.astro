@@ -172,6 +172,10 @@ import { ClientRouter } from "astro:transitions";
             createNotif("You are visiting jb's site in an iframe!", "For full experience, I recommend you to visit my site on not an iframe.")
         }
 
+        if (window.location.host !== 'jbcarreon123.nekoweb.org' && window.location.hostname !== 'localhost') {
+            createNotif("You are visiting jb's site on a backup host!", 'Note that some things that I only focused on the main host, jbcarreon123.nekoweb.org, will break. Especially webrings.')
+        }
+
         let el = document.querySelector("aside")?.dataset.activePage;
         document.querySelectorAll("nav a").forEach((e) => {
             if (e.id === el) {
@@ -237,7 +241,7 @@ import { ClientRouter } from "astro:transitions";
         );
         observer.observe(asideElement);
     });
-    document.addEventListener("astro:after-swap", () => load());
+    document.addEventListener("DOMContentLoaded", () => load());
 
     document.addEventListener("DOMContentLoaded", () => {
         console.log(

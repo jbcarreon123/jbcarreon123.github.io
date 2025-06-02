@@ -49,7 +49,9 @@ const hash = import.meta.env.COMMIT_HASH ?? "null";
 		<RichTooltip />
 		<ImageViewer />
 		<div class="container" transition:animate="none">
-			<Sidebar title={title} id={id} description={description} />
+			<Sidebar title={title} id={id} description={description}>
+				<slot name="toc" />
+			</Sidebar>
 			<main id="main">
 				<header>
 					<a href="#sidebar"><span

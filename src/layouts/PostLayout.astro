@@ -3,10 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import CommentWidget from '../components/CommentWidget.svelte';
 import '../styles/post.css';
 import '../styles/comment-widget-dark.css';
-const { frontmatter } = Astro.props;
+const { frontmatter, headings } = Astro.props;
 ---
 
 <Layout title={frontmatter.title} description={frontmatter.description} id="posts">
+    <Fragment slot="toc">
+        <details id="toc" open>
+            <summary>table of contents</summary>
+            <a href="#content">Start of post</a>
+            {headings.map(h => <a href={"#" + h.slug}>{h.text}</a>)}
+        </details>
+    </Fragment>
     <div class="article-info" style={'--banner:url(' + frontmatter.background + ')'}>
         <p class="tg">{frontmatter.tags.split(/, ?/).map((t: any) => <span>#{t} </span>)}</p>
         <h1 class="post-title">{frontmatter.title}</h1>
@@ -17,4 +24,41 @@ const { frontmatter } = Astro.props;
     <div style="width: 100%;">
         <CommentWidget client:only="svelte" disabled={frontmatter.commentsDisabled ?? false} />
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (ev) => {
+            const options = {
+                root: null,
+                rootMargin: "0px",
+                threshold: [0.35],
+            };
+
+
+            var article = document.querySelector("article");
+            if (article) {
+                var obv = new IntersectionObserver(setToc,options);
+                article.querySelectorAll('h1, h2, h3').forEach(el => {
+                    obv.observe(el.parentElement ?? el);
+                })
+
+                function setToc(e:IntersectionObserverEntry[]) {
+                    if (article) {
+                        let toc = document.querySelector('#toc');
+                        let tocItems = toc?.querySelectorAll('a');
+                        e.map(i => {
+                            tocItems?.forEach(it => {
+                                if (it.href.replace('#', '').includes(i.target.querySelector('h1, h2, h3')?.id ?? i.target.id)) {
+                                    if (i.isIntersecting) {
+                                        it.classList.add('active')
+                                    } else {
+                                        it.classList.remove('active')
+                                    }
+                                }
+                            })
+                        })
+                    }
+                }
+            }
+        })
+    </script>
 </Layout>

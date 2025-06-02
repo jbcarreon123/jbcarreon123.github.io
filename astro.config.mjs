@@ -3,7 +3,7 @@ import { defineConfig, envField, passthroughImageService } from 'astro/config';
 import { loadEnv } from "vite";
 import nekoweb from "@indiefellas/astro-adapter-nekoweb";
 import svelte from '@astrojs/svelte';
-import remarkToc from 'remark-toc';
+// import remarkToc from 'remark-toc';
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
@@ -15,11 +15,11 @@ import mdx from '@astrojs/mdx';
 import rehypeSectionize from '@hbsnow/rehype-sectionize'
 import expressiveCode from 'astro-expressive-code';
 import htmlStyleMinify from './html-style-minify.ts';
-
 import sitemap from '@astrojs/sitemap';
-
+import rehypeSlug from 'rehype-slug';
 import playformCompress from '@playform/compress';
 import { transform } from 'lightningcss';
+import rehypeToc from "@stefanprobst/rehype-extract-toc";
 
 let nkw = [];
 
@@ -96,13 +96,8 @@ export default defineConfig({
   trailingSlash: 'always',
 
   markdown: {
-    remarkPlugins: [
-      remarkToc
-    ],
-
     rehypePlugins: [
       rehypeAccessibleEmojis,
-      rehypeAutolinkHeadings,
       [rehypeExternalLinks, {
         rel: ['nofollow'], target: '_blank',
         content: {
@@ -121,7 +116,10 @@ export default defineConfig({
       }
       ],
       rehypeFigure,
-      rehypeSectionize
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: 'append' }],
+      rehypeToc,
+      rehypeSectionize,
     ],
   }
 });
