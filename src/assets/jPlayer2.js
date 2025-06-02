@@ -167,7 +167,7 @@ class jPlayer extends HTMLElement {
         })
 
         this.initListeners();
-        this.loadOverflow();
+        setTimeout(() => this.loadOverflow(), 100);
 
         this.rendered = true;
         this.emit('load');
@@ -232,8 +232,6 @@ class jPlayer extends HTMLElement {
 
         const videoElement = this.#playingContainer?.querySelector('#jplayer--video-player');
         videoElement?.appendChild(this._videoPlayer);
-
-        this.loadOverflow();
     }
 
     connectedCallback() {
@@ -754,8 +752,7 @@ function isOverflowing(el) {
     var curOverflow = getComputedStyle(el, 'overflow');
     if (!curOverflow || curOverflow === "visible")
         el.style.overflow = "hidden";
-    var isOverflowing = el.clientWidth < el.scrollWidth
-        || el.clientHeight < el.scrollHeight;
+    var isOverflowing = el.clientWidth < el.scrollWidth;
     el.style.overflow = curOverflow;
     return isOverflowing;
 }
