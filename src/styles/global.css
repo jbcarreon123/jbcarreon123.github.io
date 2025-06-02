@@ -276,7 +276,7 @@ img, figure, iframe {
 aside nav {
     display: flex;
     flex-direction: column;
-    width: 150px;
+    width: 200px;
     position: sticky;
     top: 12px;
     z-index: 99;
@@ -358,7 +358,7 @@ aside nav a, aside nav button {
     padding: 6px;
     margin-left: 6px;
     background-color: var(--acc);
-    width: 144px;
+    width: 194px;
     text-align: left;
     color: var(--link);
 }
@@ -574,7 +574,7 @@ footer .right {
 
     .container aside {
         scroll-snap-align: start;
-        min-width: 150px;
+        min-width: 200px;
         max-height: 100dvh;
         overflow-y: auto;
     }

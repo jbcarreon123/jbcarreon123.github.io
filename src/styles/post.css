@@ -101,14 +101,6 @@ article h1::after {
     vertical-align: bottom;
 }
 
-aside nav {
-    width: 200px;
-}
-
-aside nav a, aside nav button {
-    width: 194px;
-}
-
 @media (width <= 640px) {
     article h1 {
         position: static;
@@ -116,9 +108,5 @@ aside nav a, aside nav button {
 
     figure, img {
         max-width: 100%;
-    }
-
-    .container aside {
-        min-width: 200px;
     }
 }
