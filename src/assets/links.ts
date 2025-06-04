@@ -53,7 +53,13 @@ export const LinkObjs: LinkObj = [
                 path: "/gallery/",
                 redirect: false,
                 icon: "photo_library"
-            }
+            },
+            {
+                name: "Album List",
+                path: "/albumlist/",
+                redirect: false,
+                icon: "library_music"
+            },
         ]
     },
     {

@@ -1,0 +1,243 @@
+---
+import Layout from "../layouts/BgOnlyLayout.astro";
+import { albums } from "../assets/albums.ts";
+
+// @ts-ignore
+function onlyUnique(value, index, array) {
+    return array.indexOf(value) === index;
+}
+
+let al = albums.map((a) => {
+    return {
+        ...a,
+        tracks: a.tracks.map((t) => {
+            return {
+                ...t,
+                artists: t.artists?.filter((v) => v !== a.artist).filter(onlyUnique),
+            };
+        }),
+    };
+});
+
+let arr = Array.from({ length: 100 }, (_, i) => i);
+---
+
+<Layout
+    title="jb's album list"
+    id="alist"
+    description="warning: his music taste is weird"
+>
+    <h1 class="big">jb's album list</h1>
+    <div class="acontainer">
+        {
+            al.map((i) => (
+                <div>
+                    <button>
+                        <img
+                            src={i.image}
+                            alt={i.name + " by " + i.artist}
+                            loading="lazy"
+                        />
+                    </button>
+                    <div
+                        class="albumInfo"
+                        style="height: 0; width: 0; visibility: hidden;"
+                    >
+                        <h1>{i.name}</h1>
+                        <h2 class="tg">by {i.artist}</h2>
+                        <p class="tg">{i.genres}</p>
+                        <div class="tracks">
+                            <ol>
+                                {i.tracks.map((t) => (
+                                    <li>
+                                        <b>{t.title}</b>{" "}
+                                        {t.artists && t.artists?.length > 0 && (
+                                            <span class="tg">
+                                                with {t.artists.join(", ")}
+                                            </span>
+                                        )}{" "}
+                                        ({t.length})
+                                    </li>
+                                ))}
+                            </ol>
+                        </div>
+                        <div class="trlinks">
+                            {i.links.map((l) => (
+                                <a href={l.url} target="_blank">
+                                    {l.name}{" "}
+                                    <span
+                                        class="ms"
+                                        aria-hidden="true"
+                                        data-icon="open_in_new"
+                                    />
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            ))
+        }
+        <!-- {
+            arr.map((i) => (
+                <div>
+                    <button>{i}</button>
+                    <div
+                        class="albumInfo"
+                        style="height: 0; width: 0; visibility: hidden;"
+                    >
+                        <h1>{i}</h1>
+                    </div>
+                </div>
+            ))
+        } -->
+    </div>
+
+    <style slot="head">
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                interpolate-size: allow-keywords;
+            }
+        }
+
+        .acontainer {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(125px, 200px));
+            gap: 6px;
+            padding: 12px;
+            position: relative;
+            box-sizing: content-box;
+            border: 150px solid transparent;
+            width: 100%;
+            width: fit-content;
+            z-index: 1;
+        }
+
+        .albumInfo h2.tg {
+            font-weight: normal;
+        }
+
+        .albumInfo h1,
+        .albumInfo h2 {
+            padding: 0;
+        }
+
+        .acontainer button {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            padding: 0;
+            border-color: var(--bg);
+        }
+
+        .trlinks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding-top: 12px;
+        }
+
+        .trlinks a {
+            padding: 6px;
+            background: var(--acc);
+            width: max-content;
+        }
+
+        ol {
+            padding-left: 12px;
+        }
+
+        .acontainer button:hover {
+            background: var(--bg);
+        }
+
+        .acontainer button img {
+            width: 100%;
+        }
+
+        .acontainer button:hover,
+        .acontainer div:has(.albumInfo[data-vis="true"]) button {
+            opacity: 0.75;
+            border: 6px solid var(--bg);
+        }
+
+        .acontainer .albumInfo {
+            width: 600px;
+            max-width: 100vw;
+            position: absolute;
+            background: var(--bg);
+            padding: 12px;
+            overflow: hidden;
+            z-index: 99;
+        }
+
+        /* @media screen and (width <= 640px) {
+            .acontainer .albumInfo {
+                width: calc(100vw - 24px);
+                position: absolute;
+                left: 0;
+                margin-inline: 12px;
+            }
+        } */
+
+        h1.big {
+            font-size: 5em;
+            position: absolute;
+            z-index: 0;
+            left: 24px;
+            font-style: italic;
+            opacity: 0.15;
+            font-synthesis: style;
+            width: 100%;
+            text-wrap-mode: nowrap;
+        }
+    </style>
+
+    <script slot="head" is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!localStorage.getItem('jbsite:albumlist')) {
+                alert('hey! welcome to the album list! this is a page where you can judge jb\'s music taste.\n\nthis is currently in beta and its currently getting improved when jb have the time to improve it\n\ndata from musicbrainz and the album art is from cover art archive.\n\nthis will just show once, if you press ok it will never be shown again')
+
+                localStorage.setItem('jbsite:albumlist', 'hehe');
+            }
+
+            let els = document.querySelectorAll(".acontainer button");
+            els.forEach((e) =>
+                e.addEventListener("click", (ev) => {
+                    let s = e.parentElement.querySelector(".albumInfo");
+                    if (s.dataset.vis == "true") {
+                        s.style.height = "0px";
+                        s.style.visibility = "hidden";
+                        setTimeout(() => (s.style.width = "0px"), 250);
+                        s.dataset.vis = "false";
+                    } else {
+                        s.style.width = "600px";
+                        s.style.height = "auto";
+                        s.style.visibility = "visible";
+                        s.dataset.vis = "true";
+
+                        setTimeout(() => {
+                            s.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                                inline: "center",
+                            });
+                        }, 100);
+                    }
+
+                    document
+                        .querySelectorAll(".acontainer button")
+                        .forEach((el) => {
+                            if (el == e) return;
+                            let sv =
+                                el.parentElement.querySelector(".albumInfo");
+                            if (sv.dataset.vis == "true") {
+                                sv.style.height = "0px";
+                                sv.style.visibility = "hidden";
+                                sv.dataset.vis = "false";
+                                setTimeout(() => (sv.style.width = "0px"), 250);
+                            }
+                        });
+                }),
+            );
+        });
+    </script>
+</Layout>
