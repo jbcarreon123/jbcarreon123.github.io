@@ -115,7 +115,7 @@ import "prism-code-editor/invisibles.css";
                 reason: 'selector' | 'link';
             }[] = [];
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
-            const linkRegex = /(^.+url)\((?!["']?(?:(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org)|(?:\/)).+(\);?)/gm;
+            const linkRegex = /(^.+url)\((?!["']?(?:(?:https?:)?\/\/([a-z0-9A-Z\-]+\.)?nekoweb\.org)|(?:\/)).+(\);?)/gm;
             let clines = css.split("\n");
             clines.forEach((s, i) => {
                 if (regex.test(s)) {
@@ -168,7 +168,7 @@ import "prism-code-editor/invisibles.css";
 
         function replaceInvalidCSS(cssString: string | null | undefined) {
             if (!cssString) return "";
-            const urlRegex1 = /((?:https:)?\/\/)([\S]+).nekoweb.org([\S]+)(\);)/gm;
+            const urlRegex1 = /((?:https:)?\/\/)([\S\-]+).nekoweb.org([\S]+)(\);)/gm;
             const urlRegex2 = '$1nekoweb.org/site/$2/files$3?original=1$4';
             const regex = /^(?!\.site-box|\.follow|\.post-box).*{/gm;
             const linkRegex = /(^.+url)\((?!["']?(?:(?:https?:)?\/\/([a-z0-9A-Z]+\.)?nekoweb\.org)|(?:\/)).+(\);?)/gm;
