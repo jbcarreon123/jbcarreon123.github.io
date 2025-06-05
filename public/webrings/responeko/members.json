@@ -43,5 +43,10 @@
         "host": "garyswod.nekoweb.org",
         "title": "Gary's Wod",
         "expression": "https://garyswod.nekoweb.org/images/geiriinohayashi.png"
+    },
+    {
+        "host": "aglovale.nekoweb.org",
+        "title": "aglovale",
+        "expression": "https://i.imgur.com/vvFFFrG.png"
     }
 ]
