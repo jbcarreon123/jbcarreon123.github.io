@@ -7,6 +7,7 @@ import { LinkObjs } from "../assets/links";
     <nav transition:persist>
         <slot />
         <a id="index" href="/"><span aria-hidden="true" class="ms" data-icon="home"></span> Home</a>
+        <a id="jbsite5" href="/jbsite5"><span aria-hidden="true" class="ms" data-icon="change_history"></span> Check out jbsite5!</a>
         {LinkObjs.map((obj) => <details>
             <summary>{obj.name}</summary>
             {obj.links.map((l) => <a id={l.path.replace(/\/$/, '').split('/')[l.path.replace(/\/$/, '').split('/').length - 1]} href={l.path} target={l.redirect ? '_blank' : '_parent'}>
