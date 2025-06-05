@@ -19,7 +19,9 @@ let al = albums.map((a) => {
     };
 });
 
-let arr = Array.from({ length: 100 }, (_, i) => i);
+let arr = Array.from({ length: 49 - albums.length }, (_, i) => i);
+
+console.log(arr.length, al.length, 49-al.length);
 ---
 
 <Layout
@@ -28,6 +30,7 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
     description="warning: his music taste is weird"
 >
     <h1 class="big">jb's album list</h1>
+    <a class="home" href="/">go home?</a>
     <div class="acontainer">
         {
             al.map((i) => (
@@ -77,19 +80,15 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
                 </div>
             ))
         }
-        <!-- {
+        {
             arr.map((i) => (
-                <div>
-                    <button>{i}</button>
-                    <div
-                        class="albumInfo"
-                        style="height: 0; width: 0; visibility: hidden;"
-                    >
-                        <h1>{i}</h1>
-                    </div>
+                <div class="placeholder">
+                    <button>
+                        
+                    </button>
                 </div>
             ))
-        } -->
+        }
     </div>
 
     <style slot="head">
@@ -103,13 +102,28 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
             display: grid;
             grid-template-columns: repeat(7, minmax(125px, 200px));
             gap: 6px;
-            padding: 12px;
             position: relative;
             box-sizing: content-box;
-            border: 150px solid transparent;
+            padding: 150px;
             width: 100%;
             width: fit-content;
             z-index: 1;
+            margin-inline: auto;
+        }
+
+        a.home {
+            z-index: 3;
+            padding: 6px;
+            background:var(--acc);
+            position: absolute;
+            left: 6px;
+            top: 6px;
+            opacity: 0.35;
+        }
+
+        a.home:hover,
+        a.home:active {
+            opacity: 1;
         }
 
         .albumInfo h2.tg {
@@ -145,7 +159,8 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
             padding-left: 12px;
         }
 
-        .acontainer button:hover {
+        .acontainer button:hover,
+        .acontainer button:active {
             background: var(--bg);
         }
 
@@ -154,6 +169,7 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
         }
 
         .acontainer button:hover,
+        .acontainer button:active,
         .acontainer div:has(.albumInfo[data-vis="true"]) button {
             opacity: 0.75;
             border: 6px solid var(--bg);
@@ -186,7 +202,6 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
             font-style: italic;
             opacity: 0.15;
             font-synthesis: style;
-            width: 100%;
             text-wrap-mode: nowrap;
         }
     </style>
@@ -203,24 +218,32 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
             els.forEach((e) =>
                 e.addEventListener("click", (ev) => {
                     let s = e.parentElement.querySelector(".albumInfo");
-                    if (s.dataset.vis == "true") {
-                        s.style.height = "0px";
-                        s.style.visibility = "hidden";
-                        setTimeout(() => (s.style.width = "0px"), 250);
-                        s.dataset.vis = "false";
-                    } else {
-                        s.style.width = "600px";
-                        s.style.height = "auto";
-                        s.style.visibility = "visible";
-                        s.dataset.vis = "true";
+                    if (s) {
+                        if (s.dataset.vis == "true") {
+                            s.style.height = "0px";
+                            s.style.visibility = "hidden";
+                            setTimeout(() => (s.style.width = "0px"), 250);
+                            s.dataset.vis = "false";
+                        } else {
+                            s.style.width = "600px";
+                            s.style.height = "auto";
+                            s.style.visibility = "visible";
+                            s.dataset.vis = "true";
 
-                        setTimeout(() => {
-                            s.scrollIntoView({
-                                behavior: "smooth",
-                                block: "center",
-                                inline: "center",
-                            });
-                        }, 100);
+                            setTimeout(() => {
+                                s.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "center",
+                                    inline: "center",
+                                });
+                            }, 100);
+                        }
+                    } else {
+                        e.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                            inline: "center",
+                        });
                     }
 
                     document
@@ -229,6 +252,7 @@ let arr = Array.from({ length: 100 }, (_, i) => i);
                             if (el == e) return;
                             let sv =
                                 el.parentElement.querySelector(".albumInfo");
+                            if (!sv) return;
                             if (sv.dataset.vis == "true") {
                                 sv.style.height = "0px";
                                 sv.style.visibility = "hidden";

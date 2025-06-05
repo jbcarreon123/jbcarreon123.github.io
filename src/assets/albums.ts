@@ -423,7 +423,7 @@ export const albums: Album[] = [
                 url: "https://open.spotify.com/album/7AJPV0L05IyIBid97AvwVD"
             }
         ],
-        image: "https://coverartarchive.org/release/174e9cf8-4593-494f-bc34-96e898cd3108/33580932565.jpg"
+        image: "https://coverartarchive.org/release/174e9cf8-4593-494f-bc34-96e898cd3108/33580932565-250.jpg"
     },
     {
         name: "Good Kid 3",
@@ -831,5 +831,513 @@ export const albums: Album[] = [
             }
         ],
         image: "https://coverartarchive.org/release/1ad22450-b0c2-4eaf-ac3a-487786d65dc5/12093268352-250.jpg"
+    },
+    {
+        name: "Before the Night",
+        artist: "HOME",
+        tracks: [
+            {
+                title: "We’re Finally Landing",
+                artists: [],
+                songNumber: 1,
+                length: "4:32"
+            },
+            {
+                title: "Synchronize",
+                artists: [],
+                songNumber: 2,
+                length: "4:00"
+            },
+            {
+                title: "Overflow",
+                artists: [],
+                songNumber: 3,
+                length: "5:22"
+            },
+            {
+                title: "Without a Sound",
+                artists: [],
+                songNumber: 4,
+                length: "3:33"
+            },
+            {
+                title: "Above All",
+                artists: [],
+                songNumber: 5,
+                length: "3:47"
+            },
+            {
+                title: "Pyxis",
+                artists: [],
+                songNumber: 6,
+                length: "3:37"
+            },
+            {
+                title: "Before the Night",
+                artists: [],
+                songNumber: 7,
+                length: "3:53"
+            },
+            {
+                title: "If I’m Wrong",
+                artists: [],
+                songNumber: 8,
+                length: "2:55"
+            },
+            {
+                title: "Nosebleed",
+                artists: [],
+                songNumber: 9,
+                length: "3:54"
+            },
+            {
+                title: "Sun",
+                artists: [],
+                songNumber: 10,
+                length: "2:36"
+            },
+            {
+                title: "Sleep",
+                artists: [],
+                songNumber: 11,
+                length: "4:34"
+            }
+        ],
+        links: [
+            {
+                name: "Bandcamp",
+                url: "https://midwestcollective.bandcamp.com/album/before-the-night"
+            },
+            {
+                name: "Discogs",
+                url: "https://www.discogs.com/release/9330774"
+            },
+            {
+                name: "Discogs",
+                url: "https://www.discogs.com/release/14960136"
+            },
+            {
+                name: "Discogs",
+                url: "https://www.discogs.com/release/16846446"
+            },
+            {
+                name: "SoundCloud",
+                url: "https://soundcloud.com/home-2001/sets/before-the-night"
+            },
+            {
+                name: "Stream at Deezer",
+                url: "https://www.deezer.com/album/12677668"
+            },
+            {
+                name: "Stream at Spotify",
+                url: "https://open.spotify.com/album/491kGL57gDkFdIPNvEjCNd"
+            }
+        ],
+        image: "https://coverartarchive.org/release/f67bb4ba-6940-430b-b470-fb571631aba7/13026066383-250.jpg"
+    },
+    {
+        name: "RAZZMATAZZ",
+        artist: "I DONT KNOW HOW BUT THEY FOUND ME",
+        tracks: [
+            {
+                title: "Leave Me Alone",
+                artists: [],
+                songNumber: 1,
+                length: "3:36"
+            },
+            {
+                title: "Mad IQs",
+                artists: [],
+                songNumber: 2,
+                length: "3:03"
+            },
+            {
+                title: "Nobody Likes the Opening Band",
+                artists: [],
+                songNumber: 3,
+                length: "2:15"
+            },
+            {
+                title: "New Invention",
+                artists: [],
+                songNumber: 4,
+                length: "3:12"
+            },
+            {
+                title: "From the Gallows",
+                artists: [],
+                songNumber: 5,
+                length: "2:43"
+            },
+            {
+                title: "Clusterhug",
+                artists: [],
+                songNumber: 6,
+                length: "3:12"
+            },
+            {
+                title: "Sugar Pills",
+                artists: [],
+                songNumber: 7,
+                length: "3:07"
+            },
+            {
+                title: "Kiss Goodnight",
+                artists: [],
+                songNumber: 8,
+                length: "3:50"
+            },
+            {
+                title: "Lights Go Down",
+                artists: [],
+                songNumber: 9,
+                length: "3:24"
+            },
+            {
+                title: "Need You Here",
+                artists: [],
+                songNumber: 10,
+                length: "3:08"
+            },
+            {
+                title: "Door",
+                artists: [],
+                songNumber: 11,
+                length: "1:33"
+            },
+            {
+                title: "Razzmatazz",
+                artists: [],
+                songNumber: 12,
+                length: "4:19"
+            }
+        ],
+        links: [
+            {
+                name: "Bandcamp",
+                url: "https://idkhow.bandcamp.com/album/razzmatazz"
+            },
+            {
+                name: "iTunes US",
+                url: "https://itunes.apple.com/us/album/id1522943458"
+            },
+            {
+                name: "Stream at Deezer",
+                url: "https://www.deezer.com/album/179885792"
+            },
+            {
+                name: "Stream at Spotify",
+                url: "https://open.spotify.com/album/7q8hYYZgsIQCXibLzwiPll"
+            }
+        ],
+        image: "https://coverartarchive.org/release/b9dba591-125d-4e52-977f-69e7c17396d7/26991661470-250.jpg"
+    },
+    {
+        name: "this is what ____ feels like, Vol. 1-4",
+        artist: "JVKE",
+        tracks: [
+            {
+                title: "this is what falling in love feels like",
+                artists: [],
+                songNumber: 1,
+                length: "2:00"
+            },
+            {
+                title: "moon and back",
+                artists: [],
+                songNumber: 2,
+                length: "2:28"
+            },
+            {
+                title: "golden hour",
+                artists: [
+                    "JVKE"
+                ],
+                songNumber: 3,
+                length: "3:29"
+            },
+            {
+                title: "this is what heartbreak feels like",
+                artists: [],
+                songNumber: 4,
+                length: "2:37"
+            },
+            {
+                title: "i’m not okay",
+                artists: [],
+                songNumber: 5,
+                length: "2:25"
+            },
+            {
+                title: "ghost town",
+                artists: [],
+                songNumber: 6,
+                length: "2:37"
+            },
+            {
+                title: "this is what sadness feels like",
+                artists: [],
+                songNumber: 7,
+                length: "3:11"
+            },
+            {
+                title: "wonder if she loves me",
+                artists: [],
+                songNumber: 8,
+                length: "2:40"
+            },
+            {
+                title: "save your breath",
+                artists: [],
+                songNumber: 9,
+                length: "2:45"
+            },
+            {
+                title: "this is what falling out of love feels like",
+                artists: [],
+                songNumber: 10,
+                length: "2:21"
+            },
+            {
+                title: "catch me",
+                artists: [],
+                songNumber: 11,
+                length: "2:57"
+            },
+            {
+                title: "i can’t help it",
+                artists: [],
+                songNumber: 12,
+                length: "2:57"
+            }
+        ],
+        links: [
+            {
+                name: "Apple Music US",
+                url: "https://music.apple.com/us/album/1640157064"
+            },
+            {
+                name: "Stream at Deezer",
+                url: "https://www.deezer.com/album/347160717"
+            },
+            {
+                name: "Stream at Spotify",
+                url: "https://open.spotify.com/album/0X1rJoOfFT7RfYYj9wG4G8"
+            }
+        ],
+        image: "https://coverartarchive.org/release/e926d4a6-c308-460a-b6a1-0666e41eecb5/33758999232-250.jpg"
+    },
+    {
+        name: "Good Kid 2",
+        artist: "Good Kid",
+        tracks: [
+            {
+                title: "Down With the King",
+                artists: [],
+                songNumber: 1,
+                length: "2:56"
+            },
+            {
+                title: "Everything Everything",
+                artists: [],
+                songNumber: 2,
+                length: "2:46"
+            },
+            {
+                title: "Slingshot",
+                artists: [],
+                songNumber: 3,
+                length: "2:32"
+            },
+            {
+                title: "Pox",
+                artists: [],
+                songNumber: 4,
+                length: "2:38"
+            },
+            {
+                title: "Aloe Lite",
+                artists: [],
+                songNumber: 5,
+                length: "2:29"
+            },
+            {
+                title: "Drifting",
+                artists: [],
+                songNumber: 6,
+                length: "2:26"
+            }
+        ],
+        links: [
+            {
+                name: "Apple Music GB",
+                url: "https://music.apple.com/gb/album/1535818794"
+            },
+            {
+                name: "Stream at Deezer",
+                url: "https://www.deezer.com/album/179562022"
+            },
+            {
+                name: "Stream at Spotify",
+                url: "https://open.spotify.com/album/0hpImZxouzm2icIy4hsldV"
+            }
+        ],
+        image: "https://coverartarchive.org/release/a2c90a50-4c8d-4cf8-8fbe-6dc447a1bea6/39623532050-250.jpg"
+    },
+    {
+        name: "Good Kid",
+        artist: "Good Kid",
+        tracks: [
+            {
+                title: "Nomu",
+                artists: [],
+                songNumber: 1,
+                length: "2:50"
+            },
+            {
+                title: "Tell Me You Know",
+                artists: [],
+                songNumber: 2,
+                length: "3:18"
+            },
+            {
+                title: "Alchemist",
+                artists: [],
+                songNumber: 3,
+                length: "2:53"
+            },
+            {
+                title: "Witches",
+                artists: [],
+                songNumber: 4,
+                length: "2:35"
+            },
+            {
+                title: "Faster",
+                artists: [],
+                songNumber: 5,
+                length: "2:37"
+            },
+            {
+                title: "Atlas",
+                artists: [],
+                songNumber: 6,
+                length: "2:24"
+            }
+        ],
+        links: [
+            {
+                name: "Stream at Deezer",
+                url: "https://www.deezer.com/album/159460192"
+            },
+            {
+                name: "Stream at Spotify",
+                url: "https://open.spotify.com/album/4gbZs8ssK4gtqnRGTFNBJo"
+            }
+        ],
+        image: "https://coverartarchive.org/release/16a2acc1-b836-4a99-8b86-7736ed43702d/30013321928-250.jpg"
+    },
+    {
+        name: "Forgotten Arcade",
+        artist: "Frizk",
+        tracks: [
+            {
+                title: "Fusion Core",
+                artists: [],
+                songNumber: 1,
+                length: "2:34"
+            },
+            {
+                title: "Gorveve",
+                artists: [],
+                songNumber: 2,
+                length: "2:10"
+            },
+            {
+                title: "Real Fellas",
+                artists: [],
+                songNumber: 3,
+                length: "1:10"
+            },
+            {
+                title: "Flashback",
+                artists: [],
+                songNumber: 4,
+                length: "1:42"
+            },
+            {
+                title: "Bright Stuff",
+                artists: [],
+                songNumber: 5,
+                length: "1:45"
+            },
+            {
+                title: "I Feel Alive",
+                artists: [],
+                songNumber: 6,
+                length: "2:36"
+            },
+            {
+                title: "Bitrate",
+                artists: [],
+                songNumber: 7,
+                length: "1:28"
+            },
+            {
+                title: "Please Hold",
+                artists: [],
+                songNumber: 8,
+                length: "1:11"
+            },
+            {
+                title: "I Feel Alright",
+                artists: [],
+                songNumber: 9,
+                length: "2:09"
+            },
+            {
+                title: "I Know, I Hear You",
+                artists: [],
+                songNumber: 10,
+                length: "2:20"
+            },
+            {
+                title: "Leave u GONE",
+                artists: [],
+                songNumber: 11,
+                length: "1:42"
+            },
+            {
+                title: "Closing Up",
+                artists: [],
+                songNumber: 12,
+                length: "1:04"
+            },
+            {
+                title: "Rainy Day",
+                artists: [],
+                songNumber: 13,
+                length: "1:49"
+            }
+        ],
+        links: [
+            {
+                name: "Apple Music GB",
+                url: "https://music.apple.com/gb/album/1713085842"
+            },
+            {
+                name: "SoundCloud",
+                url: "https://soundcloud.com/prodfrizk/forgotten-arcade-full-album"
+            },
+            {
+                name: "Stream at Deezer",
+                url: "https://www.deezer.com/album/503522461"
+            },
+            {
+                name: "Stream at Spotify",
+                url: "https://open.spotify.com/album/6ARqHNLjBsMz438SUnLf1n"
+            }
+        ],
+        image: "https://coverartarchive.org/release/4a703d66-8919-43a4-8eb8-a9b5679b7fea/37144424156-250.jpg"
     }
 ]

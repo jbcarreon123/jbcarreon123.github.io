@@ -35,4 +35,10 @@ let r = {
 	image: link
 }
 
-console.log(JSON.stringify(r));
+const regex = /"(\w+)":/gm;
+const subst = `$1:`;
+const str = JSON.stringify(r, null, 4);
+const result = str.replace(regex, subst);
+
+console.log(result);
+navigator.clipboard.writeText(result);
