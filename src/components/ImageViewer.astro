@@ -37,10 +37,11 @@
         container.querySelector('img#image').alt = alt;
         container.querySelector('p#alt').textContent = alt;
         let url = new URL((src.startsWith('/') ? window.location.protocol + '//' + window.location.host : '') + src);
+        let dom = url.hostname != window.location.hostname ? url.hostname : ''
         let spl = url.pathname.split('/');
         let filename = spl.pop();
         let path = spl.join('/');
-        container.querySelector('p#filename').innerHTML = `${path}/<b>${filename}</b>`;
+        container.querySelector('p#filename').innerHTML = `<i>${dom && `${dom}`}</i>${path}/<b>${filename}</b>`;
         container.querySelectorAll('a.link').forEach((el) => el.href = src);
         container.classList.remove('fadeout');
         container.style.display = 'block';

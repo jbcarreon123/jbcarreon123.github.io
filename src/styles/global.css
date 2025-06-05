@@ -31,7 +31,7 @@ body {
     min-height: 100dvh;
 }
 
-.container > main {
+.container>main {
     min-width: 0;
     width: calc(100dvw - 150px);
 }
@@ -229,7 +229,10 @@ html[data-color='light'] .inf {
         300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
-input, button, select, textarea {
+input,
+button,
+select,
+textarea {
     background: var(--acc);
     color: var(--text);
     font-family: var(--font);
@@ -238,7 +241,8 @@ input, button, select, textarea {
     padding: 6px;
 }
 
-button.active, button:hover {
+button.active,
+button:hover {
     background: var(--altbg);
 }
 
@@ -269,7 +273,9 @@ code {
     content: attr(data-icon);
 }
 
-img, figure, iframe {
+img,
+figure,
+iframe {
     max-width: clamp(100px, 80dvw, 500px);
 }
 
@@ -286,7 +292,9 @@ aside nav #toc {
     padding-bottom: 20px;
 }
 
-figcaption, .tg, .text-xs {
+figcaption,
+.tg,
+.text-xs {
     font-size: 0.75em;
     color: var(--sec);
     text-transform: uppercase;
@@ -306,7 +314,9 @@ figcaption, .tg, .text-xs {
     background: var(--altbg);
 }
 
-aside nav .sep, aside nav summary, optgroup {
+aside nav .sep,
+aside nav summary,
+optgroup {
     cursor: pointer;
     font-size: 0.75em;
     color: var(--sec);
@@ -338,7 +348,7 @@ aside h1 {
     flex-direction: column;
 }
 
-#content > h1:first-of-type {
+#content>h1:first-of-type {
     padding-top: 0;
     margin-top: 0;
 }
@@ -353,8 +363,9 @@ aside div {
     z-index: 1;
 }
 
-aside nav a, aside nav button {
-    display:block;
+aside nav a,
+aside nav button {
+    display: block;
     padding: 6px;
     margin-left: 6px;
     background-color: var(--acc);
@@ -363,12 +374,14 @@ aside nav a, aside nav button {
     color: var(--link);
 }
 
-aside nav a.active, aside nav button.active {
+aside nav a.active,
+aside nav button.active {
     background-color: var(--bg);
     color: var(--link-hover);
 }
 
-aside nav a:hover, aside nav button:hover {
+aside nav a:hover,
+aside nav button:hover {
     background-color: var(--altbg);
     color: var(--link-hover);
 }
@@ -385,7 +398,7 @@ aside {
     grid-area: aside;
 }
 
-main > div {
+main>div {
     background-color: var(--bg);
     display: flex;
     flex-direction: column;
@@ -395,7 +408,7 @@ main > div {
     min-height: 100dvh;
 }
 
-div#leftbar > * {
+div#leftbar>* {
     border-right: 1px solid var(--text);
 }
 
@@ -403,7 +416,7 @@ pre {
     overflow-x: auto;
 }
 
-div#leftbar > *:last-child {
+div#leftbar>*:last-child {
     border-right: none;
 }
 
@@ -434,7 +447,12 @@ body:has(#nav-visible:checked) .a {
     text-decoration: underline;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
 }
 
@@ -457,21 +475,21 @@ h3 {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #BDBDBD80;
-  border-radius: 3px;
-  padding: 3px;
+    background: #BDBDBD80;
+    border-radius: 3px;
+    padding: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #BDBDBDFF;
+    background: #BDBDBDFF;
 }
 
 ul,
@@ -509,7 +527,8 @@ footer .right {
     width: 300px;
 }
 
-.astro-code, .expressive-code {
+.astro-code,
+.expressive-code {
     overflow-x: auto;
 }
 
@@ -538,7 +557,7 @@ footer .right {
     }
 }
 
-@media (width <= 800px) {
+@media (width <=800px) {
     footer {
         flex-direction: column;
         gap: 24px;
@@ -552,7 +571,7 @@ footer .right {
     }
 }
 
-@media (width <= 640px) {
+@media (width <=640px) {
     .container {
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
@@ -583,7 +602,7 @@ footer .right {
         overflow-y: auto;
     }
 
-    main > div {
+    main>div {
         max-height: 100dvh;
     }
 
@@ -592,14 +611,14 @@ footer .right {
     }
 
     .sidetitle {
-        display:none;
+        display: none;
     }
 
     .container:has(aside.visible) main {
         overflow-y: hidden;
     }
-    
-    .container:has(aside.visible) main > div {
+
+    .container:has(aside.visible) main>div {
         opacity: 0.35;
         pointer-events: none;
     }
@@ -611,7 +630,15 @@ footer .right {
     Internet Explorer
 */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    h1, h2, h3, h4, h5, h6, b, strong {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    b,
+    strong {
         font-synthesis: none;
     }
 
