@@ -122,7 +122,7 @@ import "prism-code-editor/invisibles.css";
                     if (/{ ?$/.test(s)) {
                         lines.push({
                             line: i + 1,
-                            entry: s.match(regex)[0],
+                            entry: htmlEscape(s.match(regex)[0]),
                             reason: 'selector'
                         });
                     }
@@ -130,7 +130,7 @@ import "prism-code-editor/invisibles.css";
                     if (!/^\//.test(s.replace(linkRegex, '$1'))) {
                         lines.push({
                             line: i + 1,
-                            entry: s.replace(linkRegex, '$1'),
+                            entry: htmlEscape(s.replace(linkRegex, '$1')),
                             reason: 'link'
                         })
                     }
@@ -157,6 +157,15 @@ import "prism-code-editor/invisibles.css";
             }
             document.querySelector("#nb-error-btn").innerHTML =
                 `Errors (${lines.length})`;
+        }
+
+        function htmlEscape(text: string) {
+            return String(text)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#39;");
         }
 
         function textToKilobytes(text: string) {
