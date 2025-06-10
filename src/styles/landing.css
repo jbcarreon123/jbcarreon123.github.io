@@ -35,10 +35,12 @@ main {
     gap: 6px;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+main {
+    height: 100%;
+}
+
+div.main {
+    margin: auto;
 }
 
 main > div {
