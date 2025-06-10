@@ -13,7 +13,7 @@ import { Image } from "astro:assets";
         <div class="entries">
             <h2 class="main">Nekozine #1</h2>
             <div>
-                <a>
+                <a href="/btn/interview/wiki/">
                     <div
                         class="behind"
                         style="--img: url(/imgs/btn/nwiki_bg.svg)"
@@ -26,17 +26,21 @@ import { Image } from "astro:assets";
                         />
                     </div>
                 </a>
-                <a>
+                <a href="/btn/interview/districts/">
                     <div
                         class="behind"
                         style="--img: url(https://nekoweb.org/static/assets/nekopattern.png); background-size: initial;"
                     >
                     </div>
                     <div>
-                        <h2>Nekoweb Districts</h2>
+                        <img
+                            src="/imgs/btn/districts_img.png"
+                            style="--h: 60px;"
+                            alt="Image that says 'Districts' on it"
+                        />
                     </div>
                 </a>
-                <a>
+                <a href="/btn/interview/ivrry/">
                     <div
                         class="behind"
                         style="--img: url(/imgs/btn/ivrry_stars.png); animation: scroll-bg 20s linear 0s forwards infinite;"
@@ -50,7 +54,7 @@ import { Image } from "astro:assets";
                         />
                     </div>
                 </a>
-                <a class="crt" style="text-decoration: none;">
+                <a href="/btn/interview/july/" class="crt" style="text-decoration: none;">
                     <div
                         class="behind"
                         style="--img: url(/imgs/btn/july_background.png);"
@@ -77,6 +81,22 @@ import { Image } from "astro:assets";
                 <a>
                     <h2>TBA</h2>
                 </a>
+            </div>
+        </div>
+        <div class="entries">
+            <h2 class="main">Credits</h2>
+            <div class="no">
+                <p>There's other people that helped me make this entry of mine!</p>
+                <div class="en">
+                    <div>
+                        <h3>Helped on the art</h3>
+                        <a href="https://penislord.nekoweb.org/">SammitoPL</a> and <a href="https://scythe.nekoweb.org/">Scytheisizer</a>
+                    </div>
+                    <div>
+                        <h3>Helped on forming the questions</h3>
+                        <a href="https://layercake.nekoweb.org/">Layercake</a> and Cicadaqueen
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -131,7 +151,7 @@ import { Image } from "astro:assets";
             position: absolute;
             left: 6px;
             top: 6px;
-            opacity: 0.35;
+            opacity: 0.5;
         }
 
         a.home:hover,
@@ -152,7 +172,7 @@ import { Image } from "astro:assets";
                 padding-bottom: 6px;
             }
 
-            & > div {
+            & > div:not(.no), &> div.no .en {
                 display: grid;
                 grid-template-columns: repeat(2, minmax(100px, 1fr));
                 width: 100%;

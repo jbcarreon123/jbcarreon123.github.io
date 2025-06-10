@@ -619,7 +619,7 @@ footer .right {
     }
 
     .container:has(aside.visible) main>div {
-        opacity: 0.35;
+        opacity: 0.5;
         pointer-events: none;
     }
 }
