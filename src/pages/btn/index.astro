@@ -83,7 +83,7 @@ import { Image } from "astro:assets";
                 </a>
             </div>
         </div>
-        <div class="entries">
+        <div class="entries credits">
             <h2 class="main">Credits</h2>
             <div class="no">
                 <p>There's other people that helped me make this entry of mine!</p>
@@ -166,6 +166,14 @@ import { Image } from "astro:assets";
             padding: 6px;
             background: var(--acc);
             min-height: 250px;
+
+            &.credits {
+                min-height: 125px;
+
+                p {
+                    padding-left: 6px;
+                }
+            }
 
             & > h2.main {
                 writing-mode: sideways-lr;
