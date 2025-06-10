@@ -3,14 +3,14 @@ import Layout from '../layouts/LayoutNoSidebar.astro';
 import CommentWidget from '../components/CommentWidget.svelte';
 import '../styles/post.css';
 import '../styles/comment-widget-dark.css';
-import MobileOnly from './mobile-only-src.md';
+import MobileOnlySrc from './mobile-only-src.md';
 ---
 
 <Layout title="A Mobile-only page" description="Jb's manifesto about mobile responsiveness">
     <div class="mo">
         <h1 class="post-title">A mobile-only page</h1>
         <article>
-            <MobileOnly />
+            <MobileOnlySrc />
         </article>
         <div style="width: 100%;">
             <CommentWidget client:only="svelte" disabled={false} />
