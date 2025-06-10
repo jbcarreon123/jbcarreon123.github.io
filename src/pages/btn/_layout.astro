@@ -10,10 +10,10 @@ const { title, cl } = Astro.props.frontmatter;
     </div>
     <div class={"main " + cl}>
         <div class="bg"></div>
-        <div class="inner">
+        <article class="inner">
             <h1>{title}</h1>
             <slot />
-        </div>
+        </article>
     </div>
 
     <link slot="head" rel="preconnect" href="https://fonts.googleapis.com" />
