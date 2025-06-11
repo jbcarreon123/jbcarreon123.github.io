@@ -57,6 +57,7 @@ const { title, cl } = Astro.props.frontmatter;
                 background-image: url("https://nekoweb.org/static/assets/nekopattern.png");
 
                 .inner {
+                    font-family: "MS UI Gothic", Verdana, sans-serif;
                     background: #fff2df;
                     color: #774519;
                 }
@@ -170,13 +171,16 @@ const { title, cl } = Astro.props.frontmatter;
             left: 6px;
             top: 6px;
             z-index: 99999;
-            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         div.home a {
             background: var(--acc);
             opacity: 0.5;
             padding: 6px;
+            width: fit-content;
         }
 
         div.home a:hover,
