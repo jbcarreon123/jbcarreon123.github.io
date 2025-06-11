@@ -9,7 +9,7 @@ Visit Nekoweb Districts at [districts.nekoweb.org](https://districts.nekoweb.org
 And thanks for Aislyn for letting us ask some questions!
 
 ## First off, can you tell us a little bit about yourself?
-I'm Aislyn Weaver, creator of Districts - Nekoweb’s most followed project. I also run a loosely defined creative collective called WVR.MOE. We make websites in Microsoft Excel, build bots, host convention panels, run the occasional fundraiser, and do other nonsense. It's dumb. It’s fun. Check us out at WVR.MOE.
+I'm Aislyn Weaver, creator of Districts - Nekoweb’s most followed project. I also run a loosely defined creative collective called [WVR.MOE](https://wvr.moe/). We make websites in Microsoft Excel, build bots, host convention panels, run the occasional fundraiser, and do other nonsense. It's dumb. It’s fun. Check us out at [WVR.MOE](https://wvr.moe/).
 
 ## What made you want to create a website in the first place? What is the main goal of their website: is it art? personal? for writing? to connect with others?
 Site directories like Nekoweb Districts exist to connect. The web is vast - and real people are often buried under centralized algorithmic media feeds, bot networks, and AI sludge. Districts' aim is to carve out a space where real Nekowebbians can find each other in their very own town square. The reason I first made it is... well, frankly because no one else had. ( ; ^.^)
@@ -35,4 +35,4 @@ Absolutely. There’s no excuse not to. Districts isn't popular because of any c
 ## What would you like to say to the person reading this now?
 If you haven't yet, now is a great time to join Nekoweb Districts! Over 100 people are listing their website on Nekoweb's most followed project, and you can too! Just email your site title, description, URL, and any 88x31 buttons to ACE@WVR.MOE.
 
-Oh, and check out WVR.MOE. (⌐⎚u⎚)
+Oh, and check out [WVR.MOE](https://wvr.moe/). (⌐⎚u⎚)
