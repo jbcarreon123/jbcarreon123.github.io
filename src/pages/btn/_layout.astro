@@ -82,14 +82,14 @@ const { title, cl } = Astro.props.frontmatter;
                     font-family: "Iosevka", monospace;
                 }
 
-                :global(a) {
+                a {
                     color: var(--green-color);
                     text-decoration: none;
                     transition:
                         text-shadow 0.2s ease,
                         color 0.2s ease;
                 }
-                :global(a:hover) {
+                a:hover {
                     color: #a1ffd8;
                     text-decoration: underline;
                     text-shadow: 0 0 5px var(--green-color);
@@ -169,7 +169,7 @@ const { title, cl } = Astro.props.frontmatter;
             position: absolute;
             left: 6px;
             top: 6px;
-            z-index: 3;
+            z-index: 99999;
             padding: 6px;
         }
 
