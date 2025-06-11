@@ -346,5 +346,11 @@
         "title": "stel @ moondvsted",
         "alt": "stel @ moondvsted",
         "imgUrl": "/imgs/buttons/stel-at-moondvsted.gif"
+    },
+    {
+        "url": "https://chromix.nekoweb.org/",
+        "title": "CHROMATOGRAPHICS",
+        "alt": "CHROMIX's web archive",
+        "imgUrl": "https://chromix.nekoweb.org/assets/kromix_button.png"
     }
 ]
