@@ -1,0 +1,28 @@
+---
+import Layout from './BgOnlyLayout.astro';
+const {slug} = Astro.props.frontmatter;
+---
+
+<Layout title="Redirecting..." id="redirecting">
+    <head>
+        <meta http-equiv="refresh" content={"0; url=" + slug + '/'} />
+    </head>
+    <div class="main">
+        <h1>Redirecting to {slug}/, please wait...</h1>
+    </div>
+
+    <style>
+        div.main {
+            margin: auto;
+            width: fit-content;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        h1 {
+            background: var(--bg);
+            padding: 24px;
+        }
+    </style>
+</Layout>   

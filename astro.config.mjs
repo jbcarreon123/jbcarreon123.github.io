@@ -37,12 +37,15 @@ if (process.env.GITHUB_ACTIONS === 'true') {
 export default defineConfig({
   site: "https://jbcarreon123.nekoweb.org",
 
+  scopedStyleStrategy: 'class',
+
   prefetch: {
     prefetchAll: true
   },
 
   build: {
-    concurrency: 12
+    concurrency: 12,
+    assets: '_jbsite4'
   },
 
   image: {
@@ -120,5 +123,14 @@ export default defineConfig({
       rehypeToc,
       rehypeSectionize,
     ],
+  },
+
+  vite: {
+    css: {
+      transformer: "lightningcss",
+      lightningcss: {
+        targets: { chrome: 95 << 16 }
+      }
+    },
   }
 });
