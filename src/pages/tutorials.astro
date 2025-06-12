@@ -50,13 +50,13 @@ const tutorials = Object.values(import.meta.glob('./tutorials/**/*.md', { eager:
             gap: 6px;
         }
 
-        @media (width <= 940px) {
+        @media screen and (width <= 940px) {
             .tutorial-container {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
     
-        @media (width <= 640px) {
+        @media screen and (width <= 640px) {
             .tutorial-container {
                 grid-template-columns: repeat(1, 100%);
             }

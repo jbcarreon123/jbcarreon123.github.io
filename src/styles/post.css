@@ -101,7 +101,7 @@ article h1::after {
     vertical-align: bottom;
 }
 
-@media (width <= 640px) {
+@media screen and (width <= 640px) {
     article h1 {
         position: static;
     }

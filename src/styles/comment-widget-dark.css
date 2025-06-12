@@ -102,7 +102,7 @@
         box-sizing: border-box;
     }
 
-    @media (width <= 640px) {
+    @media screen and (width <= 640px) {
         grid-template-columns: 1fr;
         gap: 0;
     }

@@ -125,7 +125,7 @@ marquee {
     }
 }
 
-@media (width <= 640px) {
+@media screen and (width <= 640px) {
     .big {
         font-size: 3em;
     }

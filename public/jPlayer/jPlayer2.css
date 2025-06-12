@@ -62,7 +62,7 @@
         animation: overflowMarquee 12s calc(1.5s + var(--d, 0)) infinite linear;
         position: relative;
 
-        @media (prefers-reduced-motion) {
+        @media screen and (prefers-reduced-motion) {
             animation: none;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -444,7 +444,7 @@
     }
 }
 
-@media (prefers-reduced-motion) {
+@media screen and (prefers-reduced-motion) {
     .card-background {
         display: none
     }

@@ -540,7 +540,7 @@ footer .right {
     max-height: 250px;
 }
 
-@media (prefers-reduced-motion) {
+@media screen and (prefers-reduced-motion) {
     * {
         transition: none !important;
         animation: none !important;
@@ -551,13 +551,13 @@ footer .right {
     }
 }
 
-@media (width > 640px) {
+@media screen and (width > 640px) {
     header {
         display: none;
     }
 }
 
-@media (width <=800px) {
+@media screen and (width <=800px) {
     footer {
         flex-direction: column;
         gap: 24px;
@@ -571,7 +571,7 @@ footer .right {
     }
 }
 
-@media (width <=640px) {
+@media screen and (width <=640px) {
     .container {
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
