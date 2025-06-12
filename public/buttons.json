@@ -324,12 +324,6 @@
         "imgUrl": "https://files.catbox.moe/wfsnmh.gif"
     },
     {
-        "url": "https://girlvstheinstitute.nekoweb.org/",
-        "title": "Girl(s) vs the Institute",
-        "alt": "Girl vs the Institute",
-        "imgUrl": "https://girlvstheinstitute.nekoweb.org/button.png"
-    },
-    {
         "url": "https://lexp.dev/en/index.html",
         "title": "lexp.dev",
         "alt": "lexp.dev website",
@@ -346,5 +340,17 @@
         "title": "stel @ moondvsted",
         "alt": "stel @ moondvsted",
         "imgUrl": "/imgs/buttons/stel-at-moondvsted.gif"
+    },
+    {
+        "url": "https://chromix.nekoweb.org/",
+        "title": "CHROMATOGRAPHICS",
+        "alt": "CHROMIX's web archive",
+        "imgUrl": "https://chromix.nekoweb.org/assets/kromix_button.png"
+    },
+    {
+        "url": "https://glassywebsite.nekoweb.org/",
+        "title": "Glassyweb",
+        "alt": "Glassjungle",
+        "imgUrl": "https://file.garden/ZlKCRJrkUEDiwwUh/Website%20Images/2024_06_28_129_Kleki.png"
     }
 ]

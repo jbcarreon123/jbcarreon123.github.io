@@ -17,6 +17,7 @@
     "@playform/compress": "^0.1.9",
     "@stefanprobst/rehype-extract-toc": "^3.0.0",
     "@tailwindcss/vite": "^4.1.8",
+    "@types/bun": "^1.2.15",
     "@types/cssbeautify": "^0.3.5",
     "@types/csso": "^5.0.4",
     "@types/markdown-it": "^14.1.2",
