@@ -285,28 +285,10 @@ let f = repos.filter((s) => !r.includes(s.name.toLowerCase()) && !s.fork && s.de
             }
         }
 
-        .projects-container {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(200px, 1fr));
-            gap: 6px;
-        }
-
         @media screen and (width <= 640px) {
-            .projects-container {
+            .proj {
                 grid-template-columns: repeat(1, 100%);
             }
-        }
-
-        .projects-item {
-            padding: 6px;
-            background: var(--acc);
-            height: 100%;
-            box-sizing: border-box;
-        }
-
-        .projects-item:hover,
-        .projects-item:has(*:hover) {
-            background: var(--altbg);
         }
 
         h2 {
@@ -314,10 +296,6 @@ let f = repos.filter((s) => !r.includes(s.name.toLowerCase()) && !s.fork && s.de
             margin: 0;
             padding-bottom: 6px;
             padding-top: 12px;
-        }
-
-        span.user {
-            font-weight: 500;
         }
     </style>
 </Layout>
