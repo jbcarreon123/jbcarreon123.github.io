@@ -2,6 +2,16 @@
 import BgOnlyLayout from "../layouts/BgOnlyLayout.astro";
 import { version } from "../../package.json";
 import * as os from "os";
+import Buttons from '../../public/buttons.json';
+import { outDir } from "astro:config/server";
+import { fileURLToPath } from "node:url";
+import { listInstalled } from 'list-installed';
+import path from 'path';
+
+const __dirname = path.resolve(path.dirname(''));
+const pkgMap = await listInstalled(__dirname);
+const packages = Array.from(pkgMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
 const hash = import.meta.env.COMMIT_HASH ?? "null";
 
 function toSentenceCase(str: string) {
@@ -12,33 +22,53 @@ function toSentenceCase(str: string) {
     const lowerCaseStr = str.toLowerCase();
     return lowerCaseStr.charAt(0).toUpperCase() + lowerCaseStr.slice(1);
 }
+
+const posts = Object.values(
+    import.meta.glob("./posts/**/*.md", {
+        eager: true,
+    }),
+);
+
+const adapter = packages.filter((v) => v[0].includes('astro-adapter-nekoweb'))[0]
 ---
 
 <BgOnlyLayout title="jbsite4-diag">
     <script is:inline slot="head">
         function genEmbed() {
-            let e = document.querySelector('#embed textarea');
+            let e = document.querySelector("#embed textarea");
             let dom = new DOMParser();
-            let p = dom.parseFromString(e.value, 'text/html');
-            let li = p.querySelector('a');
-            let bt = li.querySelector('img');
+            let p = dom.parseFromString(e.value, "text/html");
+            let li = p.querySelector("a");
+            let bt = li.querySelector("img");
             let sr = new URL(bt.src);
             if (sr.hostname === window.location.hostname) {
-                sr = new URL(bt.src.replace(`${window.location.protocol}//${window.location.host}`, ''), li.href);
-                console.log(bt.src.replace(`${window.location.protocol}//${window.location.host}`, ''), li.href)
+                sr = new URL(
+                    bt.src.replace(
+                        `${window.location.protocol}//${window.location.host}`,
+                        "",
+                    ),
+                    li.href,
+                );
+                console.log(
+                    bt.src.replace(
+                        `${window.location.protocol}//${window.location.host}`,
+                        "",
+                    ),
+                    li.href,
+                );
                 console.log(sr.host);
             }
             let v = {
                 url: li.href,
                 title: li.title ?? bt.title ?? bt.alt ?? li.href,
                 alt: bt.alt ?? li.href,
-                imgUrl: sr.toString()
-            }
+                imgUrl: sr.toString(),
+            };
             e.value = JSON.stringify(v, null, 4);
         }
 
         async function copy(id) {
-            let e = document.querySelector('#' + id + ' textarea');
+            let e = document.querySelector("#" + id + " textarea");
             await navigator.clipboard.writeText(e.value);
         }
     </script>
@@ -54,6 +84,10 @@ function toSentenceCase(str: string) {
             <h2 set:html={hash} />
         </div>
         <div>
+            <h3>Last built on</h3>
+            <h2>{new Date(Date.now()).toLocaleDateString()}</h2>
+        </div>
+        <div>
             <h3>Astro Version</h3>
             <h2>{Astro.generator}</h2>
         </div>
@@ -62,24 +96,38 @@ function toSentenceCase(str: string) {
             <h2>{process.version}</h2>
         </div>
         <div>
-            <h3>Last built on</h3>
-            <h2>{new Date(Date.now()).toLocaleDateString()}</h2>
-        </div>
-        <div>
             <h3>Platform</h3>
             <h2>{toSentenceCase(os.platform())} {os.arch()}</h2>
+        </div>
+        <div>
+            <h3>Packages loaded</h3>
+            <h2>{packages.length}</h2>
+        </div>
+        <div>
+            <h3>Posts loaded</h3>
+            <h2>{posts.length}</h2>
+        </div>
+        <div>
+            <h3>SBR buttons loaded</h3>
+            <h2>{Buttons.length}</h2>
         </div>
         <div>
             <h3>Name</h3>
             <h2>{os.userInfo().username}@{os.hostname()}</h2>
         </div>
+        <div>
+            <h3>Output Directory</h3>
+            <h2>{fileURLToPath(outDir)}</h2>
+        </div>
+        <div>
+            <h3>Build Adapter</h3>
+            <h2>{adapter[0]}@{adapter[1].version}</h2>
+        </div>
     </div>
 
     <div class="fl" id="embed">
         <h2>Button Embed to Site Button Repo Format Generator</h2>
-        <textarea aria-label="Your input">
-
-        </textarea>
+        <textarea aria-label="Your input"> </textarea>
         <div>
             <button onclick="genEmbed()">Generate SBR Format JSON</button>
             <button onclick="copy('embed')">Copy TextArea</button>
@@ -105,9 +153,14 @@ function toSentenceCase(str: string) {
             gap: 6px;
         }
 
-        .cl > div, .fl {
+        .cl > div,
+        .fl {
             background-color: var(--bg);
             padding: 6px;
+
+            &>h3, &>h2 {
+                padding-top: 0;
+            }
         }
 
         .fl {
@@ -116,11 +169,11 @@ function toSentenceCase(str: string) {
             flex-direction: column;
             gap: 6px;
 
-            &>button {
+            & > button {
                 width: fit-content;
             }
 
-            &>textarea {
+            & > textarea {
                 height: 150px;
             }
         }

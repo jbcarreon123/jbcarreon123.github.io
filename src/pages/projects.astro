@@ -1,16 +1,290 @@
 ---
-import GitHubProjects from '../components/GitHubProjects.svelte';
-import Layout from '../layouts/Layout.astro';
+import GitHubProjects from "../components/GitHubProjects.svelte";
+import Layout from "../layouts/Layout.astro";
+
+async function loadRepos() {
+    let repoResponse = await fetch(
+        `https://api.github.com/users/jbcarreon123/repos?per_page=100`,
+    );
+
+    if (!repoResponse.ok)
+        throw new Error(
+            `Recieved ${repoResponse.status} from GitHub. Please try again later.`,
+        );
+
+    let repos: any[] = await repoResponse.json();
+    repos = repos.concat(await loadReposWithFilter());
+
+    repos.sort(function (a, b) {
+        return new Date(b.pushed_at) - new Date(a.pushed_at);
+    });
+
+    return repos;
+}
+
+async function loadReposWithFilter() {
+    let repoResponse = await fetch(
+        `https://api.github.com/users/indiefellas/repos`,
+    );
+    let repos: any[] = await repoResponse.json();
+
+    let indiefellas = [
+        "astro-adapter-nekoweb",
+        "svelte-adapter-nekoweb",
+        "inaccessible",
+        "nekoweb-api",
+        "jAPI",
+        "neko",
+        "nkko",
+        "nekobox",
+    ];
+
+    repos = repos.filter((v) => indiefellas.includes(v.name));
+
+    let repo2Response = await fetch(
+        `https://api.github.com/users/Macro-Deck-App/repos`,
+    );
+    let repos2: any[] = await repo2Response.json();
+
+    let macroDeck = ["Macro-Bot"];
+
+    repos2 = repos2.filter((v) => macroDeck.includes(v.name));
+    repos = repos.concat(repos2);
+
+    repos = repos.concat(
+        await (
+            await fetch(`https://api.github.com/users/liberation-dev/repos`)
+        ).json(),
+    );
+    repos = repos.concat(
+        await (await fetch(`https://api.github.com/users/Y2DL/repos`)).json(),
+    );
+    repos = repos.concat(
+        await (
+            await fetch(`https://api.github.com/users/customWin/repos`)
+        ).json(),
+    );
+
+    return repos;
+}
+
+let repos: any[];
+try {
+    repos = await loadRepos();
+    repos.concat(await loadReposWithFilter());
+} catch {
+    repos = [];
+}
+
+function getStars(name: string): number {
+    return repos.filter((s) => name.toLowerCase().includes(s.name.toLowerCase()))[0]?.stargazers_count ?? 0;
+}
+
+let r = [
+    "nekobox",
+    "nkko",
+    "nekoweb-api",
+    "jplayer2",
+    ".github",
+    "baduibattles",
+    "jbsite4",
+    "jbsite3",
+    "jbs-website"
+]
+
+let f = repos.filter((s) => !r.includes(s.name.toLowerCase()) && !s.fork && s.description);
 ---
 
-<Layout title="jb's projects" description="some projects that jb did" id="projects">
+<Layout
+    title="jb's projects"
+    description="some projects that jb did"
+    id="projects"
+>
     <h1>My Projects</h1>
-    <p>Note that some of it isn't done yet.</p>
-    <div class="projects-container">
-        <GitHubProjects client:only="svelte" name={"jbcarreon123"} />
+    <h2>Main projects (owned or contributed)</h2>
+    <div class="proj">
+        <a href="https://nekobox.nekoweb.org/" target="_blank">
+            <div>
+                <div>
+                    <h2>Nekobox2</h2>
+                    <p>A Nekoweb elements.css viewer and editor</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{getStars("nekobox2")}</p>
+            </div>
+            <img class="bg" src="/imgs/projs/nekobox.png" />
+        </a>
+        <a href="https://nkko.link/" target="_blank">
+            <div>
+                <div>
+                    <h2>nkko.link</h2>
+                    <p>Basically currently a link shortener.</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{getStars("nkko")}</p>
+            </div>
+            <img class="bg" src="/imgs/projs/nkkolink.png" />
+        </a>
+        <a href="https://github.com/jbcarreon123/jPlayer2/" target="_blank">
+            <div>
+                <div>
+                    <h2>jPlayer2</h2>
+                    <p>A modern web player, powered by Web Components API</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{getStars("jplayer2")}</p>
+            </div>
+            <img class="bg" src="/imgs/projs/jplayer2.png" />
+        </a>
+        <a href="https://github.com/indiefellas/nekoweb-api" target="_blank">
+            <div>
+                <div>
+                    <h2>nekoweb-api</h2>
+                    <p>A wrapper for the Nekoweb API</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{getStars("nekoweb-api")}</p>
+            </div>
+        </a>
+    </div>
+    <h2>jb's site</h2>
+    <div class="proj">
+        <a href="/">
+            <div>
+                <div>
+                    <h2>jbSite4</h2>
+                    <p>This site</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{getStars("jbsite4")}</p>
+            </div>
+            <img class="bg" src="/imgs/projs/jbsite4.png" />
+        </a>
+        <a href="https://jbcarreon123.github.io/jbsite3" target="_blank">
+            <div>
+                <div>
+                    <h2>jbSite3</h2>
+                    <p>The last version, written in SvelteKit</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{getStars("jbsite3")}</p>
+            </div>
+            <img class="bg" src="/imgs/projs/jbsite3.png" />
+        </a>
+        <a href="https://github.com/jbcarreon123/jbs-website" target="_blank">
+            <div>
+                <div>
+                    <h2>jbSite1</h2>
+                    <p>The site that started it all. Uses SSR so there's no site</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{getStars("jbs-website")}</p>
+            </div>
+            <img class="bg" src="/imgs/projs/jbsite1.png" />
+        </a>
+    </div>
+    <h2>Other projects</h2>
+    <div class="proj">
+        {f.map((l) => <a href={l.html_url} target="_blank">
+            <div>
+                <div>
+                    <h2>{l.name}</h2>
+                    <p>{l.description}</p>
+                </div>
+                <p><span class="ms" data-icon="star" aria-hidden="true"></span>{l.stargazers_count}</p>
+            </div>
+        </a>)}
     </div>
 
-    <style is:inline>
+    <style is:global slot="head">
+        .proj {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(100px, 1fr));
+            gap: 6px;
+
+            & > a {
+                background-color: var(--altbg);
+                vertical-align: bottom;
+                min-height: 150px;
+                position: relative;
+                color: var(--text) !important;
+                text-decoration: none !important;
+
+                & > .bg {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                    opacity: 0.5;
+                    z-index: 0;
+                    object-fit: cover;
+                }
+
+                & > div {
+                    background: linear-gradient(to top, #00000080, transparent);
+                    padding: 6px;
+                    display: flex;
+                    align-items: end;
+                    height: 100%;
+                    z-index: 1;
+                    position: relative;
+                    justify-content: space-between;
+
+                    & * {
+                        padding: 0;
+                    }
+
+                    &>div {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: end;
+                        width: 100%;
+                        &>* {
+
+                        }
+                        &>p {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            opacity: 0;
+                        }
+                    }
+
+                    &>p {
+                        padding-right: 3px;
+                        width: fit-content;
+                        text-wrap-mode: nowrap;
+                    }
+                }
+
+                &:not(:has(.bg)) {
+                    div {
+                        p {
+                            opacity: 1;
+                        }
+                    }
+
+                    background: var(--acc);
+
+                    &:hover {
+                        background: var(--altbg);
+                    }
+                }
+
+                &:has(.bg):hover {
+                    background: linear-gradient(to bottom, #000000, transparent);
+
+                    &>.bg {
+                        opacity: 0.25;
+                    }
+
+                    &>div {
+                        &>div {
+                            &>p {
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         .projects-container {
             display: grid;
             grid-template-columns: repeat(3, minmax(200px, 1fr));
@@ -19,7 +293,7 @@ import Layout from '../layouts/Layout.astro';
 
         @media screen and (width <= 640px) {
             .projects-container {
-                 grid-template-columns: repeat(1, 100%);
+                grid-template-columns: repeat(1, 100%);
             }
         }
 
@@ -30,7 +304,8 @@ import Layout from '../layouts/Layout.astro';
             box-sizing: border-box;
         }
 
-        .projects-item:hover, .projects-item:has(*:hover) {
+        .projects-item:hover,
+        .projects-item:has(*:hover) {
             background: var(--altbg);
         }
 
@@ -38,6 +313,7 @@ import Layout from '../layouts/Layout.astro';
             padding: 0;
             margin: 0;
             padding-bottom: 6px;
+            padding-top: 12px;
         }
 
         span.user {
