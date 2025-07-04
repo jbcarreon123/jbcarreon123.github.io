@@ -120,5 +120,14 @@ export default defineConfig({
       rehypeToc,
       rehypeSectionize,
     ],
+  },
+
+  vite: {
+    css: {
+      transformer: 'lightningcss'
+    },
+    build: {
+      cssMinify: 'lightningcss'
+    }
   }
 });
